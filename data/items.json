@@ -1,0 +1,4 @@
+{
+  "hoodie": { "name": "hoodie", "synonyms": ["sweatshirt"], "look": "Field uniform of the remote professional. Battle-tested against thermostat disputes." },
+  "mug":    { "name": "coffee mug", "synonyms": ["mug", "cup"], "look": "Your emotional-support mug. Currently empty, like the status dashboard's promises." }
+}

@@ -1,0 +1,127 @@
+{
+  "id": "act1_home_office",
+  "name": "Mel's Home Office",
+  "background": "assets/backgrounds/act1_home_office.png",
+  "walkable": [[16, 128], [304, 128], [312, 178], [8, 178]],
+  "playerStart": { "x": 160, "y": 158, "facing": "left" },
+  "exits": [],
+  "onEnter": [
+    {
+      "if": { "flagNot": "intro_seen" },
+      "do": [
+        { "narrate": "Mel Function's home office: three monitors, one career, and a mug population that has achieved self-governance. Somewhere out there, the entire internet just stopped working. In here, it smells like yesterday's coffee. Mostly because of all the yesterdays." },
+        { "setFlag": "intro_seen" },
+        { "score": { "id": "began_the_ordeal", "points": 1 } }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "monitors",
+      "name": "monitors",
+      "synonyms": ["monitor", "screen", "screens", "display", "computer"],
+      "polygon": [[86, 58], [200, 58], [200, 100], [86, 100]],
+      "responses": {
+        "look": [
+          { "if": { "flagNot": "outage_discovered" },
+            "do": [
+              { "narrate": "Three monitors, all frozen mid-scroll. The dashboard's last recorded status is a wall of red so uniform it looks like modern art. Titled, presumably, 'Everything (2026).'" },
+              { "setFlag": "outage_discovered" },
+              { "score": { "id": "saw_the_red", "points": 2 } }
+            ] },
+          { "text": "Still red. Refreshing it with your mind hasn't worked the last forty times either." }
+        ],
+        "use": [
+          { "text": "You jiggle the mouse with the confidence of a professional. The dashboards remain a monument to the color red." }
+        ]
+      }
+    },
+    {
+      "id": "hoodie",
+      "name": "hoodie",
+      "synonyms": ["sweatshirt", "sweater", "jacket", "clothes"],
+      "polygon": [[128, 88], [176, 88], [176, 130], [128, 130]],
+      "responses": {
+        "look": [
+          { "text": "Your field uniform. It has seen four thousand video calls and zero physical meetings, which is exactly how everyone prefers it." }
+        ],
+        "take": [
+          { "if": { "flagNot": "has_hoodie" },
+            "do": [
+              { "narrate": "You claim the hoodie. Somewhere in the distance, a dress code weeps." },
+              { "addItem": "hoodie" },
+              { "setFlag": "has_hoodie" },
+              { "score": { "id": "geared_up", "points": 2 } }
+            ] },
+          { "text": "You're already carrying it. One hoodie is a wardrobe; two is a cry for help." }
+        ]
+      }
+    },
+    {
+      "id": "closet_rack",
+      "name": "server rack",
+      "synonyms": ["rack", "servers", "closet", "homelab", "lab"],
+      "polygon": [[262, 40], [310, 40], [310, 140], [262, 140]],
+      "responses": {
+        "look": [
+          { "text": "Your homelab: the only infrastructure within five hundred miles that still works, because you are the only person within five hundred miles who reads changelogs." }
+        ],
+        "use": [
+          { "text": "You check the rack. Green lights, all of them. It's the loveliest thing you've seen all day, and you saw it eleven minutes ago too." }
+        ],
+        "take": [
+          { "text": "It's bolted, racked, and cable-managed. Some relationships are permanent." }
+        ]
+      }
+    },
+    {
+      "id": "window",
+      "name": "window",
+      "synonyms": ["street", "town", "outside", "view"],
+      "polygon": [[12, 30], [92, 30], [92, 92], [12, 92]],
+      "responses": {
+        "look": [
+          { "text": "Main Street, population: dwindling. Half the storefronts are for lease and the other half sell candles. Today it looks the same as always, which is impressive for the first day of the apocalypse." }
+        ],
+        "open": [
+          { "text": "You crack the window. Fresh air enters, panics, and leaves." }
+        ]
+      }
+    },
+    {
+      "id": "dead_mugs",
+      "name": "coffee mugs",
+      "synonyms": ["mug", "mugs", "coffee", "cups", "cup"],
+      "polygon": [[40, 100], [86, 100], [86, 126], [40, 126]],
+      "responses": {
+        "look": [
+          { "text": "A museum of caffeine spanning several eras of your career. Some of these mugs contain civilizations now. You've been meaning to grant them independence." }
+        ],
+        "take": [
+          { "if": { "flagNot": "took_mug" },
+            "do": [
+              { "narrate": "You select the least biohazardous mug. It's coming with you. For morale." },
+              { "addItem": "mug" },
+              { "setFlag": "took_mug" },
+              { "score": { "id": "got_mug", "points": 2 } }
+            ] },
+          { "text": "One emotional-support mug is plenty." }
+        ]
+      }
+    },
+    {
+      "id": "chair",
+      "name": "office chair",
+      "synonyms": ["chair", "seat"],
+      "polygon": [[132, 100], [180, 100], [180, 152], [132, 152]],
+      "responses": {
+        "look": [
+          { "text": "Ergonomic, allegedly. It has molded itself so precisely to your shape that sitting anywhere else now feels like a betrayal on both sides." }
+        ],
+        "use": [
+          { "text": "Tempting. But the internet isn't going to fix itself. You checked. Repeatedly." }
+        ]
+      }
+    }
+  ]
+}

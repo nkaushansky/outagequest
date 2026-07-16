@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<!-- Explicit color scheme + hard-coded colors everywhere: prevents mobile
+     dark-mode inversion breakage. Do not rely on UA default colors anywhere. -->
+<meta name="color-scheme" content="dark">
+<title>Single Point of Failure</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background-color: #0B0B14; color: #E8E6DC; }
+  /* Engine mounts here: canvas scene + DOM UI (terminal, verb strip, inventory) */
+  #game { height: 100%; display: flex; flex-direction: column; }
+  #scene canvas { image-rendering: pixelated; width: 100%; height: auto; display: block; }
+</style>
+</head>
+<body>
+<div id="game">
+  <div id="scene"></div>
+  <div id="ui"></div>
+</div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

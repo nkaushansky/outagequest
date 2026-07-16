@@ -1,0 +1,6 @@
+{
+  "title": "Single Point of Failure",
+  "titleScreen": "Single Point of Failure: An Outage Quest, Part I",
+  "startRoom": "act1_home_office",
+  "maxScore": 250
+}
