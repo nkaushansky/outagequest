@@ -7,7 +7,9 @@
     "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "outDir": "dist"
+    "resolveJsonModule": true,
+    "types": ["vite/client"],
+    "noEmit": true
   },
   "include": ["src"]
 }

@@ -12,5 +12,7 @@
                "default": "It stays closed with the quiet confidence of enterprise hardware." }
   },
   "unknownVerb": "The parser stares at '{input}' and quietly increments an error counter somewhere.",
-  "didYouMean": "Did you mean '{suggestion}'? Of course you did. Running that instead."
+  "didYouMean": "Did you mean '{suggestion}'? Of course you did. Running that instead.",
+  "needsObjectPrompt": "You want to {verb}... what, exactly? The parser needs a direct object. Today of all days.",
+  "unknownObject": "You don't see any '{object}' here. The parser checked. Twice. With grep."
 }

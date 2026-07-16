@@ -91,7 +91,12 @@ snark for that verb (defaults live in `verbs.json`).
    room hotspot names/synonyms + inventory items
 5. Fallbacks, in order: unknown verb -> snark; verb with no object where one
    is required -> prompt; near-miss object -> "did you mean" (snarky
-   autocorrect voice)
+   autocorrect voice). Fallback templates live in `verbs.json`:
+   `unknownVerb` ({input}), `needsObjectPrompt` ({verb}), `unknownObject`
+   ({object}), `didYouMean` ({suggestion} — the correction auto-runs)
+6. A bare object with no verb implies `look` (exact matches only)
+7. With `VERB OBJECT PREP OBJECT2`, responses resolve on OBJECT2 (the
+   target); gate on the instrument with `hasItem` conditions
 
 ## Writing rules (the soul)
 

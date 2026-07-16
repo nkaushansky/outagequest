@@ -1,0 +1,143 @@
+// Shell easter eggs — parser contract step 2. These are engine-level
+// terminal chrome (the interface is a terminal), not room content.
+
+import type { Content } from "./data";
+import type { GameState } from "./state";
+import { normalize, resolveSpan, type Candidate } from "./parser";
+
+export interface ShellCtx {
+  content: Content;
+  state: GameState;
+  candidates(): Candidate[];
+  narrate(text: string, cls?: string): void;
+  clearLog(): void;
+  /** Re-run a command line through the full pipeline (for sudo). */
+  exec(input: string): void;
+}
+
+/** Returns true if the input was handled as a shell command. */
+export function tryShell(raw: string, ctx: ShellCtx): boolean {
+  const trimmed = raw.trim();
+  const tokens = trimmed.toLowerCase().split(/\s+/).filter((t) => t.length > 0);
+  const cmd = tokens[0];
+  if (!cmd) return false;
+  const rest = trimmed.slice(cmd.length).trim();
+  const shell = (text: string) => ctx.narrate(text, "shell");
+
+  switch (cmd) {
+    case "ls":
+    case "dir":
+    case "inventory":
+    case "inv":
+    case "i": {
+      const names = ctx.state.inventory.map(
+        (id) => ctx.content.items[id]?.name ?? id,
+      );
+      if (names.length === 0) {
+        shell("inventory/: empty. Traveling light into the apocalypse.");
+      } else {
+        shell("inventory/:\n" + names.map((n) => "  " + n).join("\n"));
+      }
+      return true;
+    }
+
+    case "whoami": {
+      shell("That's the question, isn't it, Mel.");
+      return true;
+    }
+
+    case "sudo": {
+      if (!rest) {
+        shell("sudo: a command is required. Absolute power, and no idea what to do with it.");
+        return true;
+      }
+      shell("[sudo] password accepted (it was 'password'). Executing with unearned confidence:");
+      ctx.exec(rest);
+      return true;
+    }
+
+    case "ping": {
+      if (!rest) {
+        shell("usage: ping <target> — yell into the void, but with syntax.");
+        return true;
+      }
+      const hit = resolveSpan(normalize(rest), ctx.candidates());
+      if (hit && !hit.suggestion) {
+        shell(
+          `PING ${hit.ref.name} (127.0.0.1): 1 packet transmitted, 1 received, 0% loss. Nice to know something still answers.`,
+        );
+      } else {
+        shell(`ping: ${rest}: Name or service not known. Like everything else today.`);
+      }
+      return true;
+    }
+
+    case "man": {
+      if (!rest) {
+        shell("man: which page? Try 'man take'. The one for your life is out of print.");
+        return true;
+      }
+      const verbs = ctx.content.verbs.verbs;
+      const query = normalize(rest).join(" ");
+      const canonical = Object.keys(verbs).find(
+        (v) =>
+          v === query ||
+          verbs[v]!.synonyms.some((s) => normalize(s).join(" ") === query),
+      );
+      const def = canonical ? verbs[canonical] : undefined;
+      if (!canonical || !def) {
+        shell(`No manual entry for '${rest}'. That knowledge lived in someone's head. They were laid off.`);
+        return true;
+      }
+      const aliases = def.synonyms
+        .filter((s) => s.toLowerCase() !== canonical)
+        .join(", ");
+      shell(
+        [
+          "NAME",
+          `    ${canonical} — ${def.default}`,
+          "SYNOPSIS",
+          `    ${canonical} ${def.needsObject ? "<object>" : "[object]"}`,
+          "ALIASES",
+          `    ${aliases || "(none. it works alone.)"}`,
+        ].join("\n"),
+      );
+      return true;
+    }
+
+    case "reboot":
+    case "restart":
+    case "shutdown": {
+      shell("You consider turning yourself off and on again. Not yet. You're the only service still running.");
+      return true;
+    }
+
+    case "rm": {
+      shell("rm: permission denied. Somewhere, a change advisory board smiles.");
+      return true;
+    }
+
+    case "pwd": {
+      shell(`/home/mel/${ctx.state.roomId}`);
+      ctx.narrate("As if you'd be anywhere else.", "sys");
+      return true;
+    }
+
+    case "help":
+    case "?": {
+      const verbList = Object.keys(ctx.content.verbs.verbs).join(", ");
+      shell(
+        `Verbs: ${verbList}. Tap things to name them; tap a verb to start a command. Old habits (ls, man, sudo, ping, whoami) may also work.`,
+      );
+      return true;
+    }
+
+    case "clear": {
+      ctx.clearLog();
+      return true;
+    }
+
+    default:
+      return false;
+  }
+}
