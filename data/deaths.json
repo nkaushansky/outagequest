@@ -1,4 +1,10 @@
 {
   "note": "Registry fills in as deaths are authored. Each death: id, title (gallery), text (death screen).",
-  "deaths": []
+  "deaths": [
+    {
+      "id": "ups_grounded",
+      "title": "Locally Grounded",
+      "text": "You open the case and grab the first component that looks optional. The Uninterruptible Power Supply interprets this as an interruption and files its objection directly through your elbows. Rated #1 in surge protection, four years running."
+    }
+  ]
 }

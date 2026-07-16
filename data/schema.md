@@ -85,7 +85,9 @@ snark for that verb (defaults live in `verbs.json`).
 1. Lowercase, strip articles (a/an/the), collapse whitespace
 2. Shell easter eggs intercepted first: `ls` (inventory), `sudo <cmd>`
    (re-runs cmd with a power-trip narration), `ping <npc>`, `man <verb>`,
-   `whoami` ("That's the question, isn't it, Mel."), `reboot` (death #1?)
+   `whoami` ("That's the question, isn't it, Mel."), `reboot` (bare only —
+   `reboot X` falls through to the parser as a `use` synonym), plus
+   `save`/`export` (print save string) and `load <string>`/`import <string>`
 3. Grammar: `VERB [OBJECT] [PREP OBJECT2]` — e.g. `use keycard on door`
 4. Verb resolved via verbs.json synonyms; objects matched against current
    room hotspot names/synonyms + inventory items
@@ -97,6 +99,14 @@ snark for that verb (defaults live in `verbs.json`).
 6. A bare object with no verb implies `look` (exact matches only)
 7. With `VERB OBJECT PREP OBJECT2`, responses resolve on OBJECT2 (the
    target); gate on the instrument with `hasItem` conditions
+
+## Saves (engine contract)
+
+The engine autosaves to localStorage after every command and on room
+change; reload restores. `save` prints a portable save string; `load
+<string>` restores it. While a death screen is up, the autosave holds the
+pre-command snapshot (one step back). Found deaths persist across retries,
+restores, and imports — they're collectibles.
 
 ## Writing rules (the soul)
 

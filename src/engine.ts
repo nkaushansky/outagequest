@@ -8,6 +8,7 @@ import { runEntries, type EngineContext } from "./resolver";
 import { tryShell } from "./shell";
 import { Scene } from "./scene";
 import { UI } from "./ui";
+import { decodeSave, encodeSave, readLocal, writeLocal, type SaveData } from "./save";
 import {
   buildCandidates,
   fill,
@@ -29,6 +30,9 @@ export class Engine {
   private ui!: UI;
   private images = new Map<string, HTMLImageElement>();
   private lastSnapshot: Snapshot | null = null;
+  /** Set while a death overlay is up, so autosave stays one step back. */
+  private pendingDeath = false;
+  private readonly dev = new URLSearchParams(window.location.search).has("dev");
 
   constructor() {
     this.content = loadContent();
@@ -47,19 +51,35 @@ export class Engine {
       onItemTap: (name) => this.insertNoun(name),
     });
 
-    this.scene = new Scene(sceneEl, this.state, {
-      onHotspotTap: (h) => this.hotspotTap(h),
-      onExit: (exit) =>
-        this.changeRoom(exit.to, {
-          x: exit.arrive.x,
-          y: exit.arrive.y,
-          facing: exit.arrive.facing,
-        }),
-    });
+    this.scene = new Scene(
+      sceneEl,
+      this.state,
+      {
+        onHotspotTap: (h) => this.hotspotTap(h),
+        onExit: (exit) =>
+          this.changeRoom(exit.to, {
+            x: exit.arrive.x,
+            y: exit.arrive.y,
+            facing: exit.arrive.facing,
+          }),
+        onDevPointer: (info) => this.ui.setDevInfo(info),
+      },
+      this.dev,
+    );
 
     this.refreshInventory();
     this.refreshSuggestions();
-    this.changeRoom(this.content.game.startRoom);
+
+    const saved = readLocal();
+    if (saved && this.content.rooms.has(saved.snap.roomId)) {
+      this.state.restore(saved.snap);
+      this.state.deathsFound = [...saved.deathsFound];
+      this.changeRoom(saved.snap.roomId, saved.snap.player, false);
+      this.narrate("Autosave restored. The outage, tragically, persists.", "sys");
+      this.refreshInventory();
+    } else {
+      this.changeRoom(this.content.game.startRoom);
+    }
   }
 
   // ---- rooms ---------------------------------------------------------
@@ -103,9 +123,43 @@ export class Engine {
     this.state.player.facing = at.facing;
     this.scene.setRoom(room, this.backgroundFor(room));
     this.refreshStatus();
-    if (runOnEnter) runEntries(room.onEnter, this.ctx());
+    if (runOnEnter) {
+      runEntries(room.onEnter, this.ctx());
+      this.autosave();
+    }
     this.refreshStatus();
     this.refreshInventory();
+  }
+
+  // ---- saves -----------------------------------------------------------
+
+  private saveData(): SaveData {
+    // While the death overlay is up the only way forward is the retry,
+    // so what persists is the pre-command snapshot (one step back).
+    const snap =
+      this.pendingDeath && this.lastSnapshot
+        ? this.lastSnapshot
+        : this.state.snapshot();
+    return { v: 1, snap, deathsFound: [...this.state.deathsFound] };
+  }
+
+  private autosave(): void {
+    writeLocal(this.saveData());
+  }
+
+  private exportSave(): string {
+    return encodeSave(this.saveData());
+  }
+
+  private importSave(raw: string): boolean {
+    const data = decodeSave(raw);
+    if (!data || !this.content.rooms.has(data.snap.roomId)) return false;
+    this.state.restore(data.snap);
+    this.state.deathsFound = [...data.deathsFound];
+    this.pendingDeath = false;
+    this.changeRoom(data.snap.roomId, data.snap.player, false);
+    this.autosave();
+    return true;
   }
 
   // ---- input pipeline ------------------------------------------------
@@ -125,12 +179,15 @@ export class Engine {
       narrate: (text, cls) => this.narrate(text, cls),
       clearLog: () => this.ui.clearLog(),
       exec: (input) => this.exec(input, true),
+      exportSave: () => this.exportSave(),
+      importSave: (raw) => this.importSave(raw),
     });
     if (!handled) this.dispatch(trimmed);
 
     this.refreshStatus();
     this.refreshInventory();
     this.refreshSuggestions();
+    if (!nested) this.autosave();
   }
 
   private candidates(): Candidate[] {
@@ -244,6 +301,7 @@ export class Engine {
 
   private die(id: string, text: string, title?: string): void {
     this.state.registerDeath(id);
+    this.pendingDeath = true;
     const registered = this.content.deaths.deaths.find((d) => d.id === id);
     this.narrate(text, "err");
     this.ui.showDeath(registered?.title ?? title ?? "SEGMENTATION FAULT", text, () => {
@@ -253,6 +311,8 @@ export class Engine {
         this.changeRoom(snap.roomId, snap.player, false);
         this.narrate("Snapshot restored. It's one step earlier and you know one more way to die.", "sys");
       }
+      this.pendingDeath = false;
+      this.autosave();
       this.refreshStatus();
       this.refreshInventory();
     });

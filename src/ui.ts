@@ -15,6 +15,7 @@ export class UI {
   private suggest: HTMLDivElement;
   private input: HTMLInputElement;
   private statusRoom: HTMLSpanElement;
+  private statusDev: HTMLSpanElement;
   private statusScore: HTMLSpanElement;
   private invChips: HTMLDivElement;
   private death: HTMLDivElement;
@@ -35,8 +36,9 @@ export class UI {
 
     const status = el("div", "status");
     this.statusRoom = el("span", "status-room");
+    this.statusDev = el("span", "status-dev");
     this.statusScore = el("span", "status-score");
-    status.append(this.statusRoom, this.statusScore);
+    status.append(this.statusRoom, this.statusDev, this.statusScore);
 
     this.log = el("div", "log");
     this.log.setAttribute("aria-live", "polite");
@@ -166,6 +168,10 @@ export class UI {
   setStatus(room: string, score: number, maxScore: number): void {
     this.statusRoom.textContent = room;
     this.statusScore.textContent = `TICKETS ${score}/${maxScore}`;
+  }
+
+  setDevInfo(info: string): void {
+    this.statusDev.textContent = info;
   }
 
   setInventory(names: string[]): void {

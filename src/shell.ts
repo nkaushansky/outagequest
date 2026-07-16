@@ -13,6 +13,10 @@ export interface ShellCtx {
   clearLog(): void;
   /** Re-run a command line through the full pipeline (for sudo). */
   exec(input: string): void;
+  /** Current save as an export string. */
+  exportSave(): string;
+  /** Restore from an export string. False = bit rot. */
+  importSave(raw: string): boolean;
 }
 
 /** Returns true if the input was handled as a shell command. */
@@ -108,7 +112,32 @@ export function tryShell(raw: string, ctx: ShellCtx): boolean {
     case "reboot":
     case "restart":
     case "shutdown": {
+      // Only bare invocations are shell chrome; "reboot modem" belongs to
+      // the parser (reboot/restart are `use` synonyms).
+      if (rest) return false;
       shell("You consider turning yourself off and on again. Not yet. You're the only service still running.");
+      return true;
+    }
+
+    case "save":
+    case "export": {
+      shell("save string (keep it somewhere less flammable than the cloud):");
+      shell(ctx.exportSave());
+      ctx.narrate("Restore later with: load <that string>", "sys");
+      return true;
+    }
+
+    case "load":
+    case "import": {
+      if (!rest) {
+        shell("usage: load <save string>. The one 'save' printed. Yes, the long one.");
+        return true;
+      }
+      if (ctx.importSave(rest)) {
+        ctx.narrate("State rehydrated. Everything is exactly as bad as you left it.", "sys");
+      } else {
+        shell("load: that string has bit rot. Not even the good checksum kind.");
+      }
       return true;
     }
 
@@ -127,7 +156,7 @@ export function tryShell(raw: string, ctx: ShellCtx): boolean {
     case "?": {
       const verbList = Object.keys(ctx.content.verbs.verbs).join(", ");
       shell(
-        `Verbs: ${verbList}. Tap things to name them; tap a verb to start a command. Old habits (ls, man, sudo, ping, whoami) may also work.`,
+        `Verbs: ${verbList}. Tap things to name them; tap a verb to start a command. Old habits (ls, man, sudo, ping, whoami, save, load) may also work.`,
       );
       return true;
     }

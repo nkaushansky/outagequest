@@ -29,9 +29,16 @@ const C_HIGHLIGHT = "#FFE066";
 const C_MARKER = "#FFE066";
 const C_LETTERBOX = "#000000";
 
+// Dev-mode overlay palette (?dev=1) — polygon authoring aid, never shipped UI.
+const C_DEV_WALKABLE = "#46FF7A";
+const C_DEV_HOTSPOT = "#FFC94A";
+const C_DEV_EXIT = "#4AD8FF";
+
 export interface SceneCallbacks {
   onHotspotTap(hotspot: Hotspot): void;
   onExit(exit: RoomExit): void;
+  /** Dev mode only: pointer position report, e.g. "143,79 monitors". */
+  onDevPointer?(info: string): void;
 }
 
 export class Scene {
@@ -48,10 +55,17 @@ export class Scene {
   private marker: { p: Pt; until: number } | null = null;
   private lastFrame = 0;
   private exitArmed = false;
+  private dev: boolean;
 
-  constructor(container: HTMLElement, state: GameState, cb: SceneCallbacks) {
+  constructor(
+    container: HTMLElement,
+    state: GameState,
+    cb: SceneCallbacks,
+    dev = false,
+  ) {
     this.state = state;
     this.cb = cb;
+    this.dev = dev;
     this.canvas = document.createElement("canvas");
     this.canvas.width = INTERNAL_W;
     this.canvas.height = INTERNAL_H;
@@ -112,6 +126,12 @@ export class Scene {
     const p = this.toInternal(e);
     if (!p || !this.room) return;
 
+    if (this.dev) {
+      // Polygon authoring: click coordinates land in the console.
+      console.log(`[dev] ${Math.round(p.x)},${Math.round(p.y)}`,
+        this.hotspotAt(p)?.id ?? "");
+    }
+
     const hotspot = this.hotspotAt(p);
     if (hotspot) {
       this.highlight = {
@@ -131,8 +151,14 @@ export class Scene {
   }
 
   private onPointerMove(e: PointerEvent): void {
-    if (e.pointerType !== "mouse") return;
     const p = this.toInternal(e);
+    if (this.dev && this.cb.onDevPointer) {
+      const hs = p ? this.hotspotAt(p) : null;
+      this.cb.onDevPointer(
+        p ? `${Math.round(p.x)},${Math.round(p.y)}${hs ? " " + hs.id : ""}` : "",
+      );
+    }
+    if (e.pointerType !== "mouse") return;
     this.canvas.style.cursor = p && this.hotspotAt(p) ? "pointer" : "default";
   }
 
@@ -215,6 +241,12 @@ export class Scene {
 
     this.drawPlayer();
 
+    if (this.dev && this.room) {
+      this.strokePoly(this.room.walkable, C_DEV_WALKABLE);
+      for (const h of this.room.hotspots) this.strokePoly(h.polygon, C_DEV_HOTSPOT);
+      for (const x of this.room.exits) this.strokePoly(x.polygon, C_DEV_EXIT);
+    }
+
     if (this.highlight && now < this.highlight.until) {
       ctx.strokeStyle = C_HIGHLIGHT;
       ctx.setLineDash([3, 2]);
@@ -231,6 +263,25 @@ export class Scene {
     } else if (this.highlight) {
       this.highlight = null;
     }
+  }
+
+  private strokePoly(poly: Pt[], color: string): void {
+    if (poly.length < 3) return;
+    const ctx = this.ctx;
+    ctx.beginPath();
+    for (let i = 0; i < poly.length; i++) {
+      const p = poly[i]!;
+      if (i === 0) ctx.moveTo(p.x, p.y);
+      else ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.globalAlpha = 0.9;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
   }
 
   /** Placeholder Mel: a hand-stacked silhouette, feet at (x, y). */

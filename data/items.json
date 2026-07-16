@@ -1,4 +1,5 @@
 {
   "hoodie": { "name": "hoodie", "synonyms": ["sweatshirt"], "look": "Field uniform of the remote professional. Battle-tested against thermostat disputes." },
-  "mug":    { "name": "coffee mug", "synonyms": ["mug", "cup"], "look": "Your emotional-support mug. Currently empty, like the status dashboard's promises." }
+  "mug":    { "name": "coffee mug", "synonyms": ["mug", "cup"], "look": "Your emotional-support mug. Currently empty, like the status dashboard's promises." },
+  "cable":  { "name": "ethernet cable", "synonyms": ["cable", "cat5", "cat 5", "ethernet", "patch cable", "network cable"], "look": "Fourteen feet of cat 5 you crimped by hand, back when you trusted nothing. Both ends test clean. It may be the most reliable object in the hemisphere right now." }
 }
