@@ -52,6 +52,8 @@ from it) and `data/schema.md` (the content format — the engine's contract).
   Outage Quest, Part I" — the long title appears there and only there).
 - Definition of done per milestone: playable in browser, mobile-checked,
   no console errors, content still pure JSON.
+- Regression harness: `tools/smoke/` (build + preview, then `npm run
+  smoke`). Keep it green; extend it with each milestone's checks.
 
 ## Player sprite (M1 can stub)
 
