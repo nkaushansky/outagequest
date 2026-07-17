@@ -183,6 +183,22 @@ const inside = await page.evaluate(() => {
 });
 ok(inside, "out-of-polygon tap clamps inside");
 
+// ---- M2 regression (2026-07-17 review): no missable score ------------------
+// Confirm the outage BEFORE ever looking at the monitors; the saw_the_red
+// discovery (+2) must still fire on the first look afterward.
+await page.evaluate(() => localStorage.clear());
+await page.reload({ waitUntil: "networkidle" });
+await page.waitForTimeout(400);
+await run("open cabinet");
+await run("use modem");
+await run("use cable on modem");
+ok((await score()) === "11", "confirm-first path reaches 11", await score());
+await run("look monitors");
+ok((await lastLines()).includes("frozen mid-scroll"), "discovery text after confirm", await lastLines());
+ok((await score()) === "13", "saw_the_red not missable (+2 after confirm)", await score());
+await run("look monitors");
+ok((await lastLines()).includes("artisanally confirmed"), "second look hits confirmed branch", await lastLines());
+
 // ---- console + screenshots -------------------------------------------------
 ok(consoleErrors.length === 0, "zero console errors", JSON.stringify(consoleErrors));
 

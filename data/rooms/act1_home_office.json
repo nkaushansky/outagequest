@@ -200,12 +200,6 @@
         "look": [
           {
             "if": {
-              "flag": "confirmed_global"
-            },
-            "text": "Still a wall of red, but now it's your wall of red: independently verified, artisanally confirmed. The dashboard has never been more correct about anything."
-          },
-          {
-            "if": {
               "flagNot": "outage_discovered"
             },
             "do": [
@@ -222,6 +216,12 @@
                 }
               }
             ]
+          },
+          {
+            "if": {
+              "flag": "confirmed_global"
+            },
+            "text": "Still a wall of red, but now it's your wall of red: independently verified, artisanally confirmed. The dashboard has never been more correct about anything."
           },
           {
             "text": "Still red. Refreshing it with your mind hasn't worked the last forty times either."
