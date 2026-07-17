@@ -55,18 +55,27 @@ export function polygonCentroid(poly: Pt[]): Pt {
 }
 
 /** Clamp a point into the polygon: unchanged if inside, else the nearest
- *  boundary point nudged slightly toward the centroid so it tests inside. */
+ *  boundary point nudged inward. The centroid direction is only a heuristic —
+ *  at a concave notch it can point outward — so candidates are verified and
+ *  the raw boundary point is the last resort (movement re-validates anyway). */
 export function clampIntoPolygon(p: Pt, poly: Pt[]): Pt {
   if (pointInPolygon(p, poly)) return p;
   const { point } = nearestPointOnPolygon(p, poly);
   const c = polygonCentroid(poly);
   const d = dist(point, c);
-  if (d === 0) return point;
-  const nudge = Math.min(1, d);
-  return {
-    x: point.x + ((c.x - point.x) / d) * nudge,
-    y: point.y + ((c.y - point.y) / d) * nudge,
-  };
+  const dirs: Pt[] = [];
+  if (d > 0) dirs.push({ x: (c.x - point.x) / d, y: (c.y - point.y) / d });
+  dirs.push(
+    { x: 0, y: 1 }, { x: 0, y: -1 }, { x: 1, y: 0 }, { x: -1, y: 0 },
+    { x: 0.7, y: 0.7 }, { x: -0.7, y: 0.7 }, { x: 0.7, y: -0.7 }, { x: -0.7, y: -0.7 },
+  );
+  for (const nudge of [0.75, 1.5]) {
+    for (const dir of dirs) {
+      const q = { x: point.x + dir.x * nudge, y: point.y + dir.y * nudge };
+      if (pointInPolygon(q, poly)) return q;
+    }
+  }
+  return point;
 }
 
 /** Generous hit test: inside the polygon, or within `pad` px of its edge. */

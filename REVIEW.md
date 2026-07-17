@@ -60,4 +60,5 @@ Per act:
 | Milestone | Date | Status | Notes |
 |-----------|------|--------|-------|
 | M1 | 2026-07-16 | self-check pass | Automated (headless Chromium, 40 checks vs M1 list + zero console errors). Formal fresh-thread review pending. |
-| M2 | 2026-07-16 | self-check pass | Automated (51 checks: M1 regression, puzzle, death/retry/gallery, autosave + export/import). Open item: background not yet regenerated with stage-set camera prompt (needs the ChatGPT generator); polygons redrawn against current art via `?dev=1` overlay. Formal review pending. |
+| M2 | 2026-07-16 | self-check pass | Automated (51 checks: M1 regression, puzzle, death/retry/gallery, autosave + export/import). Formal review pending. |
+| M2 (art) | 2026-07-17 | self-check pass | Stage-set background regenerated + treated via tools/treat_bg.py; all polygons re-fit with `?dev=1`; room grown to 20 bespoke hotspots; 51-check regression green. |

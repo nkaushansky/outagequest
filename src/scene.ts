@@ -177,8 +177,12 @@ export class Scene {
     const step = WALK_SPEED * dt;
 
     if (d <= step) {
-      player.x = this.target.x;
-      player.y = this.target.y;
+      // Never snap onto a target that isn't strictly inside — a clamped
+      // target can sit on the boundary at a concave notch.
+      if (pointInPolygon(this.target, this.room.walkable)) {
+        player.x = this.target.x;
+        player.y = this.target.y;
+      }
       this.target = null;
     } else {
       const dx = ((this.target.x - player.x) / d) * step;

@@ -2,316 +2,776 @@
   "id": "act1_home_office",
   "name": "Mel's Home Office",
   "background": "assets/backgrounds/act1_home_office.png",
-  "walkable": [[34, 136], [290, 136], [310, 178], [14, 178]],
-  "playerStart": { "x": 192, "y": 162, "facing": "left" },
+  "walkable": [[26, 140], [74, 130], [98, 114], [132, 114], [136, 126], [180, 126], [184, 114], [194, 114], [212, 106], [262, 112], [280, 124], [296, 178], [10, 178]],
+  "playerStart": {
+    "x": 160,
+    "y": 150,
+    "facing": "left"
+  },
   "exits": [],
   "onEnter": [
     {
-      "if": { "flagNot": "intro_seen" },
+      "if": {
+        "flagNot": "intro_seen"
+      },
       "do": [
-        { "narrate": "Mel Function's home office: three monitors, one career, and a mug population that has achieved self-governance. Somewhere out there, the entire internet just stopped working. In here, it smells like yesterday's coffee. Mostly because of all the yesterdays." },
-        { "setFlag": "intro_seen" },
-        { "score": { "id": "began_the_ordeal", "points": 1 } }
+        {
+          "narrate": "Mel Function's home office: three monitors, one career, and a mug population that has achieved self-governance. Somewhere out there, the entire internet just stopped working. In here, it smells like yesterday's coffee. Mostly because of all the yesterdays."
+        },
+        {
+          "setFlag": "intro_seen"
+        },
+        {
+          "score": {
+            "id": "began_the_ordeal",
+            "points": 1
+          }
+        }
       ]
     },
-    { "text": "The nerve center, again. The red glow is starting to feel load-bearing." }
+    {
+      "text": "The nerve center, again. The red glow is starting to feel load-bearing."
+    }
   ],
   "hotspots": [
     {
-      "id": "lamp",
-      "name": "desk lamp",
-      "synonyms": ["lamp", "light"],
-      "polygon": [[46, 70], [76, 70], [76, 98], [46, 98]],
+      "id": "corkboard",
+      "name": "corkboard",
+      "synonyms": [
+        "board",
+        "whiteboard",
+        "notes",
+        "sticky notes",
+        "todo"
+      ],
+      "polygon": [[0, 14], [14, 14], [14, 72], [0, 72]],
       "responses": {
         "look": [
-          { "text": "An architect's lamp aimed, with surgical precision, at the one square foot of desk you never use. The bulb is older than three of your certifications and has outlasted all of them." }
-        ],
-        "use": [
-          { "text": "Click. Off. Click. On. Finally, a system that honors its contract." }
+          {
+            "text": "A corkboard running several geological strata of TODO. The oldest visible note says 'cancel unused subscriptions.' It has outlived three of the subscriptions' parent companies."
+          }
         ],
         "take": [
-          { "text": "The lamp stays. It's the only thing in this room with a stable mount." }
-        ]
-      }
-    },
-    {
-      "id": "hoodie",
-      "name": "hoodie",
-      "synonyms": ["sweatshirt", "sweater", "jacket", "clothes"],
-      "polygon": [[136, 74], [176, 74], [176, 142], [136, 142]],
-      "responses": {
-        "look": [
-          { "if": { "flag": "has_hoodie" },
-            "text": "You're wearing it now. Its silhouette remains on the chair, the way a glacier leaves a valley." },
-          { "text": "Your field uniform. It has seen four thousand video calls and zero physical meetings, which is exactly how everyone prefers it." }
-        ],
-        "take": [
-          { "if": { "flagNot": "has_hoodie" },
-            "do": [
-              { "narrate": "You claim the hoodie. Somewhere in the distance, a dress code weeps." },
-              { "addItem": "hoodie" },
-              { "setFlag": "has_hoodie" },
-              { "score": { "id": "geared_up", "points": 2 } }
-            ] },
-          { "text": "You're already carrying it. One hoodie is a wardrobe; two is a cry for help." }
-        ]
-      }
-    },
-    {
-      "id": "monitors",
-      "name": "monitors",
-      "synonyms": ["monitor", "screen", "screens", "display", "computer", "dashboard", "dashboards"],
-      "polygon": [[70, 58], [178, 58], [178, 96], [70, 96]],
-      "responses": {
-        "look": [
-          { "if": { "flag": "confirmed_global" },
-            "text": "Still a wall of red, but now it's your wall of red: independently verified, artisanally confirmed. The dashboard has never been more correct about anything." },
-          { "if": { "flagNot": "outage_discovered" },
-            "do": [
-              { "narrate": "Three monitors, all frozen mid-scroll. The dashboard's last recorded status is a wall of red so uniform it looks like modern art. Titled, presumably, 'Everything (2026).'" },
-              { "setFlag": "outage_discovered" },
-              { "score": { "id": "saw_the_red", "points": 2 } }
-            ] },
-          { "text": "Still red. Refreshing it with your mind hasn't worked the last forty times either." }
-        ],
-        "use": [
-          { "text": "You jiggle the mouse with the confidence of a professional. The dashboards remain a monument to the color red." }
-        ],
-        "talk": [
-          { "text": "You explain to the dashboards, calmly, that you believe in them. Red, they reply. Red, red, red." }
-        ]
-      }
-    },
-    {
-      "id": "modem",
-      "name": "modem",
-      "synonyms": ["router", "gateway", "isp box", "internet"],
-      "polygon": [[142, 20], [198, 20], [198, 56], [142, 56]],
-      "responses": {
-        "look": [
-          { "if": { "flagNot": "modem_cycled" },
-            "text": "The ISP's modem, up on the shelf where its blinking is hardest to ignore. Every light on it is red, in perfect unison — the first time in recorded history all of them have agreed on anything." },
-          { "if": { "flagNot": "confirmed_global" },
-            "text": "Rebooted, warm, and blinking red with renewed confidence. It has done its part. It would like you to know that the problem, this time, is not personal." },
-          { "text": "Still red. But it's not a modem anymore. It's evidence." }
-        ],
-        "use": [
-          { "if": { "all": [ { "hasItem": "cable" }, { "flag": "modem_cycled" }, { "flagNot": "confirmed_global" } ] },
-            "do": [
-              { "narrate": "You bypass the router, the mesh, the smart switch, and every other 'improvement,' and jack straight into the modem like it's 2004. The handshake crawls out of the dark and dies: no route to host. Not your house. Not your street. The backbone itself is gone. It's real, it's global, and someone is going to have to fix it the old way. You have a terrible feeling about who." },
-              { "setFlag": "confirmed_global" },
-              { "score": { "id": "confirmed_global", "points": 5 } }
-            ] },
-          { "if": { "flagNot": "modem_cycled" },
-            "do": [
-              { "narrate": "You unplug the modem and count thirty seconds — the sacred interval, observed by sysadmins since antiquity. The lights return: red, red, red. The ritual is complete. The gods decline." },
-              { "setFlag": "modem_cycled" },
-              { "score": { "id": "cycled_modem", "points": 2 } }
-            ] },
-          { "if": { "flagNot": "confirmed_global" },
-            "text": "Cycled, warm, and still red. The modem has told you everything it knows. What you need now is a second opinion — something direct. Something cable-shaped." },
-          { "text": "It's global. You've confirmed it. Poking the modem again will not un-global it." }
-        ],
-        "take": [
-          { "text": "It's leased. The ISP charges you monthly for the privilege of this blinking. Taking it would only formalize the hostage situation." }
-        ],
-        "open": [
-          { "text": "The warranty seal disagrees — and unlike everything else today, it's still enforced." }
-        ]
-      }
-    },
-    {
-      "id": "painting",
-      "name": "painting",
-      "synonyms": ["picture", "art", "landscape", "frame"],
-      "polygon": [[104, 32], [138, 32], [138, 54], [104, 54]],
-      "responses": {
-        "look": [
-          { "text": "A pastoral landscape in a thrift-store frame, hung at exactly webcam height to suggest you're the kind of person who goes outside. The algorithm believed it. That made one of you." }
-        ],
-        "take": [
-          { "text": "And ruin the shot? It took years to compose that lie." }
+          {
+            "text": "The notes are load-bearing. Remove one and the whole methodology collapses."
+          }
         ]
       }
     },
     {
       "id": "window",
       "name": "window",
-      "synonyms": ["street", "town", "outside", "view", "blinds"],
-      "polygon": [[8, 18], [76, 18], [76, 100], [8, 100]],
+      "synonyms": [
+        "street",
+        "town",
+        "outside",
+        "view",
+        "blinds"
+      ],
+      "polygon": [[16, 8], [94, 8], [94, 62], [16, 62]],
       "responses": {
         "look": [
-          { "text": "Main Street, population: dwindling. Half the storefronts are for lease and the other half sell candles. Today it looks the same as always, which is impressive for the first day of the apocalypse." }
+          {
+            "text": "Main Street, population: dwindling. Half the storefronts are for lease and the other half sell candles. Today it looks the same as always, which is impressive for the first day of the apocalypse."
+          }
         ],
         "open": [
-          { "text": "You crack the window. Fresh air enters, panics, and leaves." }
+          {
+            "text": "You crack the window. Fresh air enters, panics, and leaves."
+          }
+        ]
+      }
+    },
+    {
+      "id": "poster",
+      "name": "sailboat print",
+      "synonyms": [
+        "poster",
+        "print",
+        "sailboat",
+        "boat"
+      ],
+      "polygon": [[98, 18], [118, 18], [118, 40], [98, 40]],
+      "responses": {
+        "look": [
+          {
+            "text": "A tiny framed sailboat. Aspirational decor. The last time you were on open water, it was a conference call named 'Offsite.'"
+          }
+        ],
+        "take": [
+          {
+            "text": "The sailboat stays moored. Someone in this room should get to keep their dream."
+          }
+        ]
+      }
+    },
+    {
+      "id": "mic",
+      "name": "microphone",
+      "synonyms": [
+        "mic",
+        "boom",
+        "boom arm",
+        "podcast mic"
+      ],
+      "polygon": [[94, 40], [108, 40], [108, 64], [94, 64]],
+      "responses": {
+        "look": [
+          {
+            "text": "A broadcast-grade microphone on a boom arm, purchased during a brief period of believing you'd start a podcast. It has since heard four thousand standups and zero episodes."
+          }
+        ],
+        "use": [
+          {
+            "text": "You tap it twice. 'Is this thing on?' Nothing is on, Mel. Nothing anywhere."
+          }
+        ],
+        "take": [
+          {
+            "text": "The boom arm is clamped, counterweighted, and calibrated. Dismantling it would take longer than the apocalypse."
+          }
+        ]
+      }
+    },
+    {
+      "id": "hoodie",
+      "name": "hoodie",
+      "synonyms": [
+        "sweatshirt",
+        "sweater",
+        "clothes"
+      ],
+      "polygon": [[156, 50], [192, 50], [192, 110], [156, 110]],
+      "responses": {
+        "look": [
+          {
+            "if": {
+              "flag": "has_hoodie"
+            },
+            "text": "You're wearing it now. Its silhouette remains on the chair, the way a glacier leaves a valley."
+          },
+          {
+            "text": "Your field uniform, draped over the chair: cat logo, thumb-holes, dignity optional. It has seen four thousand video calls and zero physical meetings, which is exactly how everyone prefers it."
+          }
+        ],
+        "take": [
+          {
+            "if": {
+              "flagNot": "has_hoodie"
+            },
+            "do": [
+              {
+                "narrate": "You claim the hoodie. Somewhere in the distance, a dress code weeps."
+              },
+              {
+                "addItem": "hoodie"
+              },
+              {
+                "setFlag": "has_hoodie"
+              },
+              {
+                "score": {
+                  "id": "geared_up",
+                  "points": 2
+                }
+              }
+            ]
+          },
+          {
+            "text": "You're already carrying it. One hoodie is a wardrobe; two is a cry for help."
+          }
+        ]
+      }
+    },
+    {
+      "id": "monitors",
+      "name": "monitors",
+      "synonyms": [
+        "monitor",
+        "screen",
+        "screens",
+        "display",
+        "computer",
+        "dashboard",
+        "dashboards"
+      ],
+      "polygon": [[104, 38], [192, 38], [192, 64], [104, 64]],
+      "responses": {
+        "look": [
+          {
+            "if": {
+              "flag": "confirmed_global"
+            },
+            "text": "Still a wall of red, but now it's your wall of red: independently verified, artisanally confirmed. The dashboard has never been more correct about anything."
+          },
+          {
+            "if": {
+              "flagNot": "outage_discovered"
+            },
+            "do": [
+              {
+                "narrate": "Three monitors, all frozen mid-scroll. The dashboard's last recorded status is a wall of red so uniform it looks like modern art. Titled, presumably, 'Everything (2026).'"
+              },
+              {
+                "setFlag": "outage_discovered"
+              },
+              {
+                "score": {
+                  "id": "saw_the_red",
+                  "points": 2
+                }
+              }
+            ]
+          },
+          {
+            "text": "Still red. Refreshing it with your mind hasn't worked the last forty times either."
+          }
+        ],
+        "use": [
+          {
+            "text": "You jiggle the mouse with the confidence of a professional. The dashboards remain a monument to the color red."
+          }
+        ],
+        "talk": [
+          {
+            "text": "You explain to the dashboards, calmly, that you believe in them. Red, they reply. Red, red, red."
+          }
+        ]
+      }
+    },
+    {
+      "id": "modem",
+      "name": "modem",
+      "synonyms": [
+        "router",
+        "gateway",
+        "isp box",
+        "internet"
+      ],
+      "polygon": [[114, 10], [172, 10], [172, 32], [114, 32]],
+      "responses": {
+        "look": [
+          {
+            "if": {
+              "flagNot": "modem_cycled"
+            },
+            "text": "The ISP's modem, up on the shelf where its blinking is hardest to ignore. Every light on it is red, in perfect unison — the first time in recorded history all of them have agreed on anything."
+          },
+          {
+            "if": {
+              "flagNot": "confirmed_global"
+            },
+            "text": "Rebooted, warm, and blinking red with renewed confidence. It has done its part. It would like you to know that the problem, this time, is not personal."
+          },
+          {
+            "text": "Still red. But it's not a modem anymore. It's evidence."
+          }
+        ],
+        "use": [
+          {
+            "if": {
+              "all": [
+                {
+                  "hasItem": "cable"
+                },
+                {
+                  "flag": "modem_cycled"
+                },
+                {
+                  "flagNot": "confirmed_global"
+                }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "You bypass the router, the mesh, the smart switch, and every other 'improvement,' and jack straight into the modem like it's 2004. The handshake crawls out of the dark and dies: no route to host. Not your house. Not your street. The backbone itself is gone. It's real, it's global, and someone is going to have to fix it the old way. You have a terrible feeling about who."
+              },
+              {
+                "setFlag": "confirmed_global"
+              },
+              {
+                "score": {
+                  "id": "confirmed_global",
+                  "points": 5
+                }
+              }
+            ]
+          },
+          {
+            "if": {
+              "flagNot": "modem_cycled"
+            },
+            "do": [
+              {
+                "narrate": "You unplug the modem and count thirty seconds — the sacred interval, observed by sysadmins since antiquity. The lights return: red, red, red. The ritual is complete. The gods decline."
+              },
+              {
+                "setFlag": "modem_cycled"
+              },
+              {
+                "score": {
+                  "id": "cycled_modem",
+                  "points": 2
+                }
+              }
+            ]
+          },
+          {
+            "if": {
+              "flagNot": "confirmed_global"
+            },
+            "text": "Cycled, warm, and still red. The modem has told you everything it knows. What you need now is a second opinion — something direct. Something cable-shaped."
+          },
+          {
+            "text": "It's global. You've confirmed it. Poking the modem again will not un-global it."
+          }
+        ],
+        "take": [
+          {
+            "text": "It's leased. The ISP charges you monthly for the privilege of this blinking. Taking it would only formalize the hostage situation."
+          }
+        ],
+        "open": [
+          {
+            "text": "The warranty seal disagrees — and unlike everything else today, it's still enforced."
+          }
+        ]
+      }
+    },
+    {
+      "id": "painting",
+      "name": "painting",
+      "synonyms": [
+        "picture",
+        "art",
+        "landscape",
+        "frame"
+      ],
+      "polygon": [[182, 16], [206, 16], [206, 40], [182, 40]],
+      "responses": {
+        "look": [
+          {
+            "text": "A pastoral landscape in a thrift-store frame, hung at exactly webcam height to suggest you're the kind of person who goes outside. The algorithm believed it. That made one of you."
+          }
+        ],
+        "take": [
+          {
+            "text": "And ruin the shot? It took years to compose that lie."
+          }
         ]
       }
     },
     {
       "id": "dead_mugs",
       "name": "coffee mugs",
-      "synonyms": ["mug", "mugs", "coffee", "cups", "cup"],
-      "polygon": [[50, 94], [124, 94], [124, 112], [50, 112]],
+      "synonyms": [
+        "mug",
+        "mugs",
+        "coffee",
+        "cups",
+        "cup"
+      ],
+      "polygon": [[16, 60], [120, 60], [120, 78], [16, 78]],
       "responses": {
         "look": [
-          { "text": "A museum of caffeine spanning several eras of your career. Some of these mugs contain civilizations now. You've been meaning to grant them independence." }
+          {
+            "text": "A museum of caffeine spanning several eras of your career — windowsill wing, desk wing, annexes pending. Some of these mugs contain civilizations now. You've been meaning to grant them independence."
+          }
         ],
         "take": [
-          { "if": { "flagNot": "took_mug" },
+          {
+            "if": {
+              "flagNot": "took_mug"
+            },
             "do": [
-              { "narrate": "You select the least biohazardous mug. It's coming with you. For morale." },
-              { "addItem": "mug" },
-              { "setFlag": "took_mug" },
-              { "score": { "id": "got_mug", "points": 2 } }
-            ] },
-          { "text": "One emotional-support mug is plenty." }
+              {
+                "narrate": "You select the least biohazardous mug. It's coming with you. For morale."
+              },
+              {
+                "addItem": "mug"
+              },
+              {
+                "setFlag": "took_mug"
+              },
+              {
+                "score": {
+                  "id": "got_mug",
+                  "points": 2
+                }
+              }
+            ]
+          },
+          {
+            "text": "One emotional-support mug is plenty."
+          }
         ]
       }
     },
     {
-      "id": "chair",
-      "name": "office chair",
-      "synonyms": ["chair", "seat"],
-      "polygon": [[104, 104], [172, 104], [172, 170], [104, 170]],
+      "id": "photo",
+      "name": "framed photo",
+      "synonyms": [
+        "photo",
+        "photograph"
+      ],
+      "polygon": [[0, 70], [20, 70], [20, 86], [0, 86]],
       "responses": {
         "look": [
-          { "text": "Ergonomic, allegedly. It has molded itself so precisely to your shape that sitting anywhere else now feels like a betrayal on both sides." }
-        ],
-        "use": [
-          { "text": "Tempting. But the internet isn't going to fix itself. You checked. Repeatedly." }
-        ]
-      }
-    },
-    {
-      "id": "ups",
-      "name": "UPS",
-      "synonyms": ["ups", "battery backup", "battery", "backup", "tower", "power supply", "beeping"],
-      "polygon": [[172, 100], [204, 100], [204, 154], [172, 154]],
-      "responses": {
-        "look": [
-          { "text": "A consumer-grade UPS purchased during a previous economic optimism. It has been beeping in B-flat since Tuesday. The manual says that means 'replace battery.' The manual is a PDF. The PDF is in the cloud." }
-        ],
-        "use": [
-          { "if": { "flagNot": "ups_warned" },
-            "do": [
-              { "narrate": "You reach toward the UPS. It emits a tone you feel in your fillings — the universal frequency of 'don't.' You withdraw the hand. For now." },
-              { "setFlag": "ups_warned" }
-            ] },
-          { "do": [
-              { "death": { "id": "ups_grounded", "text": "You open the case and grab the first component that looks optional. The Uninterruptible Power Supply interprets this as an interruption and files its objection directly through your elbows. Rated #1 in surge protection, four years running." } }
-            ] }
-        ],
-        "open": [
-          { "text": "Six screws and one federal regulation hold the case shut. The beeping continues, smug and warrantied." }
+          {
+            "text": "A photo of you outdoors, squinting like the sun was a surprise. Geologically recent. Spiritually ancient."
+          }
         ],
         "take": [
-          { "text": "It weighs as much as your ambitions did in 2016. It stays." }
-        ],
-        "talk": [
-          { "text": "You tell the UPS about your day. Beep, it says, in B-flat. It's a good listener. One note, but a good listener." }
-        ]
-      }
-    },
-    {
-      "id": "closet_rack",
-      "name": "server rack",
-      "synonyms": ["rack", "servers", "closet", "homelab", "lab"],
-      "polygon": [[198, 18], [246, 18], [246, 136], [198, 136]],
-      "responses": {
-        "look": [
-          { "text": "Your homelab: the only infrastructure within five hundred miles that still works, because you are the only person within five hundred miles who reads changelogs." }
-        ],
-        "use": [
-          { "text": "You check the rack. Green lights, all of them. It's the loveliest thing you've seen all day, and you saw it eleven minutes ago too." }
-        ],
-        "take": [
-          { "text": "It's bolted, racked, and cable-managed. Some relationships are permanent." }
-        ],
-        "talk": [
-          { "text": "You say a few encouraging words to the rack. Its fans spin a little prouder. This is the healthiest relationship in your life." }
-        ]
-      }
-    },
-    {
-      "id": "door",
-      "name": "door",
-      "synonyms": ["doorway", "hall", "hallway", "house"],
-      "polygon": [[246, 16], [272, 16], [272, 142], [246, 142]],
-      "responses": {
-        "look": [
-          { "text": "The door to the rest of the house, open since the day you noticed the rack runs warm. Beyond it: the kitchen, the laundry, and — theoretically — outside. You've seen photos." }
-        ],
-        "open": [
-          { "text": "It's been open for years. Baby steps." }
-        ],
-        "use": [
-          { "text": "Not yet. Leaving the house is an Act One finale kind of move, and you haven't even exhausted your remote options." }
-        ]
-      }
-    },
-    {
-      "id": "shelves",
-      "name": "shelves",
-      "synonyms": ["shelf", "hutch", "boxes", "storage", "junk"],
-      "polygon": [[272, 16], [318, 16], [318, 162], [272, 162]],
-      "responses": {
-        "look": [
-          { "text": "Shipping boxes kept in case you need to return hardware long out of warranty, a dead monitor awaiting a recycling day that never comes, and one router from every ISP you have ever fled. It's not hoarding if it's labeled." }
-        ],
-        "take": [
-          { "text": "The boxes are load-bearing now. Structurally, and emotionally." }
-        ],
-        "open": [
-          { "text": "You peer into a box. Styrofoam, twist ties, and the ghost of an unboxing video." }
-        ]
-      }
-    },
-    {
-      "id": "file_cabinet",
-      "name": "file cabinet",
-      "synonyms": ["cabinet", "drawer", "drawers", "filing cabinet", "files"],
-      "polygon": [[0, 100], [42, 100], [42, 164], [0, 164]],
-      "responses": {
-        "look": [
-          { "text": "A fireproof file cabinet from an era when documents were paper and fire was the threat model. The bottom drawer hasn't been opened since your last in-person job interview." }
-        ],
-        "open": [
-          { "if": { "flagNot": "cable_found" },
-            "do": [
-              { "narrate": "The bottom drawer surrenders with a shriek of metal. Inside: tax returns, a toaster warranty, and — coiled like a sleeping snake — fourteen feet of hand-crimped cat 5. You feel something you haven't felt all day: prepared." },
-              { "addItem": "cable" },
-              { "setFlag": "cable_found" },
-              { "score": { "id": "cable_acquired", "points": 3 } }
-            ] },
-          { "text": "Tax returns and the faint smell of 2009. The cable was the only survivor worth extracting." }
-        ],
-        "use": [
-          { "if": { "flagNot": "cable_found" },
-            "do": [
-              { "narrate": "The bottom drawer surrenders with a shriek of metal. Inside: tax returns, a toaster warranty, and — coiled like a sleeping snake — fourteen feet of hand-crimped cat 5. You feel something you haven't felt all day: prepared." },
-              { "addItem": "cable" },
-              { "setFlag": "cable_found" },
-              { "score": { "id": "cable_acquired", "points": 3 } }
-            ] },
-          { "text": "Tax returns and the faint smell of 2009. The cable was the only survivor worth extracting." }
-        ],
-        "take": [
-          { "text": "You take only what the mission requires. The 2011 tax return stays entombed." }
+          {
+            "text": "Evidence of outside stays on the shelf. You may need to prove it happened."
+          }
         ]
       }
     },
     {
       "id": "wastebasket",
       "name": "wastebasket",
-      "synonyms": ["trash", "trash can", "bin", "garbage", "basket", "paper", "papers"],
-      "polygon": [[36, 134], [84, 134], [84, 168], [36, 168]],
+      "synonyms": [
+        "trash",
+        "trash can",
+        "bin",
+        "garbage",
+        "basket",
+        "paper",
+        "papers"
+      ],
+      "polygon": [[0, 100], [22, 100], [22, 144], [0, 144]],
       "responses": {
         "look": [
-          { "text": "A wastebasket in containment failure. The crumpled pages are printed cloud invoices — you print them out specifically so there is something physical to crumple." }
+          {
+            "text": "A wastebasket in containment failure. The crumpled pages are printed cloud invoices — you print them out specifically so there is something physical to crumple."
+          }
         ],
         "take": [
-          { "text": "You already have a mug for despair. The basket would be redundant infrastructure." }
+          {
+            "text": "You already have a mug for despair. The basket would be redundant infrastructure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "shelves",
+      "name": "bookshelf",
+      "synonyms": [
+        "shelf",
+        "shelves",
+        "books",
+        "manuals",
+        "bookcase"
+      ],
+      "polygon": [[0, 76], [72, 76], [72, 128], [0, 128]],
+      "responses": {
+        "look": [
+          {
+            "text": "Two shelves of O'Reilly spines and binders for technologies that no longer exist. The animal on the sysadmin one stares back with what you've decided is respect."
+          }
+        ],
+        "take": [
+          {
+            "text": "You will absolutely read them again someday. You and the bookshelf maintain this fiction together."
+          }
+        ]
+      }
+    },
+    {
+      "id": "file_cabinet",
+      "name": "file cabinet",
+      "synonyms": [
+        "cabinet",
+        "drawer",
+        "drawers",
+        "filing cabinet",
+        "files"
+      ],
+      "polygon": [[82, 78], [114, 78], [114, 110], [82, 110]],
+      "responses": {
+        "look": [
+          {
+            "text": "A fireproof file cabinet from an era when documents were paper and fire was the threat model. The bottom drawer hasn't been opened since your last in-person job interview."
+          }
+        ],
+        "open": [
+          {
+            "if": {
+              "flagNot": "cable_found"
+            },
+            "do": [
+              {
+                "narrate": "The bottom drawer surrenders with a shriek of metal. Inside: tax returns, a toaster warranty, and — coiled like a sleeping snake — fourteen feet of hand-crimped cat 5. You feel something you haven't felt all day: prepared."
+              },
+              {
+                "addItem": "cable"
+              },
+              {
+                "setFlag": "cable_found"
+              },
+              {
+                "score": {
+                  "id": "cable_acquired",
+                  "points": 3
+                }
+              }
+            ]
+          },
+          {
+            "text": "Tax returns and the faint smell of 2009. The cable was the only survivor worth extracting."
+          }
+        ],
+        "use": [
+          {
+            "if": {
+              "flagNot": "cable_found"
+            },
+            "do": [
+              {
+                "narrate": "The bottom drawer surrenders with a shriek of metal. Inside: tax returns, a toaster warranty, and — coiled like a sleeping snake — fourteen feet of hand-crimped cat 5. You feel something you haven't felt all day: prepared."
+              },
+              {
+                "addItem": "cable"
+              },
+              {
+                "setFlag": "cable_found"
+              },
+              {
+                "score": {
+                  "id": "cable_acquired",
+                  "points": 3
+                }
+              }
+            ]
+          },
+          {
+            "text": "Tax returns and the faint smell of 2009. The cable was the only survivor worth extracting."
+          }
+        ],
+        "take": [
+          {
+            "text": "You take only what the mission requires. The 2011 tax return stays entombed."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ups",
+      "name": "UPS",
+      "synonyms": [
+        "ups",
+        "battery backup",
+        "battery",
+        "backup",
+        "tower",
+        "power supply",
+        "beeping"
+      ],
+      "polygon": [[112, 80], [138, 80], [138, 114], [112, 114]],
+      "responses": {
+        "look": [
+          {
+            "text": "A consumer-grade UPS purchased during a previous economic optimism. It has been beeping in B-flat since Tuesday. The manual says that means 'replace battery.' The manual is a PDF. The PDF is in the cloud."
+          }
+        ],
+        "use": [
+          {
+            "if": {
+              "flagNot": "ups_warned"
+            },
+            "do": [
+              {
+                "narrate": "You reach toward the UPS. It emits a tone you feel in your fillings — the universal frequency of 'don't.' You withdraw the hand. For now."
+              },
+              {
+                "setFlag": "ups_warned"
+              }
+            ]
+          },
+          {
+            "do": [
+              {
+                "death": {
+                  "id": "ups_grounded",
+                  "text": "You open the case and grab the first component that looks optional. The Uninterruptible Power Supply interprets this as an interruption and files its objection directly through your elbows. Rated #1 in surge protection, four years running."
+                }
+              }
+            ]
+          }
+        ],
+        "open": [
+          {
+            "text": "Six screws and one federal regulation hold the case shut. The beeping continues, smug and warrantied."
+          }
+        ],
+        "take": [
+          {
+            "text": "It weighs as much as your ambitions did in 2016. It stays."
+          }
+        ],
+        "talk": [
+          {
+            "text": "You tell the UPS about your day. Beep, it says, in B-flat. It's a good listener. One note, but a good listener."
+          }
+        ]
+      }
+    },
+    {
+      "id": "chair",
+      "name": "office chair",
+      "synonyms": [
+        "chair",
+        "seat"
+      ],
+      "polygon": [[136, 58], [178, 58], [178, 126], [136, 126]],
+      "responses": {
+        "look": [
+          {
+            "text": "Ergonomic, allegedly. It has molded itself so precisely to your shape that sitting anywhere else now feels like a betrayal on both sides."
+          }
+        ],
+        "use": [
+          {
+            "text": "Tempting. But the internet isn't going to fix itself. You checked. Repeatedly."
+          }
+        ]
+      }
+    },
+    {
+      "id": "power_strip",
+      "name": "power strip",
+      "synonyms": [
+        "surge protector",
+        "strip",
+        "outlet",
+        "plugs",
+        "socket"
+      ],
+      "polygon": [[194, 94], [218, 94], [218, 106], [194, 106]],
+      "responses": {
+        "look": [
+          {
+            "text": "A surge strip daisy-chained into the UPS, which the UPS's manual specifically forbids. You read the manual. You did it anyway. Frontier spirit."
+          }
+        ],
+        "use": [
+          {
+            "text": "Everything important is already plugged in. The empty socket is for hope."
+          }
+        ],
+        "take": [
+          {
+            "text": "And risk the boot order? The strip stays."
+          }
+        ]
+      }
+    },
+    {
+      "id": "closet_rack",
+      "name": "server rack",
+      "synonyms": [
+        "rack",
+        "servers",
+        "closet",
+        "homelab",
+        "lab"
+      ],
+      "polygon": [[216, 12], [262, 12], [262, 110], [216, 110]],
+      "responses": {
+        "look": [
+          {
+            "text": "Your homelab, racked in the closet with the louvered door open for airflow: the only infrastructure within five hundred miles that still works, because you are the only person within five hundred miles who reads changelogs."
+          }
+        ],
+        "use": [
+          {
+            "text": "You check the rack. Green lights, all of them. It's the loveliest thing you've seen all day, and you saw it eleven minutes ago too."
+          }
+        ],
+        "take": [
+          {
+            "text": "It's bolted, racked, and cable-managed. Some relationships are permanent."
+          }
+        ],
+        "talk": [
+          {
+            "text": "You say a few encouraging words to the rack. Its fans spin a little prouder. This is the healthiest relationship in your life."
+          }
+        ]
+      }
+    },
+    {
+      "id": "coat",
+      "name": "coat",
+      "synonyms": [
+        "jacket",
+        "overcoat",
+        "winter coat",
+        "hook"
+      ],
+      "polygon": [[266, 20], [292, 20], [292, 86], [266, 86]],
+      "responses": {
+        "look": [
+          {
+            "text": "Your Going Outside coat, on its dedicated hook. It still fits, probably. These days the hook sees more action from headphones."
+          }
+        ],
+        "take": [
+          {
+            "text": "Not yet. Taking the coat means admitting where this is heading. (It's heading outside. You can feel it.)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "door",
+      "name": "door",
+      "synonyms": [
+        "doorway",
+        "hall",
+        "hallway",
+        "house"
+      ],
+      "polygon": [[292, 6], [319, 6], [319, 112], [292, 112]],
+      "responses": {
+        "look": [
+          {
+            "text": "The door to the rest of the house. Closed, to keep the rack's heat in and the world's everything out. Both arrangements are holding."
+          }
+        ],
+        "open": [
+          {
+            "text": "Not yet. Opening that door is an Act One finale kind of move, and you haven't exhausted your remote options."
+          }
+        ],
+        "use": [
+          {
+            "text": "You grip the handle, then remember the dashboards can't watch themselves not change. Soon."
+          }
+        ]
+      }
+    },
+    {
+      "id": "side_table",
+      "name": "side table",
+      "synonyms": [
+        "table",
+        "cart",
+        "magazines",
+        "end table"
+      ],
+      "polygon": [[284, 98], [319, 98], [319, 168], [284, 168]],
+      "responses": {
+        "look": [
+          {
+            "text": "A side table holding the overflow: mugs that didn't make the desk roster, magazines from when you still believed in print, and a paperback serving as a coaster. Everything here is a backup for something."
+          }
+        ],
+        "take": [
+          {
+            "text": "The mugs here are the reserves. You don't call up the reserves on day one."
+          }
         ]
       }
     }
