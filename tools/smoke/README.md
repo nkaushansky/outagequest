@@ -5,8 +5,8 @@ tooling only — the game itself keeps zero runtime dependencies.
 
     npm run build
     npm run preview &          # serves dist/ on :4173
-    npm run smoke              # full M1+M2 suite -> PASS/FAIL lines,
-                               # screenshots in ./smoke-shots/
+    npm run smoke              # full M1+M2+M3 suite (129 checks) ->
+                               # PASS/FAIL lines, screenshots in ./smoke-shots/
 
 Extras:
 

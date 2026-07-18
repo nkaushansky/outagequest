@@ -1,5 +1,36 @@
 {
   "hoodie": { "name": "hoodie", "synonyms": ["sweatshirt"], "look": "Field uniform of the remote professional. Battle-tested against thermostat disputes." },
-  "mug":    { "name": "coffee mug", "synonyms": ["mug", "cup"], "look": "Your emotional-support mug. Currently empty, like the status dashboard's promises." },
-  "cable":  { "name": "ethernet cable", "synonyms": ["cable", "cat5", "cat 5", "ethernet", "patch cable", "network cable"], "look": "Fourteen feet of cat 5 you crimped by hand, back when you trusted nothing. Both ends test clean. It may be the most reliable object in the hemisphere right now." }
+  "mug":    { "name": "coffee mug", "synonyms": ["mug", "cup"], "look": "Your emotional-support mug. Currently empty, like the status dashboard's promises.",
+    "responses": {
+      "look": [
+        { "if": { "flag": "mug_full" },
+          "text": "Your emotional-support mug, now bearing actual diner coffee. Steam rises off it like uptime returning." },
+        { "text": "Your emotional-support mug. Currently empty, like the status dashboard's promises." }
+      ],
+      "use": [
+        { "if": { "flag": "mug_full" },
+          "do": [
+            { "narrate": "You drink Darlene's coffee. Diner-grade: brewed strong enough to route packets on its own. Morale patch applied successfully." },
+            { "clearFlag": "mug_full" }
+          ] },
+        { "text": "You tip the empty mug back anyway. One heroic drop reports in. It tastes like Tuesday." }
+      ]
+    } },
+  "cable":  { "name": "ethernet cable", "synonyms": ["cable", "cat5", "cat 5", "ethernet", "patch cable", "network cable"], "look": "Fourteen feet of cat 5 you crimped by hand, back when you trusted nothing. Both ends test clean. It may be the most reliable object in the hemisphere right now." },
+  "coat":   { "name": "coat", "synonyms": ["jacket", "overcoat"], "look": "The Going Outside coat, over your arm. It smells faintly of the previous decade, which is when it last worked a full shift." },
+  "pants":  { "name": "real pants", "synonyms": ["pants", "trousers", "slacks", "hard pants", "the pants"], "look": "Real Pants: rigid, buttoned, unforgiving. Last worn at a funeral for a startup. They still hold the crease. Some things stay load-bearing.",
+    "responses": {
+      "use": [
+        { "if": { "flag": "wearing_pants" },
+          "text": "You are already wearing the Real Pants. Their authority cannot be stacked." },
+        { "do": [
+            { "narrate": "You put on the Real Pants. The crease engages. Your posture files a change request and approves it unilaterally. Somewhere, a conference room feels a disturbance. You are dressed for a service call." },
+            { "setFlag": "wearing_pants" }
+          ] }
+      ],
+      "take": [
+        { "if": { "flag": "wearing_pants" },
+          "text": "You're wearing them. Further acquisition would be a laundry incident." }
+      ]
+    } }
 }

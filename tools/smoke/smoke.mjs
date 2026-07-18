@@ -1,4 +1,5 @@
-// SPOF smoke suite: REVIEW.md M1 (engine core) + M2 (vertical slice).
+// SPOF smoke suite: REVIEW.md M1 (engine core) + M2 (vertical slice) +
+// M3 (Act 1: instrument/topics/gates/onScoreComplete, act completability).
 // Usage: node tools/smoke/smoke.mjs [baseURL] [shotsDir]
 // Requires the built game served at baseURL (npm run build && npm run preview).
 import { mkdirSync } from "node:fs";
@@ -242,6 +243,185 @@ ok((await page.inputValue(".cmd-input")) === "", "floor tap near chair doesn't h
 await page.waitForTimeout(900);
 const qpos = await page.evaluate(() => ({ ...window.spof.state.player }));
 ok(Math.abs(qpos.x - 150) < 2 && Math.abs(qpos.y - 128) < 2, "floor tap walks instead", JSON.stringify(qpos));
+
+// ---- M3: instrument condition (review must-fix) ----------------------------
+// State: confirm-first flags set, score 13, cable in inventory, no mug yet.
+await run("take mug");
+await run("use mug on modem");
+ok((await lastLines()).includes("The mug abides"), "wrong instrument gets bespoke snark", await lastLines());
+ok((await score()) === "15", "mug-on-modem awards nothing", await score());
+await run("use hoodie on modem");
+ok((await lastLines()).includes("will not un-global it"), "wrong instrument falls through post-confirm", await lastLines());
+await run("take hoodie");
+ok((await score()) === "17", "office score complete at 17", await score());
+ok((await logText()).includes("everything this office owes you"), "onScoreComplete aside fired");
+const scFlags = await page.evaluate(() => [...window.spof.state.flags].filter((f) => f.startsWith("__scorecomplete")));
+ok(scFlags.includes("__scorecomplete_act1_home_office"), "onScoreComplete flagged once", JSON.stringify(scFlags));
+
+// ---- M3: pointer rewrites + act gates ---------------------------------------
+await run("take coat");
+ok((await page.locator(".inv-chip").allInnerTexts()).includes("coat"), "coat takeable after confirmation");
+await run("open door");
+ok((await logText()).includes("bigger than you remember"), "office door opens to the house", await lastLines());
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_living_room", "arrived in living room");
+ok((await score()) === "18", "living room entry scored", await score());
+
+// Scene-space click helper. Re-measures the canvas box every time — the
+// layout must never drift (see the #ui min-width fix), but a stale box
+// would turn any regression into misleading downstream failures.
+const sceneMap = async () => {
+  const b = await canvas.boundingBox();
+  const s = Math.min(b.width / 320, b.height / 180);
+  return {
+    s,
+    x: (ix) => b.x + (b.width - 320 * s) / 2 + ix * s,
+    y: (iy) => b.y + (b.height - 180 * s) / 2 + iy * s,
+  };
+};
+const clickScene = async (ix, iy) => {
+  const m = await sceneMap();
+  await page.mouse.click(m.x(ix), m.y(iy));
+};
+
+// walk into the gated front-door exit without pants: blocked entry fires
+await page.evaluate(() => { window.spof.state.player.x = 288; window.spof.state.player.y = 150; });
+await clickScene(302, 160);
+await page.waitForTimeout(1200);
+ok((await logText()).includes("critical path"), "gated exit blocks without pants", await lastLines());
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_living_room", "gate held the door");
+
+// ---- M3: living room + bedroom (pants puzzle, shelf death) ------------------
+await run("look doorbell chime");
+await run("use bike");
+await run("open couch");
+ok((await score()) === "22", "living room curiosity scored", await score());
+ok((await logText()).includes("fully audited"), "living room onScoreComplete aside");
+await run("open bedroom door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_bedroom", "entered bedroom");
+await run("look under bed");
+ok((await lastLines()).includes("HARD PANTS"), "under-bed discovery", await lastLines());
+await run("open under bed");
+ok((await lastLines(6)).includes("cold storage"), "pants restored from cold storage", await lastLines(6));
+ok((await page.locator(".inv-chip").allInnerTexts()).includes("real pants"), "pants in inventory");
+ok((await score()) === "29", "bedroom scored (2+5)", await score());
+ok((await logText()).includes("front door is the next open ticket"), "bedroom onScoreComplete aside");
+
+await run("take boxes");
+ok((await lastLines()).includes("geological groan"), "shelf warns before killing", await lastLines());
+await run("take boxes");
+await page.waitForTimeout(200);
+ok((await page.locator(".death-title").innerText()) === "Legacy Infrastructure", "CRT death registered title");
+await page.locator(".death-retry").click();
+await page.waitForTimeout(200);
+ok((await score()) === "29", "CRT death retry is one step back", await score());
+
+await run("wear pants");
+ok((await lastLines()).includes("crease engages"), "wear pants via item responses", await lastLines());
+
+// ---- M3: main street (set piece, wrong-name gag, road death) ----------------
+await run("open door");
+await run("open front door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_main_street", "front door opens with pants on");
+ok((await logText()).includes("eleven steps"), "leaving-the-house set piece", await lastLines(8));
+ok((await score()) === "33", "outside-at-last scored", await score());
+
+// east gate blocked before the diner reveal
+await page.evaluate(() => { window.spof.state.player.x = 300; window.spof.state.player.y = 150; });
+await clickScene(315, 150);
+await page.waitForTimeout(1000);
+ok((await logText()).includes("It serves pie"), "east exit blocked without the trail", await lastLines());
+
+await run("look notice board");
+ok((await lastLines(4)).includes("CANCELLED"), "Nimbus lore on the notice board", await lastLines(4));
+await run("talk to gary");
+ok((await lastLines(4)).includes("NEIL"), "Gary gets the name wrong", await lastLines(4));
+await run("ask gary about nimbus");
+ok((await lastLines()).includes("Nimbus people"), "Gary topic responds", await lastLines());
+ok((await score()) === "35", "main street curiosity scored", await score());
+ok((await logText()).includes("fully canvassed"), "main street onScoreComplete aside");
+
+await run("use road");
+ok((await lastLines()).includes("near-miss"), "road warns before killing", await lastLines());
+await run("use road");
+await page.waitForTimeout(200);
+ok((await page.locator(".death-title").innerText()) === "100% Packet Loss", "road death registered title");
+await page.locator(".death-retry").click();
+await page.waitForTimeout(200);
+
+// ---- M3: diner (topics, tally, mug instrument, the reveal) ------------------
+await run("open diner");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_diner", "entered the diner");
+await run("talk to darlene");
+ok((await lastLines()).includes("two names today"), "wrong-name tally at Darlene", await lastLines());
+await run("talk to merle");
+ok((await lastLines()).includes("three names today"), "wrong-name tally at Merle", await lastLines());
+
+await page.fill(".cmd-input", "ask merle about ");
+await page.dispatchEvent(".cmd-input", "input");
+await page.waitForTimeout(60);
+ok((await page.locator(".suggest-chip").allInnerTexts()).includes("internet"), "topic chips offered after about");
+await page.fill(".cmd-input", "");
+await page.dispatchEvent(".cmd-input", "input");
+
+await run("ask merle about internet");
+ok((await lastLines(6)).includes("Kim's Nails"), "Merle reveals the edge node", await lastLines(6));
+ok((await score()) === "40", "edge intel scored (+4)", await score());
+await run("ask darlene about kubernetes");
+ok((await lastLines()).includes("city stuff"), "topicDefault catches unknown topics", await lastLines());
+await run("use cable on urn");
+ok((await lastLines()).includes("not whatever that is"), "generic wrong-instrument snark (urn)", await lastLines());
+await run("use mug on urn");
+ok((await lastLines()).includes("brought your own"), "mug fills at the urn (instrument)", await lastLines());
+ok((await score()) === "42", "coffee scored (+2)", await score());
+ok((await logText()).includes("ledger closes"), "diner onScoreComplete aside");
+await run("use mug");
+ok((await lastLines()).includes("route packets"), "drinking the coffee", await lastLines());
+
+// ---- M3: act out — gate opens, act completable at 45 ------------------------
+await run("open door");
+await page.evaluate(() => { window.spof.state.player.x = 300; window.spof.state.player.y = 150; });
+await clickScene(315, 150);
+await page.waitForTimeout(1500);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "east gate opens with the trail");
+ok((await logText()).includes("END OF ACT ONE"), "act-out stinger narrates");
+ok((await score()) === "45", "Act 1 completable at exactly 45", await score());
+// The mid-suite localStorage.clear() wiped the earlier UPS collectible, so
+// this lifetime can only hold the two new Act 1 deaths (ups_grounded is
+// asserted in the M2 section within its own storage lifetime).
+const m3deaths = await page.evaluate(() => [...window.spof.state.deathsFound]);
+ok(["legacy_infrastructure", "packet_loss"].every((d) => m3deaths.includes(d)),
+  "both new Act 1 deaths collected + registered", JSON.stringify(m3deaths));
+
+// no dead-man-walking: the world stays open at act end
+await page.evaluate(() => { window.spof.state.player.x = 26; window.spof.state.player.y = 150; });
+await clickScene(6, 150);
+await page.waitForTimeout(1200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_main_street", "act end is not a dead end");
+
+// ---- M3: drag-to-walk -------------------------------------------------------
+await page.evaluate(() => { window.spof.state.player.x = 60; window.spof.state.player.y = 150; });
+const dm = await sceneMap();
+await page.mouse.move(dm.x(60), dm.y(150));
+await page.mouse.down();
+for (let i = 1; i <= 8; i++) {
+  await page.mouse.move(dm.x(60 + i * 15), dm.y(150));
+  await page.waitForTimeout(70);
+}
+const dragPos = await page.evaluate(() => ({ ...window.spof.state.player }));
+await page.mouse.up();
+ok(dragPos.x > 85, "drag-to-walk follows the pointer", JSON.stringify(dragPos));
+
+// ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
+const lookGaps = await page.evaluate(() => {
+  const gaps = [];
+  for (const [id, room] of window.spof.content.rooms) {
+    for (const h of room.hotspots) {
+      if (!h.responses?.look?.length) gaps.push(`${id}.${h.id}`);
+    }
+  }
+  return gaps;
+});
+ok(lookGaps.length === 0, "every hotspot has a bespoke LOOK", JSON.stringify(lookGaps));
 
 // ---- console + screenshots -------------------------------------------------
 ok(consoleErrors.length === 0, "zero console errors", JSON.stringify(consoleErrors));

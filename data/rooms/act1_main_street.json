@@ -1,0 +1,405 @@
+{
+  "id": "act1_main_street",
+  "name": "Main Street",
+  "background": "assets/backgrounds/act1_main_street.png",
+  "walkable": [[4, 118], [318, 118], [318, 164], [4, 164]],
+  "playerStart": { "x": 16, "y": 150, "facing": "right" },
+  "exits": [
+    {
+      "to": "act1_living_room",
+      "polygon": [[0, 118], [10, 118], [10, 164], [0, 164]],
+      "arrive": { "x": 286, "y": 150, "facing": "left" }
+    },
+    {
+      "to": "act1_diner",
+      "polygon": [[236, 118], [268, 118], [268, 128], [236, 128]],
+      "arrive": { "x": 34, "y": 150, "facing": "right" }
+    },
+    {
+      "to": "act1_edge_of_town",
+      "polygon": [[310, 118], [318, 118], [318, 164], [310, 164]],
+      "arrive": { "x": 26, "y": 150, "facing": "right" },
+      "if": { "flag": "edge_node_located" },
+      "blocked": [
+        {
+          "text": "East is just more town, and then the county. You could wander it, but wandering isn't a plan. Somebody around here knows where the internet physically lives — and in a town this size, information travels through exactly one building. It serves pie."
+        }
+      ]
+    }
+  ],
+  "onEnter": [
+    {
+      "if": { "flagNot": "ms_outside" },
+      "do": [
+        {
+          "narrate": "The door swings open and the world comes in uncompressed: real sun, unconditioned air, a breeze with no vendor. You step onto the porch, then the walk, then — witness it — Main Street itself. Outside. On location. In person. Four years of 'attending remotely,' and the commute back took eleven steps."
+        },
+        {
+          "narrate": "The sky is doing all this for free, which no longer sounds like a sustainable business model to you. That's the first thing you'll need to unlearn."
+        },
+        { "setFlag": "ms_outside" },
+        { "score": { "id": "ms_outside_at_last", "points": 4 } }
+      ]
+    },
+    {
+      "text": "Main Street. Still outside. You're getting almost casual about it."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "Main Street has been fully canvassed: neighbor consulted, notices read, sky acknowledged. The street's remaining business is all eastbound, past the traffic light, where the strip mall keeps its hum."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "house_door",
+      "name": "your front door",
+      "synonyms": ["front door", "door", "home", "porch"],
+      "polygon": [[2, 28], [30, 28], [30, 118], [2, 118]],
+      "responses": {
+        "look": [
+          {
+            "text": "Your front door, seen from the outside for the first time in years. The paint has been fading on your behalf this whole time. The smart doorbell watches you with its one dead eye, recording nothing for nobody."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              { "narrate": "Back inside, where the air is subscription-temperature." },
+              { "goto": "act1_living_room" }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              { "narrate": "Back inside, where the air is subscription-temperature." },
+              { "goto": "act1_living_room" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "house",
+      "name": "your house",
+      "synonyms": ["house", "siding", "gutters"],
+      "polygon": [[0, 0], [46, 0], [46, 118], [30, 118], [30, 28], [2, 28]],
+      "responses": {
+        "look": [
+          {
+            "text": "Your house, from the street: modest, vinyl-sided, gutters overdue. From out here you can see the office window glowing faintly — the one lit room, like a pilot light for a whole life. It looks smaller than the inside of it felt."
+          }
+        ],
+        "take": [
+          {
+            "text": "You already have the house. That's approximately the entire problem."
+          }
+        ]
+      }
+    },
+    {
+      "id": "gary",
+      "name": "Gary",
+      "synonyms": ["neighbor", "man", "guy"],
+      "polygon": [[56, 58], [84, 58], [84, 126], [56, 126]],
+      "responses": {
+        "look": [
+          {
+            "text": "Gary, your neighbor of nine years, watering a lawn that died in August with a hose that works fine. Gary believes in routine the way the cloud believed in redundancy: loudly, and without checking."
+          }
+        ],
+        "talk": [
+          {
+            "if": { "flagNot": "met_gary" },
+            "do": [
+              {
+                "narrate": "'NEIL!' Gary bellows, delighted, hose still running. 'Heck of a day, Neil! Whole internet's down, they're saying. You're computers — that you, then?' He beams. You fixed Gary's printer in 2019. You did it as Mel. The name did not survive the driveway."
+              },
+              { "setFlag": "met_gary" },
+              { "score": { "id": "ms_talked_gary", "points": 1 } }
+            ]
+          },
+          {
+            "text": "'Anything else, Neil?' Gary redirects the hose to a patch of lawn that died senior year. You could correct him. Nine years in, the correction would cost more than the name."
+          }
+        ],
+        "take": [
+          {
+            "text": "Gary is not portable. Gary is barely steerable."
+          }
+        ]
+      },
+      "topics": [
+        {
+          "match": ["outage", "internet", "cloud"],
+          "responses": [
+            {
+              "text": "'Oh, it's the whole shebang, Neil. TV's out, thermostat's out, Marlene's fridge is asking her to log in. LOG IN. To the FRIDGE.' He leans on the fence, philosophical. 'We had an icebox growing up. Never once asked who I was.'"
+            }
+          ]
+        },
+        {
+          "match": ["nimbus", "cumulonimbus"],
+          "responses": [
+            {
+              "text": "'The Nimbus people!' Gary nods sagely. 'Got the whole world on one wire, and now look.' He gestures at his dead lawn as if it were their fault too. Honestly, at this point, you wouldn't rule it out."
+            }
+          ]
+        },
+        {
+          "match": ["name", "mel", "neil"],
+          "responses": [
+            {
+              "text": "'It's Mel, actually,' you say. Gary blinks warmly. 'That's what I said. Neil.' The hose keeps running. Somewhere, a scorekeeper makes a small, satisfied mark."
+            }
+          ]
+        },
+        {
+          "match": ["town", "main street"],
+          "responses": [
+            {
+              "text": "'Town's fine,' says Gary, of a town that is visibly not fine. 'Diner's still going. Salon's got that new manicurist.' He pauses. 'Weird hum behind that place, though. Always has been.' Gary has no idea what he just said to you."
+            }
+          ]
+        }
+      ],
+      "topicDefault": [
+        {
+          "text": "Gary considers the topic, then the hose, then the topic again. The hose wins."
+        }
+      ]
+    },
+    {
+      "id": "planter",
+      "name": "planter",
+      "synonyms": ["petunias", "flowers", "flower bed"],
+      "polygon": [[88, 100], [112, 100], [112, 122], [88, 122]],
+      "responses": {
+        "look": [
+          {
+            "text": "A municipal planter of memorial petunias, maintained by the Beautification Committee, which is one woman named Dot. The petunias are losing, but slowly, which around here counts as economic development."
+          }
+        ],
+        "take": [
+          {
+            "text": "Dot would know. Dot always knows."
+          }
+        ]
+      }
+    },
+    {
+      "id": "candle_shop",
+      "name": "candle shop",
+      "synonyms": ["candles", "shop", "wicked awesome", "storefront"],
+      "polygon": [[100, 16], [150, 16], [150, 114], [100, 114]],
+      "responses": {
+        "look": [
+          {
+            "text": "'Wick'd Awesome,' the candle shop, one of the two business models this town has left. The window display is forty candles arranged around a chalkboard reading 'WI-FI DOWN. CANDLES: STILL WORK.' Fastest pivot in retail history."
+          }
+        ],
+        "open": [
+          {
+            "text": "Closed. The sign says 'back in 15,' carbon-dated to sometime last fall."
+          }
+        ],
+        "take": [
+          {
+            "text": "Looting the candle shop on day one? Save something for act five."
+          }
+        ]
+      }
+    },
+    {
+      "id": "bench",
+      "name": "bench",
+      "synonyms": ["seat", "memorial bench"],
+      "polygon": [[130, 96], [172, 96], [172, 122], [130, 122]],
+      "responses": {
+        "look": [
+          {
+            "text": "A memorial bench: 'IN LOVING MEMORY OF EARL PROUTY, WHO LIKED TO SIT.' Earl understood something about scope that the entire technology industry never did."
+          }
+        ],
+        "use": [
+          {
+            "text": "You sit for exactly four seconds, in Earl's honor. It's a good bench. Earl had taste. Back to work."
+          }
+        ]
+      }
+    },
+    {
+      "id": "forlease",
+      "name": "empty storefronts",
+      "synonyms": ["for lease", "storefront", "storefronts", "empty stores", "video store"],
+      "polygon": [[152, 16], [196, 16], [196, 114], [152, 114]],
+      "responses": {
+        "look": [
+          {
+            "text": "Three storefronts, three FOR LEASE signs, three ghosts: a video store, a travel agency, a computer-repair shop. Everything they did got 'disrupted' into an app. All of those apps are down today. The dark windows do not gloat, which is more restraint than you'd manage."
+          }
+        ],
+        "open": [
+          {
+            "text": "Locked, dusty, and honestly none of your business until at least act three."
+          }
+        ]
+      }
+    },
+    {
+      "id": "notice_board",
+      "name": "notice board",
+      "synonyms": ["board", "notices", "town board", "flyers", "flyer", "poster"],
+      "polygon": [[198, 22], [224, 22], [224, 106], [198, 106]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flagNot": "ms_board_read" },
+            "do": [
+              {
+                "narrate": "The town notice board. Centerpiece: a glossy corporate flyer — 'CUMULONIMBUS COMMUNITY CLOUD DAY! Meet the cloud that powers your town!' Someone has written 'nimbus day' across it in marker; a corporate hand has crossed that out and re-printed 'CUMULONIMBUS™' with a taped-on addendum citing brand guidelines, section 4. Beneath it all, a smaller sticker: CANCELLED. Three layers of institutional wound, one thumbtack."
+              },
+              { "setFlag": "ms_board_read" },
+              { "score": { "id": "ms_notice_board", "points": 1 } }
+            ]
+          },
+          {
+            "text": "Also on the board: a lost cat (found, per a second note), zumba at the grange hall, and a phone number for gutter cleaning you are absolutely not writing down today."
+          }
+        ],
+        "take": [
+          {
+            "text": "You leave the flyer. It's not lore if you take it home; it's clutter."
+          }
+        ]
+      }
+    },
+    {
+      "id": "diner_front",
+      "name": "diner",
+      "synonyms": ["bottomless cup", "cafe", "restaurant", "diner door"],
+      "polygon": [[226, 14], [280, 14], [280, 118], [226, 118]],
+      "responses": {
+        "look": [
+          {
+            "text": "The Bottomless Cup, the town diner, open since 1961 and open now, because griddles run on gas and Darlene runs on spite. The neon OPEN sign is dark, so someone has hung a paper sign: 'YES.' Through the glass: actual people. Plural."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              { "narrate": "You let yourself into the smell of coffee and competence." },
+              { "goto": "act1_diner" }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              { "narrate": "You let yourself into the smell of coffee and competence." },
+              { "goto": "act1_diner" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "newspaper_box",
+      "name": "newspaper box",
+      "synonyms": ["newspaper", "paper", "news box", "gazette"],
+      "polygon": [[284, 88], [302, 88], [302, 122], [284, 122]],
+      "responses": {
+        "look": [
+          {
+            "text": "A coin-op box for the County Gazette, weekly, printed two towns over on an actual press. This week's front page, through the scratched plastic: 'CLOUD OUT; LIBRARY EXTENDS HOURS.' The Gazette has been waiting forty years to win a news cycle, and it intends to enjoy this one."
+          }
+        ],
+        "open": [
+          {
+            "text": "Fifty cents. Your wallet is at home, in the pocket of pants you refused to wear. The Gazette would appreciate the irony, in print, next Thursday."
+          }
+        ],
+        "use": [
+          {
+            "text": "You thump the coin return out of muscle memory. Nothing. The Gazette runs a tight ship."
+          }
+        ]
+      }
+    },
+    {
+      "id": "traffic_light",
+      "name": "traffic light",
+      "synonyms": ["light", "stoplight", "signal", "pole"],
+      "polygon": [[302, 8], [318, 8], [318, 118], [302, 118]],
+      "responses": {
+        "look": [
+          {
+            "text": "The town's one traffic light, dark. Not from the outage — it's been dark since March, pending a county work order. Traffic self-organizes: everyone waves everyone else through, a consensus protocol with better uptime than anything you've administered."
+          }
+        ],
+        "use": [
+          {
+            "text": "The controller box is county property and padlocked. Besides, the town has already routed around the failure. You'd only be introducing regression."
+          }
+        ]
+      }
+    },
+    {
+      "id": "sky",
+      "name": "sky",
+      "synonyms": ["clouds", "cloud", "sun", "up"],
+      "polygon": [[46, 0], [319, 0], [319, 14], [46, 14]],
+      "responses": {
+        "look": [
+          {
+            "text": "The sky. A few white clouds drift by — cumulus, the working-class kind. No availability zones, no egress fees, no login. The original cloud provider, still shipping weather to every user on Earth at five nines. Somebody should study how they do it."
+          }
+        ],
+        "take": [
+          {
+            "text": "Others have tried. One of them named a trillion-dollar company after the attempt."
+          }
+        ]
+      }
+    },
+    {
+      "id": "road",
+      "name": "road",
+      "synonyms": ["street", "asphalt", "crosswalk", "traffic"],
+      "polygon": [[0, 162], [319, 162], [319, 180], [0, 180]],
+      "responses": {
+        "look": [
+          {
+            "text": "Main Street's actual street: patched asphalt, a faded crosswalk, and a stillness that reads as safety. Statistically, one vehicle per hour uses this road. The statistic is due. The statistic is always due."
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "ms_road_warned" },
+            "do": [
+              {
+                "narrate": "You step off the curb. Halfway across, you remember there is nothing on the other side but the for-lease reflection of this side, and you walk back. Behind you, distantly, an engine. The road logs the near-miss and says nothing."
+              },
+              { "setFlag": "ms_road_warned" }
+            ]
+          },
+          {
+            "do": [
+              { "death": { "id": "packet_loss" } }
+            ]
+          }
+        ],
+        "open": [
+          {
+            "text": "The road does not open. The county has a form for that, and the county is closed."
+          }
+        ]
+      }
+    }
+  ]
+}

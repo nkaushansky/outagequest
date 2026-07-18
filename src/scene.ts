@@ -36,10 +36,15 @@ const C_DEV_EXIT = "#4AD8FF";
 
 export interface SceneCallbacks {
   onHotspotTap(hotspot: Hotspot): void;
-  onExit(exit: RoomExit): void;
+  /** Returns false when a gated exit refused the crossing. */
+  onExit(exit: RoomExit): boolean;
   /** Dev mode only: pointer position report, e.g. "143,79 monitors". */
   onDevPointer?(info: string): void;
 }
+
+/** Finger travel (CSS px) before a press stops being a tap and becomes a
+ *  drag-to-walk. Generous enough that shaky taps stay taps. */
+const DRAG_START_PX = 10;
 
 export class Scene {
   private canvas: HTMLCanvasElement;
@@ -55,6 +60,17 @@ export class Scene {
   private marker: { p: Pt; until: number } | null = null;
   private lastFrame = 0;
   private exitArmed = false;
+  /** A gated exit that refused: stay quiet until the player leaves it. */
+  private suppressedExit: RoomExit | null = null;
+  /** Live press: becomes a drag past DRAG_START_PX, else a tap on lift. */
+  private press: {
+    pointerId: number;
+    startX: number;
+    startY: number;
+    dragging: boolean;
+    /** Set when the room changed mid-drag: swallow the rest of the press. */
+    ended: boolean;
+  } | null = null;
   private dev: boolean;
 
   constructor(
@@ -77,6 +93,8 @@ export class Scene {
 
     this.canvas.addEventListener("pointerdown", (e) => this.onPointerDown(e));
     this.canvas.addEventListener("pointermove", (e) => this.onPointerMove(e));
+    this.canvas.addEventListener("pointerup", (e) => this.onPointerUp(e));
+    this.canvas.addEventListener("pointercancel", () => (this.press = null));
 
     this.lastFrame = performance.now();
     requestAnimationFrame((t) => this.frame(t));
@@ -91,6 +109,11 @@ export class Scene {
     // Don't fire an exit until the player has actually walked somewhere,
     // in case an arrive point sits inside an exit polygon.
     this.exitArmed = false;
+    this.suppressedExit = null;
+    // A drag that carried Mel through a door ends at the threshold —
+    // otherwise the finger, still down near the reciprocal exit, would
+    // bounce straight back.
+    if (this.press?.dragging) this.press.ended = true;
   }
 
   setBackground(bg: HTMLImageElement | null): void {
@@ -132,9 +155,61 @@ export class Scene {
         this.hotspotAt(p)?.id ?? "");
     }
 
-    // Floor priority: a tap inside the walkable polygon always walks —
-    // dense generous hotspots otherwise out-compete walking on touch
-    // screens. Hotspots only contest taps outside the floor.
+    this.press = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      dragging: false,
+      ended: false,
+    };
+    this.canvas.setPointerCapture(e.pointerId);
+  }
+
+  private onPointerMove(e: PointerEvent): void {
+    const p = this.toInternal(e);
+    if (this.dev && this.cb.onDevPointer) {
+      const hs = p ? this.hotspotAt(p) : null;
+      this.cb.onDevPointer(
+        p ? `${Math.round(p.x)},${Math.round(p.y)}${hs ? " " + hs.id : ""}` : "",
+      );
+    }
+
+    const press = this.press;
+    if (press && press.pointerId === e.pointerId && !press.ended) {
+      if (
+        !press.dragging &&
+        Math.hypot(e.clientX - press.startX, e.clientY - press.startY) >
+          DRAG_START_PX
+      ) {
+        press.dragging = true;
+      }
+      // Drag-to-walk: Mel continuously heads for the finger, projected
+      // into the walkable polygon. No marker — the finger is the marker.
+      if (press.dragging && this.room && this.room.walkable.length >= 3) {
+        this.target = clampIntoPolygon(
+          this.toInternalClamped(e),
+          this.room.walkable,
+        );
+        this.exitArmed = true;
+      }
+      return;
+    }
+
+    if (e.pointerType !== "mouse") return;
+    this.canvas.style.cursor = p && this.hotspotAt(p) ? "pointer" : "default";
+  }
+
+  private onPointerUp(e: PointerEvent): void {
+    const press = this.press;
+    if (!press || press.pointerId !== e.pointerId) return;
+    this.press = null;
+    if (press.dragging || press.ended) return; // drag ends where it ends
+
+    // A clean tap. Floor priority: a tap inside the walkable polygon
+    // always walks — dense generous hotspots otherwise out-compete
+    // walking on touch screens. Hotspots only contest off-floor taps.
+    const p = this.toInternal(e);
+    if (!p || !this.room) return;
     const onFloor =
       this.room.walkable.length >= 3 && pointInPolygon(p, this.room.walkable);
     const hotspot = onFloor ? null : this.hotspotAt(p);
@@ -155,16 +230,20 @@ export class Scene {
     }
   }
 
-  private onPointerMove(e: PointerEvent): void {
-    const p = this.toInternal(e);
-    if (this.dev && this.cb.onDevPointer) {
-      const hs = p ? this.hotspotAt(p) : null;
-      this.cb.onDevPointer(
-        p ? `${Math.round(p.x)},${Math.round(p.y)}${hs ? " " + hs.id : ""}` : "",
-      );
-    }
-    if (e.pointerType !== "mouse") return;
-    this.canvas.style.cursor = p && this.hotspotAt(p) ? "pointer" : "default";
+  /** Like toInternal, but clamps into the picture instead of bailing on
+   *  the letterbox — a dragging finger may wander off the art. */
+  private toInternalClamped(e: PointerEvent): Pt {
+    const rect = this.canvas.getBoundingClientRect();
+    const scale =
+      Math.min(rect.width / INTERNAL_W, rect.height / INTERNAL_H) || 1;
+    const offX = (rect.width - INTERNAL_W * scale) / 2;
+    const offY = (rect.height - INTERNAL_H * scale) / 2;
+    const x = (e.clientX - rect.left - offX) / scale;
+    const y = (e.clientY - rect.top - offY) / scale;
+    return {
+      x: Math.max(0, Math.min(INTERNAL_W - 1, x)),
+      y: Math.max(0, Math.min(INTERNAL_H - 1, y)),
+    };
   }
 
   private frame(now: number): void {
@@ -212,11 +291,23 @@ export class Scene {
     }
 
     if (this.exitArmed) {
+      if (
+        this.suppressedExit &&
+        !pointInPolygon(player, this.suppressedExit.polygon)
+      ) {
+        this.suppressedExit = null; // stepped clear; the gate may speak again
+      }
       for (const exit of this.room.exits) {
+        if (exit === this.suppressedExit) continue;
         if (exit.polygon.length >= 3 && pointInPolygon(player, exit.polygon)) {
           this.target = null;
           this.exitArmed = false;
-          this.cb.onExit(exit);
+          if (!this.cb.onExit(exit)) {
+            // Gate held: stop at the threshold, and don't re-run the
+            // blocked snark every frame the player lingers inside.
+            this.suppressedExit = exit;
+            this.exitArmed = true;
+          }
           return;
         }
       }

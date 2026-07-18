@@ -21,6 +21,8 @@ export interface ParsedCommand {
   object?: ObjectRef;
   prep?: string;
   object2?: ObjectRef;
+  /** "talk/ask X about Y": Y is a free topic phrase, not an object. */
+  topic?: string;
   /** Set when a near-miss was accepted; holds the corrected phrase. */
   didYouMean?: string;
 }
@@ -186,6 +188,9 @@ export function parse(
   }
 
   const rest = tokens.slice(vm.consumed);
+  // A dangling preposition ("use cable on") is the tap-composer's arming
+  // state — RUN executes it as the one-object command it already is.
+  if (rest.length > 0 && PREPS.has(rest[rest.length - 1]!)) rest.pop();
   const def = verbs.verbs[vm.verb];
   if (rest.length === 0) {
     if (def?.needsObject) return { ok: false, reason: "needsObject", verb: vm.verb };
@@ -209,6 +214,13 @@ export function parse(
 
   if (prepIdx !== -1) {
     const span2 = rest.slice(prepIdx + 1);
+    // "talk/ask X about Y": Y is a free topic phrase, matched later against
+    // the hotspot's authored topics — never against room objects.
+    if (vm.verb === "talk" && rest[prepIdx] === "about") {
+      cmd.prep = "about";
+      cmd.topic = span2.join(" ");
+      return { ok: true, cmd };
+    }
     const obj2 = resolveSpan(span2, candidates);
     if (!obj2) return { ok: false, reason: "unknownObject", object: span2.join(" ") };
     cmd.prep = rest[prepIdx]!;

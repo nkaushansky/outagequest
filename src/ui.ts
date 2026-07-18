@@ -83,6 +83,8 @@ export class UI {
 
     this.death = el("div", "death");
     this.death.hidden = true;
+    this.death.setAttribute("role", "dialog");
+    this.death.setAttribute("aria-modal", "true");
     const deathBox = el("div", "death-box");
     const deathKicker = el("div", "death-kicker");
     deathKicker.textContent = "KERNEL PANIC";
@@ -210,8 +212,18 @@ export class UI {
     this.deathTitle.textContent = title;
     this.deathText.textContent = text;
     this.death.hidden = false;
+    // Focus trap: while dead, Tab must not reach the terminal behind the
+    // overlay. The retry button is the whole world now.
+    const trap = (e: KeyboardEvent) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        this.deathRetry.focus();
+      }
+    };
+    document.addEventListener("keydown", trap, true);
     const handler = () => {
       this.deathRetry.removeEventListener("click", handler);
+      document.removeEventListener("keydown", trap, true);
       this.death.hidden = true;
       onRetry();
     };

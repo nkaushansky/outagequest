@@ -8,7 +8,28 @@
     "y": 150,
     "facing": "left"
   },
-  "exits": [],
+  "exits": [
+    {
+      "to": "act1_living_room",
+      "polygon": [[286, 124], [319, 124], [319, 178], [286, 178]],
+      "arrive": { "x": 30, "y": 158, "facing": "right" },
+      "if": { "flag": "confirmed_global" },
+      "blocked": [
+        {
+          "text": "You drift toward the door and catch yourself. Not yet. There are remote options left, and you intend to exhaust every one of them from this chair, as is tradition."
+        }
+      ]
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "And that's everything this office owes you, ticket-wise. Seventeen points of pure diagnostic virtue, and the outage hasn't budged. Whatever's broken, it isn't in this room — and the door knows it."
+        }
+      ]
+    }
+  ],
   "onEnter": [
     {
       "if": {
@@ -71,6 +92,12 @@
       "polygon": [[16, 8], [94, 8], [94, 62], [16, 62]],
       "responses": {
         "look": [
+          {
+            "if": {
+              "flag": "confirmed_global"
+            },
+            "text": "Main Street, unchanged and unbothered. Somewhere down there is a diner, a nail salon, and — if the trail holds — the actual edge of the actual internet. You're going to have to go look at it. With your legs."
+          },
           {
             "text": "Main Street, population: dwindling. Half the storefronts are for lease and the other half sell candles. Today it looks the same as always, which is impressive for the first day of the apocalypse."
           }
@@ -272,7 +299,7 @@
             "if": {
               "all": [
                 {
-                  "hasItem": "cable"
+                  "instrument": "cable"
                 },
                 {
                   "flag": "modem_cycled"
@@ -296,6 +323,58 @@
                 }
               }
             ]
+          },
+          {
+            "if": {
+              "all": [
+                {
+                  "instrument": "cable"
+                },
+                {
+                  "flagNot": "modem_cycled"
+                }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "Cable in hand, you reach for the port — and stop. Protocol exists for a reason. First you unplug the modem and count thirty seconds — the sacred interval, observed by sysadmins since antiquity. The lights return: red, red, red. The ritual is complete. The gods decline. NOW the cable."
+              },
+              {
+                "setFlag": "modem_cycled"
+              },
+              {
+                "score": {
+                  "id": "cycled_modem",
+                  "points": 2
+                }
+              }
+            ]
+          },
+          {
+            "if": {
+              "any": [
+                {
+                  "instrument": "mug"
+                },
+                {
+                  "instrument": "dead_mugs"
+                }
+              ]
+            },
+            "text": "You raise the mug to the modem. Caffeine and packets: civilization's two great delivery networks, and neither one is currently shipping. The modem blinks. The mug abides. Nothing is diagnosed."
+          },
+          {
+            "if": {
+              "all": [
+                {
+                  "anyInstrument": true
+                },
+                {
+                  "flagNot": "confirmed_global"
+                }
+              ]
+            },
+            "text": "You wave it at the modem with real conviction. The modem, a professional, declines to acknowledge improvised networking equipment. It wants copper or nothing."
           },
           {
             "if": {
@@ -593,8 +672,7 @@
             "do": [
               {
                 "death": {
-                  "id": "ups_grounded",
-                  "text": "You open the case and grab the first component that looks optional. The Uninterruptible Power Supply interprets this as an interruption and files its objection directly through your elbows. Rated #1 in surge protection, four years running."
+                  "id": "ups_grounded"
                 }
               }
             ]
@@ -714,10 +792,41 @@
       "responses": {
         "look": [
           {
+            "if": {
+              "hasItem": "coat"
+            },
+            "text": "The hook stands empty for the first time in years. It's coping."
+          },
+          {
+            "if": {
+              "flag": "confirmed_global"
+            },
+            "text": "The Going Outside coat, suddenly load-bearing. It has been rehearsing this moment on its hook since the second Obama administration."
+          },
+          {
             "text": "Your Going Outside coat, on its dedicated hook. It still fits, probably. These days the hook sees more action from headphones."
           }
         ],
         "take": [
+          {
+            "if": {
+              "hasItem": "coat"
+            },
+            "text": "You have the coat. The hook has grief. Everyone's processing."
+          },
+          {
+            "if": {
+              "flag": "confirmed_global"
+            },
+            "do": [
+              {
+                "narrate": "You lift the coat off its hook. It settles onto your arm like it never doubted this day would come. It doubted."
+              },
+              {
+                "addItem": "coat"
+              }
+            ]
+          },
           {
             "text": "Not yet. Taking the coat means admitting where this is heading. (It's heading outside. You can feel it.)"
           }
@@ -737,15 +846,47 @@
       "responses": {
         "look": [
           {
+            "if": {
+              "flag": "confirmed_global"
+            },
+            "text": "The door to the rest of the house — and, past that, the front door, the street, the town, the world. The problem is out there now. The door has started looking meaningful, and it knows it."
+          },
+          {
             "text": "The door to the rest of the house. Closed, to keep the rack's heat in and the world's everything out. Both arrangements are holding."
           }
         ],
         "open": [
           {
+            "if": {
+              "flag": "confirmed_global"
+            },
+            "do": [
+              {
+                "narrate": "You open the door and step out of the nerve center. The rest of the house is bigger than you remember. Houses do that when you stop using them."
+              },
+              {
+                "goto": "act1_living_room"
+              }
+            ]
+          },
+          {
             "text": "Not yet. Opening that door is an Act One finale kind of move, and you haven't exhausted your remote options."
           }
         ],
         "use": [
+          {
+            "if": {
+              "flag": "confirmed_global"
+            },
+            "do": [
+              {
+                "narrate": "You open the door and step out of the nerve center. The rest of the house is bigger than you remember. Houses do that when you stop using them."
+              },
+              {
+                "goto": "act1_living_room"
+              }
+            ]
+          },
           {
             "text": "You grip the handle, then remember the dashboards can't watch themselves not change. Soon."
           }

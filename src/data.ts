@@ -50,7 +50,7 @@ function normalizeRoom(raw: unknown): Room {
   const start = (r.playerStart ?? {}) as Record<string, unknown>;
   const exits = Array.isArray(r.exits) ? r.exits : [];
   const hotspots = Array.isArray(r.hotspots) ? r.hotspots : [];
-  return {
+  const room: Room = {
     id: String(r.id ?? ""),
     name: String(r.name ?? ""),
     background: String(r.background ?? ""),
@@ -63,7 +63,7 @@ function normalizeRoom(raw: unknown): Room {
     exits: exits.map((e): RoomExit => {
       const x = e as Record<string, unknown>;
       const arrive = (x.arrive ?? {}) as Record<string, unknown>;
-      return {
+      const exit: RoomExit = {
         to: String(x.to ?? ""),
         polygon: toPts(x.polygon),
         arrive: {
@@ -72,19 +72,30 @@ function normalizeRoom(raw: unknown): Room {
           facing: toFacing(arrive.facing),
         },
       };
+      if (x.if) exit.if = x.if as RoomExit["if"];
+      if (Array.isArray(x.blocked)) exit.blocked = x.blocked as ResponseEntry[];
+      return exit;
     }),
     onEnter: (Array.isArray(r.onEnter) ? r.onEnter : []) as ResponseEntry[],
     hotspots: hotspots.map((h): Hotspot => {
       const s = h as Record<string, unknown>;
-      return {
+      const hotspot: Hotspot = {
         id: String(s.id ?? ""),
         name: String(s.name ?? ""),
         synonyms: (s.synonyms ?? []) as string[],
         polygon: toPts(s.polygon),
         responses: (s.responses ?? {}) as Hotspot["responses"],
       };
+      if (Array.isArray(s.topics)) hotspot.topics = s.topics as Hotspot["topics"];
+      if (Array.isArray(s.topicDefault))
+        hotspot.topicDefault = s.topicDefault as ResponseEntry[];
+      return hotspot;
     }),
   };
+  if (Array.isArray(r.onScoreComplete)) {
+    room.onScoreComplete = r.onScoreComplete as ResponseEntry[];
+  }
+  return room;
 }
 
 export interface Content {

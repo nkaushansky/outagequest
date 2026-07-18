@@ -1,0 +1,482 @@
+{
+  "id": "act1_living_room",
+  "name": "The Rest of the House",
+  "background": "assets/backgrounds/act1_living_room.png",
+  "walkable": [[4, 120], [212, 120], [214, 112], [244, 112], [246, 120], [300, 120], [310, 178], [4, 178]],
+  "playerStart": { "x": 30, "y": 158, "facing": "right" },
+  "exits": [
+    {
+      "to": "act1_home_office",
+      "polygon": [[0, 120], [24, 120], [24, 178], [0, 178]],
+      "arrive": { "x": 284, "y": 164, "facing": "left" }
+    },
+    {
+      "to": "act1_bedroom",
+      "polygon": [[214, 112], [244, 112], [244, 130], [214, 130]],
+      "arrive": { "x": 34, "y": 158, "facing": "right" }
+    },
+    {
+      "to": "act1_main_street",
+      "polygon": [[292, 120], [319, 120], [319, 178], [292, 178]],
+      "arrive": { "x": 16, "y": 150, "facing": "right" },
+      "if": { "flag": "wearing_pants" },
+      "blocked": [
+        {
+          "if": { "hasItem": "pants" },
+          "text": "Hand on the deadbolt, you look down. You are HOLDING the Real Pants. Holding is not wearing. The distinction matters — ask any auditor."
+        },
+        {
+          "text": "Hand on the deadbolt, you look down. Joggers. You cannot debug the internet in joggers; the internet would know. Somewhere in this house are Real Pants, and finding them just became the critical path."
+        }
+      ]
+    }
+  ],
+  "onEnter": [
+    {
+      "if": { "flagNot": "lr_seen" },
+      "do": [
+        {
+          "narrate": "The rest of the house. You furnished this room during a period of believing in furniture, then filled it with devices during a period of believing in devices. Every one of them is currently a monument. It's very quiet. The quiet has a vendor."
+        },
+        { "setFlag": "lr_seen" },
+        { "score": { "id": "lr_entered", "points": 1 } }
+      ]
+    },
+    {
+      "text": "The living room again. The devices maintain their vigil: off, all the way down."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "That's the living room fully audited: every gadget interrogated, every cushion deposed. The verdict is unanimous — nothing in here works, and the only ticket left is the one that goes out the front door."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "office_door",
+      "name": "office door",
+      "synonyms": ["office", "door to office", "nerve center"],
+      "polygon": [[2, 28], [26, 28], [26, 120], [2, 120]],
+      "responses": {
+        "look": [
+          {
+            "text": "The door back to the office. Warm light, fan hum, working infrastructure. Your entire adult life fits through that doorframe, and it knows it."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              { "narrate": "You duck back into the nerve center." },
+              { "goto": "act1_home_office" }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              { "narrate": "You duck back into the nerve center." },
+              { "goto": "act1_home_office" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "photos",
+      "name": "family photos",
+      "synonyms": ["photos", "pictures", "frames", "family"],
+      "polygon": [[30, 22], [62, 22], [62, 58], [30, 58]],
+      "responses": {
+        "look": [
+          {
+            "text": "A wall of family photos, chronologically arranged: you shrinking, your relatives multiplying, everyone at gatherings you attended by speakerphone. The most recent frame is from 2021. It's a screenshot."
+          }
+        ],
+        "take": [
+          {
+            "text": "The photos stay. Provenance matters — they're the only backups in this house that were ever tested."
+          }
+        ]
+      }
+    },
+    {
+      "id": "thermostat",
+      "name": "thermostat",
+      "synonyms": ["smart thermostat", "nest", "climate"],
+      "polygon": [[66, 40], [82, 40], [82, 60], [66, 60]],
+      "responses": {
+        "look": [
+          {
+            "text": "A smart thermostat, learning model, now unlearned. Its screen shows a spinning cloud icon and the house shows sixty-one degrees. It knew your schedule, your preferences, your sleep cycle. It has forgotten all of it, but not, somehow, the subscription."
+          }
+        ],
+        "use": [
+          {
+            "text": "You stab at the ring. 'Connecting…' it soothes, in a font that cost eight figures. The furnace, which is downstairs and made of iron, waits for permission from a server that no longer exists."
+          }
+        ],
+        "talk": [
+          {
+            "text": "'Hey. It's cold.' The thermostat displays a gentle breathing animation. Somewhere a product designer is very proud of how calmly you're being ignored."
+          }
+        ],
+        "open": [
+          {
+            "text": "You pop the faceplate off, revealing two wires that have been perfectly capable of running the furnace since 1974. You could hotwire it. You put the faceplate back on. Not today's incident."
+          }
+        ]
+      }
+    },
+    {
+      "id": "tv",
+      "name": "television",
+      "synonyms": ["tv", "smart tv", "screen", "soundbar"],
+      "polygon": [[84, 28], [148, 28], [148, 80], [84, 80]],
+      "responses": {
+        "look": [
+          {
+            "text": "Sixty-five inches of smart TV displaying its boot screen: a cloud logo, gently pulsing, like a heartbeat monitor for something already gone. It has forty-one apps and no channels. Antennas were discontinued as a concept."
+          }
+        ],
+        "use": [
+          {
+            "text": "You press power. The cloud logo pulses a little faster, flattered by the attention, and delivers nothing. The TV cannot show you anything without asking permission first, and permission is down."
+          }
+        ],
+        "talk": [
+          {
+            "text": "You address the television directly, an old family custom. In your father's day it would at least have shown static. Static was honest. Static was LOCAL."
+          }
+        ],
+        "take": [
+          {
+            "text": "Sixty-five inches, eleven pounds, zero utility. It stays on the wall as a cautionary tale."
+          }
+        ]
+      }
+    },
+    {
+      "id": "speaker",
+      "name": "smart speaker",
+      "synonyms": ["speaker", "assistant", "echo", "voice assistant"],
+      "polygon": [[152, 48], [168, 48], [168, 72], [152, 72]],
+      "responses": {
+        "look": [
+          {
+            "text": "A smart speaker, mid-shelf, its light ring dark. For six years it listened to everything said in this room and contributed weather. Now it's just a cylinder with opinions it can't reach."
+          }
+        ],
+        "talk": [
+          {
+            "if": { "flagNot": "lr_speaker_talked" },
+            "do": [
+              {
+                "narrate": "'Hey. Are you there?' Nothing. You feel briefly foolish, then briefly bereaved, then foolish about the bereavement. It never knew you. It forwarded you."
+              },
+              { "setFlag": "lr_speaker_talked" }
+            ]
+          },
+          {
+            "text": "You've said your goodbyes to the cylinder. Twice is a séance."
+          }
+        ],
+        "use": [
+          {
+            "text": "You tap the top of the speaker, the spot that used to summon a chime. The chime was also cloud-hosted."
+          }
+        ],
+        "take": [
+          {
+            "text": "You could carry it, but then you'd be a man walking through the apocalypse holding a mute cylinder, and the town talks enough."
+          }
+        ]
+      }
+    },
+    {
+      "id": "window_lr",
+      "name": "window",
+      "synonyms": ["curtains", "view", "outside"],
+      "polygon": [[170, 16], [210, 16], [210, 62], [170, 62]],
+      "responses": {
+        "look": [
+          {
+            "text": "The living room window, with a view of the side yard and Gary's fence. The fence is doing better than the yard. Both are doing better than the internet."
+          }
+        ],
+        "open": [
+          {
+            "text": "You open the window an inch. Outside air, unscheduled birdsong, zero notifications. Terrifying. You close it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "bedroom_door",
+      "name": "bedroom door",
+      "synonyms": ["bedroom", "hallway", "hall"],
+      "polygon": [[214, 20], [244, 20], [244, 112], [214, 112]],
+      "responses": {
+        "look": [
+          {
+            "if": { "hasItem": "pants" },
+            "text": "The bedroom doorway. Mission accomplished in there, sartorially speaking."
+          },
+          {
+            "if": { "flag": "confirmed_global" },
+            "text": "The bedroom doorway. Somewhere past it: the bed you should use more, the closet you should use differently, and — if this day is really happening — Real Pants."
+          },
+          {
+            "text": "The doorway to the bedroom, dark and unjudgmental."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              { "narrate": "You head into the bedroom." },
+              { "goto": "act1_bedroom" }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              { "narrate": "You head into the bedroom." },
+              { "goto": "act1_bedroom" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "front_door",
+      "name": "front door",
+      "synonyms": ["door", "deadbolt", "outside door", "exit"],
+      "polygon": [[286, 10], [318, 10], [318, 118], [286, 118]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flag": "wearing_pants" },
+            "text": "The front door. Deadbolt, chain, weatherstripping — the full perimeter defense of a man who ordered everything online. You're dressed. It's unlocked. The only thing holding it shut now is you."
+          },
+          {
+            "text": "The front door. You installed a smart doorbell on the other side of it so you'd never have to open it blind. You have not opened it, blind or otherwise, in a very long time. The hinges have theories about you."
+          }
+        ],
+        "open": [
+          {
+            "if": { "flag": "wearing_pants" },
+            "do": [
+              {
+                "narrate": "You throw the deadbolt. It's louder than you remember — a proper mechanical CLACK, no cloud round-trip, one hundred percent local execution."
+              },
+              { "goto": "act1_main_street" }
+            ]
+          },
+          {
+            "if": { "hasItem": "pants" },
+            "text": "You reach for the deadbolt and stop. The pants are over your arm like a sommelier's towel. Wear them. This is a service call, not a delivery."
+          },
+          {
+            "text": "Your hand makes it to the deadbolt before the rest of you files an objection: not in joggers. If you're going to walk into the apocalypse, you're going to do it in Real Pants."
+          }
+        ],
+        "use": [
+          {
+            "if": { "flag": "wearing_pants" },
+            "do": [
+              {
+                "narrate": "You throw the deadbolt. It's louder than you remember — a proper mechanical CLACK, no cloud round-trip, one hundred percent local execution."
+              },
+              { "goto": "act1_main_street" }
+            ]
+          },
+          {
+            "text": "The deadbolt awaits a decision you haven't finished dressing for."
+          }
+        ]
+      }
+    },
+    {
+      "id": "couch",
+      "name": "couch",
+      "synonyms": ["sofa", "cushions", "cushion", "seat"],
+      "polygon": [[60, 96], [150, 96], [150, 134], [60, 134]],
+      "responses": {
+        "look": [
+          {
+            "text": "A couch with a body-shaped depression at one end, like a fossil forming in real time. The other two cushions are showroom-fresh. Guests were always theoretical."
+          }
+        ],
+        "open": [
+          {
+            "if": { "flagNot": "lr_couch_dug" },
+            "do": [
+              {
+                "narrate": "You excavate the cushions. Findings: $1.14 in coins, a stylus for a tablet you recycled, and the remote for the TV — the physical one, with buttons, that you replaced with an app. You hold it like a relic. It clicks. Nothing obeys, but it CLICKS."
+              },
+              { "setFlag": "lr_couch_dug" },
+              { "score": { "id": "lr_couch_archaeology", "points": 1 } }
+            ]
+          },
+          {
+            "text": "The dig site is exhausted. The coins remain in situ, for future archaeologists."
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "lr_couch_dug" },
+            "do": [
+              {
+                "narrate": "You excavate the cushions. Findings: $1.14 in coins, a stylus for a tablet you recycled, and the remote for the TV — the physical one, with buttons, that you replaced with an app. You hold it like a relic. It clicks. Nothing obeys, but it CLICKS."
+              },
+              { "setFlag": "lr_couch_dug" },
+              { "score": { "id": "lr_couch_archaeology", "points": 1 } }
+            ]
+          },
+          {
+            "text": "You consider sitting. The body-shaped depression yawns invitingly. No. Sitting is how the last four years happened."
+          }
+        ],
+        "take": [
+          {
+            "text": "The couch stays. It's the only thing in this room that never needed a firmware update."
+          }
+        ]
+      }
+    },
+    {
+      "id": "bike",
+      "name": "exercise bike",
+      "synonyms": ["bike", "peloton", "spin bike", "exercise"],
+      "polygon": [[246, 70], [284, 70], [284, 124], [246, 124]],
+      "responses": {
+        "look": [
+          {
+            "text": "A connected exercise bike with a tablet the size of a serving tray. You bought it to bring the gym home, and it brought the gym's monthly fee home instead. Current mileage: 41. Current role: sculpture."
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "lr_bike_tried" },
+            "do": [
+              {
+                "narrate": "You climb on and pedal. The flywheel spins — that part is physics, physics still works — but the resistance knob is 'digital,' the classes are 'live,' and the tablet is a black mirror with your own face in it. You are a man pedaling nowhere, watching himself do it, at zero difficulty. This is the most honest workout it has ever provided."
+              },
+              { "setFlag": "lr_bike_tried" },
+              { "score": { "id": "lr_bike_truth", "points": 2 } }
+            ]
+          },
+          {
+            "text": "One existential ride per outage is the recommended dosage."
+          }
+        ],
+        "take": [
+          {
+            "text": "It weighs a hundred and forty pounds. The subscription was the part designed to be easy to carry."
+          }
+        ]
+      }
+    },
+    {
+      "id": "plant",
+      "name": "houseplant",
+      "synonyms": ["plant", "fern", "pot", "monstera"],
+      "polygon": [[30, 88], [54, 88], [54, 122], [30, 122]],
+      "responses": {
+        "look": [
+          {
+            "text": "A houseplant, thriving, because you put it on a smart watering timer years ago and the timer runs locally. The healthiest living thing in the house is the one you automated and forgot. There's a sermon in that, and the plant knows it."
+          }
+        ],
+        "take": [
+          {
+            "text": "The plant has a working system. You don't uproot working systems. Not today of all days."
+          }
+        ],
+        "talk": [
+          {
+            "text": "You tell the plant it's doing great. It is. It didn't need to hear it from you."
+          }
+        ]
+      }
+    },
+    {
+      "id": "mesh_node",
+      "name": "mesh node",
+      "synonyms": ["mesh", "router", "wifi", "node", "access point"],
+      "polygon": [[134, 82], [150, 82], [150, 96], [134, 96]],
+      "responses": {
+        "look": [
+          {
+            "text": "One node of the mesh Wi-Fi system, glowing a soft, useless teal. It's meshing beautifully with the other two nodes. The three of them share nothing all over the house, seamlessly."
+          }
+        ],
+        "use": [
+          {
+            "text": "You power-cycle it out of professional courtesy. It rejoins its mesh instantly — flawless local coordination in service of a dead uplink. A well-drilled marching band on a sinking ship."
+          }
+        ],
+        "take": [
+          {
+            "text": "Break up the mesh? It's the only functioning team in five hundred miles."
+          }
+        ]
+      }
+    },
+    {
+      "id": "doorbell_panel",
+      "name": "doorbell chime",
+      "synonyms": ["doorbell", "chime", "panel", "video doorbell"],
+      "polygon": [[266, 32], [284, 32], [284, 58], [266, 58]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flagNot": "lr_doorbell_looked" },
+            "do": [
+              {
+                "narrate": "The smart doorbell's indoor chime, showing a spinner where the porch feed should be. Six years of footage of delivery drivers, uploaded nightly to a data center that is currently a very quiet building. The doorbell itself still works, technically. It rings in the cloud, where no one lives."
+              },
+              { "setFlag": "lr_doorbell_looked" },
+              { "score": { "id": "lr_doorbell_dead", "points": 1 } }
+            ]
+          },
+          {
+            "text": "Still spinning. If anyone's on the porch, that's between them and the hardware."
+          }
+        ],
+        "use": [
+          {
+            "text": "You tap the chime. It shows you a cloud with a slash through it — the international symbol for 'we took the bell part out of the doorbell.'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dvd_shelf",
+      "name": "DVD shelf",
+      "synonyms": ["dvds", "dvd", "movies", "shelf", "discs", "media"],
+      "polygon": [[248, 16], [284, 16], [284, 64], [248, 64]],
+      "responses": {
+        "look": [
+          {
+            "text": "A short shelf of DVDs that survived four purges: three space operas, a boxed sitcom, someone's wedding. Physical media — quaint, dusty, and as of this morning, the only films in North America that still play. The last shall be first."
+          }
+        ],
+        "use": [
+          {
+            "text": "You could watch a DVD. The TV, however, converts to the physical-media faith only through an HDMI ritual you're too busy for. The apocalypse first; the space opera after."
+          }
+        ],
+        "take": [
+          {
+            "text": "You leave the collection intact. If civilization ends properly, this shelf is the new Library of Alexandria, and you're not looting it early."
+          }
+        ]
+      }
+    }
+  ]
+}

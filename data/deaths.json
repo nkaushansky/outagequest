@@ -1,10 +1,20 @@
 {
-  "note": "Registry fills in as deaths are authored. Each death: id, title (gallery), text (death screen).",
+  "note": "Single source of truth for death copy: the death screen and the M8 gallery both read this registry. Room JSON triggers a death by id alone; inline text there is only a fallback for unregistered ids.",
   "deaths": [
     {
       "id": "ups_grounded",
       "title": "Locally Grounded",
       "text": "You open the case and grab the first component that looks optional. The Uninterruptible Power Supply interprets this as an interruption and files its objection directly through your elbows. Rated #1 in surge protection, four years running."
+    },
+    {
+      "id": "legacy_infrastructure",
+      "title": "Legacy Infrastructure",
+      "text": "You pull the bottom box. Above it, four CRT monitors you kept as backups — for a technology that no longer exists — finally see use. As ordnance. The coroner's report will say 'legacy infrastructure,' and for once the paperwork will be accurate."
+    },
+    {
+      "id": "packet_loss",
+      "title": "100% Packet Loss",
+      "text": "You step into Main Street without looking. Statistically, this road carries one vehicle per hour. You have just met the hour. The town's entire traffic, delivered in a single packet, and you were standing on the route. In your own postmortem, you will be listed as the single point of failure."
     }
   ]
 }

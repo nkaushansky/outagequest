@@ -16,10 +16,12 @@ import {
   normalize,
   parse,
   PREPS,
+  resolveSpan,
   type Candidate,
   type ParsedCommand,
 } from "./parser";
-import type { Facing, Hotspot, Room } from "./types";
+import type { Facing, Hotspot, ResponseEntry, Room, RoomExit } from "./types";
+import { evalCondition } from "./resolver";
 
 const MAX_SUGGESTIONS = 6;
 
@@ -32,10 +34,16 @@ export class Engine {
   private lastSnapshot: Snapshot | null = null;
   /** Set while a death overlay is up, so autosave stays one step back. */
   private pendingDeath = false;
+  /** Per room: every score id authored in its JSON (onScoreComplete's own
+   *  entries excluded). Computed once — content stays pure data. */
+  private roomScoreIds = new Map<string, Set<string>>();
   private readonly dev = new URLSearchParams(window.location.search).has("dev");
 
   constructor() {
     this.content = loadContent();
+    for (const room of this.content.rooms.values()) {
+      this.roomScoreIds.set(room.id, collectScoreIds(room));
+    }
   }
 
   boot(sceneEl: HTMLElement, uiEl: HTMLElement): void {
@@ -56,12 +64,7 @@ export class Engine {
       this.state,
       {
         onHotspotTap: (h) => this.hotspotTap(h),
-        onExit: (exit) =>
-          this.changeRoom(exit.to, {
-            x: exit.arrive.x,
-            y: exit.arrive.y,
-            facing: exit.arrive.facing,
-          }),
+        onExit: (exit) => this.tryExit(exit),
         onDevPointer: (info) => this.ui.setDevInfo(info),
       },
       this.dev,
@@ -125,10 +128,42 @@ export class Engine {
     this.refreshStatus();
     if (runOnEnter) {
       runEntries(room.onEnter, this.ctx());
+      this.checkScoreComplete();
       this.autosave();
     }
     this.refreshStatus();
     this.refreshInventory();
+  }
+
+  /** Walk-into-exit gatekeeper. Returns false when the gate held. */
+  private tryExit(exit: RoomExit): boolean {
+    // One step back from the threshold: anything that fires here (blocked
+    // snark, an onEnter death in the next room) retries to this moment.
+    this.lastSnapshot = this.state.snapshot();
+    if (exit.if && !evalCondition(exit.if, this.state)) {
+      runEntries(exit.blocked, this.ctx());
+      this.checkScoreComplete();
+      this.refreshStatus();
+      this.refreshInventory();
+      this.autosave();
+      return false;
+    }
+    this.changeRoom(exit.to, { ...exit.arrive });
+    return true;
+  }
+
+  /** The narrator settles the room's tab once its last score id lands. */
+  private checkScoreComplete(): void {
+    if (this.pendingDeath) return;
+    const room = this.currentRoom();
+    if (!room) return;
+    const ids = this.roomScoreIds.get(room.id);
+    if (!ids || ids.size === 0) return;
+    const flag = "__scorecomplete_" + room.id;
+    if (this.state.flags.has(flag)) return;
+    for (const id of ids) if (!this.state.awarded.has(id)) return;
+    this.state.flags.add(flag);
+    runEntries(room.onScoreComplete, this.ctx());
   }
 
   // ---- saves -----------------------------------------------------------
@@ -183,6 +218,7 @@ export class Engine {
       importSave: (raw) => this.importSave(raw),
     });
     if (!handled) this.dispatch(trimmed);
+    this.checkScoreComplete();
 
     this.refreshStatus();
     this.refreshInventory();
@@ -233,30 +269,38 @@ export class Engine {
   }
 
   /** Resolve a parsed command against the target object's response lists.
-   *  With OBJECT2 present ("use keycard on door"), the target is OBJECT2;
-   *  conditions like hasItem gate the instrument. */
+   *  With OBJECT2 present ("use keycard on door"), the target is OBJECT2
+   *  and OBJECT becomes the instrument — `instrument`/`anyInstrument`
+   *  conditions see it. Topic commands resolve on OBJECT instead. */
   private perform(cmd: ParsedCommand): void {
     const verbDef = this.content.verbs.verbs[cmd.verb];
     const fallback = () => {
       if (verbDef) this.narrate(verbDef.default);
     };
 
+    if (cmd.topic !== undefined) {
+      this.performTopic(cmd, fallback);
+      return;
+    }
+
     const target = cmd.object2 ?? cmd.object;
     if (!target) {
       fallback();
       return;
     }
+    const instrumentId = cmd.object2 ? cmd.object?.id : undefined;
 
     if (target.kind === "hotspot") {
       const room = this.currentRoom();
       const hotspot = room?.hotspots.find((h) => h.id === target.id);
       const entries = hotspot?.responses?.[cmd.verb];
-      if (!runEntries(entries, this.ctx())) fallback();
+      if (!runEntries(entries, this.ctx(instrumentId))) fallback();
       return;
     }
 
-    // Inventory item: items carry a bespoke look; other verbs fall back.
+    // Inventory item target: authored responses first, bespoke look second.
     const item = this.content.items[target.id];
+    if (runEntries(item?.responses?.[cmd.verb], this.ctx(instrumentId))) return;
     if (cmd.verb === "look" && item?.look) {
       this.narrate(item.look);
       return;
@@ -264,11 +308,39 @@ export class Engine {
     fallback();
   }
 
+  /** "talk/ask X about Y" — X's authored topics, then X's topicDefault,
+   *  then the verbs.json unknownTopic template. */
+  private performTopic(cmd: ParsedCommand, fallback: () => void): void {
+    const target = cmd.object;
+    const topic = cmd.topic ?? "";
+    if (!target) {
+      fallback();
+      return;
+    }
+    const room = this.currentRoom();
+    const hotspot =
+      target.kind === "hotspot"
+        ? room?.hotspots.find((h) => h.id === target.id)
+        : undefined;
+    const match = hotspot?.topics?.find((t) =>
+      t.match.some((m) => normalize(m).join(" ") === topic),
+    );
+    if (match && runEntries(match.responses, this.ctx())) return;
+    if (runEntries(hotspot?.topicDefault, this.ctx())) return;
+    const template = this.content.verbs.unknownTopic;
+    if (template) {
+      this.narrate(fill(template, { name: target.name, topic }), "sys");
+    } else {
+      fallback();
+    }
+  }
+
   // ---- engine context (side effects for the resolver) -----------------
 
-  private ctx(): EngineContext {
+  private ctx(instrumentId?: string): EngineContext {
     return {
       state: this.state,
+      instrumentId,
       narrate: (text, cls) => this.narrate(text, cls),
       award: (id, points) => this.award(id, points),
       addItem: (id) => {
@@ -299,12 +371,18 @@ export class Engine {
     );
   }
 
-  private die(id: string, text: string, title?: string): void {
+  private die(id: string, text?: string, title?: string): void {
     this.state.registerDeath(id);
     this.pendingDeath = true;
+    // deaths.json is the single source of death copy (the M8 gallery reads
+    // it); inline room text only covers deaths the registry doesn't know.
     const registered = this.content.deaths.deaths.find((d) => d.id === id);
-    this.narrate(text, "err");
-    this.ui.showDeath(registered?.title ?? title ?? "SEGMENTATION FAULT", text, () => {
+    const body =
+      registered?.text ??
+      text ??
+      "You die of an undocumented feature. (Register this death in data/deaths.json.)";
+    this.narrate(body, "err");
+    this.ui.showDeath(registered?.title ?? title ?? "SEGMENTATION FAULT", body, () => {
       if (this.lastSnapshot) {
         const snap = this.lastSnapshot;
         this.state.restore(snap);
@@ -325,12 +403,25 @@ export class Engine {
     const vm = matchVerb(tokens, this.content.verbs);
     const rest = vm ? tokens.slice(vm.consumed) : tokens;
     if (rest.length > 0) {
+      if (this.armInstrument(verb, rest)) return;
       // Verb applied to something already named: fire immediately
       // (Sierra icon-bar feel). Bare verb taps just start composing.
       this.tapExec([verb, ...rest].join(" "));
       return;
     }
     this.ui.setInput(verb + " ", true);
+  }
+
+  /** Sierra icon-bar rule: completing USE's object slot with a carried
+   *  item arms it as the instrument ("use cable on ") and waits for a
+   *  target tap. RUN still fires the bare one-object command (the parser
+   *  drops a dangling preposition). Hotspots stay immediate targets. */
+  private armInstrument(verb: string, span: string[]): boolean {
+    if (verb !== "use" || span.some((t) => PREPS.has(t))) return false;
+    const hit = resolveSpan(span, this.candidates());
+    if (!hit || hit.suggestion || hit.ref.kind !== "item") return false;
+    this.ui.setInput([verb, ...span, "on"].join(" ") + " ", true);
+    return true;
   }
 
   private hotspotTap(hotspot: Hotspot): void {
@@ -368,6 +459,7 @@ export class Engine {
     }
     const head = rest.slice(0, cut + 1);
     const line = [...verbTokens, ...head, s].join(" ");
+    if (run && cut === -1 && this.armInstrument(vm.verb, normalize(s))) return;
     if (run) this.tapExec(line);
     else this.ui.setInput(line + " ", true);
   }
@@ -405,6 +497,22 @@ export class Engine {
       if (PREPS.has(rest[i]!)) cut = i;
     }
     const tail = rest.slice(cut + 1).join(" ");
+
+    // After "talk/ask X about", offer X's authored topics — discoverable
+    // conversation beats guess-the-noun.
+    if (vm.verb === "talk" && cut >= 0 && rest[cut] === "about") {
+      const npc = resolveSpan(rest.slice(0, cut), this.candidates());
+      if (npc && npc.ref.kind === "hotspot") {
+        const hotspot = this.currentRoom()?.hotspots.find(
+          (h) => h.id === npc.ref.id,
+        );
+        return (hotspot?.topics ?? [])
+          .map((t) => t.match[0] ?? "")
+          .filter((m) => m && m !== tail && m.startsWith(tail))
+          .slice(0, MAX_SUGGESTIONS);
+      }
+      return [];
+    }
 
     const room = this.currentRoom();
     const names: string[] = [];
@@ -452,4 +560,26 @@ export class Engine {
       exec: (raw: string) => this.exec(raw),
     };
   }
+}
+
+/** Every score id authored in a room's JSON — the set onScoreComplete
+ *  waits for. Ids inside onScoreComplete itself are excluded, so a
+ *  completion bonus can't make its own trigger unsatisfiable. */
+function collectScoreIds(room: Room): Set<string> {
+  const ids = new Set<string>();
+  const scan = (entries?: ResponseEntry[]) => {
+    for (const entry of entries ?? []) {
+      for (const action of entry.do ?? []) {
+        if ("score" in action) ids.add(action.score.id);
+      }
+    }
+  };
+  scan(room.onEnter);
+  for (const exit of room.exits) scan(exit.blocked);
+  for (const h of room.hotspots) {
+    for (const list of Object.values(h.responses ?? {})) scan(list);
+    for (const t of h.topics ?? []) scan(t.responses);
+    scan(h.topicDefault);
+  }
+  return ids;
 }

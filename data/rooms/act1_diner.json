@@ -1,0 +1,518 @@
+{
+  "id": "act1_diner",
+  "name": "The Bottomless Cup",
+  "background": "assets/backgrounds/act1_diner.png",
+  "walkable": [[26, 120], [300, 120], [310, 178], [16, 178]],
+  "playerStart": { "x": 34, "y": 150, "facing": "right" },
+  "exits": [
+    {
+      "to": "act1_main_street",
+      "polygon": [[0, 120], [22, 120], [22, 178], [0, 178]],
+      "arrive": { "x": 250, "y": 146, "facing": "down" }
+    }
+  ],
+  "onEnter": [
+    {
+      "if": { "flagNot": "dn_seen" },
+      "do": [
+        {
+          "narrate": "The Bottomless Cup: eight stools, four booths, sixty years of gravy in the walls. The griddle hisses, the coffee urn steams, and none of it is asking a server for permission, because all of it IS the server. You had forgotten rooms could be this operational."
+        },
+        { "setFlag": "dn_seen" }
+      ]
+    },
+    {
+      "text": "The diner, still humming along on gas, grease, and Darlene. Best uptime in the hemisphere."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "The diner's ledger closes: coffee secured, locals consulted, intelligence acquired. You know where the internet lives now. It lives behind a nail salon, and someone has to go knock. The tab, as ever, says it's you."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "diner_door",
+      "name": "door",
+      "synonyms": ["exit", "outside", "street"],
+      "polygon": [[2, 26], [28, 26], [28, 118], [2, 118]],
+      "responses": {
+        "look": [
+          {
+            "text": "The diner door, hung with the paper 'YES' sign facing out. A bell on a spring announces all arrivals. It has never once needed a firmware update to ding."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              { "narrate": "The bell dings you out." },
+              { "goto": "act1_main_street" }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              { "narrate": "The bell dings you out." },
+              { "goto": "act1_main_street" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "corkboard_dn",
+      "name": "corkboard",
+      "synonyms": ["cork board", "flyers", "notices", "business cards"],
+      "polygon": [[32, 30], [58, 30], [58, 74], [32, 74]],
+      "responses": {
+        "look": [
+          {
+            "text": "The diner corkboard, the town's actual backbone: babysitters, a tractor for sale, choir practice moved to Tuesdays. One yellowed clipping from the Gazette — 'LOCAL MAN'S NEPHEW INSTALLS INTERNET EQUIPMENT AT PLAZA' — with a photo of a proud kid in a hard hat outside the nail salon. Merle is in the background of the photo, pointing at the equipment like he built it."
+          }
+        ],
+        "take": [
+          {
+            "text": "The clipping belongs to the board, and the board belongs to the town. Besides, Merle would notice. Merle notices everything except your name."
+          }
+        ]
+      }
+    },
+    {
+      "id": "booths",
+      "name": "booths",
+      "synonyms": ["booth", "tables", "table", "vinyl"],
+      "polygon": [[30, 92], [96, 92], [96, 140], [30, 140]],
+      "responses": {
+        "look": [
+          {
+            "text": "Four booths in surgical-green vinyl, each patched with tape a shade off. The window booth holds two farmers discussing the outage with the calm of men whose equipment predates login screens. Their tractors will start tomorrow. They know it. The tractors know it."
+          }
+        ],
+        "use": [
+          {
+            "text": "You're not here to sit. You're here on what you are slowly coming to accept is a service call for the entire planet."
+          }
+        ],
+        "talk": [
+          {
+            "text": "You nod at the farmers. They nod back — one nod each, fixed-rate, no retries needed. Rural TCP."
+          }
+        ]
+      }
+    },
+    {
+      "id": "pie_case",
+      "name": "pie case",
+      "synonyms": ["pie", "pies", "case", "dessert"],
+      "polygon": [[100, 60], [124, 60], [124, 92], [100, 92]],
+      "responses": {
+        "look": [
+          {
+            "text": "A rotating pie case, unplugged from its rotation since the Clinton administration, pies stationary and magnificent: cherry, apple, and one labeled simply 'CREAM.' No inventory system tracks these pies. Darlene knows. Darlene has always known."
+          }
+        ],
+        "take": [
+          {
+            "text": "Pie is earned in this town, not taken. You have not yet earned pie. You suspect the exchange rate is denominated in fixed internets."
+          }
+        ],
+        "open": [
+          {
+            "text": "The case opens from Darlene's side. This is not an oversight. This is security architecture."
+          }
+        ]
+      }
+    },
+    {
+      "id": "darlene",
+      "name": "Darlene",
+      "synonyms": ["waitress", "server", "woman"],
+      "polygon": [[120, 40], [152, 40], [152, 92], [120, 92]],
+      "responses": {
+        "look": [
+          {
+            "text": "Darlene: apron, pencil behind the ear, coffee pot in permanent orbit. She has run this room through blizzards, recessions, and one health inspector with ambitions. An outage does not crack her top ten."
+          }
+        ],
+        "talk": [
+          {
+            "if": { "all": [{ "flagNot": "met_darlene" }, { "flag": "met_gary" }] },
+            "do": [
+              {
+                "narrate": "'Mark, hon! Sit anywhere.' Darlene has called you Mark since the day you fixed the diner's card reader — as Mel, invoiced as Mel, thanked as Mark. That's two names today, and the day is young. 'Coffee's still hot. Gas don't crash.'"
+              },
+              { "setFlag": "met_darlene" },
+              { "score": { "id": "dn_darlene", "points": 1 } }
+            ]
+          },
+          {
+            "if": { "flagNot": "met_darlene" },
+            "do": [
+              {
+                "narrate": "'Mark, hon! Sit anywhere.' Darlene has called you Mark since the day you fixed the diner's card reader — as Mel, invoiced as Mel, thanked as Mark. 'Coffee's still hot. Gas don't crash.'"
+              },
+              { "setFlag": "met_darlene" },
+              { "score": { "id": "dn_darlene", "points": 1 } }
+            ]
+          },
+          {
+            "text": "'Need something, Mark?' She's already moving. Darlene answers questions the way the old internet served pages: fast, and mostly what you asked for."
+          }
+        ],
+        "take": [
+          {
+            "text": "Darlene is the load-bearing member of this entire town. She stays."
+          }
+        ]
+      },
+      "topics": [
+        {
+          "match": ["outage", "internet"],
+          "responses": [
+            {
+              "text": "'Register's cash-only, card thing's showing a little cloud with an X through it.' She shrugs with the pot. 'We wrote prices on a chalkboard. Took four minutes. World's shortest disaster recovery.' She refills a farmer without looking."
+            }
+          ]
+        },
+        {
+          "match": ["nimbus", "cumulonimbus", "cloud"],
+          "responses": [
+            {
+              "text": "'The Nimbus people put a chip reader in my counter and a fee in my margin.' She taps the dead tablet with the pencil. 'Three percent. For weather.' Darlene understood cloud economics before the term existed: never rent what you can own, and never own what you can't fix with a spoon."
+            }
+          ]
+        },
+        {
+          "match": ["merle"],
+          "responses": [
+            {
+              "text": "'Merle?' Darlene's voice drops to diner-confidential. 'Knows where every pipe, wire, and grudge in this county is buried. His nephew put in that computer closet at the plaza.' She freshens Merle's cup unasked. 'Ask him about it. You'll want the counter stool. It's a forty-minute answer.'"
+            }
+          ]
+        },
+        {
+          "match": ["name", "mel", "mark"],
+          "responses": [
+            {
+              "text": "'It's Mel,' you offer. 'Mm-hm,' says Darlene, warmly, writing MARK on a ticket you haven't ordered. There is no malice in it. There is no correcting it either. Some records are append-only."
+            }
+          ]
+        },
+        {
+          "match": ["pie"],
+          "responses": [
+            {
+              "text": "'Pie's for closers, hon.' She says it kindly, the way you'd read a service-level agreement to a child. Fix the internet, get the cherry. Now you have a contract."
+            }
+          ]
+        }
+      ],
+      "topicDefault": [
+        {
+          "text": "Darlene files your question under 'city stuff' and tops off the nearest cup, which is her way of changing the subject at 60 psi."
+        }
+      ]
+    },
+    {
+      "id": "coffee_urn",
+      "name": "coffee urn",
+      "synonyms": ["urn", "coffee", "coffee pot", "pot"],
+      "polygon": [[160, 48], [184, 48], [184, 88], [160, 88]],
+      "responses": {
+        "look": [
+          {
+            "text": "The coffee urn: forty cups of capacity, gas-heated, gravity-served. Zero apps, zero pods, zero DRM. It has out-survived every startup that ever pitched 'coffee, but smart.' The urn was always smart. The urn kept it to itself."
+          }
+        ],
+        "use": [
+          {
+            "if": { "all": [{ "instrument": "mug" }, { "flagNot": "mug_full" }] },
+            "do": [
+              {
+                "narrate": "You hold your mug under the spigot and pull the lever. A rope of black, honest coffee. Darlene nods at the mug — 'brought your own, good man, Mark' — and waves off payment. Provisions: secured. Morale: patched."
+              },
+              { "setFlag": "mug_full" },
+              { "score": { "id": "dn_mug_filled", "points": 2 } }
+            ]
+          },
+          {
+            "if": { "instrument": "mug" },
+            "text": "The mug is already full. Topping off a full mug is how you get a wet sleeve and a reputation."
+          },
+          {
+            "if": { "anyInstrument": true },
+            "text": "You present it to the urn. The urn dispenses into cups, mugs, and thermoses — vessels, not whatever that is. Darlene's eyebrow enforces the interface."
+          },
+          {
+            "if": { "flagNot": "took_mug" },
+            "text": "You reach for the lever and stop — no vessel. A man who owns upwards of thirty mugs, and every one of them is at home. Darlene would lend you a cup, but you'd never survive the look."
+          },
+          {
+            "text": "Your mug's in your bag. Coffee first requires hardware. You know this stack."
+          }
+        ],
+        "take": [
+          {
+            "text": "The urn is the beating heart of this establishment and bolted to the counter, in that order."
+          }
+        ]
+      }
+    },
+    {
+      "id": "pos_tablet",
+      "name": "card reader",
+      "synonyms": ["pos", "tablet", "register", "reader", "cash only", "sign"],
+      "polygon": [[190, 56], [212, 56], [212, 90], [190, 90]],
+      "responses": {
+        "look": [
+          {
+            "text": "The card-reader tablet, showing a cloud with an X through it and the words 'We'll be back!' — the corporate we, the eternal we, the we that is not coming. Taped below it, in Darlene's block capitals: CASH ONLY. WE'LL WAIT. And they will. They were here first."
+          }
+        ],
+        "use": [
+          {
+            "text": "You tap the screen. 'We'll be back!' it insists, with the confidence of a status page. You've written that status page. You know what's behind it. Nothing is behind it."
+          }
+        ],
+        "take": [
+          {
+            "text": "Repossessing the Nimbus hardware is somebody's job, and today that somebody is unreachable by definition."
+          }
+        ]
+      }
+    },
+    {
+      "id": "napkins",
+      "name": "napkin dispenser",
+      "synonyms": ["napkins", "napkin", "dispenser"],
+      "polygon": [[216, 74], [230, 74], [230, 90], [216, 90]],
+      "responses": {
+        "look": [
+          {
+            "text": "A chrome napkin dispenser, spring-loaded, dented, immortal. Estimated install date: Eisenhower. Failed deployments: zero. You look at your reflection in it. Your reflection has seen things."
+          }
+        ],
+        "use": [
+          {
+            "text": "You take one napkin. It dispenses exactly one napkin. You stand a moment in silent respect for correct behavior."
+          }
+        ],
+        "take": [
+          {
+            "text": "One napkin is use. The dispenser is infrastructure. You don't take infrastructure. You maintain it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "merle",
+      "name": "Merle",
+      "synonyms": ["old man", "regular", "old timer"],
+      "polygon": [[232, 48], [266, 48], [266, 128], [232, 128]],
+      "responses": {
+        "look": [
+          {
+            "text": "Merle: seed cap, flannel, coffee saucered to cool. Retired from the county, the railroad, or the phone company, depending which story he's in. Merle is what institutional memory looks like when it outlives the institutions."
+          }
+        ],
+        "talk": [
+          {
+            "if": { "all": [{ "flagNot": "met_merle" }, { "flag": "met_gary" }, { "flag": "met_darlene" }] },
+            "do": [
+              {
+                "narrate": "Merle looks you over like a parcel with insufficient postage. 'You're the IT,' he pronounces. Neil, Mark, and now 'the IT' — three names today, zero of them yours, and the last one isn't even a name. The narrator is keeping the tally in a safe place. It's getting heavy."
+              },
+              { "setFlag": "met_merle" }
+            ]
+          },
+          {
+            "if": { "all": [{ "flagNot": "met_merle" }, { "any": [{ "flag": "met_gary" }, { "flag": "met_darlene" }] }] },
+            "do": [
+              {
+                "narrate": "Merle looks you over like a parcel with insufficient postage. 'You're the IT,' he pronounces. Not a name. Not even an attempt at a name. The day's tally of things-you've-been-called grows, and none of the entries are 'Mel.'"
+              },
+              { "setFlag": "met_merle" }
+            ]
+          },
+          {
+            "if": { "flagNot": "met_merle" },
+            "do": [
+              {
+                "narrate": "Merle looks you over like a parcel with insufficient postage. 'You're the IT,' he pronounces, and turns back to his coffee, communication complete. Somewhere in that sentence was a greeting, a job description, and a filing decision, none of which involved your name."
+              },
+              { "setFlag": "met_merle" }
+            ]
+          },
+          {
+            "if": { "flagNot": "edge_node_located" },
+            "text": "Merle sips. 'Ask straight, IT. Coffee's getting cold and I don't do preambles.' Merle knows things about this town. You can feel the topics radiating off him. Perhaps ask him about one."
+          },
+          {
+            "text": "'Closet's still humming, last I walked past,' Merle says, to his coffee, about the most important building in the hemisphere."
+          }
+        ],
+        "take": [
+          {
+            "text": "Merle predates the concept of being moved. He was born on that stool and he'll be mourned on it."
+          }
+        ]
+      },
+      "topics": [
+        {
+          "match": ["internet", "edge node", "node", "closet", "strip mall", "plaza", "equipment"],
+          "responses": [
+            {
+              "if": { "flagNot": "edge_node_located" },
+              "do": [
+                {
+                  "narrate": "Merle sets down the cup. This is the forty-minute answer, and it is worth every minute: his nephew Dale, the hard hat, the summer of the install. 'They put the internet in a CLOSET, son. Back of the plaza, behind Kim's Nails. Gray door, no sign, hums like a June beetle. Dale said it's the — ' he air-quotes with terrible precision — ''regional edge.' Whole county's internet, one door, one janitor's key.' He picks the cup back up. 'You want the outage? Start where it hums.'"
+                },
+                {
+                  "narrate": "There it is. The trail. The edge of the internet, physically, behind a nail salon, and every step from here descends the stack. You feel the ticket assign itself to you."
+                },
+                { "setFlag": "edge_node_located" },
+                { "score": { "id": "dn_edge_located", "points": 4 } }
+              ]
+            },
+            {
+              "text": "'Gray door. Kim's Nails. Hums.' Merle repeats the coordinates without looking up. Merle does not cache-miss."
+            }
+          ]
+        },
+        {
+          "match": ["outage"],
+          "responses": [
+            {
+              "text": "'Third one I've seen,' says Merle. 'Sixty-five, the ice storm took the phones. Eighty-eight, the substation. Both times, somebody drove out and fixed the actual thing with actual hands.' He looks at you with the weight of a man handing off a shift. 'Nobody drives out anymore.'"
+            }
+          ]
+        },
+        {
+          "match": ["nimbus", "cumulonimbus", "cloud"],
+          "responses": [
+            {
+              "text": "'Company man came through in a polo, said everything was going to the cloud.' Merle taps the counter. 'I asked him where the cloud was. He said everywhere. That's what my granddad said about God, and at least God didn't bill monthly.'"
+            }
+          ]
+        },
+        {
+          "match": ["name", "mel", "the it"],
+          "responses": [
+            {
+              "text": "'Name's Mel,' you say. Merle considers this the way he'd consider a weather forecast: noted, distrusted. 'The IT,' he confirms, and the matter is closed. In this diner, Merle's ledger is the authoritative copy."
+            }
+          ]
+        },
+        {
+          "match": ["dale", "nephew"],
+          "responses": [
+            {
+              "text": "'Dale's in the city now. Installs closets all over.' A long sip. 'Doesn't call. The closets hum, though. A man leaves his hum behind.' You write off the last part as Merle being Merle, and privately suspect it's the wisest sentence you'll hear all week."
+            }
+          ]
+        }
+      ],
+      "topicDefault": [
+        {
+          "text": "Merle weighs the topic against his coffee and rules in favor of the coffee. Appeal denied."
+        }
+      ]
+    },
+    {
+      "id": "counter",
+      "name": "counter",
+      "synonyms": ["bar", "stools", "stool", "formica"],
+      "polygon": [[100, 88], [260, 88], [260, 126], [100, 126]],
+      "responses": {
+        "look": [
+          {
+            "text": "The counter: boomerang-pattern Formica worn white at every elbow point, eight stools with sixty years of torque in the swivels. More real problems have been solved at this counter than in any war room you've ever been paged into."
+          }
+        ],
+        "use": [
+          {
+            "text": "You lean on the counter. It accepts your weight and, implicitly, your situation. Formica is a load-bearing surface in every sense."
+          }
+        ],
+        "take": [
+          {
+            "text": "The stools are bolted down. The town learned about stool theft the same year it learned about the interstate."
+          }
+        ]
+      }
+    },
+    {
+      "id": "specials_board",
+      "name": "specials board",
+      "synonyms": ["specials", "chalkboard", "menu", "prices"],
+      "polygon": [[126, 8], [176, 8], [176, 40], [126, 40]],
+      "responses": {
+        "look": [
+          {
+            "text": "The chalkboard, updated this morning: 'EGGS — $4. CASH. / COFFEE — YES. / WIFI — NO. / ADVICE — FREE.' Under it, smaller, in Darlene's hand: 'we take checks from people we know, which is everyone.' The most coherent pricing page you've read in a decade."
+          }
+        ],
+        "take": [
+          {
+            "text": "The board stays. It's currently the only accurate status page in the western hemisphere."
+          }
+        ]
+      }
+    },
+    {
+      "id": "tv_diner",
+      "name": "television",
+      "synonyms": ["tv", "set", "screen"],
+      "polygon": [[214, 6], [258, 6], [258, 36], [214, 36]],
+      "responses": {
+        "look": [
+          {
+            "text": "A TV on a ceiling mount, tuned to a smart-TV input that is currently a pulsing cloud logo. Nobody has looked at it since breakfast. The diner has reverted to its ancestral programming: the window, and each other."
+          }
+        ],
+        "use": [
+          {
+            "text": "The remote lives behind the counter, under Darlene's jurisdiction, and Darlene has ruled the cloud logo 'restful.' Case closed."
+          }
+        ]
+      }
+    },
+    {
+      "id": "jukebox",
+      "name": "jukebox",
+      "synonyms": ["juke", "music", "records"],
+      "polygon": [[286, 48], [318, 48], [318, 124], [286, 124]],
+      "responses": {
+        "look": [
+          {
+            "text": "A 1974 jukebox, all chrome and amber, stocked with 45s that have outlived four audio formats and two streaming services. It is, at this moment, the most advanced functioning entertainment system in the county. Possibly the continent."
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "dn_jukebox_played" },
+            "do": [
+              {
+                "narrate": "You feed it the quarter from your hoodie pocket — the one that's been through the wash since spring. Clunk, whir, needle down: steel guitar fills the diner, warm and entirely offline. The farmers nod. Merle's boot moves, once. For three minutes, the outage is somebody else's problem."
+              },
+              { "setFlag": "dn_jukebox_played" }
+            ]
+          },
+          {
+            "text": "One quarter, one song. The jukebox's pricing model has been stable since Nixon, which is more than the cloud ever managed."
+          }
+        ],
+        "take": [
+          {
+            "text": "It weighs three hundred pounds and belongs to the town's soul. Both facts are disqualifying."
+          }
+        ]
+      }
+    }
+  ]
+}

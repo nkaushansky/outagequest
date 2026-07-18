@@ -1,0 +1,437 @@
+{
+  "id": "act1_bedroom",
+  "name": "Mel's Bedroom",
+  "background": "assets/backgrounds/act1_bedroom.png",
+  "walkable": [[4, 120], [140, 120], [142, 136], [238, 136], [240, 120], [318, 120], [310, 178], [8, 178]],
+  "playerStart": { "x": 34, "y": 158, "facing": "right" },
+  "exits": [
+    {
+      "to": "act1_living_room",
+      "polygon": [[0, 120], [24, 120], [24, 178], [0, 178]],
+      "arrive": { "x": 229, "y": 136, "facing": "down" }
+    }
+  ],
+  "onEnter": [
+    {
+      "if": { "flagNot": "br_seen" },
+      "do": [
+        {
+          "narrate": "The bedroom: where you spend eight hours a night and zero waking decisions. The blackout curtains are excellent at their job, which is why the succulent died. Somewhere in here, allegedly, are clothes suitable for the outside world."
+        },
+        { "setFlag": "br_seen" }
+      ]
+    },
+    {
+      "text": "The bedroom. The bed notes your continued verticality with disapproval."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "The bedroom has surrendered everything it was hiding — including the pants, which is the part history will remember. Nothing left in here but sleep debt. The front door is the next open ticket."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "door_lr",
+      "name": "doorway",
+      "synonyms": ["door", "living room", "hall", "hallway"],
+      "polygon": [[2, 30], [26, 30], [26, 120], [2, 120]],
+      "responses": {
+        "look": [
+          {
+            "text": "The way back to the living room and its field of dead appliances."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              { "narrate": "Back to the living room." },
+              { "goto": "act1_living_room" }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              { "narrate": "Back to the living room." },
+              { "goto": "act1_living_room" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "shelf_boxes",
+      "name": "closet shelf",
+      "synonyms": ["shelf", "boxes", "box", "crt", "crts", "monitors", "top shelf"],
+      "polygon": [[28, 2], [90, 2], [90, 18], [28, 18]],
+      "responses": {
+        "look": [
+          {
+            "text": "The closet's top shelf, bearing a cardboard ziggurat: cables, adapters, and — crowning it — four CRT monitors kept 'as backups.' The shelf brackets were rated for towels. The whole arrangement is a load-bearing question mark."
+          }
+        ],
+        "take": [
+          {
+            "if": { "flagNot": "br_shelf_warned" },
+            "do": [
+              {
+                "narrate": "You reach for the bottom box. The ziggurat shifts — a slow, geological groan, forty pounds of vintage glass rethinking its position. You withdraw the hand. The shelf settles, unsatisfied."
+              },
+              { "setFlag": "br_shelf_warned" }
+            ]
+          },
+          {
+            "do": [
+              { "death": { "id": "legacy_infrastructure" } }
+            ]
+          }
+        ],
+        "open": [
+          {
+            "if": { "flagNot": "br_shelf_warned" },
+            "do": [
+              {
+                "narrate": "You reach for the bottom box. The ziggurat shifts — a slow, geological groan, forty pounds of vintage glass rethinking its position. You withdraw the hand. The shelf settles, unsatisfied."
+              },
+              { "setFlag": "br_shelf_warned" }
+            ]
+          },
+          {
+            "do": [
+              { "death": { "id": "legacy_infrastructure" } }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "br_shelf_warned" },
+            "do": [
+              {
+                "narrate": "You reach for the bottom box. The ziggurat shifts — a slow, geological groan, forty pounds of vintage glass rethinking its position. You withdraw the hand. The shelf settles, unsatisfied."
+              },
+              { "setFlag": "br_shelf_warned" }
+            ]
+          },
+          {
+            "do": [
+              { "death": { "id": "legacy_infrastructure" } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "closet",
+      "name": "closet",
+      "synonyms": ["wardrobe", "hoodies", "clothes", "hangers"],
+      "polygon": [[28, 18], [90, 18], [90, 112], [28, 112]],
+      "responses": {
+        "look": [
+          {
+            "text": "The closet, doors open in permanent surrender. Contents: eleven hoodies in a gradient from 'conference swag' to 'load-bearing,' two collared shirts sealed in dry-cleaning plastic like evidence, and zero pants. The pants are not here. The pants have never been here."
+          }
+        ],
+        "open": [
+          {
+            "text": "It's already open. This closet gave up on privacy around the same time you did."
+          }
+        ],
+        "take": [
+          {
+            "text": "You own the hoodie you're wearing and the hoodie in your bag. A third would be hubris."
+          }
+        ],
+        "use": [
+          {
+            "text": "You riffle the hangers left to right. Cotton, cotton, fleece, regret, cotton. Nothing with a waistband that means business."
+          }
+        ]
+      }
+    },
+    {
+      "id": "window_br",
+      "name": "window",
+      "synonyms": ["curtains", "blackout curtains", "blinds"],
+      "polygon": [[96, 14], [140, 14], [140, 58], [96, 58]],
+      "responses": {
+        "look": [
+          {
+            "text": "Blackout curtains, hotel-grade, hung so video calls would never backlight you. They've held this room at 2 a.m. for six years straight. Behind them, reportedly, is a sun."
+          }
+        ],
+        "open": [
+          {
+            "if": { "flagNot": "br_curtains_opened" },
+            "do": [
+              {
+                "narrate": "You haul the curtains apart. Daylight enters like a SWAT team. The room, seen clearly for the first time in years, looks exactly like a place where a man has been for six years. You are now legally in a 'before' picture."
+              },
+              { "setFlag": "br_curtains_opened" }
+            ]
+          },
+          {
+            "text": "The curtains stand open. The room is still processing the exposure."
+          }
+        ],
+        "use": [
+          {
+            "text": "You adjust the curtain overlap by a centimeter, a maintenance ritual from the era of 4 a.m. standups with Singapore."
+          }
+        ]
+      }
+    },
+    {
+      "id": "diploma",
+      "name": "diploma",
+      "synonyms": ["degree", "certificate", "frame"],
+      "polygon": [[98, 64], [116, 64], [116, 82], [98, 82]],
+      "responses": {
+        "look": [
+          {
+            "text": "Your degree, framed, hung in the one room no camera ever sees. Bachelor of Science in a field that has been renamed four times since. The Latin is holding up better than the curriculum."
+          }
+        ],
+        "take": [
+          {
+            "text": "The diploma stays on the wall. It's the only certification you hold that never expires or requires renewal fees, and you treasure it for that."
+          }
+        ]
+      }
+    },
+    {
+      "id": "nightstand",
+      "name": "nightstand",
+      "synonyms": ["night stand", "bedside table", "chargers", "charger"],
+      "polygon": [[118, 76], [142, 76], [142, 120], [118, 120]],
+      "responses": {
+        "look": [
+          {
+            "text": "The nightstand: a charging graveyard. Five cables for four dead standards, a phone dock shaped like optimism, and a paperback with a bookmark at page 12 that has not advanced since the first lockdown."
+          }
+        ],
+        "open": [
+          {
+            "text": "The drawer holds earplugs, a dead fitness band, and the user manual for the bed. The bed has a user manual. You closed the drawer years ago for a reason."
+          }
+        ],
+        "take": [
+          {
+            "text": "You need none of these cables. You keep all of these cables. This is the way."
+          }
+        ]
+      }
+    },
+    {
+      "id": "clock",
+      "name": "alarm clock",
+      "synonyms": ["clock", "alarm"],
+      "polygon": [[246, 26], [264, 26], [264, 40], [246, 40]],
+      "responses": {
+        "look": [
+          {
+            "text": "A plastic alarm clock blinking 12:00, as it has since the power flicker of 2019. All day, every clock you own has been wrong in the cloud. This one has been wrong locally, dependably, for years. Seniority matters."
+          }
+        ],
+        "use": [
+          {
+            "text": "You could set it. But it's been 12:00 in this room for five years, and today of all days, you're not sure it's wrong."
+          }
+        ],
+        "take": [
+          {
+            "text": "The clock stays on duty. Somebody in this house has to keep the wrong time running."
+          }
+        ]
+      }
+    },
+    {
+      "id": "under_bed",
+      "name": "under the bed",
+      "synonyms": ["under bed", "underneath", "space bag", "bag", "vacuum bag", "cold storage"],
+      "polygon": [[144, 124], [234, 124], [234, 146], [144, 146]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flagNot": "br_bag_found" },
+            "do": [
+              {
+                "narrate": "You kneel and peer into the under-bed dark: dust with weather patterns, one sock (right), and — pushed against the wall — a vacuum-sealed space bag, contents compressed to two dimensions. A label in your own handwriting: 'HARD PANTS — DO NOT NEED.' Past you filed them in cold storage. Present you begs to differ."
+              },
+              { "setFlag": "br_bag_found" },
+              { "score": { "id": "br_under_bed", "points": 2 } }
+            ]
+          },
+          {
+            "if": { "flagNot": "br_pants_found" },
+            "text": "The space bag waits in the dust, pants flattened inside like pressed flowers from a more formal civilization. Retrieval requires only commitment."
+          },
+          {
+            "text": "Dust, the sock, and a deflated bag. The archive has been emptied. The sock keeps its post."
+          }
+        ],
+        "open": [
+          {
+            "if": { "flagNot": "br_bag_found" },
+            "do": [
+              {
+                "narrate": "You kneel and peer into the under-bed dark: dust with weather patterns, one sock (right), and — pushed against the wall — a vacuum-sealed space bag, contents compressed to two dimensions. A label in your own handwriting: 'HARD PANTS — DO NOT NEED.' Past you filed them in cold storage. Present you begs to differ."
+              },
+              { "setFlag": "br_bag_found" },
+              { "score": { "id": "br_under_bed", "points": 2 } }
+            ]
+          },
+          {
+            "if": { "flagNot": "br_pants_found" },
+            "do": [
+              {
+                "narrate": "You drag the bag out and break the vacuum seal. It inhales — a long, grateful gasp, five years of held breath — and the pants reinflate into the third dimension. Restore from cold storage: successful. Integrity check: they still fit, pending one brave test. You are holding Real Pants."
+              },
+              { "addItem": "pants" },
+              { "setFlag": "br_pants_found" },
+              { "score": { "id": "br_pants_restored", "points": 5 } }
+            ]
+          },
+          {
+            "text": "The bag is spent. It served the archive faithfully and now it rests."
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "br_bag_found" },
+            "do": [
+              {
+                "narrate": "You kneel and peer into the under-bed dark: dust with weather patterns, one sock (right), and — pushed against the wall — a vacuum-sealed space bag, contents compressed to two dimensions. A label in your own handwriting: 'HARD PANTS — DO NOT NEED.' Past you filed them in cold storage. Present you begs to differ."
+              },
+              { "setFlag": "br_bag_found" },
+              { "score": { "id": "br_under_bed", "points": 2 } }
+            ]
+          },
+          {
+            "if": { "flagNot": "br_pants_found" },
+            "do": [
+              {
+                "narrate": "You drag the bag out and break the vacuum seal. It inhales — a long, grateful gasp, five years of held breath — and the pants reinflate into the third dimension. Restore from cold storage: successful. Integrity check: they still fit, pending one brave test. You are holding Real Pants."
+              },
+              { "addItem": "pants" },
+              { "setFlag": "br_pants_found" },
+              { "score": { "id": "br_pants_restored", "points": 5 } }
+            ]
+          },
+          {
+            "text": "The bag is spent. It served the archive faithfully and now it rests."
+          }
+        ],
+        "take": [
+          {
+            "if": { "flagNot": "br_bag_found" },
+            "do": [
+              {
+                "narrate": "You kneel and peer into the under-bed dark: dust with weather patterns, one sock (right), and — pushed against the wall — a vacuum-sealed space bag, contents compressed to two dimensions. A label in your own handwriting: 'HARD PANTS — DO NOT NEED.' Past you filed them in cold storage. Present you begs to differ."
+              },
+              { "setFlag": "br_bag_found" },
+              { "score": { "id": "br_under_bed", "points": 2 } }
+            ]
+          },
+          {
+            "if": { "flagNot": "br_pants_found" },
+            "do": [
+              {
+                "narrate": "You drag the bag out and break the vacuum seal. It inhales — a long, grateful gasp, five years of held breath — and the pants reinflate into the third dimension. Restore from cold storage: successful. Integrity check: they still fit, pending one brave test. You are holding Real Pants."
+              },
+              { "addItem": "pants" },
+              { "setFlag": "br_pants_found" },
+              { "score": { "id": "br_pants_restored", "points": 5 } }
+            ]
+          },
+          {
+            "text": "You already performed the retrieval. The sock, per policy, is never coming out."
+          }
+        ]
+      }
+    },
+    {
+      "id": "bed",
+      "name": "bed",
+      "synonyms": ["mattress", "blankets", "duvet", "pillows"],
+      "polygon": [[144, 52], [234, 52], [234, 132], [144, 132]],
+      "responses": {
+        "look": [
+          {
+            "text": "The bed, made to the standard of a man who knows nobody's coming to inspect it. The duvet is technical fabric. The pillow arrangement is load-balanced. Below deck, the under-bed dark keeps its own inventory."
+          }
+        ],
+        "use": [
+          {
+            "text": "Lie down? Now? The world's infrastructure is on fire and you're the only volunteer department in range. The bed will keep. The bed always keeps."
+          }
+        ],
+        "open": [
+          {
+            "text": "You lift the duvet, confirm the bed contains bed, and re-secure the perimeter."
+          }
+        ],
+        "take": [
+          {
+            "text": "You cannot take the bed with you, a sentence you may repeat to yourself at hour nine of this."
+          }
+        ]
+      }
+    },
+    {
+      "id": "dresser",
+      "name": "dresser",
+      "synonyms": ["drawers", "drawer", "bureau", "joggers", "sweatpants"],
+      "polygon": [[240, 40], [292, 40], [292, 120], [240, 120]],
+      "responses": {
+        "look": [
+          {
+            "text": "The dresser. Top drawer: socks, sorted by attrition. Middle drawer: t-shirts from conferences that no longer exist, for products that no longer exist, from companies that were acquired for the t-shirt budget. Bottom drawer: the soft-pants archive."
+          }
+        ],
+        "open": [
+          {
+            "text": "You pull the bottom drawer: joggers, sweatpants, and one pair of 'dress joggers,' a garment whose name should have been a warning. Soft pants, every one. Soft pants cannot make this journey. The town would smell the elastic."
+          }
+        ],
+        "take": [
+          {
+            "text": "You decline to pack joggers as a backup. If the Real Pants fail, you fail with them. Commitment is a deployment strategy."
+          }
+        ],
+        "use": [
+          {
+            "text": "You square up the sock drawer by reflex. Order must live somewhere today."
+          }
+        ]
+      }
+    },
+    {
+      "id": "chair_pile",
+      "name": "the chair",
+      "synonyms": ["chair", "clothes pile", "pile", "laundry"],
+      "polygon": [[296, 60], [318, 60], [318, 124], [296, 124]],
+      "responses": {
+        "look": [
+          {
+            "text": "The Chair: neither closet nor hamper but a third state of matter, holding clothes too clean to wash and too worn to hang. Archaeologists would call it a midden. You call it the staging environment."
+          }
+        ],
+        "take": [
+          {
+            "text": "You will not find Real Pants in the staging environment. Nothing in staging is ever production-ready. You know this professionally."
+          }
+        ],
+        "use": [
+          {
+            "text": "You consider processing the pile. The pile considers being processed. You reach a mutual understanding: later."
+          }
+        ]
+      }
+    }
+  ]
+}

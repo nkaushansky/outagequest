@@ -4,7 +4,7 @@
                "default": "You look. It looks back. Neither of you learns anything." },
     "take":  { "synonyms": ["take", "get", "grab", "pick up", "steal"], "needsObject": true,
                "default": "It declines to be taken. Respect that." },
-    "use":   { "synonyms": ["use", "operate", "activate", "press", "push", "pull", "jiggle", "plug", "plug in", "unplug", "connect", "attach", "reboot", "restart", "cycle", "power cycle"], "needsObject": true,
+    "use":   { "synonyms": ["use", "operate", "activate", "press", "push", "pull", "jiggle", "plug", "plug in", "unplug", "connect", "attach", "reboot", "restart", "cycle", "power cycle", "wear", "put on", "drink"], "needsObject": true,
                "default": "You use it as hard as you can. Nothing happens, professionally." },
     "talk":  { "synonyms": ["talk", "talk to", "speak", "ask", "greet"], "needsObject": true,
                "default": "You clear your throat. The silence files a ticket." },
@@ -14,5 +14,6 @@
   "unknownVerb": "The parser stares at '{input}' and quietly increments an error counter somewhere.",
   "didYouMean": "Did you mean '{suggestion}'? Of course you did. Running that instead.",
   "needsObjectPrompt": "You want to {verb}... what, exactly? The parser needs a direct object. Today of all days.",
-  "unknownObject": "You don't see any '{object}' here. The parser checked. Twice. With grep."
+  "unknownObject": "You don't see any '{object}' here. The parser checked. Twice. With grep.",
+  "unknownTopic": "You bring up '{topic}'. It doesn't land. {name} remains at idle."
 }
