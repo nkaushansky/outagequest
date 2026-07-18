@@ -94,6 +94,12 @@
     border: 1px solid #2E4A66; border-radius: 6px;
     padding: 8px 12px; touch-action: manipulation;
   }
+  .clear {
+    font: inherit; font-size: 14px; cursor: pointer;
+    background-color: #1C1C2C; color: #9090A8;
+    border: 1px solid #34344A; border-radius: 6px;
+    padding: 8px 10px; touch-action: manipulation;
+  }
 
   .verbs { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 8px; }
   .verb {
@@ -102,7 +108,7 @@
     border: 1px solid #2E4A66; border-radius: 6px;
     padding: 8px 6px; touch-action: manipulation;
   }
-  .verb:active, .run:active, .suggest-chip:active { background-color: #24384E; }
+  .verb:active, .run:active, .clear:active, .suggest-chip:active { background-color: #24384E; }
 
   .inv {
     display: flex; align-items: center; gap: 8px;
@@ -119,7 +125,7 @@
   }
 
   @media (pointer: coarse) {
-    .verb, .run { min-height: 44px; }
+    .verb, .run, .clear { min-height: 44px; }
     .suggest-chip, .inv-chip { min-height: 32px; }
   }
 

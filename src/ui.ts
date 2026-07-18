@@ -57,10 +57,14 @@ export class UI {
     this.input.enterKeyHint = "go";
     this.input.setAttribute("aria-label", "command");
     this.input.placeholder = "type, or tap things…";
+    const clear = el("button", "clear");
+    clear.textContent = "✕";
+    clear.setAttribute("aria-label", "clear command line");
+    clear.addEventListener("click", () => this.setInput("", true));
     const run = el("button", "run");
     run.textContent = "RUN";
     run.addEventListener("click", () => this.submit());
-    inputRow.append(prompt, this.input, run);
+    inputRow.append(prompt, this.input, clear, run);
 
     const verbStrip = el("div", "verbs");
     for (const verb of verbs) {

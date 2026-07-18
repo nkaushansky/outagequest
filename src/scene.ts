@@ -132,7 +132,12 @@ export class Scene {
         this.hotspotAt(p)?.id ?? "");
     }
 
-    const hotspot = this.hotspotAt(p);
+    // Floor priority: a tap inside the walkable polygon always walks —
+    // dense generous hotspots otherwise out-compete walking on touch
+    // screens. Hotspots only contest taps outside the floor.
+    const onFloor =
+      this.room.walkable.length >= 3 && pointInPolygon(p, this.room.walkable);
+    const hotspot = onFloor ? null : this.hotspotAt(p);
     if (hotspot) {
       this.highlight = {
         poly: hotspot.polygon,

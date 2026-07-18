@@ -199,6 +199,29 @@ ok((await score()) === "13", "saw_the_red not missable (+2 after confirm)", awai
 await run("look monitors");
 ok((await lastLines()).includes("artisanally confirmed"), "second look hits confirmed branch", await lastLines());
 
+// ---- input QoL (2026-07-18 device playtest) --------------------------------
+// Player is at playerStart (160,150) after the reload above; canvas
+// geometry helpers from the walk section are still in scope.
+[cx, cy] = toClient(120, 50); // monitors, outside the floor
+await page.mouse.click(cx, cy);
+ok((await page.inputValue(".cmd-input")) === "monitors", "hotspot tap names noun", await page.inputValue(".cmd-input"));
+[cx, cy] = toClient(50, 30); // window, outside the floor
+await page.mouse.click(cx, cy);
+ok((await page.inputValue(".cmd-input")) === "window", "bare-noun tap replaces, not stacks", await page.inputValue(".cmd-input"));
+await page.locator(".verb", { hasText: "USE" }).click();
+ok((await page.inputValue(".cmd-input")) === "use window", "verb tap prepends to noun", await page.inputValue(".cmd-input"));
+[cx, cy] = toClient(120, 50); // monitors again, mid-command
+await page.mouse.click(cx, cy);
+ok((await page.inputValue(".cmd-input")) === "use monitors ", "mid-command tap fills object slot", await page.inputValue(".cmd-input"));
+await page.locator(".clear").click();
+ok((await page.inputValue(".cmd-input")) === "", "clear button empties input", await page.inputValue(".cmd-input"));
+[cx, cy] = toClient(150, 128); // floor, 2px under the chair polygon (inside old pad)
+await page.mouse.click(cx, cy);
+ok((await page.inputValue(".cmd-input")) === "", "floor tap near chair doesn't hotspot", await page.inputValue(".cmd-input"));
+await page.waitForTimeout(900);
+const qpos = await page.evaluate(() => ({ ...window.spof.state.player }));
+ok(Math.abs(qpos.x - 150) < 2 && Math.abs(qpos.y - 128) < 2, "floor tap walks instead", JSON.stringify(qpos));
+
 // ---- console + screenshots -------------------------------------------------
 ok(consoleErrors.length === 0, "zero console errors", JSON.stringify(consoleErrors));
 

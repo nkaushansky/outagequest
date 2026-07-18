@@ -333,8 +333,16 @@ export class Engine {
   }
 
   private insertNoun(name: string): void {
-    const current = this.ui.getInput().trimEnd();
-    this.ui.setInput(current ? `${current} ${name}` : name, true);
+    const tokens = normalize(this.ui.getInput());
+    if (matchVerb(tokens, this.content.verbs)) {
+      // Mid-command: the tap fills the current object slot (same tail
+      // rule as autocomplete acceptance).
+      this.acceptSuggestion(name);
+    } else {
+      // No verb started: the tap names a new target — replace, don't
+      // stack ("window mug rack" is never a command).
+      this.ui.setInput(name, true);
+    }
   }
 
   private acceptSuggestion(s: string): void {
