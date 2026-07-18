@@ -2,23 +2,35 @@
   "id": "act1_bedroom",
   "name": "Mel's Bedroom",
   "background": "assets/backgrounds/act1_bedroom.png",
-  "walkable": [[4, 120], [140, 120], [142, 136], [238, 136], [240, 120], [318, 120], [310, 178], [8, 178]],
-  "playerStart": { "x": 34, "y": 158, "facing": "right" },
+  "walkable": [[8, 112], [164, 112], [166, 140], [254, 140], [256, 112], [278, 112], [278, 150], [306, 150], [302, 178], [10, 178]],
+  "playerStart": {
+    "x": 34,
+    "y": 158,
+    "facing": "right"
+  },
   "exits": [
     {
       "to": "act1_living_room",
-      "polygon": [[0, 120], [24, 120], [24, 178], [0, 178]],
-      "arrive": { "x": 48, "y": 136, "facing": "down" }
+      "polygon": [[0, 116], [24, 116], [24, 178], [0, 178]],
+      "arrive": {
+        "x": 34,
+        "y": 152,
+        "facing": "down"
+      }
     }
   ],
   "onEnter": [
     {
-      "if": { "flagNot": "br_seen" },
+      "if": {
+        "flagNot": "br_seen"
+      },
       "do": [
         {
           "narrate": "The bedroom: where you spend eight hours a night and zero waking decisions. The blackout curtains are excellent at their job, which is why the succulent died. Somewhere in here, allegedly, are clothes suitable for the outside world."
         },
-        { "setFlag": "br_seen" }
+        {
+          "setFlag": "br_seen"
+        }
       ]
     },
     {
@@ -38,8 +50,13 @@
     {
       "id": "door_lr",
       "name": "doorway",
-      "synonyms": ["door", "living room", "hall", "hallway"],
-      "polygon": [[2, 30], [26, 30], [26, 120], [2, 120]],
+      "synonyms": [
+        "door",
+        "living room",
+        "hall",
+        "hallway"
+      ],
+      "polygon": [[6, 14], [32, 14], [32, 110], [6, 110]],
       "responses": {
         "look": [
           {
@@ -49,16 +66,24 @@
         "open": [
           {
             "do": [
-              { "narrate": "Back to the living room." },
-              { "goto": "act1_living_room" }
+              {
+                "narrate": "Back to the living room."
+              },
+              {
+                "goto": "act1_living_room"
+              }
             ]
           }
         ],
         "use": [
           {
             "do": [
-              { "narrate": "Back to the living room." },
-              { "goto": "act1_living_room" }
+              {
+                "narrate": "Back to the living room."
+              },
+              {
+                "goto": "act1_living_room"
+              }
             ]
           }
         ]
@@ -67,8 +92,16 @@
     {
       "id": "shelf_boxes",
       "name": "closet shelf",
-      "synonyms": ["shelf", "boxes", "box", "crt", "crts", "monitors", "top shelf"],
-      "polygon": [[28, 2], [90, 2], [90, 18], [28, 18]],
+      "synonyms": [
+        "shelf",
+        "boxes",
+        "box",
+        "crt",
+        "crts",
+        "monitors",
+        "top shelf"
+      ],
+      "polygon": [[50, 22], [115, 22], [115, 51], [50, 51]],
       "responses": {
         "look": [
           {
@@ -77,49 +110,73 @@
         ],
         "take": [
           {
-            "if": { "flagNot": "br_shelf_warned" },
+            "if": {
+              "flagNot": "br_shelf_warned"
+            },
             "do": [
               {
                 "narrate": "You reach for the bottom box. The ziggurat shifts — a slow, geological groan, forty pounds of vintage glass rethinking its position. You withdraw the hand. The shelf settles, unsatisfied."
               },
-              { "setFlag": "br_shelf_warned" }
+              {
+                "setFlag": "br_shelf_warned"
+              }
             ]
           },
           {
             "do": [
-              { "death": { "id": "legacy_infrastructure" } }
+              {
+                "death": {
+                  "id": "legacy_infrastructure"
+                }
+              }
             ]
           }
         ],
         "open": [
           {
-            "if": { "flagNot": "br_shelf_warned" },
+            "if": {
+              "flagNot": "br_shelf_warned"
+            },
             "do": [
               {
                 "narrate": "You reach for the bottom box. The ziggurat shifts — a slow, geological groan, forty pounds of vintage glass rethinking its position. You withdraw the hand. The shelf settles, unsatisfied."
               },
-              { "setFlag": "br_shelf_warned" }
+              {
+                "setFlag": "br_shelf_warned"
+              }
             ]
           },
           {
             "do": [
-              { "death": { "id": "legacy_infrastructure" } }
+              {
+                "death": {
+                  "id": "legacy_infrastructure"
+                }
+              }
             ]
           }
         ],
         "use": [
           {
-            "if": { "flagNot": "br_shelf_warned" },
+            "if": {
+              "flagNot": "br_shelf_warned"
+            },
             "do": [
               {
                 "narrate": "You reach for the bottom box. The ziggurat shifts — a slow, geological groan, forty pounds of vintage glass rethinking its position. You withdraw the hand. The shelf settles, unsatisfied."
               },
-              { "setFlag": "br_shelf_warned" }
+              {
+                "setFlag": "br_shelf_warned"
+              }
             ]
           },
           {
             "do": [
-              { "death": { "id": "legacy_infrastructure" } }
+              {
+                "death": {
+                  "id": "legacy_infrastructure"
+                }
+              }
             ]
           }
         ]
@@ -128,8 +185,13 @@
     {
       "id": "closet",
       "name": "closet",
-      "synonyms": ["wardrobe", "hoodies", "clothes", "hangers"],
-      "polygon": [[28, 18], [90, 18], [90, 112], [28, 112]],
+      "synonyms": [
+        "wardrobe",
+        "hoodies",
+        "clothes",
+        "hangers"
+      ],
+      "polygon": [[44, 15], [122, 15], [122, 110], [44, 110]],
       "responses": {
         "look": [
           {
@@ -156,8 +218,12 @@
     {
       "id": "window_br",
       "name": "window",
-      "synonyms": ["curtains", "blackout curtains", "blinds"],
-      "polygon": [[96, 14], [140, 14], [140, 58], [96, 58]],
+      "synonyms": [
+        "curtains",
+        "blackout curtains",
+        "blinds"
+      ],
+      "polygon": [[134, 12], [197, 12], [197, 80], [134, 80]],
       "responses": {
         "look": [
           {
@@ -166,12 +232,16 @@
         ],
         "open": [
           {
-            "if": { "flagNot": "br_curtains_opened" },
+            "if": {
+              "flagNot": "br_curtains_opened"
+            },
             "do": [
               {
                 "narrate": "You haul the curtains apart. Daylight enters like a SWAT team. The room, seen clearly for the first time in years, looks exactly like a place where a man has been for six years. You are now legally in a 'before' picture."
               },
-              { "setFlag": "br_curtains_opened" }
+              {
+                "setFlag": "br_curtains_opened"
+              }
             ]
           },
           {
@@ -188,8 +258,12 @@
     {
       "id": "diploma",
       "name": "diploma",
-      "synonyms": ["degree", "certificate", "frame"],
-      "polygon": [[98, 64], [116, 64], [116, 82], [98, 82]],
+      "synonyms": [
+        "degree",
+        "certificate",
+        "frame"
+      ],
+      "polygon": [[201, 31], [224, 31], [224, 50], [201, 50]],
       "responses": {
         "look": [
           {
@@ -206,8 +280,13 @@
     {
       "id": "nightstand",
       "name": "nightstand",
-      "synonyms": ["night stand", "bedside table", "chargers", "charger"],
-      "polygon": [[118, 76], [142, 76], [142, 120], [118, 120]],
+      "synonyms": [
+        "night stand",
+        "bedside table",
+        "chargers",
+        "charger"
+      ],
+      "polygon": [[124, 82], [158, 82], [158, 114], [124, 114]],
       "responses": {
         "look": [
           {
@@ -229,8 +308,11 @@
     {
       "id": "clock",
       "name": "alarm clock",
-      "synonyms": ["clock", "alarm"],
-      "polygon": [[246, 26], [264, 26], [264, 40], [246, 40]],
+      "synonyms": [
+        "clock",
+        "alarm"
+      ],
+      "polygon": [[253, 45], [278, 45], [278, 58], [253, 58]],
       "responses": {
         "look": [
           {
@@ -252,22 +334,40 @@
     {
       "id": "under_bed",
       "name": "under the bed",
-      "synonyms": ["under bed", "underneath", "space bag", "bag", "vacuum bag", "cold storage"],
-      "polygon": [[144, 124], [234, 124], [234, 146], [144, 146]],
+      "synonyms": [
+        "under bed",
+        "underneath",
+        "space bag",
+        "bag",
+        "vacuum bag",
+        "cold storage"
+      ],
+      "polygon": [[184, 118], [252, 118], [252, 142], [184, 142]],
       "responses": {
         "look": [
           {
-            "if": { "flagNot": "br_bag_found" },
+            "if": {
+              "flagNot": "br_bag_found"
+            },
             "do": [
               {
                 "narrate": "You kneel and peer into the under-bed dark: dust with weather patterns, one sock (right), and — pushed against the wall — a vacuum-sealed space bag, contents compressed to two dimensions. A label in your own handwriting: 'HARD PANTS — DO NOT NEED.' Past you filed them in cold storage. Present you begs to differ."
               },
-              { "setFlag": "br_bag_found" },
-              { "score": { "id": "br_under_bed", "points": 2 } }
+              {
+                "setFlag": "br_bag_found"
+              },
+              {
+                "score": {
+                  "id": "br_under_bed",
+                  "points": 2
+                }
+              }
             ]
           },
           {
-            "if": { "flagNot": "br_pants_found" },
+            "if": {
+              "flagNot": "br_pants_found"
+            },
             "text": "The space bag waits in the dust, pants flattened inside like pressed flowers from a more formal civilization. Retrieval requires only commitment."
           },
           {
@@ -276,24 +376,44 @@
         ],
         "open": [
           {
-            "if": { "flagNot": "br_bag_found" },
+            "if": {
+              "flagNot": "br_bag_found"
+            },
             "do": [
               {
                 "narrate": "You kneel and peer into the under-bed dark: dust with weather patterns, one sock (right), and — pushed against the wall — a vacuum-sealed space bag, contents compressed to two dimensions. A label in your own handwriting: 'HARD PANTS — DO NOT NEED.' Past you filed them in cold storage. Present you begs to differ."
               },
-              { "setFlag": "br_bag_found" },
-              { "score": { "id": "br_under_bed", "points": 2 } }
+              {
+                "setFlag": "br_bag_found"
+              },
+              {
+                "score": {
+                  "id": "br_under_bed",
+                  "points": 2
+                }
+              }
             ]
           },
           {
-            "if": { "flagNot": "br_pants_found" },
+            "if": {
+              "flagNot": "br_pants_found"
+            },
             "do": [
               {
                 "narrate": "You drag the bag out and break the vacuum seal. It inhales — a long, grateful gasp, five years of held breath — and the pants reinflate into the third dimension. Restore from cold storage: successful. Integrity check: they still fit, pending one brave test. You are holding Real Pants."
               },
-              { "addItem": "pants" },
-              { "setFlag": "br_pants_found" },
-              { "score": { "id": "br_pants_restored", "points": 5 } }
+              {
+                "addItem": "pants"
+              },
+              {
+                "setFlag": "br_pants_found"
+              },
+              {
+                "score": {
+                  "id": "br_pants_restored",
+                  "points": 5
+                }
+              }
             ]
           },
           {
@@ -302,24 +422,44 @@
         ],
         "use": [
           {
-            "if": { "flagNot": "br_bag_found" },
+            "if": {
+              "flagNot": "br_bag_found"
+            },
             "do": [
               {
                 "narrate": "You kneel and peer into the under-bed dark: dust with weather patterns, one sock (right), and — pushed against the wall — a vacuum-sealed space bag, contents compressed to two dimensions. A label in your own handwriting: 'HARD PANTS — DO NOT NEED.' Past you filed them in cold storage. Present you begs to differ."
               },
-              { "setFlag": "br_bag_found" },
-              { "score": { "id": "br_under_bed", "points": 2 } }
+              {
+                "setFlag": "br_bag_found"
+              },
+              {
+                "score": {
+                  "id": "br_under_bed",
+                  "points": 2
+                }
+              }
             ]
           },
           {
-            "if": { "flagNot": "br_pants_found" },
+            "if": {
+              "flagNot": "br_pants_found"
+            },
             "do": [
               {
                 "narrate": "You drag the bag out and break the vacuum seal. It inhales — a long, grateful gasp, five years of held breath — and the pants reinflate into the third dimension. Restore from cold storage: successful. Integrity check: they still fit, pending one brave test. You are holding Real Pants."
               },
-              { "addItem": "pants" },
-              { "setFlag": "br_pants_found" },
-              { "score": { "id": "br_pants_restored", "points": 5 } }
+              {
+                "addItem": "pants"
+              },
+              {
+                "setFlag": "br_pants_found"
+              },
+              {
+                "score": {
+                  "id": "br_pants_restored",
+                  "points": 5
+                }
+              }
             ]
           },
           {
@@ -328,24 +468,44 @@
         ],
         "take": [
           {
-            "if": { "flagNot": "br_bag_found" },
+            "if": {
+              "flagNot": "br_bag_found"
+            },
             "do": [
               {
                 "narrate": "You kneel and peer into the under-bed dark: dust with weather patterns, one sock (right), and — pushed against the wall — a vacuum-sealed space bag, contents compressed to two dimensions. A label in your own handwriting: 'HARD PANTS — DO NOT NEED.' Past you filed them in cold storage. Present you begs to differ."
               },
-              { "setFlag": "br_bag_found" },
-              { "score": { "id": "br_under_bed", "points": 2 } }
+              {
+                "setFlag": "br_bag_found"
+              },
+              {
+                "score": {
+                  "id": "br_under_bed",
+                  "points": 2
+                }
+              }
             ]
           },
           {
-            "if": { "flagNot": "br_pants_found" },
+            "if": {
+              "flagNot": "br_pants_found"
+            },
             "do": [
               {
                 "narrate": "You drag the bag out and break the vacuum seal. It inhales — a long, grateful gasp, five years of held breath — and the pants reinflate into the third dimension. Restore from cold storage: successful. Integrity check: they still fit, pending one brave test. You are holding Real Pants."
               },
-              { "addItem": "pants" },
-              { "setFlag": "br_pants_found" },
-              { "score": { "id": "br_pants_restored", "points": 5 } }
+              {
+                "addItem": "pants"
+              },
+              {
+                "setFlag": "br_pants_found"
+              },
+              {
+                "score": {
+                  "id": "br_pants_restored",
+                  "points": 5
+                }
+              }
             ]
           },
           {
@@ -357,8 +517,13 @@
     {
       "id": "bed",
       "name": "bed",
-      "synonyms": ["mattress", "blankets", "duvet", "pillows"],
-      "polygon": [[144, 52], [234, 52], [234, 132], [144, 132]],
+      "synonyms": [
+        "mattress",
+        "blankets",
+        "duvet",
+        "pillows"
+      ],
+      "polygon": [[164, 56], [256, 56], [256, 138], [164, 138]],
       "responses": {
         "look": [
           {
@@ -385,8 +550,14 @@
     {
       "id": "dresser",
       "name": "dresser",
-      "synonyms": ["drawers", "drawer", "bureau", "joggers", "sweatpants"],
-      "polygon": [[240, 40], [292, 40], [292, 120], [240, 120]],
+      "synonyms": [
+        "drawers",
+        "drawer",
+        "bureau",
+        "joggers",
+        "sweatpants"
+      ],
+      "polygon": [[246, 58], [290, 58], [290, 110], [246, 110]],
       "responses": {
         "look": [
           {
@@ -413,8 +584,13 @@
     {
       "id": "chair_pile",
       "name": "the chair",
-      "synonyms": ["chair", "clothes pile", "pile", "laundry"],
-      "polygon": [[296, 60], [318, 60], [318, 124], [296, 124]],
+      "synonyms": [
+        "chair",
+        "clothes pile",
+        "pile",
+        "laundry"
+      ],
+      "polygon": [[282, 68], [319, 68], [319, 152], [282, 152]],
       "responses": {
         "look": [
           {

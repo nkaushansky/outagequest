@@ -2,16 +2,16 @@
   "id": "act1_living_room",
   "name": "The Rest of the House",
   "background": "assets/backgrounds/act1_living_room.png",
-  "walkable": [[4, 120], [32, 120], [34, 112], [62, 112], [64, 120], [300, 120], [310, 178], [4, 178]],
+  "walkable": [[22, 116], [33, 116], [33, 138], [156, 138], [156, 116], [298, 116], [258, 178], [8, 178]],
   "playerStart": {
     "x": 34,
-    "y": 158,
+    "y": 150,
     "facing": "right"
   },
   "exits": [
     {
       "to": "act1_home_office",
-      "polygon": [[0, 120], [24, 120], [24, 178], [0, 178]],
+      "polygon": [[0, 116], [22, 116], [22, 178], [0, 178]],
       "arrive": {
         "x": 284,
         "y": 164,
@@ -20,7 +20,7 @@
     },
     {
       "to": "act1_bedroom",
-      "polygon": [[34, 112], [62, 112], [62, 130], [34, 130]],
+      "polygon": [[24, 116], [44, 116], [44, 142], [24, 142]],
       "arrive": {
         "x": 34,
         "y": 158,
@@ -29,10 +29,10 @@
     },
     {
       "to": "act1_main_street",
-      "polygon": [[292, 120], [319, 120], [319, 178], [292, 178]],
+      "polygon": [[282, 116], [300, 116], [300, 142], [282, 142]],
       "arrive": {
         "x": 16,
-        "y": 150,
+        "y": 140,
         "facing": "right"
       },
       "if": {
@@ -94,7 +94,7 @@
         "pot",
         "monstera"
       ],
-      "polygon": [[2, 86], [30, 86], [30, 124], [2, 124]],
+      "polygon": [[0, 75], [20, 75], [20, 150], [0, 150]],
       "responses": {
         "look": [
           {
@@ -121,7 +121,7 @@
         "door to office",
         "nerve center"
       ],
-      "polygon": [[2, 26], [28, 26], [28, 120], [2, 120]],
+      "polygon": [[7, 17], [41, 17], [41, 110], [7, 110]],
       "responses": {
         "look": [
           {
@@ -162,7 +162,7 @@
         "hallway",
         "hall"
       ],
-      "polygon": [[34, 20], [64, 20], [64, 112], [34, 112]],
+      "polygon": [[66, 22], [97, 22], [97, 110], [66, 110]],
       "responses": {
         "look": [
           {
@@ -216,7 +216,7 @@
         "frames",
         "family"
       ],
-      "polygon": [[66, 22], [102, 22], [102, 58], [66, 58]],
+      "polygon": [[100, 26], [150, 26], [150, 64], [100, 64]],
       "responses": {
         "look": [
           {
@@ -238,7 +238,7 @@
         "nest",
         "climate"
       ],
-      "polygon": [[102, 38], [120, 38], [120, 60], [102, 60]],
+      "polygon": [[51, 45], [61, 45], [61, 57], [51, 57]],
       "responses": {
         "look": [
           {
@@ -271,7 +271,7 @@
         "screen",
         "soundbar"
       ],
-      "polygon": [[120, 28], [188, 28], [188, 80], [120, 80]],
+      "polygon": [[152, 32], [207, 32], [207, 67], [152, 67]],
       "responses": {
         "look": [
           {
@@ -305,7 +305,7 @@
         "node",
         "access point"
       ],
-      "polygon": [[164, 80], [186, 80], [186, 96], [164, 96]],
+      "polygon": [[176, 70], [198, 70], [198, 84], [176, 84]],
       "responses": {
         "look": [
           {
@@ -333,7 +333,7 @@
         "echo",
         "voice assistant"
       ],
-      "polygon": [[188, 46], [208, 46], [208, 74], [188, 74]],
+      "polygon": [[207, 46], [225, 46], [225, 64], [207, 64]],
       "responses": {
         "look": [
           {
@@ -378,7 +378,7 @@
         "view",
         "outside"
       ],
-      "polygon": [[210, 16], [252, 16], [252, 62], [210, 62]],
+      "polygon": [[221, 20], [251, 20], [251, 81], [221, 81]],
       "responses": {
         "look": [
           {
@@ -401,7 +401,7 @@
         "panel",
         "video doorbell"
       ],
-      "polygon": [[238, 66], [254, 66], [254, 88], [238, 88]],
+      "polygon": [[276, 88], [290, 88], [290, 104], [276, 104]],
       "responses": {
         "look": [
           {
@@ -445,7 +445,7 @@
         "discs",
         "media"
       ],
-      "polygon": [[256, 14], [286, 14], [286, 72], [256, 72]],
+      "polygon": [[253, 30], [280, 30], [280, 102], [253, 102]],
       "responses": {
         "look": [
           {
@@ -465,53 +465,6 @@
       }
     },
     {
-      "id": "bike",
-      "name": "exercise bike",
-      "synonyms": [
-        "bike",
-        "peloton",
-        "spin bike",
-        "exercise"
-      ],
-      "polygon": [[254, 76], [290, 76], [290, 130], [254, 130]],
-      "responses": {
-        "look": [
-          {
-            "text": "A connected exercise bike with a tablet the size of a serving tray. You bought it to bring the gym home, and it brought the gym's monthly fee home instead. Current mileage: 41. Current role: sculpture."
-          }
-        ],
-        "use": [
-          {
-            "if": {
-              "flagNot": "lr_bike_tried"
-            },
-            "do": [
-              {
-                "narrate": "You climb on and pedal. The flywheel spins — that part is physics, physics still works — but the resistance knob is 'digital,' the classes are 'live,' and the tablet is a black mirror with your own face in it. You are a man pedaling nowhere, watching himself do it, at zero difficulty. This is the most honest workout it has ever provided."
-              },
-              {
-                "setFlag": "lr_bike_tried"
-              },
-              {
-                "score": {
-                  "id": "lr_bike_truth",
-                  "points": 2
-                }
-              }
-            ]
-          },
-          {
-            "text": "One existential ride per outage is the recommended dosage."
-          }
-        ],
-        "take": [
-          {
-            "text": "It weighs a hundred and forty pounds. The subscription was the part designed to be easy to carry."
-          }
-        ]
-      }
-    },
-    {
       "id": "front_door",
       "name": "front door",
       "synonyms": [
@@ -520,7 +473,7 @@
         "outside door",
         "exit"
       ],
-      "polygon": [[292, 10], [318, 10], [318, 118], [292, 118]],
+      "polygon": [[285, 20], [318, 20], [318, 108], [285, 108]],
       "responses": {
         "look": [
           {
@@ -578,6 +531,53 @@
       }
     },
     {
+      "id": "bike",
+      "name": "exercise bike",
+      "synonyms": [
+        "bike",
+        "peloton",
+        "spin bike",
+        "exercise"
+      ],
+      "polygon": [[262, 72], [319, 72], [319, 168], [262, 168]],
+      "responses": {
+        "look": [
+          {
+            "text": "A connected exercise bike with a tablet the size of a serving tray. You bought it to bring the gym home, and it brought the gym's monthly fee home instead. Current mileage: 41. Current role: sculpture."
+          }
+        ],
+        "use": [
+          {
+            "if": {
+              "flagNot": "lr_bike_tried"
+            },
+            "do": [
+              {
+                "narrate": "You climb on and pedal. The flywheel spins — that part is physics, physics still works — but the resistance knob is 'digital,' the classes are 'live,' and the tablet is a black mirror with your own face in it. You are a man pedaling nowhere, watching himself do it, at zero difficulty. This is the most honest workout it has ever provided."
+              },
+              {
+                "setFlag": "lr_bike_tried"
+              },
+              {
+                "score": {
+                  "id": "lr_bike_truth",
+                  "points": 2
+                }
+              }
+            ]
+          },
+          {
+            "text": "One existential ride per outage is the recommended dosage."
+          }
+        ],
+        "take": [
+          {
+            "text": "It weighs a hundred and forty pounds. The subscription was the part designed to be easy to carry."
+          }
+        ]
+      }
+    },
+    {
       "id": "couch",
       "name": "couch",
       "synonyms": [
@@ -586,7 +586,7 @@
         "cushion",
         "seat"
       ],
-      "polygon": [[64, 96], [158, 96], [158, 134], [64, 134]],
+      "polygon": [[33, 63], [64, 63], [64, 80], [152, 80], [152, 136], [33, 136]],
       "responses": {
         "look": [
           {

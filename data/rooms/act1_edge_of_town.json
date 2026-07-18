@@ -2,18 +2,28 @@
   "id": "act1_edge_of_town",
   "name": "The Edge of Town",
   "background": "assets/backgrounds/act1_edge_of_town.png",
-  "walkable": [[4, 122], [316, 122], [316, 166], [4, 166]],
-  "playerStart": { "x": 26, "y": 150, "facing": "right" },
+  "walkable": [[74, 126], [316, 126], [310, 178], [8, 178], [8, 150], [72, 150]],
+  "playerStart": {
+    "x": 30,
+    "y": 158,
+    "facing": "right"
+  },
   "exits": [
     {
       "to": "act1_main_street",
-      "polygon": [[0, 122], [20, 122], [20, 166], [0, 166]],
-      "arrive": { "x": 300, "y": 150, "facing": "left" }
+      "polygon": [[0, 126], [20, 126], [20, 178], [0, 178]],
+      "arrive": {
+        "x": 300,
+        "y": 140,
+        "facing": "left"
+      }
     }
   ],
   "onEnter": [
     {
-      "if": { "flagNot": "eot_arrived" },
+      "if": {
+        "flagNot": "eot_arrived"
+      },
       "do": [
         {
           "narrate": "The plaza at the edge of town: six storefronts, four occupied, one of them 'Kim's Nails,' its window glowing warm against the gray afternoon. And there, around the side, exactly where Merle filed it — a gray steel door with no sign, no handle-cam, no branding. Just a hum. You can feel it through your shoes: fifty hertz of institutional indifference, the actual edge of the actual internet, breathing behind a nail salon."
@@ -21,9 +31,18 @@
         {
           "narrate": "You stand there in your Real Pants, coat over your arm, mug in your bag, four wrong names deep into the first day of the rest of the outage. Every dashboard on Earth is red, and the only trail on Earth runs through that door. Mel Function — whatever this town thinks your name is — the descent starts here."
         },
-        { "narrate": "END OF ACT ONE. (Act Two: 'Regional Infrastructure' — under construction. The hum will wait. It's good at waiting.)" },
-        { "setFlag": "eot_arrived" },
-        { "score": { "id": "eot_act_one_complete", "points": 3 } }
+        {
+          "narrate": "END OF ACT ONE. (Act Two: 'Regional Infrastructure' — under construction. The hum will wait. It's good at waiting.)"
+        },
+        {
+          "setFlag": "eot_arrived"
+        },
+        {
+          "score": {
+            "id": "eot_act_one_complete",
+            "points": 3
+          }
+        }
       ]
     },
     {
@@ -32,14 +51,36 @@
   ],
   "hotspots": [
     {
-      "id": "strip_mall",
-      "name": "strip mall",
-      "synonyms": ["plaza", "mall", "storefronts", "shopping center"],
-      "polygon": [[40, 10], [280, 10], [280, 102], [40, 102]],
+      "id": "sign_pylon",
+      "name": "plaza sign",
+      "synonyms": [
+        "sign",
+        "pylon",
+        "parkview"
+      ],
+      "polygon": [[18, 6], [52, 6], [52, 140], [18, 140]],
       "responses": {
         "look": [
           {
-            "text": "The Parkview Plaza, which views a parking lot. Tanning, tax prep, vacancy, nails, vacancy, and one unmarked unit. Regional infrastructure chose this place for the same reason everyone else here did: the rent."
+            "text": "The plaza's pylon sign: PARKVIEW PLAZA in letters missing enough plastic to read PARKV EW P AZA. Below, tenant panels — the nail salon's is lit. One panel is blank white and always has been. That one, you now know, is the internet's."
+          }
+        ]
+      }
+    },
+    {
+      "id": "weeds",
+      "name": "weeds",
+      "synonyms": [
+        "crack",
+        "cracks",
+        "pavement",
+        "asphalt"
+      ],
+      "polygon": [[0, 118], [70, 118], [70, 146], [0, 146]],
+      "responses": {
+        "look": [
+          {
+            "text": "Weeds working a seam in the parking lot, patient as rust. Zero funding, zero roadmap, one hundred percent year-over-year growth. The only scaling story in this town that ever came true."
           }
         ]
       }
@@ -47,8 +88,13 @@
     {
       "id": "nail_salon",
       "name": "nail salon",
-      "synonyms": ["kims nails", "kim's nails", "salon", "kims"],
-      "polygon": [[60, 24], [140, 24], [140, 98], [60, 98]],
+      "synonyms": [
+        "kims nails",
+        "kim's nails",
+        "salon",
+        "kims"
+      ],
+      "polygon": [[76, 72], [128, 72], [128, 120], [76, 120]],
       "responses": {
         "look": [
           {
@@ -70,8 +116,13 @@
     {
       "id": "vent",
       "name": "box fan",
-      "synonyms": ["fan", "vent", "transom", "exhaust"],
-      "polygon": [[188, 10], [216, 10], [216, 28], [188, 28]],
+      "synonyms": [
+        "fan",
+        "vent",
+        "transom",
+        "exhaust"
+      ],
+      "polygon": [[253, 69], [268, 69], [268, 84], [253, 84]],
       "responses": {
         "look": [
           {
@@ -83,8 +134,14 @@
     {
       "id": "hum_door",
       "name": "gray door",
-      "synonyms": ["door", "steel door", "hum", "closet", "edge node"],
-      "polygon": [[180, 30], [224, 30], [224, 104], [180, 104]],
+      "synonyms": [
+        "door",
+        "steel door",
+        "hum",
+        "closet",
+        "edge node"
+      ],
+      "polygon": [[249, 82], [270, 82], [270, 120], [249, 120]],
       "responses": {
         "look": [
           {
@@ -111,8 +168,12 @@
     {
       "id": "dumpster",
       "name": "dumpster",
-      "synonyms": ["trash", "garbage", "bin"],
-      "polygon": [[240, 78], [300, 78], [300, 128], [240, 128]],
+      "synonyms": [
+        "trash",
+        "garbage",
+        "bin"
+      ],
+      "polygon": [[272, 90], [319, 90], [319, 126], [272, 126]],
       "responses": {
         "look": [
           {
@@ -127,27 +188,19 @@
       }
     },
     {
-      "id": "weeds",
-      "name": "weeds",
-      "synonyms": ["crack", "cracks", "pavement", "asphalt"],
-      "polygon": [[8, 84], [36, 84], [36, 124], [8, 124]],
+      "id": "strip_mall",
+      "name": "strip mall",
+      "synonyms": [
+        "plaza",
+        "mall",
+        "storefronts",
+        "shopping center"
+      ],
+      "polygon": [[74, 52], [302, 52], [302, 124], [74, 124]],
       "responses": {
         "look": [
           {
-            "text": "Weeds working a seam in the parking lot, patient as rust. Zero funding, zero roadmap, one hundred percent year-over-year growth. The only scaling story in this town that ever came true."
-          }
-        ]
-      }
-    },
-    {
-      "id": "sign_pylon",
-      "name": "plaza sign",
-      "synonyms": ["sign", "pylon", "parkview"],
-      "polygon": [[298, 6], [318, 6], [318, 100], [298, 100]],
-      "responses": {
-        "look": [
-          {
-            "text": "The plaza's pylon sign: PARKVIEW PLAZA in letters missing enough plastic to read PARKV EW P AZA. Below, tenant panels — the nail salon's is lit. One panel is blank white and always has been. That one, you now know, is the internet's."
+            "text": "The Parkview Plaza, which views a parking lot. Tanning, tax prep, vacancy, nails, vacancy, and one unmarked unit. Regional infrastructure chose this place for the same reason everyone else here did: the rent."
           }
         ]
       }

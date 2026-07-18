@@ -289,8 +289,8 @@ const clickScene = async (ix, iy) => {
 };
 
 // walk into the gated front-door exit without pants: blocked entry fires
-await page.evaluate(() => { window.spof.state.player.x = 288; window.spof.state.player.y = 150; });
-await clickScene(302, 160);
+await page.evaluate(() => { window.spof.state.player.x = 270; window.spof.state.player.y = 150; });
+await clickScene(290, 124);
 await page.waitForTimeout(1200);
 ok((await logText()).includes("critical path"), "gated exit blocks without pants", await lastLines());
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_living_room", "gate held the door");
@@ -331,8 +331,8 @@ ok((await logText()).includes("eleven steps"), "leaving-the-house set piece", aw
 ok((await score()) === "33", "outside-at-last scored", await score());
 
 // east gate blocked before the diner reveal
-await page.evaluate(() => { window.spof.state.player.x = 300; window.spof.state.player.y = 150; });
-await clickScene(315, 150);
+await page.evaluate(() => { window.spof.state.player.x = 300; window.spof.state.player.y = 140; });
+await clickScene(315, 138);
 await page.waitForTimeout(1000);
 ok((await logText()).includes("It serves pie"), "east exit blocked without the trail", await lastLines());
 
@@ -384,8 +384,8 @@ ok((await lastLines()).includes("route packets"), "drinking the coffee", await l
 
 // ---- M3: act out — gate opens, act completable at 45 ------------------------
 await run("open door");
-await page.evaluate(() => { window.spof.state.player.x = 300; window.spof.state.player.y = 150; });
-await clickScene(315, 150);
+await page.evaluate(() => { window.spof.state.player.x = 300; window.spof.state.player.y = 140; });
+await clickScene(315, 138);
 await page.waitForTimeout(1500);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "east gate opens with the trail");
 ok((await logText()).includes("END OF ACT ONE"), "act-out stinger narrates");
@@ -398,18 +398,18 @@ ok(["legacy_infrastructure", "packet_loss"].every((d) => m3deaths.includes(d)),
   "both new Act 1 deaths collected + registered", JSON.stringify(m3deaths));
 
 // no dead-man-walking: the world stays open at act end
-await page.evaluate(() => { window.spof.state.player.x = 26; window.spof.state.player.y = 150; });
-await clickScene(6, 150);
+await page.evaluate(() => { window.spof.state.player.x = 30; window.spof.state.player.y = 158; });
+await clickScene(10, 164);
 await page.waitForTimeout(1200);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_main_street", "act end is not a dead end");
 
 // ---- M3: drag-to-walk -------------------------------------------------------
-await page.evaluate(() => { window.spof.state.player.x = 60; window.spof.state.player.y = 150; });
+await page.evaluate(() => { window.spof.state.player.x = 60; window.spof.state.player.y = 138; });
 const dm = await sceneMap();
-await page.mouse.move(dm.x(60), dm.y(150));
+await page.mouse.move(dm.x(60), dm.y(138));
 await page.mouse.down();
 for (let i = 1; i <= 8; i++) {
-  await page.mouse.move(dm.x(60 + i * 15), dm.y(150));
+  await page.mouse.move(dm.x(60 + i * 15), dm.y(138));
   await page.waitForTimeout(70);
 }
 const dragPos = await page.evaluate(() => ({ ...window.spof.state.player }));
