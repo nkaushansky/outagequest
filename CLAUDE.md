@@ -37,7 +37,9 @@ from it) and `data/schema.md` (the content format — the engine's contract).
   later, it must remain obtainable.
 - No pixel hunts (hotspots are generous), no guess-the-verb (synonyms are
   generous; "did you mean" is snarky but helpful).
-- Score events award exactly once (by id). "N of 250" whispers completionism.
+- Score events award exactly once (by id). The ticket queue counts DOWN —
+  opens at 250, completionism is closing it to 0 (presentation only;
+  authored score actions stay additive).
 
 ## Milestones
 

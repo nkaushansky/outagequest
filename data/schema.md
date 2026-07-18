@@ -129,7 +129,9 @@ exits, topics), `instrument` is never satisfied and `anyInstrument` equals
 - `{ "narrate": "text" }` — message window / narrator
 - `{ "setFlag": "x" }` / `{ "clearFlag": "x" }`
 - `{ "addItem": "id" }` / `{ "removeItem": "id" }`
-- `{ "score": { "id": "unique_event", "points": 5 } }` — awards once, ever
+- `{ "score": { "id": "unique_event", "points": 5 } }` — awards once, ever.
+  Author points additively as always; the UI presents the total as a
+  ticket queue counting down from maxScore ("TICKETS OPEN 205/250")
 - `{ "death": { "id": "electrocuted_by_rack" } }` — death screen + gallery
   registration + instant retry one step back. Copy lives in `data/deaths.json`
   (id, title, text); an inline `"text"`/`"title"` here is only a fallback for

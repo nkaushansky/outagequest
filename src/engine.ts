@@ -365,8 +365,9 @@ export class Engine {
     this.state.awarded.add(id);
     this.state.score += points;
     this.refreshStatus();
+    const open = this.content.game.maxScore - this.state.score;
     this.narrate(
-      `+${points} ticket${points === 1 ? "" : "s"} (${this.state.score}/${this.content.game.maxScore})`,
+      `${points} ticket${points === 1 ? "" : "s"} closed (${open} open)`,
       "pts",
     );
   }

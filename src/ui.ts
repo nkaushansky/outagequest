@@ -174,7 +174,10 @@ export class UI {
 
   setStatus(room: string, score: number, maxScore: number): void {
     this.statusRoom.textContent = room;
-    this.statusScore.textContent = `TICKETS ${score}/${maxScore}`;
+    // The queue burns DOWN: the outage opens with 250 tickets on Mel's
+    // plate and completionism is getting it to zero. Score stays additive
+    // internally; only the presentation inverts.
+    this.statusScore.textContent = `TICKETS OPEN ${maxScore - score}/${maxScore}`;
   }
 
   setDevInfo(info: string): void {

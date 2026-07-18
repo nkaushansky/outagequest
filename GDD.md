@@ -28,7 +28,8 @@ stack, the less anyone understands it. Competence lives at the bottom.
 **Keep the Sierra soul:** narrator-as-character (every LOOK gets a joke);
 curiosity as the core loop (absurd amounts of examinable stuff); rooms as
 places (discrete screens with edges); real stakes (collectible deaths);
-score counter ("N of 250") whispering completionism.
+score counter whispering completionism — a ticket queue that opens at 250
+and burns down toward the sysadmin's one true dream, zero.
 
 **Fix the Sierra sins:** never silently unwinnable; death = instant retry
 one step back; no guess-the-verb (rich synonyms, "did you mean"); no pixel
@@ -120,8 +121,11 @@ cycles, hand-cleaned); NPCs mostly static with 2–3 talk frames.
 
 ## Systems
 
-- **Score:** events award once by id; total 250; framed as ticket-
-  resolution points; final screen = post-incident review.
+- **Score:** events award once by id; total 250; internally additive.
+  Presented as a ticket queue counting DOWN: the outage opens with 250
+  tickets on Mel's plate, every event closes some, completionism is queue
+  zero. Unclosed tickets at the end read as backlog carried over. Final
+  screen = post-incident review.
 - **Deaths:** narrated punchlines, instant retry one step back, tracked in
   a "deaths found" gallery.
 - **Saves:** autosave to localStorage on room change + export/import save

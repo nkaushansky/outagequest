@@ -32,14 +32,19 @@ const run = async (cmd) => {
   await page.waitForTimeout(60);
 };
 const lastLines = async (n = 4) => (await logText()).split("\n").slice(-n).join("\n");
-const score = async () => (await status()).match(/TICKETS (\d+)\//)[1];
+// Status shows the queue counting down ("TICKETS OPEN 205/250"); checks
+// reason in closed tickets, so convert back.
+const score = async () => {
+  const m = (await status()).match(/TICKETS OPEN (\d+)\/(\d+)/);
+  return String(Number(m[2]) - Number(m[1]));
+};
 
 // ---- M1 regression ------------------------------------------------------
 ok(await page.locator("#scene canvas").count() === 1, "canvas mounted");
 const attrs = await page.locator("#scene canvas").evaluate((c) => [c.width, c.height]);
 ok(attrs[0] === 320 && attrs[1] === 180, "true 320x180 backbuffer", JSON.stringify(attrs));
 ok((await logText()).includes("mug population"), "intro narration");
-ok((await status()) === "TICKETS 1/250", "intro score", await status());
+ok((await status()) === "TICKETS OPEN 249/250", "intro queue count", await status());
 
 await run("look monitors");
 ok((await lastLines()).includes("wall of red"), "monitors look", await lastLines());
@@ -131,7 +136,7 @@ ok(!!saveLine, "save prints SPOF1. string");
 await page.evaluate(() => localStorage.clear());
 await page.reload({ waitUntil: "networkidle" });
 await page.waitForTimeout(400);
-ok((await status()) === "TICKETS 1/250", "cleared storage = fresh game", await status());
+ok((await status()) === "TICKETS OPEN 249/250", "cleared storage = fresh game", await status());
 await run("load " + saveLine);
 ok((await lastLines()).includes("rehydrated"), "import narrates", await lastLines());
 ok((await score()) === "17", "import restores score", await score());
