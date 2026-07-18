@@ -33,16 +33,24 @@ backgrounds must leave those spots empty.
 
 ## act1_living_room — The Rest of the House
 
-> Scene: a modest American living room abandoned to smart gadgets. Along the
-> back wall, left to right: an open interior door spilling warm light, a
-> cluster of framed family photos, a small round wall thermostat, a large
-> wall-mounted flat TV that is dark, a low media console beneath it with a
-> small router, a smart speaker on a little shelf, a bright window showing a
-> side yard and wooden fence, a dark open doorway to a bedroom hallway, and
-> on the right wall a sturdy front door with a deadbolt. A worn couch sits
-> against the wall left of center, a leafy houseplant in the left corner, a
-> shelf of DVDs and a modern exercise bike with a tablet screen on the right
-> side. Cozy but slightly stale, warm afternoon light.
+Architecture note: interior doors cluster on the LEFT (deeper into the
+house); the RIGHT rear corner is the exterior corner of the building
+(window, then front door) — a bedroom cannot fit on that side.
+
+> Scene: a modest American living room abandoned to smart gadgets. The left
+> side of the room is the interior side of the house: on the left wall, an
+> open interior door spilling warm light from a home office, and at the far
+> left of the back wall a dark open doorway leading deeper into the house
+> toward a bedroom. Continuing right along the back wall: a cluster of
+> framed family photos, a small round wall thermostat, a large dark
+> wall-mounted flat TV over a low media console holding a small router, a
+> smart speaker on a little wall shelf, and near the right corner a bright
+> window showing a side yard and wooden fence. The right side is the
+> exterior corner of the house: a tall shelf of DVDs beside a sturdy front
+> door with a deadbolt on the right wall, with a modern exercise bike with a
+> tablet screen parked in front of the shelf. A worn couch against the wall
+> left of center, a leafy houseplant in the front left corner. Cozy but
+> slightly stale, warm afternoon light.
 
 ## act1_bedroom — Mel's Bedroom
 

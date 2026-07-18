@@ -8,7 +8,7 @@
     {
       "to": "act1_living_room",
       "polygon": [[0, 120], [24, 120], [24, 178], [0, 178]],
-      "arrive": { "x": 229, "y": 136, "facing": "down" }
+      "arrive": { "x": 48, "y": 136, "facing": "down" }
     }
   ],
   "onEnter": [

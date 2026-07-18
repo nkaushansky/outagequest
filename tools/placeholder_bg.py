@@ -81,65 +81,69 @@ def texture(im, amount=9):
 # ---- rooms ----------------------------------------------------------------
 
 def living_room(im, d):
+    # Architecture: interior doors cluster LEFT (office on the left wall,
+    # bedroom doorway far-left of the back wall, deeper into the house);
+    # the RIGHT rear corner is the exterior corner (window, then front
+    # door on the right wall). Keep the real-art prompt in sync.
     vgrad(im, 0, 120, (188, 148, 112), (214, 176, 138))     # warm wall
     vgrad(im, 120, 180, (128, 88, 62), (96, 64, 46))        # wood floor
     d.rectangle(box(0, 116, 320, 121), fill=(150, 108, 78)) # baseboard
-    # office door (left, warm glow within)
-    rect(d, (2, 28, 26, 120), (64, 48, 44))
-    rect(d, (6, 34, 22, 118), (196, 150, 96))
+    # office door (left wall, warm glow within)
+    rect(d, (2, 26, 28, 120), (64, 48, 44))
+    rect(d, (6, 32, 24, 118), (196, 150, 96))
+    # bedroom doorway (back wall far left, dark — deeper into the house)
+    rect(d, (34, 20, 64, 112), (70, 52, 46))
+    rect(d, (38, 26, 60, 112), (44, 34, 34))
     # photos
-    for i, (px, py) in enumerate([(31, 24), (48, 24), (31, 42), (48, 42)]):
+    for px, py in [(69, 24), (86, 24), (69, 42), (86, 42)]:
         rect(d, (px, py, px + 13, py + 14), (108, 84, 64))
         rect(d, (px + 2, py + 2, px + 11, py + 12), (222, 210, 188))
     # thermostat
-    d.ellipse(box(66, 41, 82, 59), fill=(236, 234, 230), outline=(120, 120, 124), width=3)
-    d.ellipse(box(71, 46, 77, 54), fill=(180, 190, 200))
+    d.ellipse(box(104, 41, 118, 57), fill=(236, 234, 230), outline=(120, 120, 124), width=3)
+    d.ellipse(box(108, 45, 114, 53), fill=(180, 190, 200))
     # TV + console
-    rect(d, (84, 28, 148, 80), (34, 34, 44))
-    d.ellipse(box(106, 44, 126, 60), fill=(70, 76, 96))     # cloud logo blob
-    rect(d, (82, 80, 152, 96), (122, 88, 60))
-    rect(d, (134, 82, 150, 94), (46, 60, 66))               # mesh node
-    d.ellipse(box(140, 86, 144, 90), fill=(96, 210, 200))
+    rect(d, (122, 28, 186, 78), (34, 34, 44))
+    d.ellipse(box(144, 42, 164, 58), fill=(70, 76, 96))     # cloud logo blob
+    rect(d, (120, 78, 188, 96), (122, 88, 60))
+    rect(d, (166, 80, 184, 94), (46, 60, 66))               # mesh node
+    d.ellipse(box(172, 84, 176, 88), fill=(96, 210, 200))
     # speaker on shelf
-    rect(d, (150, 70, 170, 74), (122, 88, 60))
-    rect(d, (154, 48, 166, 70), (58, 58, 64))
-    # window (side yard + fence)
-    rect(d, (170, 16, 210, 62), (110, 86, 66))
-    rect(d, (173, 19, 207, 59), (170, 200, 220))
-    d.rectangle(box(173, 44, 207, 59), fill=(128, 142, 96))
-    d.rectangle(box(173, 38, 207, 46), fill=(150, 128, 96))  # fence
-    # bedroom doorway
-    rect(d, (214, 20, 244, 112), (70, 52, 46))
-    rect(d, (218, 26, 240, 112), (44, 34, 34))
-    # DVD shelf + bike
-    rect(d, (248, 16, 284, 64), (112, 80, 56))
-    for row in (24, 40, 54):
-        d.rectangle(box(251, row - 6, 281, row), fill=(90, 64, 46))
-        for i in range(7):
-            x = 252 + i * 4
-            d.rectangle(box(x, row - 6, x + 3, row), fill=rng.choice([(160, 60, 50), (60, 100, 140), (196, 170, 90), (80, 130, 90)]))
-    shadow(d, 248, 284, 124)
-    rect(d, (250, 92, 280, 104), (70, 70, 80))              # bike frame
-    rect(d, (258, 70, 276, 92), (40, 40, 48))               # tablet
-    d.ellipse(box(248, 104, 262, 124), outline=(50, 50, 58), width=6)
-    d.ellipse(box(268, 104, 282, 124), outline=(50, 50, 58), width=6)
-    # doorbell chime
-    rect(d, (266, 32, 284, 58), (236, 232, 226))
-    d.ellipse(box(272, 40, 278, 48), fill=(150, 160, 176))
-    # front door
-    rect(d, (286, 10, 318, 118), (128, 74, 52))
-    rect(d, (291, 18, 313, 62), (108, 60, 42))
-    rect(d, (291, 68, 313, 110), (108, 60, 42))
-    d.ellipse(box(289, 62, 294, 68), fill=(210, 180, 90))
+    rect(d, (188, 68, 208, 72), (122, 88, 60))
+    rect(d, (192, 48, 204, 68), (58, 58, 64))
+    # window near the exterior corner (side yard + fence)
+    rect(d, (210, 16, 252, 62), (110, 86, 66))
+    rect(d, (213, 19, 249, 59), (170, 200, 220))
+    d.rectangle(box(213, 44, 249, 59), fill=(128, 142, 96))
+    d.rectangle(box(213, 38, 249, 46), fill=(150, 128, 96))  # fence
+    # doorbell chime beside the door frame
+    rect(d, (240, 68, 252, 86), (236, 232, 226))
+    d.ellipse(box(243, 73, 249, 81), fill=(150, 160, 176))
+    # DVD shelf + bike parked in front (right side)
+    rect(d, (256, 16, 284, 70), (112, 80, 56))
+    for row in (26, 42, 58):
+        d.rectangle(box(259, row - 8, 281, row), fill=(90, 64, 46))
+        for i in range(5):
+            x = 260 + i * 4
+            d.rectangle(box(x, row - 8, x + 3, row), fill=rng.choice([(160, 60, 50), (60, 100, 140), (196, 170, 90), (80, 130, 90)]))
+    shadow(d, 254, 290, 130)
+    rect(d, (258, 98, 288, 110), (70, 70, 80))              # bike frame
+    rect(d, (266, 76, 284, 98), (40, 40, 48))               # tablet
+    d.ellipse(box(256, 110, 270, 130), outline=(50, 50, 58), width=6)
+    d.ellipse(box(276, 110, 290, 130), outline=(50, 50, 58), width=6)
+    # front door (right wall — the exterior corner)
+    rect(d, (292, 10, 318, 118), (128, 74, 52))
+    rect(d, (296, 18, 314, 62), (108, 60, 42))
+    rect(d, (296, 68, 314, 110), (108, 60, 42))
+    d.ellipse(box(293, 62, 298, 68), fill=(210, 180, 90))
     # couch + plant
-    shadow(d, 58, 152, 134)
-    rect(d, (60, 96, 150, 128), (150, 96, 84))
-    rect(d, (60, 118, 150, 134), (128, 80, 70))
-    for cx in (82, 105, 128):
+    shadow(d, 64, 158, 134)
+    rect(d, (66, 96, 156, 128), (150, 96, 84))
+    rect(d, (66, 118, 156, 134), (128, 80, 70))
+    for cx in (88, 111, 134):
         rect(d, (cx - 10, 100, cx + 10, 118), (162, 106, 92))
-    shadow(d, 30, 54, 122)
-    rect(d, (36, 106, 48, 122), (150, 92, 60))
-    d.ellipse(box(28, 84, 56, 110), fill=(78, 122, 66))
+    shadow(d, 2, 28, 124)
+    rect(d, (10, 108, 22, 124), (150, 92, 60))
+    d.ellipse(box(2, 86, 30, 112), fill=(78, 122, 66))
 
 
 def bedroom(im, d):

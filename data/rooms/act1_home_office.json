@@ -12,7 +12,7 @@
     {
       "to": "act1_living_room",
       "polygon": [[286, 124], [319, 124], [319, 178], [286, 178]],
-      "arrive": { "x": 30, "y": 158, "facing": "right" },
+      "arrive": { "x": 34, "y": 158, "facing": "right" },
       "if": { "flag": "confirmed_global" },
       "blocked": [
         {
