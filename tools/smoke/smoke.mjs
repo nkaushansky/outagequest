@@ -201,18 +201,39 @@ ok((await lastLines()).includes("artisanally confirmed"), "second look hits conf
 
 // ---- input QoL (2026-07-18 device playtest) --------------------------------
 // Player is at playerStart (160,150) after the reload above; canvas
-// geometry helpers from the walk section are still in scope.
+// geometry helpers from the walk section are still in scope. Flags
+// outage_discovered + confirmed_global are set by the section above.
+ok((await page.locator(".suggest-chip").count()) === 0, "no suggestion chips on empty input");
 [cx, cy] = toClient(120, 50); // monitors, outside the floor
 await page.mouse.click(cx, cy);
 ok((await page.inputValue(".cmd-input")) === "monitors", "hotspot tap names noun", await page.inputValue(".cmd-input"));
 [cx, cy] = toClient(50, 30); // window, outside the floor
 await page.mouse.click(cx, cy);
 ok((await page.inputValue(".cmd-input")) === "window", "bare-noun tap replaces, not stacks", await page.inputValue(".cmd-input"));
-await page.locator(".verb", { hasText: "USE" }).click();
-ok((await page.inputValue(".cmd-input")) === "use window", "verb tap prepends to noun", await page.inputValue(".cmd-input"));
-[cx, cy] = toClient(120, 50); // monitors again, mid-command
+await page.locator(".verb", { hasText: "USE" }).click(); // verb onto named thing
+await page.waitForTimeout(60);
+ok((await page.inputValue(".cmd-input")) === "", "verb tap on noun auto-runs", await page.inputValue(".cmd-input"));
+ok((await lastLines()).includes("Nothing happens, professionally"), "auto-run hit use default", await lastLines());
+await page.locator(".verb", { hasText: "LOOK" }).click(); // bare verb: composes
+ok((await page.inputValue(".cmd-input")) === "look ", "bare verb tap composes, no run", JSON.stringify(await page.inputValue(".cmd-input")));
+ok((await page.locator(".suggest-chip").count()) > 0, "object chips offered after verb");
+[cx, cy] = toClient(120, 50); // noun onto composed verb
 await page.mouse.click(cx, cy);
-ok((await page.inputValue(".cmd-input")) === "use monitors ", "mid-command tap fills object slot", await page.inputValue(".cmd-input"));
+await page.waitForTimeout(60);
+ok((await page.inputValue(".cmd-input")) === "", "noun tap completes verb and runs", await page.inputValue(".cmd-input"));
+ok((await lastLines()).includes("artisanally confirmed"), "auto-ran look monitors", await lastLines());
+await page.fill(".cmd-input", "look co");
+await page.dispatchEvent(".cmd-input", "input");
+await page.waitForTimeout(50);
+await page.locator(".suggest-chip").first().click(); // chip completes and runs
+await page.waitForTimeout(60);
+ok((await lastLines()).includes("geological strata"), "suggestion chip auto-runs", await lastLines());
+ok((await page.inputValue(".cmd-input")) === "", "input cleared after chip run", await page.inputValue(".cmd-input"));
+await page.fill(".cmd-input", "look co");
+await page.dispatchEvent(".cmd-input", "input");
+await page.waitForTimeout(50);
+await page.press(".cmd-input", "Tab"); // typing flow: Tab completes, never runs
+ok((await page.inputValue(".cmd-input")) === "look corkboard ", "Tab completes without running", JSON.stringify(await page.inputValue(".cmd-input")));
 await page.locator(".clear").click();
 ok((await page.inputValue(".cmd-input")) === "", "clear button empties input", await page.inputValue(".cmd-input"));
 [cx, cy] = toClient(150, 128); // floor, 2px under the chair polygon (inside old pad)

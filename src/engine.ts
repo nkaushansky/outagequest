@@ -47,7 +47,7 @@ export class Engine {
       },
       onInputChanged: () => this.refreshSuggestions(),
       onVerb: (verb) => this.composeVerb(verb),
-      onSuggestion: (s) => this.acceptSuggestion(s),
+      onSuggestion: (s, run) => this.acceptSuggestion(s, run),
       onItemTap: (name) => this.insertNoun(name),
     });
 
@@ -324,8 +324,13 @@ export class Engine {
     const tokens = normalize(this.ui.getInput());
     const vm = matchVerb(tokens, this.content.verbs);
     const rest = vm ? tokens.slice(vm.consumed) : tokens;
-    const next = [verb, ...rest].join(" ") + (rest.length === 0 ? " " : "");
-    this.ui.setInput(next, true);
+    if (rest.length > 0) {
+      // Verb applied to something already named: fire immediately
+      // (Sierra icon-bar feel). Bare verb taps just start composing.
+      this.tapExec([verb, ...rest].join(" "));
+      return;
+    }
+    this.ui.setInput(verb + " ", true);
   }
 
   private hotspotTap(hotspot: Hotspot): void {
@@ -335,9 +340,8 @@ export class Engine {
   private insertNoun(name: string): void {
     const tokens = normalize(this.ui.getInput());
     if (matchVerb(tokens, this.content.verbs)) {
-      // Mid-command: the tap fills the current object slot (same tail
-      // rule as autocomplete acceptance).
-      this.acceptSuggestion(name);
+      // Mid-command: the noun completes the object slot — and runs.
+      this.acceptSuggestion(name, true);
     } else {
       // No verb started: the tap names a new target — replace, don't
       // stack ("window mug rack" is never a command).
@@ -345,7 +349,10 @@ export class Engine {
     }
   }
 
-  private acceptSuggestion(s: string): void {
+  /** Complete the object slot with `s`. Tap-completed verb+noun runs
+   *  immediately; typed input only ever runs via Enter/RUN (Tab passes
+   *  run=false). */
+  private acceptSuggestion(s: string, run = false): void {
     const raw = this.ui.getInput();
     const tokens = normalize(raw);
     const vm = matchVerb(tokens, this.content.verbs);
@@ -360,7 +367,14 @@ export class Engine {
       if (PREPS.has(rest[i]!)) cut = i;
     }
     const head = rest.slice(0, cut + 1);
-    this.ui.setInput([...verbTokens, ...head, s].join(" ") + " ", true);
+    const line = [...verbTokens, ...head, s].join(" ");
+    if (run) this.tapExec(line);
+    else this.ui.setInput(line + " ", true);
+  }
+
+  private tapExec(line: string): void {
+    this.ui.setInput("", this.ui.finePointer);
+    this.exec(line);
   }
 
   private refreshSuggestions(): void {
@@ -369,7 +383,9 @@ export class Engine {
 
   private suggest(raw: string): string[] {
     const verbs = Object.keys(this.content.verbs.verbs);
-    if (raw.trim() === "") return verbs;
+    // Empty input suggests nothing — the verb strip already offers the
+    // verbs; chips only appear once they're completing something.
+    if (raw.trim() === "") return [];
 
     const tokens = normalize(raw);
     const vm = matchVerb(tokens, this.content.verbs);

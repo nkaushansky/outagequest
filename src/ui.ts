@@ -6,7 +6,8 @@ export interface UICallbacks {
   onSubmit(raw: string): void;
   onInputChanged(text: string): void;
   onVerb(verb: string): void;
-  onSuggestion(text: string): void;
+  /** `run`: true for chip taps (complete-and-run), false for Tab. */
+  onSuggestion(text: string, run: boolean): void;
   onItemTap(name: string): void;
 }
 
@@ -106,7 +107,7 @@ export class UI {
         const first = this.suggestions[0];
         if (first) {
           e.preventDefault();
-          this.cb.onSuggestion(first);
+          this.cb.onSuggestion(first, false);
         }
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
@@ -200,7 +201,7 @@ export class UI {
     for (const s of items) {
       const chip = el("button", "suggest-chip");
       chip.textContent = s;
-      chip.addEventListener("click", () => this.cb.onSuggestion(s));
+      chip.addEventListener("click", () => this.cb.onSuggestion(s, true));
       this.suggest.appendChild(chip);
     }
   }

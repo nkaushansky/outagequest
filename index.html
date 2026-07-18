@@ -69,8 +69,9 @@
 
   .suggest {
     display: flex; flex-wrap: wrap; gap: 6px;
-    min-height: 30px; padding: 2px 8px 4px; align-content: flex-start;
+    padding: 2px 8px 4px; align-content: flex-start;
   }
+  .suggest:empty { display: none; }
   .suggest-chip {
     font: inherit; font-size: 13px; cursor: pointer;
     background-color: #1C1C2C; color: #B8D8F8;
