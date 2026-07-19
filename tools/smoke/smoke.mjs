@@ -422,6 +422,27 @@ const relB = await page.evaluate(() => ({ ...window.spof.state.player }));
 ok(Math.abs(relB.x - relA.x) < 3 && Math.abs(relB.y - relA.y) < 3,
   "drag release stops the walk", JSON.stringify([relA, relB]));
 
+// ---- M3: desktop keys — arrows steer on an empty line, stay terminal keys otherwise
+await page.locator(".cmd-input").click();
+const kb0 = await page.evaluate(() => ({ ...window.spof.state.player }));
+await page.keyboard.down("ArrowRight");
+await page.waitForTimeout(500);
+await page.keyboard.up("ArrowRight");
+const kb1 = await page.evaluate(() => ({ ...window.spof.state.player }));
+ok(kb1.x - kb0.x > 15, "empty-line arrow key walks", JSON.stringify([kb0, kb1]));
+await page.waitForTimeout(400);
+const kb2 = await page.evaluate(() => ({ ...window.spof.state.player }));
+ok(Math.abs(kb2.x - kb1.x) < 3, "arrow release stops the walk (keys)", JSON.stringify([kb1, kb2]));
+await run("look sky");
+await page.fill(".cmd-input", "l");
+await page.dispatchEvent(".cmd-input", "input");
+await page.press(".cmd-input", "ArrowUp");
+ok((await page.inputValue(".cmd-input")) === "look sky", "ArrowUp mid-command recalls history", await page.inputValue(".cmd-input"));
+await page.locator(".clear").click();
+await page.press(".cmd-input", "Control+ArrowUp");
+ok((await page.inputValue(".cmd-input")) === "look sky", "Ctrl+ArrowUp recalls from an empty line", await page.inputValue(".cmd-input"));
+await page.locator(".clear").click();
+
 // ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
 const lookGaps = await page.evaluate(() => {
   const gaps = [];

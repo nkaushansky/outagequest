@@ -71,6 +71,8 @@ export class Scene {
     /** Set when the room changed mid-drag: swallow the rest of the press. */
     ended: boolean;
   } | null = null;
+  /** Held arrow keys (desktop): steering, like drag but on a keyboard. */
+  private heldKeys = new Set<string>();
   private dev: boolean;
 
   constructor(
@@ -115,8 +117,21 @@ export class Scene {
     this.suppressedExit = null;
     // A drag that carried Mel through a door ends at the threshold —
     // otherwise the finger, still down near the reciprocal exit, would
-    // bounce straight back.
+    // bounce straight back. Held arrows likewise: key auto-repeat
+    // re-engages them after a beat if the player keeps holding.
     if (this.press?.dragging) this.press.ended = true;
+    this.heldKeys.clear();
+  }
+
+  /** Desktop arrows: hold to walk, release to stop. */
+  steerKey(key: string, down: boolean): void {
+    if (!down) {
+      this.heldKeys.delete(key);
+      return;
+    }
+    this.heldKeys.add(key);
+    this.target = null; // keys override any pending walk order
+    this.exitArmed = true;
   }
 
   setBackground(bg: HTMLImageElement | null): void {
@@ -264,7 +279,45 @@ export class Scene {
   }
 
   private update(dt: number): void {
-    if (!this.room || !this.target) return;
+    if (!this.room) return;
+
+    // Keyboard steering runs instead of (never alongside) target walking.
+    if (this.heldKeys.size > 0) {
+      const kx =
+        (this.heldKeys.has("ArrowRight") ? 1 : 0) -
+        (this.heldKeys.has("ArrowLeft") ? 1 : 0);
+      const ky =
+        (this.heldKeys.has("ArrowDown") ? 1 : 0) -
+        (this.heldKeys.has("ArrowUp") ? 1 : 0);
+      if (kx !== 0 || ky !== 0) {
+        const len = Math.hypot(kx, ky);
+        const player = this.state.player;
+        const dx = (kx / len) * WALK_SPEED * dt;
+        const dy = (ky / len) * WALK_SPEED * dt;
+        const next = { x: player.x + dx, y: player.y + dy };
+        if (pointInPolygon(next, this.room.walkable)) {
+          player.x = next.x;
+          player.y = next.y;
+        } else if (pointInPolygon({ x: next.x, y: player.y }, this.room.walkable)) {
+          player.x = next.x;
+        } else if (pointInPolygon({ x: player.x, y: next.y }, this.room.walkable)) {
+          player.y = next.y;
+        }
+        if (Math.abs(dx) >= Math.abs(dy)) {
+          player.facing = dx < 0 ? "left" : "right";
+        } else {
+          player.facing = dy < 0 ? "up" : "down";
+        }
+        this.animTime += dt;
+      }
+      this.checkExits();
+      return;
+    }
+
+    if (!this.target) {
+      this.checkExits();
+      return;
+    }
     const player = this.state.player;
     const d = dist(player, this.target);
     const step = WALK_SPEED * dt;
@@ -299,26 +352,30 @@ export class Scene {
       this.animTime += dt;
     }
 
-    if (this.exitArmed) {
-      if (
-        this.suppressedExit &&
-        !pointInPolygon(player, this.suppressedExit.polygon)
-      ) {
-        this.suppressedExit = null; // stepped clear; the gate may speak again
-      }
-      for (const exit of this.room.exits) {
-        if (exit === this.suppressedExit) continue;
-        if (exit.polygon.length >= 3 && pointInPolygon(player, exit.polygon)) {
-          this.target = null;
-          this.exitArmed = false;
-          if (!this.cb.onExit(exit)) {
-            // Gate held: stop at the threshold, and don't re-run the
-            // blocked snark every frame the player lingers inside.
-            this.suppressedExit = exit;
-            this.exitArmed = true;
-          }
-          return;
+    this.checkExits();
+  }
+
+  private checkExits(): void {
+    if (!this.room || !this.exitArmed) return;
+    const player = this.state.player;
+    if (
+      this.suppressedExit &&
+      !pointInPolygon(player, this.suppressedExit.polygon)
+    ) {
+      this.suppressedExit = null; // stepped clear; the gate may speak again
+    }
+    for (const exit of this.room.exits) {
+      if (exit === this.suppressedExit) continue;
+      if (exit.polygon.length >= 3 && pointInPolygon(player, exit.polygon)) {
+        this.target = null;
+        this.exitArmed = false;
+        if (!this.cb.onExit(exit)) {
+          // Gate held: stop at the threshold, and don't re-run the
+          // blocked snark every frame the player lingers inside.
+          this.suppressedExit = exit;
+          this.exitArmed = true;
         }
+        return;
       }
     }
   }

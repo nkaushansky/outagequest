@@ -9,6 +9,8 @@ export interface UICallbacks {
   /** `run`: true for chip taps (complete-and-run), false for Tab. */
   onSuggestion(text: string, run: boolean): void;
   onItemTap(name: string): void;
+  /** Arrow-key steering: key is "ArrowUp" etc.; down=false on release. */
+  onSteer(key: string, down: boolean): void;
 }
 
 export class UI {
@@ -98,9 +100,10 @@ export class UI {
     root.append(status, this.log, this.suggest, inputRow, verbStrip, inv);
     document.body.appendChild(this.death);
 
-    this.input.addEventListener("input", () =>
-      this.cb.onInputChanged(this.input.value),
-    );
+    this.input.addEventListener("input", () => {
+      this.historyPos = this.history.length; // typing resets the history walk
+      this.cb.onInputChanged(this.input.value);
+    });
     this.input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
@@ -111,16 +114,49 @@ export class UI {
           e.preventDefault();
           this.cb.onSuggestion(first, false);
         }
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        this.cycleHistory(-1);
-      } else if (e.key === "ArrowDown") {
-        e.preventDefault();
-        this.cycleHistory(1);
+      } else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        // Terminal keys only while mid-command (or with Ctrl, always).
+        // On an empty line the event bubbles to the window handler,
+        // where arrows walk Mel instead.
+        if (e.ctrlKey || e.metaKey || this.input.value !== "") {
+          e.preventDefault();
+          this.cycleHistory(e.key === "ArrowUp" ? -1 : 1);
+        }
       }
     });
 
+    // Desktop movement: arrows steer Mel whenever they aren't doing
+    // terminal work — hold to walk, release to stop (drag's keyboard twin).
+    window.addEventListener("keydown", (e) => this.onGlobalArrow(e, true));
+    window.addEventListener("keyup", (e) => this.onGlobalArrow(e, false));
+
     if (this.finePointer) this.input.focus();
+  }
+
+  private onGlobalArrow(e: KeyboardEvent, down: boolean): void {
+    if (!e.key.startsWith("Arrow")) return;
+    if (!down) {
+      this.cb.onSteer(e.key, false); // releases always land — no stuck keys
+      return;
+    }
+    if (!this.death.hidden || e.altKey) return; // the dead don't pace
+    if (e.ctrlKey || e.metaKey) {
+      // Ctrl+arrow: history recall from anywhere, for the shell diehards.
+      if (
+        (e.key === "ArrowUp" || e.key === "ArrowDown") &&
+        document.activeElement !== this.input
+      ) {
+        e.preventDefault();
+        this.cycleHistory(e.key === "ArrowUp" ? -1 : 1);
+        if (this.finePointer) this.input.focus();
+      }
+      return;
+    }
+    if (document.activeElement === this.input && this.input.value !== "") {
+      return; // mid-command: caret and history keep the keys
+    }
+    e.preventDefault();
+    this.cb.onSteer(e.key, true);
   }
 
   private submit(): void {
@@ -164,6 +200,7 @@ export class UI {
   }
 
   setInput(value: string, focus = false): void {
+    this.historyPos = this.history.length; // a fresh line restarts the walk
     this.input.value = value;
     if (focus && this.finePointer) {
       this.input.focus();

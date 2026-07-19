@@ -156,7 +156,7 @@ export function tryShell(raw: string, ctx: ShellCtx): boolean {
     case "?": {
       const verbList = Object.keys(ctx.content.verbs.verbs).join(", ");
       shell(
-        `Verbs: ${verbList}. Tap things to name them; tap a verb to start a command. Old habits (ls, man, sudo, ping, whoami, save, load) may also work.`,
+        `Verbs: ${verbList}. Tap things to name them; tap a verb to start a command. Arrow keys walk when the line is empty; while typing they edit and recall history (Ctrl+Up anytime). Old habits (ls, man, sudo, ping, whoami, save, load) may also work.`,
       );
       return true;
     }

@@ -57,6 +57,7 @@ export class Engine {
       onVerb: (verb) => this.composeVerb(verb),
       onSuggestion: (s, run) => this.acceptSuggestion(s, run),
       onItemTap: (name) => this.insertNoun(name),
+      onSteer: (key, down) => this.scene.steerKey(key, down),
     });
 
     this.scene = new Scene(
