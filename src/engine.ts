@@ -138,6 +138,8 @@ export class Engine {
     }
     this.refreshStatus();
     this.refreshInventory();
+    // A walked exit ends any conversation; the chip row must follow suit.
+    this.refreshSuggestions();
   }
 
   /** Walk-into-exit gatekeeper. Returns false when the gate held. */
@@ -308,7 +310,20 @@ export class Engine {
         this.topicContext = hotspot.id;
       }
       const entries = hotspot?.responses?.[cmd.verb];
-      if (!runEntries(entries, this.ctx(instrumentId))) fallback();
+      if (runEntries(entries, this.ctx(instrumentId))) return;
+      // The room named it but authored nothing for this verb; a carried
+      // item sharing the noun catches the command ("wear coat" works in
+      // the room the coat came from).
+      const alt = cmd.object2 ? cmd.object2Alt : cmd.objectAlt;
+      if (alt?.kind === "item") {
+        const item = this.content.items[alt.id];
+        if (runEntries(item?.responses?.[cmd.verb], this.ctx(instrumentId))) return;
+        if (cmd.verb === "look" && item?.look) {
+          this.narrate(item.look);
+          return;
+        }
+      }
+      fallback();
       return;
     }
 

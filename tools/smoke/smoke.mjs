@@ -266,6 +266,17 @@ ok(scFlags.includes("__scorecomplete_act1_home_office"), "onScoreComplete flagge
 // ---- M3: pointer rewrites + act gates ---------------------------------------
 await run("take coat");
 ok((await page.locator(".inv-chip").allInnerTexts()).includes("coat"), "coat takeable after confirmation");
+
+// carried item catches verbs its source hotspot leaves unhandled: the coat
+// must wear IN the office too, then a save restore hands it back for the run
+await run("save");
+const coatSave = (await logText()).match(/SPOF1\.[A-Za-z0-9+/=]+/g).pop();
+await run("wear coat");
+ok((await lastLines()).includes("assumes its post"), "coat wears in the office (item catches shadowed verb)", await lastLines());
+ok(!(await page.locator(".inv-chip").allInnerTexts()).includes("coat"), "office-worn coat leaves the inventory");
+await run(`load ${coatSave}`);
+ok((await page.locator(".inv-chip").allInnerTexts()).includes("coat"), "save restore returns the coat for the rest of the run");
+
 await run("open door");
 ok((await logText()).includes("bigger than you remember"), "office door opens to the house", await lastLines());
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_living_room", "arrived in living room");
@@ -310,6 +321,8 @@ ok((await lastLines(6)).includes("cold storage"), "pants restored from cold stor
 ok((await page.locator(".inv-chip").allInnerTexts()).includes("real pants"), "pants in inventory");
 ok((await score()) === "29", "bedroom scored (2+5)", await score());
 ok((await logText()).includes("front door is the next open ticket"), "bedroom onScoreComplete aside");
+await run("look doorway");
+ok((await lastLines()).includes("came willingly"), "bedroom doorway re-aims after the pants", await lastLines());
 
 await run("take boxes");
 ok((await lastLines()).includes("geological groan"), "shelf warns before killing", await lastLines());
@@ -344,6 +357,8 @@ await run("talk to gary");
 ok((await lastLines(4)).includes("NEIL"), "Gary gets the name wrong", await lastLines(4));
 await run("ask gary about nimbus");
 ok((await lastLines()).includes("Nimbus people"), "Gary topic responds", await lastLines());
+await run("ask gary about hum");
+ok((await lastLines()).includes("Weird hum"), "Gary's town topic answers its own hint nouns", await lastLines());
 ok((await score()) === "35", "main street curiosity scored", await score());
 ok((await logText()).includes("fully canvassed"), "main street onScoreComplete aside");
 
@@ -381,6 +396,24 @@ ok((await lastLines(6)).includes("Kim's Nails"), "Merle reveals the edge node", 
 ok((await score()) === "40", "edge intel scored (+4)", await score());
 await run("ask darlene about kubernetes");
 ok((await lastLines()).includes("city stuff"), "topicDefault catches unknown topics", await lastLines());
+await run("ask merle about salon");
+ok((await lastLines()).includes("cache-miss"), "Merle's key topic answers the salon nouns", await lastLines());
+await run("look farmers");
+ok((await lastLines()).includes("predates login screens"), "booth farmers answer to their name", await lastLines());
+await run("look door");
+ok((await lastLines()).includes("holding it open"), "diner door re-aims after the reveal", await lastLines());
+
+// a walked exit ends the conversation AND clears the rendered chip row
+await run("talk to merle");
+ok((await page.locator(".suggest-chip").count()) > 0, "chips armed before walking out");
+await page.evaluate(() => { window.spof.state.player.x = 34; window.spof.state.player.y = 114; });
+await clickScene(24, 109);
+await page.waitForTimeout(1200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_main_street", "walked out of the diner");
+ok((await page.locator(".suggest-chip").count()) === 0, "walked exit clears the topic chips");
+await run("look traffic light");
+ok((await lastLines()).includes("practically a green"), "main street pointer re-aims east after the reveal", await lastLines());
+await run("open diner");
 await run("use cable on urn");
 ok((await lastLines()).includes("not whatever that is"), "generic wrong-instrument snark (urn)", await lastLines());
 await run("use mug on urn");
@@ -450,6 +483,17 @@ await page.locator(".clear").click();
 await page.press(".cmd-input", "Control+ArrowUp");
 ok((await page.inputValue(".cmd-input")) === "look sky", "Ctrl+ArrowUp recalls from an empty line", await page.inputValue(".cmd-input"));
 await page.locator(".clear").click();
+
+// alt-tab safety: window blur releases held steering keys
+await page.keyboard.down("ArrowLeft");
+await page.waitForTimeout(300);
+await page.evaluate(() => window.dispatchEvent(new Event("blur")));
+await page.waitForTimeout(150);
+const bl1 = await page.evaluate(() => ({ ...window.spof.state.player }));
+await page.waitForTimeout(400);
+const bl2 = await page.evaluate(() => ({ ...window.spof.state.player }));
+ok(Math.abs(bl2.x - bl1.x) < 3, "window blur releases held steering keys", JSON.stringify([bl1, bl2]));
+await page.keyboard.up("ArrowLeft");
 
 // ---- M3: inventory tray wraps and collapses ---------------------------------
 const invCount = await page.locator(".inv-chip").count();

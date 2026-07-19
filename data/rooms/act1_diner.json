@@ -59,6 +59,14 @@
       "responses": {
         "look": [
           {
+            "if": { "flag": "edge_node_located" },
+            "do": [
+              {
+                "narrate": "The diner door, bell and all. On the other side: east, the plaza, the hum. Merle gave you the address; the door is just holding it open. The 'YES' sign faces out like it knew you'd need one more."
+              }
+            ]
+          },
+          {
             "text": "The diner door, hung with the paper 'YES' sign facing out. A bell on a spring announces all arrivals. It has never once needed a firmware update to ding."
           }
         ],
@@ -95,7 +103,12 @@
         "cork board",
         "flyers",
         "notices",
-        "business cards"
+        "business cards",
+        "clipping",
+        "article",
+        "newspaper",
+        "gazette",
+        "photo"
       ],
       "polygon": [[33, 16], [58, 16], [58, 64], [33, 64]],
       "responses": {
@@ -196,7 +209,9 @@
         "urn",
         "coffee",
         "coffee pot",
-        "pot"
+        "pot",
+        "lever",
+        "spigot"
       ],
       "polygon": [[147, 52], [167, 52], [167, 78], [147, 78]],
       "responses": {
@@ -555,7 +570,12 @@
             "closet",
             "strip mall",
             "plaza",
-            "equipment"
+            "equipment",
+            "salon",
+            "nail salon",
+            "nails",
+            "kim",
+            "kims"
           ],
           "responses": [
             {
@@ -734,7 +754,9 @@
         "booth",
         "tables",
         "table",
-        "vinyl"
+        "vinyl",
+        "farmers",
+        "farmer"
       ],
       "polygon": [[0, 70], [104, 70], [104, 120], [70, 160], [36, 178], [0, 178]],
       "responses": {

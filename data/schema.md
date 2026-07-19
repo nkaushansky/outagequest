@@ -145,9 +145,12 @@ exits, topics), `instrument` is never satisfied and `anyInstrument` equals
 ## Items
 
 `data/items.json`: `id -> { name, synonyms, look, responses? }`. The
-optional `responses` block has the hotspot shape and resolves first — so a
-carried item can react to verbs ("use pants" wears them); `look` is the
-fallback when no `look` list is authored. Score ids authored in items.json
+optional `responses` block has the hotspot shape — so a carried item can
+react to verbs ("use pants" wears them); `look` is the fallback when no
+`look` list is authored. When a room hotspot claims the same noun as a
+carried item, the hotspot's authored responses win, and the item catches
+any verb the hotspot leaves unhandled (so taking a room's coat never
+strands "wear coat" in that room). Score ids authored in items.json
 belong to no room and never count toward any room's `onScoreComplete`.
 
 ## Parser contract

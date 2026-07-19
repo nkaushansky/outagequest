@@ -19,8 +19,12 @@ export interface Candidate {
 export interface ParsedCommand {
   verb: string; // canonical
   object?: ObjectRef;
+  /** Carried item sharing OBJECT's noun (see SpanResolution.alt). */
+  objectAlt?: ObjectRef;
   prep?: string;
   object2?: ObjectRef;
+  /** Carried item sharing OBJECT2's noun. */
+  object2Alt?: ObjectRef;
   /** "talk/ask X about Y": Y is a free topic phrase, not an object. */
   topic?: string;
   /** Set when a near-miss was accepted; holds the corrected phrase. */
@@ -132,6 +136,10 @@ export function editDistance(a: string, b: string): number {
 
 export interface SpanResolution {
   ref: ObjectRef;
+  /** Same phrase, other kind: when a room hotspot and a carried item share
+   *  a noun, the hotspot wins the match and the item rides along so the
+   *  engine can let it catch verbs the hotspot leaves unhandled. */
+  alt?: ObjectRef;
   /** Present when matched via near-miss ("did you mean"). */
   suggestion?: string;
 }
@@ -146,7 +154,12 @@ export function resolveSpan(
   for (let start = 0; start < span.length; start++) {
     const joined = span.slice(start).join(" ");
     const hit = candidates.find((c) => c.phrase === joined);
-    if (hit) return { ref: hit.ref };
+    if (hit) {
+      const alt = candidates.find(
+        (c) => c.phrase === joined && c.ref.kind !== hit.ref.kind,
+      );
+      return alt ? { ref: hit.ref, alt: alt.ref } : { ref: hit.ref };
+    }
   }
   // Near miss.
   const joined = span.join(" ");
@@ -210,6 +223,7 @@ export function parse(
   if (!obj) return { ok: false, reason: "unknownObject", object: objSpan.join(" ") };
 
   const cmd: ParsedCommand = { verb: vm.verb, object: obj.ref };
+  if (obj.alt) cmd.objectAlt = obj.alt;
   if (obj.suggestion) cmd.didYouMean = obj.suggestion;
 
   if (prepIdx !== -1) {
@@ -225,6 +239,7 @@ export function parse(
     if (!obj2) return { ok: false, reason: "unknownObject", object: span2.join(" ") };
     cmd.prep = rest[prepIdx]!;
     cmd.object2 = obj2.ref;
+    if (obj2.alt) cmd.object2Alt = obj2.alt;
     if (obj2.suggestion && !cmd.didYouMean) cmd.didYouMean = obj2.suggestion;
   }
 

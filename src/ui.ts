@@ -138,6 +138,12 @@ export class UI {
     // terminal work — hold to walk, release to stop (drag's keyboard twin).
     window.addEventListener("keydown", (e) => this.onGlobalArrow(e, true));
     window.addEventListener("keyup", (e) => this.onGlobalArrow(e, false));
+    // Alt-tab swallows keyups; release everything so Mel never walks alone.
+    window.addEventListener("blur", () => {
+      for (const k of ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]) {
+        this.cb.onSteer(k, false);
+      }
+    });
 
     if (this.finePointer) this.input.focus();
   }

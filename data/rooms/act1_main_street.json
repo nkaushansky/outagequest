@@ -88,7 +88,9 @@
       "synonyms": [
         "neighbor",
         "man",
-        "guy"
+        "guy",
+        "lawn",
+        "hose"
       ],
       "polygon": [[32, 74], [54, 74], [54, 124], [32, 124]],
       "responses": {
@@ -166,7 +168,12 @@
         {
           "match": [
             "town",
-            "main street"
+            "main street",
+            "salon",
+            "nails",
+            "manicurist",
+            "hum",
+            "diner"
           ],
           "responses": [
             {
@@ -229,7 +236,9 @@
       "synonyms": [
         "house",
         "siding",
-        "gutters"
+        "gutters",
+        "doorbell",
+        "smart doorbell"
       ],
       "polygon": [[0, 20], [50, 20], [50, 127], [0, 127]],
       "responses": {
@@ -273,8 +282,7 @@
       "synonyms": [
         "candles",
         "shop",
-        "wicked awesome",
-        "storefront"
+        "wicked awesome"
       ],
       "polygon": [[104, 50], [153, 50], [153, 125], [104, 125]],
       "responses": {
@@ -304,7 +312,9 @@
         "town board",
         "flyers",
         "flyer",
-        "poster"
+        "poster",
+        "sign",
+        "signs"
       ],
       "polygon": [[160, 90], [194, 90], [194, 133], [160, 133]],
       "responses": {
@@ -347,7 +357,10 @@
         "storefront",
         "storefronts",
         "empty stores",
-        "video store"
+        "video store",
+        "travel agency",
+        "repair shop",
+        "computer repair"
       ],
       "polygon": [[155, 55], [254, 55], [254, 124], [155, 124]],
       "responses": {
@@ -445,6 +458,14 @@
       "polygon": [[300, 0], [319, 0], [319, 127], [300, 127]],
       "responses": {
         "look": [
+          {
+            "if": { "flag": "edge_node_located" },
+            "do": [
+              {
+                "narrate": "The dead traffic light, pointing nowhere as usual — except now you know what's past it. East, behind the nail salon, the county's internet hums in a closet. The light stays dark. You go anyway. That's practically a green."
+              }
+            ]
+          },
           {
             "text": "The town's one traffic light, dark. Not from the outage — it's been dark since March, pending a county work order. Traffic self-organizes: everyone waves everyone else through, a consensus protocol with better uptime than anything you've administered."
           }

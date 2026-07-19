@@ -92,7 +92,8 @@
         "plant",
         "fern",
         "pot",
-        "monstera"
+        "monstera",
+        "timer"
       ],
       "polygon": [[0, 75], [20, 75], [20, 150], [0, 150]],
       "responses": {
@@ -236,7 +237,8 @@
       "synonyms": [
         "smart thermostat",
         "nest",
-        "climate"
+        "climate",
+        "furnace"
       ],
       "polygon": [[51, 45], [61, 45], [61, 57], [51, 57]],
       "responses": {
@@ -331,7 +333,8 @@
         "speaker",
         "assistant",
         "echo",
-        "voice assistant"
+        "voice assistant",
+        "cylinder"
       ],
       "polygon": [[207, 46], [225, 46], [225, 64], [207, 64]],
       "responses": {
@@ -537,7 +540,8 @@
         "bike",
         "peloton",
         "spin bike",
-        "exercise"
+        "exercise",
+        "tablet"
       ],
       "polygon": [[262, 72], [319, 72], [319, 168], [262, 168]],
       "responses": {

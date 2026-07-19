@@ -60,6 +60,14 @@
       "responses": {
         "look": [
           {
+            "if": { "flag": "br_pants_found" },
+            "do": [
+              {
+                "narrate": "The way back through the living room — and past it, the front door you are now equipped to open. The bedroom has done its part. History will note the pants came willingly."
+              }
+            ]
+          },
+          {
             "text": "The way back to the living room and its field of dead appliances."
           }
         ],
@@ -300,7 +308,7 @@
         ],
         "take": [
           {
-            "text": "You need none of these cables. You keep all of these cables. This is the way."
+            "text": "You need none of these cables. You keep all of these cables. It is the closest thing you have to a retirement plan."
           }
         ]
       }
