@@ -253,7 +253,9 @@ export class UI {
       return;
     }
     if (!open) return;
-    for (const name of names) {
+    // Newest first: the thing just picked up is the thing about to be
+    // used, and it must sit inside the tray's visible window.
+    for (const name of [...names].reverse()) {
       const chip = el("button", "inv-chip");
       chip.textContent = name;
       chip.addEventListener("click", () => this.cb.onItemTap(name));

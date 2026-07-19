@@ -123,7 +123,13 @@
     padding: 3px 0; cursor: pointer; touch-action: manipulation;
   }
   .inv-label:active { color: #B8B8CC; }
-  .inv-chips { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+  /* The open tray never eats more than ~two chip rows; past that it
+     scrolls internally. Newest items render first (see ui.ts), so the
+     working set stays inside the visible window as the pile grows. */
+  .inv-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; min-width: 0;
+    max-height: 76px; overflow-y: auto; overscroll-behavior: contain;
+  }
   .inv.collapsed .inv-chips { display: none; }
   .inv-empty { color: #55556A; font-size: 13px; }
   .inv-chip {
@@ -171,6 +177,7 @@
     .verbs { padding: 3px 6px; gap: 4px; }
     .verb { padding: 6px 4px; font-size: 12px; }
     .inv { padding: 3px 6px 6px; }
+    .inv-chips { max-height: 40px; }
     .verb, .run, .clear { min-height: 38px; }
   }
 </style>

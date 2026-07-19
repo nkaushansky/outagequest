@@ -322,6 +322,8 @@ ok((await score()) === "29", "CRT death retry is one step back", await score());
 
 await run("wear pants");
 ok((await lastLines()).includes("crease engages"), "wear pants via item responses", await lastLines());
+ok(!(await page.locator(".inv-chip").allInnerTexts()).includes("real pants"),
+  "worn pants leave the inventory");
 
 // ---- M3: main street (set piece, wrong-name gag, road death) ----------------
 await run("open door");
@@ -454,6 +456,10 @@ const invCount = await page.locator(".inv-chip").count();
 ok(invCount >= 4, "inventory holds the act's item pile", String(invCount));
 const invScroll = await page.locator(".inv").evaluate((n) => n.scrollWidth <= n.clientWidth + 1);
 ok(invScroll, "inventory wraps instead of scrolling");
+ok((await page.locator(".inv-chip").first().innerText()) === "coat", "newest item leads the tray",
+  await page.locator(".inv-chip").first().innerText());
+const invCap = await page.locator(".inv-chips").evaluate((n) => getComputedStyle(n).maxHeight !== "none");
+ok(invCap, "open tray is height-capped (scrolls internally past ~2 rows)");
 await page.locator(".inv-label").click();
 ok((await page.locator(".inv-chip").count()) === 0, "inventory tray collapses");
 ok((await page.locator(".inv-label").innerText()).includes(`(${invCount})`), "collapsed label shows count", await page.locator(".inv-label").innerText());

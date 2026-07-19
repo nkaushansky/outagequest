@@ -24,8 +24,9 @@
         { "if": { "flag": "wearing_pants" },
           "text": "You are already wearing the Real Pants. Their authority cannot be stacked." },
         { "do": [
-            { "narrate": "You put on the Real Pants. The crease engages. Your posture files a change request and approves it unilaterally. Somewhere, a conference room feels a disturbance. You are dressed for a service call." },
-            { "setFlag": "wearing_pants" }
+            { "narrate": "You put on the Real Pants. The crease engages. Your posture files a change request and approves it unilaterally. Somewhere, a conference room feels a disturbance. You are dressed for a service call. The pants leave your inventory and enter your identity." },
+            { "setFlag": "wearing_pants" },
+            { "removeItem": "pants" }
           ] }
       ],
       "take": [

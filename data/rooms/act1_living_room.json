@@ -167,7 +167,7 @@
         "look": [
           {
             "if": {
-              "hasItem": "pants"
+              "flag": "br_pants_found"
             },
             "text": "The bedroom doorway. Mission accomplished in there, sartorially speaking."
           },

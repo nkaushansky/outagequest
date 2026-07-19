@@ -203,3 +203,9 @@ persist across retries, restores, and imports — they're collectibles.
 - Pointer rewrites: every room's puzzle-state transitions rewrite its
   pointer hotspots — after the big flag flips, the door/coat/window lines
   should pull the player onward, and `onScoreComplete` says so out loud.
+- Spent items leave the pocket: when an item's story is over (worn,
+  consumed, handed off) and no later act can need it, `removeItem` it in
+  the same response and let the narration own the disappearance — the
+  inventory is a working set, not a trophy case. Never remove anything a
+  later `hasItem` gate could want; durable state belongs in flags, which
+  survive the item. Reusable tools (the cable, the mug) stay.
