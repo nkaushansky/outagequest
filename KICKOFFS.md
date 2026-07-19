@@ -7,6 +7,54 @@ they survive between threads. Paste the section verbatim, then settle any
 
 ---
 
+## M3 — Formal review (paste this first; attach screenshots per REVIEW.md)
+
+M3 formal review — Act 1 complete. Repo: nkaushansky/outagequest, branch
+`claude/act1-content-engine-a4m3n1` (all M3 work lives there, unmerged;
+main still ends at the M2 QoL round). You are the reviewer, not the
+builder: verify independently, trust nothing the build thread logged
+until you've reproduced it.
+
+Read first: REVIEW.md — the every-review checks, the M3–M7 per-act
+checklist, and the M3 log rows (content+engine, ticket queue, playtest
+QoL 2, act boundary, items canon, inventory tray, M3.5 plan/scope,
+M4 carry-forwards) so you know what was built and what was decided.
+Then CLAUDE.md, GDD.md, data/schema.md.
+
+REVIEW PASSES:
+1. Build from source; `npm run preview` + `npm run smoke` — the suite is
+   ~149 checks and must be green with zero console errors. The suite is
+   the builder's evidence; your job is what it can't see.
+2. Independent playthrough: complete Act 1 start to finish with your own
+   commands (walkthrough intentionally NOT provided — if you need one,
+   that's a finding). Verify: act completable, exactly 45 tickets closed
+   at full clear ("TICKETS OPEN 205/250"), no dead-man-walking (every
+   required step still reachable at act end), all three deaths fair
+   (warn-first) and registered, one-step-back retry, saves round-trip.
+3. Soul checks: 10 random LOOKs read aloud against the office
+   calibration — would the Space Quest narrator say them? Wrong-name gag
+   present in every meeting order (Gary/Darlene/Merle tally variants);
+   Nimbus-vs-Cumulonimbus lore readable; onScoreComplete asides fire
+   once per room; pointer hotspots pull the player onward after each
+   state change.
+4. Canon-vs-implementation audit: the decision rows (countdown queue,
+   consumables/kit + coat spend + coffee_act1, act-ends-on-arrival,
+   topic chips, arrow keys, inventory tray) must match what the game
+   actually does and what CLAUDE.md/GDD.md/schema.md claim.
+5. Purity + platform: content still pure JSON (no room logic in
+   src/engine.ts — read the engine diff since main), all colors
+   explicit/dark-mode safe, emulated mobile portrait + landscape (scene
+   letterboxes, inputs tappable, log budget holds). Note real-device
+   findings from the human's screenshots.
+
+VERDICT: append a formal review row to REVIEW.md's log (pass / issues
+found; must-fixes get fixed on the branch and re-verified before pass).
+On pass: merge the branch to main, deploy the merged build via the
+dreamhost-upload flow (slug `outagequest`), and confirm the next step is
+the M3.5 Characters kickoff in this file.
+
+---
+
 ## M3.5 — Characters (paste after the formal M3 review passes)
 
 M3.5 kickoff — Characters. Repo: nkaushansky/outagequest, start from main
