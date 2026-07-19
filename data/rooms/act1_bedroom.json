@@ -566,6 +566,10 @@
         ],
         "open": [
           {
+            "if": { "flagNot": "br_bag_found" },
+            "text": "You pull the bottom drawer: joggers, sweatpants, and one pair of 'dress joggers,' a garment whose name should have been a warning. Soft pants, every one. Soft pants cannot make this journey. The Real Pants aren't in the rotation at all — they were decommissioned years ago, and this house archives decommissioned hardware somewhere darker than a drawer. Lower, too."
+          },
+          {
             "text": "You pull the bottom drawer: joggers, sweatpants, and one pair of 'dress joggers,' a garment whose name should have been a warning. Soft pants, every one. Soft pants cannot make this journey. The town would smell the elastic."
           }
         ],

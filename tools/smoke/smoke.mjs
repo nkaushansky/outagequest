@@ -358,6 +358,12 @@ await run("open diner");
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_diner", "entered the diner");
 await run("talk to darlene");
 ok((await lastLines()).includes("two names today"), "wrong-name tally at Darlene", await lastLines());
+const topicChips = await page.locator(".suggest-chip").allInnerTexts();
+ok(topicChips.includes("ask Darlene about nimbus"), "talk arms tappable topic chips", JSON.stringify(topicChips));
+await page.locator(".suggest-chip", { hasText: "about nimbus" }).click();
+await page.waitForTimeout(80);
+ok((await lastLines()).includes("For weather"), "topic chip runs the ask", await lastLines());
+ok((await page.locator(".suggest-chip").allInnerTexts()).includes("ask Darlene about pie"), "chips persist through the conversation");
 await run("talk to merle");
 ok((await lastLines()).includes("three names today"), "wrong-name tally at Merle", await lastLines());
 

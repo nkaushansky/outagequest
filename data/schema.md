@@ -79,9 +79,12 @@ resolution space: 320 wide, 180 tall, origin top-left.
   // Optional: "talk/ask X about Y". Y is matched (normalized, articles
   // stripped) against each topic's `match` list; first hit wins and its
   // responses resolve first-match as usual. A miss falls to `topicDefault`,
-  // then to verbs.json `unknownTopic` ({name}, {topic}). The autocomplete
-  // row offers each topic's first `match` phrase after "about" — write
-  // match[0] as the label you want players to see.
+  // then to verbs.json `unknownTopic` ({name}, {topic}). Write match[0] as
+  // the label you want players to see: the autocomplete row offers it after
+  // a typed "about", and — the tap path — after any TALK (or ask) lands on
+  // a topic-bearing hotspot, the empty command line offers full
+  // "ask X about Y" chips, tap-to-run, until the player does something else
+  // or leaves the room.
   "topics": [
     { "match": ["outage", "internet"],
       "responses": [ { "text": "\"Whole thing's down, hon.\"" } ] }

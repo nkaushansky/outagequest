@@ -37,6 +37,9 @@ export class Engine {
   /** Per room: every score id authored in its JSON (onScoreComplete's own
    *  entries excluded). Computed once — content stays pure data. */
   private roomScoreIds = new Map<string, Set<string>>();
+  /** Hotspot id of the live conversation: while set, the empty command
+   *  line offers tappable "ask X about Y" chips. */
+  private topicContext: string | null = null;
   private readonly dev = new URLSearchParams(window.location.search).has("dev");
 
   constructor() {
@@ -121,6 +124,7 @@ export class Engine {
       return;
     }
     this.state.roomId = id;
+    this.topicContext = null;
     const at = arrive ?? room.playerStart;
     this.state.player.x = at.x;
     this.state.player.y = at.y;
@@ -279,6 +283,10 @@ export class Engine {
       if (verbDef) this.narrate(verbDef.default);
     };
 
+    // A conversation ends when the player does something else; talking to
+    // (or asking) a topic-bearing hotspot re-opens it below.
+    this.topicContext = null;
+
     if (cmd.topic !== undefined) {
       this.performTopic(cmd, fallback);
       return;
@@ -294,6 +302,11 @@ export class Engine {
     if (target.kind === "hotspot") {
       const room = this.currentRoom();
       const hotspot = room?.hotspots.find((h) => h.id === target.id);
+      if (cmd.verb === "talk" && hotspot?.topics?.length) {
+        // Chatting with someone who has topics arms the tap path: the
+        // empty command line offers "ask X about Y" chips.
+        this.topicContext = hotspot.id;
+      }
       const entries = hotspot?.responses?.[cmd.verb];
       if (!runEntries(entries, this.ctx(instrumentId))) fallback();
       return;
@@ -323,6 +336,7 @@ export class Engine {
       target.kind === "hotspot"
         ? room?.hotspots.find((h) => h.id === target.id)
         : undefined;
+    if (hotspot?.topics?.length) this.topicContext = hotspot.id;
     const match = hotspot?.topics?.find((t) =>
       t.match.some((m) => normalize(m).join(" ") === topic),
     );
@@ -450,6 +464,12 @@ export class Engine {
     const tokens = normalize(raw);
     const vm = matchVerb(tokens, this.content.verbs);
     if (!vm) {
+      // A chip that is a whole command (topic chips: "ask X about Y")
+      // runs on tap; anything else starts composing.
+      if (run && matchVerb(normalize(s), this.content.verbs)) {
+        this.tapExec(s);
+        return;
+      }
       this.ui.setInput(s + " ", true);
       return;
     }
@@ -478,8 +498,18 @@ export class Engine {
   private suggest(raw: string): string[] {
     const verbs = Object.keys(this.content.verbs.verbs);
     // Empty input suggests nothing — the verb strip already offers the
-    // verbs; chips only appear once they're completing something.
-    if (raw.trim() === "") return [];
+    // verbs — unless a conversation is live, in which case the line
+    // offers the whole ask ("ask Merle about internet"), tap-to-run.
+    if (raw.trim() === "") {
+      if (!this.topicContext) return [];
+      const npc = this.currentRoom()?.hotspots.find(
+        (h) => h.id === this.topicContext,
+      );
+      return (npc?.topics ?? [])
+        .map((t) => (t.match[0] ? `ask ${npc!.name} about ${t.match[0]}` : ""))
+        .filter(Boolean)
+        .slice(0, MAX_SUGGESTIONS);
+    }
 
     const tokens = normalize(raw);
     const vm = matchVerb(tokens, this.content.verbs);
