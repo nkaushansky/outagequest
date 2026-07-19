@@ -20,7 +20,11 @@ export class UI {
   private statusRoom: HTMLSpanElement;
   private statusDev: HTMLSpanElement;
   private statusScore: HTMLSpanElement;
+  private inv!: HTMLDivElement;
+  private invLabel!: HTMLButtonElement;
   private invChips: HTMLDivElement;
+  private invNames: string[] = [];
+  private invOpen = true;
   private death: HTMLDivElement;
   private deathTitle: HTMLDivElement;
   private deathText: HTMLDivElement;
@@ -77,11 +81,16 @@ export class UI {
       verbStrip.appendChild(b);
     }
 
-    const inv = el("div", "inv");
-    const invLabel = el("span", "inv-label");
-    invLabel.textContent = "inventory/";
+    this.inv = el("div", "inv");
+    this.invLabel = el("button", "inv-label") as HTMLButtonElement;
+    this.invLabel.setAttribute("aria-label", "toggle inventory tray");
+    this.invLabel.addEventListener("click", () => {
+      this.invOpen = !this.invOpen;
+      this.renderInventory();
+    });
     this.invChips = el("div", "inv-chips");
-    inv.append(invLabel, this.invChips);
+    this.inv.append(this.invLabel, this.invChips);
+    const inv = this.inv;
 
     this.death = el("div", "death");
     this.death.hidden = true;
@@ -222,6 +231,20 @@ export class UI {
   }
 
   setInventory(names: string[]): void {
+    this.invNames = names;
+    this.renderInventory();
+  }
+
+  /** Chips wrap into rows (no horizontal scrolling); the "inventory/"
+   *  label toggles the tray closed to "inventory/ (N)" when the player
+   *  wants the log space back. `ls` remains the purist's view. */
+  private renderInventory(): void {
+    const names = this.invNames;
+    const open = this.invOpen || names.length === 0;
+    this.inv.classList.toggle("collapsed", !open);
+    this.invLabel.textContent = open
+      ? "inventory/"
+      : `inventory/ (${names.length})`;
     this.invChips.replaceChildren();
     if (names.length === 0) {
       const none = el("span", "inv-empty");
@@ -229,6 +252,7 @@ export class UI {
       this.invChips.appendChild(none);
       return;
     }
+    if (!open) return;
     for (const name of names) {
       const chip = el("button", "inv-chip");
       chip.textContent = name;

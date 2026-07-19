@@ -449,6 +449,17 @@ await page.press(".cmd-input", "Control+ArrowUp");
 ok((await page.inputValue(".cmd-input")) === "look sky", "Ctrl+ArrowUp recalls from an empty line", await page.inputValue(".cmd-input"));
 await page.locator(".clear").click();
 
+// ---- M3: inventory tray wraps and collapses ---------------------------------
+const invCount = await page.locator(".inv-chip").count();
+ok(invCount >= 4, "inventory holds the act's item pile", String(invCount));
+const invScroll = await page.locator(".inv").evaluate((n) => n.scrollWidth <= n.clientWidth + 1);
+ok(invScroll, "inventory wraps instead of scrolling");
+await page.locator(".inv-label").click();
+ok((await page.locator(".inv-chip").count()) === 0, "inventory tray collapses");
+ok((await page.locator(".inv-label").innerText()).includes(`(${invCount})`), "collapsed label shows count", await page.locator(".inv-label").innerText());
+await page.locator(".inv-label").click();
+ok((await page.locator(".inv-chip").count()) === invCount, "inventory tray reopens");
+
 // ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
 const lookGaps = await page.evaluate(() => {
   const gaps = [];
