@@ -793,6 +793,12 @@
         "look": [
           {
             "if": {
+              "flag": "wearing_coat"
+            },
+            "text": "The empty hook, at ease. Its coat is deployed in the field. Some hooks wait a decade for this."
+          },
+          {
+            "if": {
               "hasItem": "coat"
             },
             "text": "The hook stands empty for the first time in years. It's coping."
@@ -808,6 +814,12 @@
           }
         ],
         "take": [
+          {
+            "if": {
+              "flag": "wearing_coat"
+            },
+            "text": "You're wearing it. The hook has never been prouder of an empty position."
+          },
           {
             "if": {
               "hasItem": "coat"

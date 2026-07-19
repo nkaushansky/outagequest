@@ -225,6 +225,9 @@
                 "setFlag": "mug_full"
               },
               {
+                "setFlag": "coffee_act1"
+              },
+              {
                 "score": {
                   "id": "dn_mug_filled",
                   "points": 2

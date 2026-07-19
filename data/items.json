@@ -17,7 +17,16 @@
       ]
     } },
   "cable":  { "name": "ethernet cable", "synonyms": ["cable", "cat5", "cat 5", "ethernet", "patch cable", "network cable"], "look": "Fourteen feet of cat 5 you crimped by hand, back when you trusted nothing. Both ends test clean. It may be the most reliable object in the hemisphere right now." },
-  "coat":   { "name": "coat", "synonyms": ["jacket", "overcoat"], "look": "The Going Outside coat, over your arm. It smells faintly of the previous decade, which is when it last worked a full shift." },
+  "coat":   { "name": "coat", "synonyms": ["jacket", "overcoat"], "look": "The Going Outside coat, over your arm. It smells faintly of the previous decade, which is when it last worked a full shift.",
+    "responses": {
+      "use": [
+        { "do": [
+            { "narrate": "You shrug on the Going Outside coat. It survived the decade better than most contracts. You are now dressed for elsewhere — which, today, is everywhere. The coat leaves your inventory and assumes its post." },
+            { "setFlag": "wearing_coat" },
+            { "removeItem": "coat" }
+          ] }
+      ]
+    } },
   "pants":  { "name": "real pants", "synonyms": ["pants", "trousers", "slacks", "hard pants", "the pants"], "look": "Real Pants: rigid, buttoned, unforgiving. Last worn at a funeral for a startup. They still hold the crease. Some things stay load-bearing.",
     "responses": {
       "use": [

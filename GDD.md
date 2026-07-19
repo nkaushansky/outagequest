@@ -128,6 +128,22 @@ cycles, hand-cleaned); NPCs mostly static with 2–3 talk frames.
   screen = post-incident review.
 - **Deaths:** narrated punchlines, instant retry one step back, tracked in
   a "deaths found" gallery.
+- **Inventory:** two classes. *Consumables* are acquired and spent inside
+  the same act — when an item's story ends, it leaves the inventory (the
+  narration owns the exit). A lingering consumable near act end is a
+  visible signal of unfinished business, but never a gate: every act stays
+  speedrunnable. No act may require an item from a previous act. *Kit* is
+  Mel's permanent two-piece loadout, unmissable by construction and
+  allowed to cross acts: the hand-crimped ethernet cable (his sword —
+  each act finds a new device to jack it into) and the emotional-support
+  mug. (Pending a destined payoff, the backup hoodie rides along as
+  honorary kit.)
+- **The Coffee Log (meta-collectible):** every act contains exactly one
+  coffee source (Act 1: the diner urn; Act 2+: break station, coffee
+  shop, etc.). Filling the mug in an act sets a persistent
+  `coffee_act<N>` flag. Filling it in all five acts earns a commendation
+  in the endgame postmortem, alongside the deaths gallery and the
+  wrong-name tally. Optional, like all completionism here.
 - **Saves:** autosave to localStorage on room change + export/import save
   string.
 - **Audio (open):** chiptune/MT-32 pastiche vs. minimal ambience — decide

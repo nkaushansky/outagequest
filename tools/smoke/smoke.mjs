@@ -466,6 +466,14 @@ ok((await page.locator(".inv-label").innerText()).includes(`(${invCount})`), "co
 await page.locator(".inv-label").click();
 ok((await page.locator(".inv-chip").count()) === invCount, "inventory tray reopens");
 
+// consumables spend in-act: the coat wears and drops; kit stays
+await run("wear coat");
+ok((await lastLines()).includes("assumes its post"), "coat wears anywhere", await lastLines());
+ok(!(await page.locator(".inv-chip").allInnerTexts()).includes("coat"), "worn coat leaves the inventory");
+ok((await page.locator(".inv-chip").allInnerTexts()).includes("ethernet cable"), "kit survives the act");
+const coffeeLog = await page.evaluate(() => window.spof.state.flags.has("coffee_act1"));
+ok(coffeeLog, "coffee log stamped for act 1");
+
 // ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
 const lookGaps = await page.evaluate(() => {
   const gaps = [];

@@ -208,4 +208,11 @@ persist across retries, restores, and imports — they're collectibles.
   the same response and let the narration own the disappearance — the
   inventory is a working set, not a trophy case. Never remove anything a
   later `hasItem` gate could want; durable state belongs in flags, which
-  survive the item. Reusable tools (the cable, the mug) stay.
+  survive the item.
+- Consumables vs kit (GDD "Systems"): every non-kit item acquired in an
+  act gets spent in that act; a lingering consumable is a signal of open
+  tickets, never a gate — acts stay speedrunnable, and no act may require
+  a previous act's item. Kit (cable, mug) crosses acts and stays.
+- The Coffee Log: each act's one coffee source sets `coffee_act<N>` when
+  the mug is filled there (alongside the reusable `mug_full` flag). The
+  M8 postmortem reads these — author the flag, don't invent variants.
