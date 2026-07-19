@@ -94,7 +94,10 @@ export class Scene {
     this.canvas.addEventListener("pointerdown", (e) => this.onPointerDown(e));
     this.canvas.addEventListener("pointermove", (e) => this.onPointerMove(e));
     this.canvas.addEventListener("pointerup", (e) => this.onPointerUp(e));
-    this.canvas.addEventListener("pointercancel", () => (this.press = null));
+    this.canvas.addEventListener("pointercancel", () => {
+      if (this.press?.dragging) this.target = null;
+      this.press = null;
+    });
 
     this.lastFrame = performance.now();
     requestAnimationFrame((t) => this.frame(t));
@@ -203,7 +206,13 @@ export class Scene {
     const press = this.press;
     if (!press || press.pointerId !== e.pointerId) return;
     this.press = null;
-    if (press.dragging || press.ended) return; // drag ends where it ends
+    if (press.dragging || press.ended) {
+      // Steering stops when the finger lifts. Taps are the fire-and-forget
+      // "go there" gesture; a drag moves Mel only while held — otherwise a
+      // 15px nudge commits him to a cross-room march.
+      this.target = null;
+      return;
+    }
 
     // A clean tap. Floor priority: a tap inside the walkable polygon
     // always walks — dense generous hotspots otherwise out-compete

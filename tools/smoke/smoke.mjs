@@ -415,6 +415,12 @@ for (let i = 1; i <= 8; i++) {
 const dragPos = await page.evaluate(() => ({ ...window.spof.state.player }));
 await page.mouse.up();
 ok(dragPos.x > 85, "drag-to-walk follows the pointer", JSON.stringify(dragPos));
+await page.waitForTimeout(120);
+const relA = await page.evaluate(() => ({ ...window.spof.state.player }));
+await page.waitForTimeout(450);
+const relB = await page.evaluate(() => ({ ...window.spof.state.player }));
+ok(Math.abs(relB.x - relA.x) < 3 && Math.abs(relB.y - relA.y) < 3,
+  "drag release stops the walk", JSON.stringify([relA, relB]));
 
 // ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
 const lookGaps = await page.evaluate(() => {
