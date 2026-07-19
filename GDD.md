@@ -154,7 +154,15 @@ cycles, hand-cleaned); NPCs mostly static with 2–3 talk frames.
   sprite: outfit flags (wearing_pants, wearing_coat, the backup hoodie's
   eventual cold-aisle moment) select sprite variants via a data-defined
   outfit map, so dressing up reads on screen and the engine stays
-  ignorant of specific flags.
+  ignorant of specific flags. M3.5's lasting deliverable is the CHARACTER
+  STYLE BIBLE: a reference sheet plus a documented, repeatable
+  make-a-character process (the sprite counterpart of the background
+  prompt prefix). After M3.5 there is no recurring character milestone —
+  each act's new NPCs are made inside that act's own content thread,
+  in the established style, calibrated against the existing cast. A
+  character that would break the established process (unique animation,
+  set-piece scale) earns a mini dedicated pass — exception-driven,
+  never calendar-driven.
 - **Audio (open):** chiptune/MT-32 pastiche vs. minimal ambience — decide
   by M8.
 
