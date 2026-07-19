@@ -61,7 +61,12 @@ from it) and `data/schema.md` (the content format — the engine's contract).
 
 Placeholder rectangle or simple silhouette is fine through M2. Real sprite:
 ~32x64 px, 4 directions, 6–8 frame walk cycles, hand-cleaned. NPCs static
-with 2–3 talk frames.
+with 2–3 talk frames. All characters (Mel + NPCs) are designed together in
+one dedicated pass — M3.5, after the formal M3 review, before Act 2 — so
+they share one style (the sprite equivalent of the one-generator rule).
+Worn state must show on Mel: outfit flags (wearing_pants, wearing_coat,
+the eventual hoodie beat) select sprite variants through a data-defined
+outfit map; the engine never hard-codes a flag name.
 
 ## Asset pipeline
 

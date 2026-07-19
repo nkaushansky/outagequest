@@ -146,6 +146,15 @@ cycles, hand-cleaned); NPCs mostly static with 2–3 talk frames.
   wrong-name tally. Optional, like all completionism here.
 - **Saves:** autosave to localStorage on room change + export/import save
   string.
+- **Character art (M3.5):** all sprites — Mel and every NPC — are designed
+  together in one dedicated pass so they share one visual language (the
+  sprite counterpart of the one-background-generator rule). Mel ~32x64,
+  4 directions, 6–8 frame walk; NPCs static with 2–3 talk frames, standing
+  in the hotspot spots reserved for them. Worn state is visible on the
+  sprite: outfit flags (wearing_pants, wearing_coat, the backup hoodie's
+  eventual cold-aisle moment) select sprite variants via a data-defined
+  outfit map, so dressing up reads on screen and the engine stays
+  ignorant of specific flags.
 - **Audio (open):** chiptune/MT-32 pastiche vs. minimal ambience — decide
   by M8.
 
