@@ -2,16 +2,16 @@
   "id": "act1_diner",
   "name": "The Bottomless Cup",
   "background": "assets/backgrounds/act1_diner.png",
-  "walkable": [[14, 108], [104, 108], [104, 136], [298, 136], [306, 178], [38, 178], [70, 160], [104, 142]],
+  "walkable": [[104, 136], [298, 136], [306, 178], [38, 178], [70, 160], [104, 142]],
   "playerStart": {
-    "x": 34,
-    "y": 114,
+    "x": 114,
+    "y": 148,
     "facing": "right"
   },
   "exits": [
     {
       "to": "act1_main_street",
-      "polygon": [[6, 106], [26, 106], [26, 126], [6, 126]],
+      "polygon": [[88, 138], [108, 138], [108, 158], [88, 158]],
       "arrive": {
         "x": 278,
         "y": 142,
@@ -288,7 +288,7 @@
         "woman"
       ],
       "polygon": [[168, 42], [196, 42], [196, 92], [168, 92]],
-      "sprite": { "use": "darlene", "at": [182, 88] },
+      "sprite": { "use": "darlene", "at": [182, 77] },
       "responses": {
         "look": [
           {

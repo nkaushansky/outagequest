@@ -475,11 +475,13 @@ await run("look door");
 ok((await lastLines()).includes("holding it open"), "diner door re-aims after the reveal", await lastLines());
 
 // a walked exit ends the conversation AND clears the rendered chip row
+// (M3.5: the diner exit moved to the floor's left edge — the old door
+// corridor ran over the booth backs and stranded the sprite on them)
 await run("talk to merle");
 ok((await page.locator(".suggest-chip").count()) > 0, "chips armed before walking out");
-await page.evaluate(() => { window.spof.state.player.x = 34; window.spof.state.player.y = 114; });
-await clickScene(24, 109);
-await page.waitForTimeout(1200);
+await page.evaluate(() => { window.spof.state.player.x = 120; window.spof.state.player.y = 150; });
+await clickScene(95, 150);
+await page.waitForTimeout(1600);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_main_street", "walked out of the diner");
 ok((await page.locator(".suggest-chip").count()) === 0, "walked exit clears the topic chips");
 await run("look traffic light");

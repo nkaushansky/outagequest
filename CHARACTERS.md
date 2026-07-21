@@ -165,10 +165,13 @@ engine work.
    frames as small overlay parts (an arm, a prop pose) — not full
    redraws.
 5. **Behind furniture?** End the art at the occluding edge (Darlene's
-   waist-cut) and anchor that row on the furniture line. **Seated?**
-   Sit them on painted furniture; anchor at the lowest body pixel.
-   Keep the anchor y **above the walkable band** so Mel always draws in
-   front.
+   waist-cut) and anchor that row so it tucks behind the furniture's FAR
+   edge — on the near edge she reads as standing in front with her legs
+   missing. **Seated?** Sit them on painted furniture; anchor at the
+   lowest body pixel. Keep the anchor y **at or above the top of the
+   walkable band** (draw order sorts by anchor y, so Mel still passes in
+   front), and put standers' feet ON a painted ground line — a foot row
+   floating above the lawn/sidewalk boundary reads as levitation.
 6. **Register + place:** add the sheet to `data/sprites.json` (frame
    size, anchor, talkFps); add `"sprite": { "use": "<id>", "at": [x, y] }`
    to their hotspot; fine-tune `at` against `?dev=1` or a devshot.
