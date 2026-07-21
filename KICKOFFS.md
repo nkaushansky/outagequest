@@ -121,14 +121,91 @@ log row appended.
 
 ---
 
-## M4 — Act 2 (draft after M3.5; seeds below)
+## M4 — Act 2 (paste after M3.5 merges)
 
-Not yet drafted. When drafting, pull from REVIEW.md rows: "M3 (act
-boundary)" (door-entry code/key hunt as Act 2's opening puzzle, hooks:
-Kim's salon, dumpster, Gazette clipping, Merle/Dale lore, at least one
-thread back into town), "M4 carry-forward (documents)" (document
-close-up overlay is M4's opening engine/schema item; retrofit Act 1's
-lore props), "M3 (items canon)" (Act 2 needs one coffee source →
-coffee_act2; new NPCs get new wrong names for Mel; consumables spend
-in-act; the cable finds a new device). Score budget: ~205 tickets remain
-across Acts 2–5.
+M4 kickoff — Act 2: the Edge Node. Repo: nkaushansky/outagequest, start
+from main (M3.5 characters merged; see REVIEW.md rows "M3.5
+(characters)", "M3.5 (device feedback)", "M3 (act boundary)", "M4
+carry-forward (documents)", "M3 (items canon)").
+
+Read before writing anything: CLAUDE.md, GDD.md (story spine — Act 2 is
+the edge node behind the nail salon), data/schema.md, CHARACTERS.md
+(every new NPC is minted with it, calibrated against the reference
+plate), PROMPTS.md (background process), REVIEW.md.
+
+SCOPE:
+
+1. **Document close-ups (the opening engine/schema item).** Generalize
+   the death-screen pattern: a focus-trapped, dismissible DOM overlay;
+   CSS renders the paper (newsprint / Post-it / aged clipping /
+   corporate flyer); text stays real DOM text — never canvas. One
+   minimal schema action, e.g. `document{style,title,body,image?}`.
+   Document images may be treated crops of existing background art (the
+   Gazette clipping's plaza photo IS the edge-of-town art, sepia'd —
+   free continuity). Build the mechanism first, content second (the M3
+   instrument-condition pattern); the door-code hunt is its first
+   customer. Retrofit Act 1's lore props in the same pass: Main Street
+   notice-board flyer, Gazette box front page, diner corkboard clipping
+   (office corkboard optional).
+
+2. **Act 2's opening puzzle: through the gray door.** A key/code hunt
+   seeded entirely in Act 1's planted hooks — Kim's salon (watches the
+   door), the dumpster (Dale's install debris), the corkboard Gazette
+   photo, Merle/Dale lore — with at least one thread sending the player
+   back into town (the open world at act end is design, not
+   decoration). The code stays out of Mel's own office; the trail is
+   town-side. Act 1 must remain completable exactly as reviewed — no
+   re-gating anything behind new content.
+
+3. **Act 2 content: the edge node.** "Regional infrastructure" is one
+   rack and a box fan in a humming closet behind a nail salon. New
+   rooms per GDD scope (5–6 dense, the existing edge-of-town plaza as
+   hub), backgrounds via the PROMPTS.md style prefix + treat_bg.py (one
+   generator), polygons fit with `?dev=1`. Every hotspot a bespoke
+   LOOK; deaths collectible, warn-first, registered; puzzles follow
+   sysadmin logic; the act ends pointing one layer down.
+
+4. **New NPCs, in-act, per the bible.** Kim (the salon; watches
+   everything) and whoever else the act demands — minted with
+   CHARACTERS.md's make-a-character process, placed by hotspot `sprite`
+   blocks (pure data), three smoke checks each. Every new NPC gets
+   Mel's name wrong a NEW way (the tally continues). The cable finds
+   its Act 2 device; one coffee source stamps `coffee_act2`;
+   consumables spend in-act.
+
+5. **Act 1 debt sweep (small, while touching those rooms).** From the
+   M3 formal-review carry-forwards: office desk noun + post-drawer
+   cabinet LOOK, couch remote + griddle content, curiosity LOOK points
+   for diner/EOT (both currently award zero), EOT's missing
+   onScoreComplete stays absent by design (the act-out is its aside —
+   confirm, don't add).
+
+DECIDE AT THREAD START (settle these WITH the human in conversation
+before building — they are joint decisions, not builder discretion; see
+REVIEW.md "M3.5 (decisions ratified)"):
+
+- Act 2 room map: which 5–6 rooms (salon interior? closet interior?
+  service corridor? behind-the-plaza?) and which one is the act's
+  coffee source.
+- Door-code shape: multi-clue combination vs. physical key vs. social
+  (Kim simply knows) — and how many hooks the player must touch.
+- Act 2 ticket budget (~205 remain across Acts 2–5; Act 1 spent 45).
+
+CONSTRAINTS: content pure JSON (the document overlay is one schema
+action; adding rooms/NPCs touches no engine code); all text DOM, never
+canvas; new backgrounds one-generator + treat_bg.py at true 320x180;
+new sprites use the master palette; acts stay speedrunnable; nothing
+from Act 1's inventory may be required (kit excepted).
+
+TEST LOOP: npm run build + preview + `npm run smoke` (suite is ~182
+checks, green twice — keep it green; extend with document-overlay
+checks, Act 2 completability, new-NPC sprite checks, coffee_act2).
+Deploy via the dreamhost-upload flow, slug `outagequest`; real-phone
+pass before calling it done.
+
+DEFINITION OF DONE: Acts 1 + 2 completable start to finish (Act 1
+unchanged at 45 closed); the gray door opens via the authored hunt;
+document close-ups live incl. the Act 1 retrofits; all new NPCs visible
+and talking on a phone in both orientations; the wrong-name tally
+grows; content still pure JSON; zero console errors; REVIEW.md log row
+appended.
