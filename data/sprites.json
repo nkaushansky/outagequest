@@ -1,0 +1,12 @@
+{
+  "note": "Sprite registry (schema.md 'Sprites'). Sheets live in assets/sprites/, compiled from hand-pixeled grids by tools/sprites/build_sprites.py. anchor = the frame pixel that lands on the sprite's world (x,y): feet for walkers, the counter-cut for Darlene, boot soles for seated Merle.",
+  "sprites": {
+    "mel_base":       { "sheet": "assets/sprites/mel_base.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "mel_pants":      { "sheet": "assets/sprites/mel_pants.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "mel_coat":       { "sheet": "assets/sprites/mel_coat.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "mel_coat_pants": { "sheet": "assets/sprites/mel_coat_pants.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "gary":    { "sheet": "assets/sprites/gary.png", "frameW": 40, "frameH": 52, "anchor": [19, 51], "talkFps": 6 },
+    "darlene": { "sheet": "assets/sprites/darlene.png", "frameW": 30, "frameH": 38, "anchor": [14, 37], "talkFps": 6 },
+    "merle":   { "sheet": "assets/sprites/merle.png", "frameW": 30, "frameH": 54, "anchor": [14, 53], "talkFps": 5 }
+  }
+}

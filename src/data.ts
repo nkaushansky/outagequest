@@ -12,6 +12,8 @@ import type {
   ResponseEntry,
   Room,
   RoomExit,
+  SpriteDef,
+  SpritesFile,
   VerbsFile,
 } from "./types";
 
@@ -19,6 +21,7 @@ import gameJson from "../data/game.json";
 import verbsJson from "../data/verbs.json";
 import itemsJson from "../data/items.json";
 import deathsJson from "../data/deaths.json";
+import spritesJson from "../data/sprites.json";
 
 const roomModules = import.meta.glob("../data/rooms/*.json", {
   eager: true,
@@ -26,6 +29,12 @@ const roomModules = import.meta.glob("../data/rooms/*.json", {
 });
 
 const backgroundUrls = import.meta.glob("../assets/backgrounds/*.png", {
+  eager: true,
+  import: "default",
+  query: "?url",
+});
+
+const spriteSheetUrls = import.meta.glob("../assets/sprites/*.png", {
   eager: true,
   import: "default",
   query: "?url",
@@ -89,6 +98,15 @@ function normalizeRoom(raw: unknown): Room {
       if (Array.isArray(s.topics)) hotspot.topics = s.topics as Hotspot["topics"];
       if (Array.isArray(s.topicDefault))
         hotspot.topicDefault = s.topicDefault as ResponseEntry[];
+      if (s.sprite && typeof s.sprite === "object") {
+        // "at" arrives as [x, y], like every other room coordinate.
+        const sp = s.sprite as { use?: unknown; at?: unknown };
+        const pair = Array.isArray(sp.at) ? (sp.at as number[]) : [0, 0];
+        hotspot.sprite = {
+          use: String(sp.use ?? ""),
+          at: { x: Number(pair[0] ?? 0), y: Number(pair[1] ?? 0) },
+        };
+      }
       return hotspot;
     }),
   };
@@ -104,8 +122,12 @@ export interface Content {
   items: ItemsFile;
   deaths: DeathsFile;
   rooms: Map<string, Room>;
+  /** sprite id (data/sprites.json) -> sheet definition */
+  sprites: Map<string, SpriteDef>;
   /** room background path (as written in room JSON) -> served asset URL */
   backgroundUrl(path: string): string | undefined;
+  /** sprite sheet path (as written in sprites.json) -> served asset URL */
+  spriteUrl(path: string): string | undefined;
 }
 
 export function loadContent(): Content {
@@ -122,12 +144,25 @@ export function loadContent(): Content {
     bgByPath.set(key.replace(/^\.\.\//, ""), String(url));
   }
 
+  const spriteByPath = new Map<string, string>();
+  for (const [key, url] of Object.entries(spriteSheetUrls)) {
+    spriteByPath.set(key.replace(/^\.\.\//, ""), String(url));
+  }
+
+  const sprites = new Map<string, SpriteDef>();
+  const spritesFile = spritesJson as unknown as SpritesFile;
+  for (const [id, def] of Object.entries(spritesFile.sprites ?? {})) {
+    sprites.set(id, def);
+  }
+
   return {
-    game: gameJson as GameConfig,
+    game: gameJson as unknown as GameConfig,
     verbs: verbsJson as unknown as VerbsFile,
     items: itemsJson as unknown as ItemsFile,
     deaths: deathsJson as unknown as DeathsFile,
     rooms,
+    sprites,
     backgroundUrl: (path) => bgByPath.get(path.replace(/^\.?\//, "")),
+    spriteUrl: (path) => spriteByPath.get(path.replace(/^\.?\//, "")),
   };
 }

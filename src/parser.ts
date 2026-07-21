@@ -4,6 +4,7 @@
 
 import type { ItemsFile, Room, VerbsFile } from "./types";
 import type { GameState } from "./state";
+import { evalCondition } from "./resolver";
 
 export interface ObjectRef {
   kind: "hotspot" | "item";
@@ -96,7 +97,16 @@ export function buildCandidates(
       if (norm) out.push({ phrase: norm, ref });
     }
   }
-  for (const id of state.inventory) {
+  const present = new Set(state.inventory);
+  for (const [id, item] of Object.entries(items)) {
+    // Worn/ambient items: presentIf keeps them addressable un-carried
+    // ("wear pants" after the pants entered Mel's identity).
+    if (!present.has(id) && item.presentIf &&
+        evalCondition(item.presentIf, state)) {
+      present.add(id);
+    }
+  }
+  for (const id of present) {
     const item = items[id];
     if (!item) continue;
     const ref: ObjectRef = { kind: "item", id, name: item.name };

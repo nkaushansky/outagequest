@@ -6,11 +6,13 @@ resolution space: 320 wide, 180 tall, origin top-left.
 
 ## Files
 
-- `data/game.json` — global config: title, startRoom, maxScore
+- `data/game.json` — global config: title, startRoom, maxScore, and the
+  player outfit map (see Sprites)
 - `data/verbs.json` — canonical verbs + synonym table + fallback templates
 - `data/items.json` — inventory items
 - `data/deaths.json` — death registry: the single source of death copy
   (screen text + gallery title). Room JSON triggers deaths by id.
+- `data/sprites.json` — sprite sheet registry (see Sprites)
 - `data/rooms/<room_id>.json` — one file per room
 
 ## Room
@@ -142,16 +144,79 @@ exits, topics), `instrument` is never satisfied and `anyInstrument` equals
 - `{ "goto": "room_id" }`
 - `{ "playSound": "id" }` (M8)
 
+## Sprites
+
+`data/sprites.json` registers every sprite sheet; sheets live in
+`assets/sprites/` and are compiled from hand-pixeled grids by
+`tools/sprites/build_sprites.py` (see CHARACTERS.md — the style bible).
+
+```jsonc
+{
+  "sprites": {
+    "mel_base": { "sheet": "assets/sprites/mel_base.png",
+      "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "gary": { "sheet": "assets/sprites/gary.png",
+      "frameW": 40, "frameH": 52, "anchor": [19, 51], "talkFps": 6 }
+  }
+}
+```
+
+Sheet convention (the image declares its own shape): columns = frames,
+col 0 is the idle frame, the rest are the cycle. A 4-row sheet is a
+**walker** — rows in fixed order down/left/right/up, cols 1+ the walk
+cycle. A 1-row sheet is a **static NPC** — cols 1+ the talk cycle.
+`anchor` is the frame pixel that lands on the sprite's world (x, y):
+feet for standing figures, the counter-cut row for a waist-up NPC, boot
+soles for a seated one.
+
+**NPC placement is room data.** A hotspot gains an optional `sprite`
+block and the engine draws that NPC standing there — adding a room's NPC
+never touches engine code:
+
+```jsonc
+{ "id": "gary", "name": "Gary", "polygon": [[32,74],[54,74],[54,124],[32,124]],
+  "sprite": { "use": "gary", "at": [43, 123] } }
+```
+
+`use` names a registry id; `at` is where the anchor lands (in-world,
+320x180 space). Draw order is painter's-by-anchor-y across NPCs and the
+player, so keep `at` y above the walkable band for characters standing
+behind it. TALK (or ask-about) landing on a sprite-bearing hotspot runs
+its talk cycle for a beat; there is nothing to author.
+
+**The outfit map** lives in `data/game.json` under `player.sprite`: an
+ordered first-match list, exactly like response resolution. The first
+entry whose `if` passes (standard conditions) names Mel's sheet. The
+engine never knows a flag's name — a future outfit is a new sheet, a
+registry row, and one entry here:
+
+```jsonc
+"player": { "sprite": [
+  { "if": { "all": [{ "flag": "wearing_coat" }, { "flag": "wearing_pants" }] },
+    "use": "mel_coat_pants" },
+  { "if": { "flag": "wearing_coat" }, "use": "mel_coat" },
+  { "if": { "flag": "wearing_pants" }, "use": "mel_pants" },
+  { "use": "mel_base" }
+] }
+```
+
 ## Items
 
-`data/items.json`: `id -> { name, synonyms, look, responses? }`. The
-optional `responses` block has the hotspot shape — so a carried item can
-react to verbs ("use pants" wears them); `look` is the fallback when no
-`look` list is authored. When a room hotspot claims the same noun as a
+`data/items.json`: `id -> { name, synonyms, look, responses?, presentIf? }`.
+The optional `responses` block has the hotspot shape — so a carried item
+can react to verbs ("use pants" wears them); `look` is the fallback when
+no `look` list is authored. When a room hotspot claims the same noun as a
 carried item, the hotspot's authored responses win, and the item catches
 any verb the hotspot leaves unhandled (so taking a room's coat never
 strands "wear coat" in that room). Score ids authored in items.json
 belong to no room and never count toward any room's `onScoreComplete`.
+
+`presentIf` (a standard condition) keeps the item addressable while it
+passes even when the item isn't carried — the worn-clothes rule. Spent
+items leave the inventory (writing rules), but "wear pants" the day after
+should meet "you're already in them", not a parser shrug. Pair it with a
+guard entry at the top of the relevant verb list, and a worn-state `look`
+entry, as the pants and coat do.
 
 ## Parser contract
 

@@ -1,8 +1,8 @@
 // Canvas scene: true 320x180 backbuffer upscaled with nearest-neighbor.
-// Backgrounds, player sprite and walk animation live here. No text is ever
-// rendered into the canvas — all UI is DOM (see ui.ts).
+// Backgrounds, player sprite, NPC sprites and walk animation live here.
+// No text is ever rendered into the canvas — all UI is DOM (see ui.ts).
 
-import type { Hotspot, Pt, Room, RoomExit } from "./types";
+import type { Facing, Hotspot, Pt, Room, RoomExit } from "./types";
 import type { GameState } from "./state";
 import {
   clampIntoPolygon,
@@ -18,8 +18,11 @@ const WALK_SPEED = 70; // px/sec in internal space
 const HOTSPOT_PAD = 5; // generous hit-testing
 const HIGHLIGHT_MS = 450;
 const MARKER_MS = 350;
+/** How long an NPC's talk cycle runs after a talk/ask lands on them. */
+const TALK_MS = 2600;
 
-// Placeholder sprite palette (real sprite arrives after M2). Explicit colors.
+// Placeholder sprite palette — the fallback when a sheet is missing or
+// still loading (and the pre-M3.5 look). Explicit colors.
 const C_SHADOW = "rgba(0, 0, 0, 0.35)";
 const C_LEGS = "#2E3742";
 const C_TORSO = "#55606E";
@@ -28,6 +31,33 @@ const C_HAIR = "#3A2E28";
 const C_HIGHLIGHT = "#FFE066";
 const C_MARKER = "#FFE066";
 const C_LETTERBOX = "#000000";
+
+/** A resolved sprite sheet: image + layout from data/sprites.json.
+ *  Walker sheets: 4 rows (down/left/right/up), col 0 idle + walk cols.
+ *  Static sheets: 1 row, col 0 idle + talk cols. */
+export interface SpriteSheet {
+  img: HTMLImageElement;
+  frameW: number;
+  frameH: number;
+  anchorX: number;
+  anchorY: number;
+  walkFps: number;
+  talkFps: number;
+}
+
+/** An NPC standing in the room (from a hotspot's `sprite` block). */
+export interface SceneNpc {
+  id: string;
+  sheet: SpriteSheet;
+  x: number;
+  y: number;
+}
+
+const FACING_ROW: Record<Facing, number> = { down: 0, left: 1, right: 2, up: 3 };
+
+function sheetReady(s: SpriteSheet): boolean {
+  return s.img.complete && s.img.naturalWidth > 0;
+}
 
 // Dev-mode overlay palette (?dev=1) — polygon authoring aid, never shipped UI.
 const C_DEV_WALKABLE = "#46FF7A";
@@ -75,6 +105,15 @@ export class Scene {
   private heldKeys = new Set<string>();
   private dev: boolean;
 
+  /** Player sheet for the current outfit; null falls back to the
+   *  placeholder silhouette so a missing sheet never blanks the game. */
+  private playerSheet: SpriteSheet | null = null;
+  private npcs: SceneNpc[] = [];
+  /** Live talk animation: which NPC and when it started. */
+  private talk: { id: string; start: number } | null = null;
+  /** True on frames where the player actually moved (walk animation). */
+  private walking = false;
+
   constructor(
     container: HTMLElement,
     state: GameState,
@@ -111,6 +150,7 @@ export class Scene {
     this.target = null;
     this.highlight = null;
     this.marker = null;
+    this.talk = null;
     // Don't fire an exit until the player has actually walked somewhere,
     // in case an arrive point sits inside an exit polygon.
     this.exitArmed = false;
@@ -136,6 +176,35 @@ export class Scene {
 
   setBackground(bg: HTMLImageElement | null): void {
     this.bg = bg;
+  }
+
+  /** Swap the player's sheet (outfit change / initial load). */
+  setPlayerSprite(sheet: SpriteSheet | null): void {
+    this.playerSheet = sheet;
+  }
+
+  /** Replace the room's standing NPCs (called on room change). */
+  setNpcs(npcs: SceneNpc[]): void {
+    this.npcs = npcs;
+    this.talk = null;
+  }
+
+  /** Run an NPC's talk cycle for a beat (talk/ask landed on them). */
+  npcTalk(id: string): void {
+    if (!this.npcs.some((n) => n.id === id)) return;
+    this.talk = { id, start: performance.now() };
+  }
+
+  /** Debug/test: id of the NPC currently mid-talk-cycle, if any. */
+  npcTalking(): string | null {
+    return this.talk && performance.now() - this.talk.start < TALK_MS
+      ? this.talk.id
+      : null;
+  }
+
+  /** Debug/test: NPC ids standing in the current room. */
+  npcIds(): string[] {
+    return this.npcs.map((n) => n.id);
   }
 
   /** Map a pointer event to internal coordinates, accounting for the
@@ -279,6 +348,7 @@ export class Scene {
   }
 
   private update(dt: number): void {
+    this.walking = false;
     if (!this.room) return;
 
     // Keyboard steering runs instead of (never alongside) target walking.
@@ -298,10 +368,13 @@ export class Scene {
         if (pointInPolygon(next, this.room.walkable)) {
           player.x = next.x;
           player.y = next.y;
+          this.walking = true;
         } else if (pointInPolygon({ x: next.x, y: player.y }, this.room.walkable)) {
           player.x = next.x;
+          this.walking = true;
         } else if (pointInPolygon({ x: player.x, y: next.y }, this.room.walkable)) {
           player.y = next.y;
+          this.walking = true;
         }
         if (Math.abs(dx) >= Math.abs(dy)) {
           player.facing = dx < 0 ? "left" : "right";
@@ -337,10 +410,13 @@ export class Scene {
       if (pointInPolygon(next, this.room.walkable)) {
         player.x = next.x;
         player.y = next.y;
+        this.walking = true;
       } else if (pointInPolygon({ x: next.x, y: player.y }, this.room.walkable)) {
         player.x = next.x; // slide along x
+        this.walking = true;
       } else if (pointInPolygon({ x: player.x, y: next.y }, this.room.walkable)) {
         player.y = next.y; // slide along y
+        this.walking = true;
       } else {
         this.target = null; // wedged; stop rather than escape the polygon
       }
@@ -405,7 +481,7 @@ export class Scene {
       this.marker = null;
     }
 
-    this.drawPlayer();
+    this.drawSprites(now);
 
     if (this.dev && this.room) {
       this.strokePoly(this.room.walkable, C_DEV_WALKABLE);
@@ -450,14 +526,74 @@ export class Scene {
     ctx.globalAlpha = 1;
   }
 
-  /** Placeholder Mel: a hand-stacked silhouette, feet at (x, y). */
-  private drawPlayer(): void {
+  /** Painter's algorithm over everything that stands on the floor:
+   *  NPCs + player, sorted by anchor y (feet), lowest drawn last. */
+  private drawSprites(now: number): void {
+    const drawables: { y: number; draw: () => void }[] = [];
+
+    for (const npc of this.npcs) {
+      drawables.push({ y: npc.y, draw: () => this.drawNpc(npc, now) });
+    }
+    const player = this.state.player;
+    drawables.push({ y: player.y, draw: () => this.drawPlayerSprite() });
+
+    drawables.sort((a, b) => a.y - b.y);
+    for (const d of drawables) d.draw();
+  }
+
+  private drawNpc(npc: SceneNpc, now: number): void {
+    const s = npc.sheet;
+    if (!sheetReady(s)) return; // static scenery gap beats a broken image
+    const cols = Math.max(1, Math.floor(s.img.naturalWidth / s.frameW));
+    let col = 0;
+    const talk = this.talk;
+    if (talk && talk.id === npc.id && cols > 1) {
+      const t = now - talk.start;
+      if (t < TALK_MS) {
+        col = 1 + (Math.floor((t / 1000) * s.talkFps) % (cols - 1));
+      } else {
+        this.talk = null;
+      }
+    }
+    this.ctx.drawImage(
+      s.img,
+      col * s.frameW, 0, s.frameW, s.frameH,
+      Math.round(npc.x - s.anchorX), Math.round(npc.y - s.anchorY),
+      s.frameW, s.frameH,
+    );
+  }
+
+  private drawPlayerSprite(): void {
+    const s = this.playerSheet;
+    const { x, y, facing } = this.state.player;
+    if (!s || !sheetReady(s)) {
+      this.drawPlayerPlaceholder();
+      return;
+    }
+    const cols = Math.max(1, Math.floor(s.img.naturalWidth / s.frameW));
+    const rows = Math.max(1, Math.floor(s.img.naturalHeight / s.frameH));
+    const row = rows >= 4 ? FACING_ROW[facing] : 0;
+    const col =
+      this.walking && cols > 1
+        ? 1 + (Math.floor(this.animTime * s.walkFps) % (cols - 1))
+        : 0;
+    this.ctx.drawImage(
+      s.img,
+      col * s.frameW, row * s.frameH, s.frameW, s.frameH,
+      Math.round(x - s.anchorX), Math.round(y - s.anchorY),
+      s.frameW, s.frameH,
+    );
+  }
+
+  /** Pre-M3.5 Mel: a hand-stacked silhouette, feet at (x, y). Kept as
+   *  the fallback so a missing sheet degrades to the old look, not to
+   *  an invisible protagonist. */
+  private drawPlayerPlaceholder(): void {
     const ctx = this.ctx;
     const { x, y, facing } = this.state.player;
     const px = Math.round(x);
     const py = Math.round(y);
-    const walking = this.target !== null;
-    const stride = walking && Math.floor(this.animTime * 6) % 2 === 0 ? 1 : 0;
+    const stride = this.walking && Math.floor(this.animTime * 6) % 2 === 0 ? 1 : 0;
 
     ctx.fillStyle = C_SHADOW;
     ctx.fillRect(px - 7, py - 1, 14, 2);

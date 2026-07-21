@@ -13,6 +13,38 @@ export interface GameConfig {
   titleScreen?: string;
   startRoom: string;
   maxScore: number;
+  /** Outfit map: first entry whose `if` passes names the player's sprite.
+   *  The engine never knows a flag name — dressing up is pure data. */
+  player?: { sprite: OutfitEntry[] };
+}
+
+export interface OutfitEntry {
+  if?: Condition;
+  use: string;
+}
+
+/** One sheet in data/sprites.json. Walker sheets are 4 rows in fixed
+ *  order down/left/right/up; single-row sheets are static NPCs. Col 0 is
+ *  idle; remaining cols are the walk or talk cycle. `anchor` is the frame
+ *  pixel that lands on the sprite's world (x, y) — feet, usually. */
+export interface SpriteDef {
+  sheet: string;
+  frameW: number;
+  frameH: number;
+  anchor: [number, number];
+  walkFps?: number;
+  talkFps?: number;
+}
+
+export interface SpritesFile {
+  note?: string;
+  sprites: Record<string, SpriteDef>;
+}
+
+/** A hotspot's standing sprite: which sheet, and where the anchor goes. */
+export interface HotspotSpriteRef {
+  use: string;
+  at: Pt;
 }
 
 export interface VerbDef {
@@ -39,6 +71,9 @@ export interface ItemDef {
    *  carried items can react ("use pants" = wearing them). `look` remains
    *  the fallback when no "look" list is authored. */
   responses?: Record<string, ResponseEntry[]>;
+  /** The item also answers to its nouns (without being carried) while
+   *  this passes — worn things stay addressable after removeItem. */
+  presentIf?: Condition;
 }
 
 export type ItemsFile = Record<string, ItemDef>;
@@ -95,6 +130,8 @@ export interface Hotspot {
   topics?: TopicDef[];
   /** Runs for a topic no `match` covers (before verbs.json unknownTopic). */
   topicDefault?: ResponseEntry[];
+  /** An NPC stands here: sprite id + anchor point, pure data. */
+  sprite?: HotspotSpriteRef;
 }
 
 export interface RoomExit {

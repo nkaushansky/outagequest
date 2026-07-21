@@ -1,5 +1,6 @@
 // SPOF smoke suite: REVIEW.md M1 (engine core) + M2 (vertical slice) +
-// M3 (Act 1: instrument/topics/gates/onScoreComplete, act completability).
+// M3 (Act 1: instrument/topics/gates/onScoreComplete, act completability) +
+// M3.5 (sprites: outfit map, NPC presence, talk cycles, real canvas pixels).
 // Usage: node tools/smoke/smoke.mjs [baseURL] [shotsDir]
 // Requires the built game served at baseURL (npm run build && npm run preview).
 import { mkdirSync } from "node:fs";
@@ -39,12 +40,55 @@ const score = async () => {
   return String(Number(m[2]) - Number(m[1]));
 };
 
+// M3.5 sprite probes. Master-palette ramps are the style authority
+// (tools/sprites/chars/_master_palette.py) — stable by design, so exact
+// canvas pixels are legitimate render evidence.
+const RAMP = {
+  slate_m: [94, 110, 128],    // Mel's hoodie
+  khaki_m: [160, 136, 94],    // the Real Pants
+  coat_m: [134, 102, 64],     // the Going Outside coat
+  polo_m: [122, 156, 182],    // Gary
+  apron_l: [240, 234, 220],   // Darlene
+  flannel_m: [146, 62, 42],   // Merle
+};
+const playerSprite = () => page.evaluate(() => window.spof.sprites.player());
+const npcIds = () => page.evaluate(() => window.spof.sprites.npcs());
+const npcTalking = () => page.evaluate(() => window.spof.sprites.talking());
+/** True when any pixel of the backbuffer region holds the exact ramp
+ *  color (retries briefly — sheets decode async on first use). */
+const canvasHas = async (name, box) => {
+  for (let tries = 0; tries < 10; tries++) {
+    const hit = await page.evaluate(([rgb, b]) => {
+      const cv = document.querySelector("#scene canvas");
+      const x0 = Math.max(0, b[0]), y0 = Math.max(0, b[1]);
+      const d = cv.getContext("2d")
+        .getImageData(x0, y0, Math.min(320, b[2]) - x0, Math.min(180, b[3]) - y0).data;
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i] === rgb[0] && d[i + 1] === rgb[1] && d[i + 2] === rgb[2]) return true;
+      }
+      return false;
+    }, [RAMP[name], box]);
+    if (hit) return true;
+    await page.waitForTimeout(100);
+  }
+  return false;
+};
+/** Region around the player's feet-anchored frame. */
+const playerBox = async () => {
+  const p = await page.evaluate(() => ({ ...window.spof.state.player }));
+  return [Math.round(p.x) - 16, Math.round(p.y) - 62, Math.round(p.x) + 16, Math.round(p.y) + 2];
+};
+
 // ---- M1 regression ------------------------------------------------------
 ok(await page.locator("#scene canvas").count() === 1, "canvas mounted");
 const attrs = await page.locator("#scene canvas").evaluate((c) => [c.width, c.height]);
 ok(attrs[0] === 320 && attrs[1] === 180, "true 320x180 backbuffer", JSON.stringify(attrs));
 ok((await logText()).includes("mug population"), "intro narration");
 ok((await status()) === "TICKETS OPEN 249/250", "intro queue count", await status());
+
+// ---- M3.5: the player sprite renders (base outfit) -----------------------
+ok((await playerSprite()) === "mel_base", "outfit map resolves to mel_base", await playerSprite());
+ok(await canvasHas("slate_m", await playerBox()), "Mel's hoodie drawn on canvas");
 
 await run("look monitors");
 ok((await lastLines()).includes("wall of red"), "monitors look", await lastLines());
@@ -274,8 +318,14 @@ const coatSave = (await logText()).match(/SPOF1\.[A-Za-z0-9+/=]+/g).pop();
 await run("wear coat");
 ok((await lastLines()).includes("assumes its post"), "coat wears in the office (item catches shadowed verb)", await lastLines());
 ok(!(await page.locator(".inv-chip").allInnerTexts()).includes("coat"), "office-worn coat leaves the inventory");
+ok((await playerSprite()) === "mel_coat", "coat flag switches the sprite to mel_coat", await playerSprite());
+ok(await canvasHas("coat_m", await playerBox()), "coat outfit drawn on canvas");
+await run("wear coat");
+ok((await lastLines()).includes("already at its post"),
+  "worn coat addressable through the office hotspot shadow (presentIf alt)", await lastLines());
 await run(`load ${coatSave}`);
 ok((await page.locator(".inv-chip").allInnerTexts()).includes("coat"), "save restore returns the coat for the rest of the run");
+ok((await playerSprite()) === "mel_base", "restore un-wears the coat sprite", await playerSprite());
 
 await run("open door");
 ok((await logText()).includes("bigger than you remember"), "office door opens to the house", await lastLines());
@@ -337,6 +387,12 @@ await run("wear pants");
 ok((await lastLines()).includes("crease engages"), "wear pants via item responses", await lastLines());
 ok(!(await page.locator(".inv-chip").allInnerTexts()).includes("real pants"),
   "worn pants leave the inventory");
+ok((await playerSprite()) === "mel_pants", "the Real Pants read on the sprite", await playerSprite());
+ok(await canvasHas("khaki_m", await playerBox()), "khaki legs drawn on canvas");
+await run("wear pants");
+ok((await lastLines()).includes("cannot be stacked"), "worn pants stay addressable (presentIf)", await lastLines());
+await run("look pants");
+ok((await lastLines()).includes("precedes you into rooms"), "worn pants have a worn LOOK", await lastLines());
 
 // ---- M3: main street (set piece, wrong-name gag, road death) ----------------
 await run("open door");
@@ -351,10 +407,15 @@ await clickScene(315, 138);
 await page.waitForTimeout(1000);
 ok((await logText()).includes("It serves pie"), "east exit blocked without the trail", await lastLines());
 
+// ---- M3.5: Gary stands in his reserved spot ---------------------------------
+ok((await npcIds()).includes("gary"), "Gary's sprite present on Main Street", JSON.stringify(await npcIds()));
+ok(await canvasHas("polo_m", [23, 70, 64, 126]), "Gary drawn at his hotspot spot");
+
 await run("look notice board");
 ok((await lastLines(4)).includes("CANCELLED"), "Nimbus lore on the notice board", await lastLines(4));
 await run("talk to gary");
 ok((await lastLines(4)).includes("NEIL"), "Gary gets the name wrong", await lastLines(4));
+ok((await npcTalking()) === "gary", "talking runs Gary's talk cycle", String(await npcTalking()));
 await run("ask gary about nimbus");
 ok((await lastLines()).includes("Nimbus people"), "Gary topic responds", await lastLines());
 await run("ask gary about hum");
@@ -373,8 +434,17 @@ await page.waitForTimeout(200);
 // ---- M3: diner (topics, tally, mug instrument, the reveal) ------------------
 await run("open diner");
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_diner", "entered the diner");
+
+// ---- M3.5: the diner regulars stand in their reserved spots -----------------
+const dinerNpcs = await npcIds();
+ok(dinerNpcs.includes("darlene") && dinerNpcs.includes("merle"),
+  "Darlene + Merle sprites present in the diner", JSON.stringify(dinerNpcs));
+ok(await canvasHas("apron_l", [168, 50, 197, 89]), "Darlene drawn behind the counter");
+ok(await canvasHas("flannel_m", [225, 54, 254, 109]), "Merle drawn on his stool");
+
 await run("talk to darlene");
 ok((await lastLines()).includes("two names today"), "wrong-name tally at Darlene", await lastLines());
+ok((await npcTalking()) === "darlene", "talking runs Darlene's talk cycle", String(await npcTalking()));
 const topicChips = await page.locator(".suggest-chip").allInnerTexts();
 ok(topicChips.includes("ask Darlene about nimbus"), "talk arms tappable topic chips", JSON.stringify(topicChips));
 await page.locator(".suggest-chip", { hasText: "about nimbus" }).click();
@@ -383,6 +453,7 @@ ok((await lastLines()).includes("For weather"), "topic chip runs the ask", await
 ok((await page.locator(".suggest-chip").allInnerTexts()).includes("ask Darlene about pie"), "chips persist through the conversation");
 await run("talk to merle");
 ok((await lastLines()).includes("three names today"), "wrong-name tally at Merle", await lastLines());
+ok((await npcTalking()) === "merle", "talking runs Merle's talk cycle", String(await npcTalking()));
 
 await page.fill(".cmd-input", "ask merle about ");
 await page.dispatchEvent(".cmd-input", "input");
@@ -515,6 +586,9 @@ await run("wear coat");
 ok((await lastLines()).includes("assumes its post"), "coat wears anywhere", await lastLines());
 ok(!(await page.locator(".inv-chip").allInnerTexts()).includes("coat"), "worn coat leaves the inventory");
 ok((await page.locator(".inv-chip").allInnerTexts()).includes("ethernet cable"), "kit survives the act");
+ok((await playerSprite()) === "mel_coat_pants", "coat + pants compound outfit resolves", await playerSprite());
+await run("wear coat");
+ok((await lastLines()).includes("already at its post"), "worn coat stays addressable (presentIf)", await lastLines());
 const coffeeLog = await page.evaluate(() => window.spof.state.flags.has("coffee_act1"));
 ok(coffeeLog, "coffee log stamped for act 1");
 

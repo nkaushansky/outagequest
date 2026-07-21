@@ -2,5 +2,13 @@
   "title": "Single Point of Failure",
   "titleScreen": "Single Point of Failure: An Outage Quest, Part I",
   "startRoom": "act1_home_office",
-  "maxScore": 250
+  "maxScore": 250,
+  "player": {
+    "sprite": [
+      { "if": { "all": [{ "flag": "wearing_coat" }, { "flag": "wearing_pants" }] }, "use": "mel_coat_pants" },
+      { "if": { "flag": "wearing_coat" }, "use": "mel_coat" },
+      { "if": { "flag": "wearing_pants" }, "use": "mel_pants" },
+      { "use": "mel_base" }
+    ]
+  }
 }

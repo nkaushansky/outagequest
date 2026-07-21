@@ -288,6 +288,7 @@
         "woman"
       ],
       "polygon": [[168, 42], [196, 42], [196, 92], [168, 92]],
+      "sprite": { "use": "darlene", "at": [182, 88] },
       "responses": {
         "look": [
           {
@@ -475,6 +476,7 @@
         "old timer"
       ],
       "polygon": [[236, 58], [262, 58], [262, 130], [236, 130]],
+      "sprite": { "use": "merle", "at": [239, 108] },
       "responses": {
         "look": [
           {

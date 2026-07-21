@@ -57,11 +57,17 @@ from it) and `data/schema.md` (the content format — the engine's contract).
 - Regression harness: `tools/smoke/` (build + preview, then `npm run
   smoke`). Keep it green; extend it with each milestone's checks.
 
-## Player sprite (M1 can stub)
+## Characters (M3.5 landed; see CHARACTERS.md)
 
-Placeholder rectangle or simple silhouette is fine through M2. Real sprite:
-~32x64 px, 4 directions, 6–8 frame walk cycles, hand-cleaned. NPCs static
-with 2–3 talk frames. All characters (Mel + NPCs) are designed together in
+Sprites are hand-pixeled grid files in `tools/sprites/chars/`, compiled
+by `tools/sprites/build_sprites.py` into `assets/sprites/` sheets —
+CHARACTERS.md is the style bible and the make-a-character process. Mel:
+32x64, 4 directions, 6-frame walk, outfit variants selected by the
+data-defined outfit map in game.json (engine knows no flag names). NPCs
+static with 2–3 talk-gesture frames, placed by a hotspot `sprite` block —
+adding an NPC never touches engine code. One master palette for the whole
+cast (`chars/_master_palette.py`); the old placeholder rectangle remains
+only as the missing-sheet fallback. All characters (Mel + NPCs) are designed together in
 one dedicated pass — M3.5, after the formal M3 review, before Act 2 — so
 they share one style (the sprite equivalent of the one-generator rule).
 Worn state must show on Mel: outfit flags (wearing_pants, wearing_coat,

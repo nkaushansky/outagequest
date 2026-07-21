@@ -6,7 +6,7 @@ import { loadContent, type Content } from "./data";
 import { GameState, type Snapshot } from "./state";
 import { runEntries, type EngineContext } from "./resolver";
 import { tryShell } from "./shell";
-import { Scene } from "./scene";
+import { Scene, type SceneNpc, type SpriteSheet } from "./scene";
 import { UI } from "./ui";
 import { decodeSave, encodeSave, readLocal, writeLocal, type SaveData } from "./save";
 import {
@@ -40,6 +40,10 @@ export class Engine {
   /** Hotspot id of the live conversation: while set, the empty command
    *  line offers tappable "ask X about Y" chips. */
   private topicContext: string | null = null;
+  /** Resolved sprite sheets by sprite id (data/sprites.json). */
+  private sheets = new Map<string, SpriteSheet | null>();
+  /** The outfit the player sprite last resolved to (avoids re-set spam). */
+  private playerSpriteId: string | null = null;
   private readonly dev = new URLSearchParams(window.location.search).has("dev");
 
   constructor() {
@@ -101,16 +105,74 @@ export class Engine {
       this.narrate(`[engine] missing background: ${room.background}`, "err");
       return null;
     }
+    return this.imageFor(url, room.background);
+  }
+
+  private imageFor(url: string, label: string): HTMLImageElement {
     let img = this.images.get(url);
     if (!img) {
       img = new Image();
       img.src = url;
       img.decode().catch(() => {
-        this.narrate(`[engine] failed to load ${room.background}`, "err");
+        this.narrate(`[engine] failed to load ${label}`, "err");
       });
       this.images.set(url, img);
     }
     return img;
+  }
+
+  // ---- sprites ---------------------------------------------------------
+
+  /** Sprite id -> sheet (image + layout), cached; null when unknown. */
+  private sheetFor(id: string): SpriteSheet | null {
+    if (this.sheets.has(id)) return this.sheets.get(id) ?? null;
+    const def = this.content.sprites.get(id);
+    const url = def && this.content.spriteUrl(def.sheet);
+    if (!def || !url) {
+      this.narrate(`[engine] unknown sprite: ${id}`, "err");
+      this.sheets.set(id, null);
+      return null;
+    }
+    const sheet: SpriteSheet = {
+      img: this.imageFor(url, def.sheet),
+      frameW: def.frameW,
+      frameH: def.frameH,
+      anchorX: def.anchor?.[0] ?? Math.floor(def.frameW / 2),
+      anchorY: def.anchor?.[1] ?? def.frameH - 1,
+      walkFps: def.walkFps ?? 9,
+      talkFps: def.talkFps ?? 6,
+    };
+    this.sheets.set(id, sheet);
+    return sheet;
+  }
+
+  /** First outfit-map entry whose condition passes names Mel's sheet.
+   *  The engine evaluates conditions; it never knows a flag's name. */
+  private refreshPlayerSprite(): void {
+    const outfits = this.content.game.player?.sprite ?? [];
+    let id: string | null = null;
+    for (const entry of outfits) {
+      if (!entry.if || evalCondition(entry.if, this.state)) {
+        id = entry.use;
+        break;
+      }
+    }
+    if (id === this.playerSpriteId) return;
+    this.playerSpriteId = id;
+    this.scene.setPlayerSprite(id ? this.sheetFor(id) : null);
+  }
+
+  /** NPCs standing in this room: every hotspot with a `sprite` block. */
+  private npcsFor(room: Room): SceneNpc[] {
+    const npcs: SceneNpc[] = [];
+    for (const h of room.hotspots) {
+      if (!h.sprite) continue;
+      const sheet = this.sheetFor(h.sprite.use);
+      if (sheet) {
+        npcs.push({ id: h.id, sheet, x: h.sprite.at.x, y: h.sprite.at.y });
+      }
+    }
+    return npcs;
   }
 
   private changeRoom(
@@ -130,6 +192,8 @@ export class Engine {
     this.state.player.y = at.y;
     this.state.player.facing = at.facing;
     this.scene.setRoom(room, this.backgroundFor(room));
+    this.scene.setNpcs(this.npcsFor(room));
+    this.refreshPlayerSprite();
     this.refreshStatus();
     if (runOnEnter) {
       runEntries(room.onEnter, this.ctx());
@@ -150,6 +214,7 @@ export class Engine {
     if (exit.if && !evalCondition(exit.if, this.state)) {
       runEntries(exit.blocked, this.ctx());
       this.checkScoreComplete();
+      this.refreshPlayerSprite();
       this.refreshStatus();
       this.refreshInventory();
       this.autosave();
@@ -227,6 +292,7 @@ export class Engine {
     if (!handled) this.dispatch(trimmed);
     this.checkScoreComplete();
 
+    this.refreshPlayerSprite();
     this.refreshStatus();
     this.refreshInventory();
     this.refreshSuggestions();
@@ -309,6 +375,10 @@ export class Engine {
         // empty command line offers "ask X about Y" chips.
         this.topicContext = hotspot.id;
       }
+      // Talking at anyone with a standing sprite runs their talk cycle.
+      if (cmd.verb === "talk" && hotspot?.sprite) {
+        this.scene.npcTalk(hotspot.id);
+      }
       const entries = hotspot?.responses?.[cmd.verb];
       if (runEntries(entries, this.ctx(instrumentId))) return;
       // The room named it but authored nothing for this verb; a carried
@@ -352,6 +422,7 @@ export class Engine {
         ? room?.hotspots.find((h) => h.id === target.id)
         : undefined;
     if (hotspot?.topics?.length) this.topicContext = hotspot.id;
+    if (hotspot?.sprite) this.scene.npcTalk(hotspot.id);
     const match = hotspot?.topics?.find((t) =>
       t.match.some((m) => normalize(m).join(" ") === topic),
     );
@@ -605,6 +676,11 @@ export class Engine {
       state: this.state,
       content: this.content,
       exec: (raw: string) => this.exec(raw),
+      sprites: {
+        player: () => this.playerSpriteId,
+        npcs: () => this.scene.npcIds(),
+        talking: () => this.scene.npcTalking(),
+      },
     };
   }
 }
