@@ -658,7 +658,7 @@ await run("open nail salon");
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_salon", "salon door opens");
 const salonNpcs = await npcIds();
 ok(salonNpcs.includes("kim") && salonNpcs.includes("dot"), "Kim + Dot sprites present", JSON.stringify(salonNpcs));
-ok(await canvasHas("rose_m", [138, 30, 192, 82]), "Kim drawn behind the manicure table");
+ok(await canvasHas("rose_m", [104, 56, 140, 110]), "Kim drawn standing at her station");
 ok(await canvasHas("lavender_m", [204, 58, 256, 118]), "Dot drawn on the dryer chair");
 await run("talk to kim");
 ok((await lastLines()).includes("Malcolm"), "Kim wrongs the name a new way (Malcolm)", await lastLines());

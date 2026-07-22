@@ -144,11 +144,14 @@ engine work.
   Rust flannel with cream check lattice, denim, boots on the rail,
   white saucer of coffee cooling in both hands. Talk: the saucer lifts
   toward the blow.
-- **Kim Nguyen** (Kim's Nails, behind the manicure table) — 30x40
-  static, waist-up behind furniture (the Darlene trick; anchor row
-  tucks behind the table's FAR edge). Sleek black bob, gold claw clip,
-  white-trim collar, and the cast's rose pop: the salon tunic. The
-  emery board never leaves her left hand. Talk: the file lifts
+- **Kim Nguyen** (Kim's Nails, standing at her nail station) — 30x50
+  static stander, feet anchored, baked shadow. Started life waist-up
+  behind a placeholder table; the real salon art gave her a small
+  station with the client's chair in front, so she got legs — black
+  slacks, white salon flats — and works on her feet (also keeps her
+  pose distinct from Darlene). Sleek black bob, gold claw clip,
+  white-trim collar, and the cast's rose pop: the hip-length tunic.
+  The emery board never leaves her left hand. Talk: the file lifts
   mid-flourish, then the right hand points you at your next task —
   without looking up. Minted M4, first product of the make-a-character
   process.

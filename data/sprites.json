@@ -8,7 +8,7 @@
     "gary":    { "sheet": "assets/sprites/gary.png", "frameW": 40, "frameH": 52, "anchor": [19, 51], "talkFps": 6 },
     "darlene": { "sheet": "assets/sprites/darlene.png", "frameW": 30, "frameH": 38, "anchor": [14, 37], "talkFps": 6 },
     "merle":   { "sheet": "assets/sprites/merle.png", "frameW": 30, "frameH": 54, "anchor": [14, 53], "talkFps": 5 },
-    "kim":     { "sheet": "assets/sprites/kim.png", "frameW": 30, "frameH": 40, "anchor": [14, 39], "talkFps": 6 },
+    "kim":     { "sheet": "assets/sprites/kim.png", "frameW": 30, "frameH": 50, "anchor": [14, 47], "talkFps": 6 },
     "dot":     { "sheet": "assets/sprites/dot.png", "frameW": 34, "frameH": 48, "anchor": [16, 47], "talkFps": 5 }
   }
 }
