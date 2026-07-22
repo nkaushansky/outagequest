@@ -4,49 +4,73 @@
   "background": "assets/backgrounds/act2_salon.png",
   "walkable": [
     [
-      84,
+      128,
+      102
+    ],
+    [
+      158,
+      102
+    ],
+    [
+      158,
       112
+    ],
+    [
+      188,
+      112
+    ],
+    [
+      188,
+      102
     ],
     [
       206,
-      112
+      102
     ],
     [
       206,
-      122
+      108
     ],
     [
-      252,
-      122
+      244,
+      108
     ],
     [
-      252,
-      112
+      244,
+      102
     ],
     [
-      318,
-      112
+      294,
+      102
+    ],
+    [
+      294,
+      146
     ],
     [
       312,
+      146
+    ],
+    [
+      308,
       178
     ],
     [
-      8,
+      12,
       178
     ],
     [
-      8,
-      142
+      12,
+      164
     ],
     [
-      84,
-      142
+      126,
+      164
     ]
   ],
   "playerStart": {
-    "x": 296,
-    "y": 150,
+    "x": 288,
+    "y": 110,
     "facing": "left"
   },
   "exits": [
@@ -54,20 +78,20 @@
       "to": "act1_edge_of_town",
       "polygon": [
         [
-          306,
-          112
+          284,
+          100
         ],
         [
-          319,
-          112
+          316,
+          100
         ],
         [
-          319,
-          178
+          316,
+          130
         ],
         [
-          306,
-          178
+          284,
+          130
         ]
       ],
       "arrive": {
@@ -81,25 +105,25 @@
       "polygon": [
         [
           0,
-          142
+          160
         ],
         [
-          10,
-          142
+          14,
+          160
         ],
         [
-          10,
-          178
+          14,
+          180
         ],
         [
           0,
-          178
+          180
         ]
       ],
       "arrive": {
-        "x": 24,
-        "y": 150,
-        "facing": "right"
+        "x": 26,
+        "y": 132,
+        "facing": "down"
       }
     }
   ],
@@ -142,27 +166,27 @@
       ],
       "polygon": [
         [
-          104,
-          56
+          116,
+          54
         ],
         [
-          140,
-          56
+          152,
+          54
         ],
         [
-          140,
-          110
+          152,
+          108
         ],
         [
-          104,
-          110
+          116,
+          108
         ]
       ],
       "sprite": {
         "use": "kim",
         "at": [
-          122,
-          108
+          134,
+          106
         ]
       },
       "responses": {
@@ -336,27 +360,27 @@
       ],
       "polygon": [
         [
-          206,
-          38
+          208,
+          52
         ],
         [
-          252,
-          38
+          244,
+          52
         ],
         [
-          252,
-          116
+          244,
+          104
         ],
         [
-          206,
-          116
+          208,
+          104
         ]
       ],
       "sprite": {
         "use": "dot",
         "at": [
-          228,
-          114
+          225,
+          101
         ]
       },
       "responses": {
@@ -488,20 +512,20 @@
       ],
       "polygon": [
         [
-          74,
-          36
-        ],
-        [
-          102,
-          36
-        ],
-        [
-          102,
-          64
+          52,
+          54
         ],
         [
           74,
-          64
+          54
+        ],
+        [
+          74,
+          78
+        ],
+        [
+          52,
+          78
         ]
       ],
       "responses": {
@@ -593,20 +617,20 @@
       ],
       "polygon": [
         [
-          102,
-          44
+          104,
+          58
         ],
         [
-          122,
-          44
+          126,
+          58
         ],
         [
-          122,
-          66
+          126,
+          78
         ],
         [
-          102,
-          66
+          104,
+          78
         ]
       ],
       "responses": {
@@ -674,20 +698,20 @@
       ],
       "polygon": [
         [
-          22,
-          22
+          38,
+          10
         ],
         [
-          70,
-          22
+          110,
+          10
         ],
         [
-          70,
-          84
+          110,
+          60
         ],
         [
-          22,
-          84
+          38,
+          60
         ]
       ],
       "responses": {
@@ -722,19 +746,19 @@
       ],
       "polygon": [
         [
-          136,
-          18
+          150,
+          10
         ],
         [
-          196,
-          18
+          194,
+          10
         ],
         [
-          196,
+          194,
           62
         ],
         [
-          136,
+          150,
           62
         ]
       ],
@@ -753,24 +777,28 @@
         "lamp",
         "uv lamp",
         "curing lamp",
-        "dryer lamp"
+        "dryer lamp",
+        "station",
+        "nail station",
+        "desk",
+        "table"
       ],
       "polygon": [
         [
-          132,
-          62
+          142,
+          58
         ],
         [
-          156,
-          62
+          166,
+          58
         ],
         [
-          156,
-          78
+          166,
+          74
         ],
         [
-          132,
-          78
+          142,
+          74
         ]
       ],
       "responses": {
@@ -797,20 +825,20 @@
       ],
       "polygon": [
         [
-          104,
-          66
+          78,
+          58
         ],
         [
-          122,
+          104,
+          58
+        ],
+        [
+          104,
           78
         ],
         [
-          122,
-          92
-        ],
-        [
-          104,
-          84
+          78,
+          78
         ]
       ],
       "responses": {
@@ -853,20 +881,20 @@
       ],
       "polygon": [
         [
-          208,
-          36
+          202,
+          32
         ],
         [
-          250,
-          36
+          242,
+          32
         ],
         [
-          250,
-          78
+          242,
+          60
         ],
         [
-          208,
-          78
+          202,
+          60
         ]
       ],
       "responses": {
@@ -893,20 +921,28 @@
       ],
       "polygon": [
         [
-          22,
-          96
+          0,
+          56
         ],
         [
-          82,
-          96
+          126,
+          56
         ],
         [
-          82,
-          138
+          126,
+          162
         ],
         [
-          22,
-          138
+          44,
+          162
+        ],
+        [
+          44,
+          114
+        ],
+        [
+          0,
+          114
         ]
       ],
       "responses": {
@@ -932,20 +968,20 @@
       ],
       "polygon": [
         [
-          254,
-          22
+          238,
+          16
         ],
         [
-          288,
-          22
+          278,
+          16
         ],
         [
-          288,
-          68
+          278,
+          66
         ],
         [
-          254,
-          68
+          238,
+          66
         ]
       ],
       "responses": {
@@ -968,20 +1004,20 @@
       ],
       "polygon": [
         [
-          0,
-          26
+          2,
+          6
         ],
         [
-          18,
-          26
+          36,
+          6
         ],
         [
-          18,
-          112
+          36,
+          102
         ],
         [
-          0,
-          112
+          2,
+          102
         ]
       ],
       "responses": {
@@ -997,7 +1033,12 @@
                 "narrate": "You slip through the curtain. Kim doesn't stop you, which in Kim is a security clearance."
               },
               {
-                "goto": "act2_corridor"
+                "goto": "act2_corridor",
+                "arrive": {
+                  "x": 26,
+                  "y": 132,
+                  "facing": "down"
+                }
               }
             ]
           }
@@ -1009,7 +1050,12 @@
                 "narrate": "You slip through the curtain. Kim doesn't stop you, which in Kim is a security clearance."
               },
               {
-                "goto": "act2_corridor"
+                "goto": "act2_corridor",
+                "arrive": {
+                  "x": 26,
+                  "y": 132,
+                  "facing": "down"
+                }
               }
             ]
           }
@@ -1027,20 +1073,20 @@
       ],
       "polygon": [
         [
-          292,
-          20
+          284,
+          12
         ],
         [
           318,
-          20
+          12
         ],
         [
           318,
-          108
+          100
         ],
         [
-          292,
-          108
+          284,
+          100
         ]
       ],
       "responses": {
@@ -1081,6 +1127,91 @@
                 }
               }
             ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "trolley",
+      "name": "trolley",
+      "synonyms": [
+        "cart",
+        "lotions",
+        "towels",
+        "supplies"
+      ],
+      "polygon": [
+        [
+          6,
+          116
+        ],
+        [
+          38,
+          116
+        ],
+        [
+          38,
+          160
+        ],
+        [
+          6,
+          160
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "A wheeled trolley of lotions, acetones, and towels folded to hotel spec, parked with its brakes on. Kim's supply chain: four feet long, zero intermediaries, restocked Tuesdays by Kim, audited continuously by Kim. Fortune 500 logistics departments would weep into their dashboards."
+          }
+        ],
+        "take": [
+          {
+            "text": "Every bottle on that cart is inventoried in the only database that matters. You'd be caught before your hand closed."
+          }
+        ],
+        "use": [
+          {
+            "text": "You are not qualified to operate the lotions. Few are."
+          }
+        ]
+      }
+    },
+    {
+      "id": "bench",
+      "name": "waiting bench",
+      "synonyms": [
+        "bench",
+        "seat",
+        "cushion",
+        "magazines"
+      ],
+      "polygon": [
+        [
+          294,
+          106
+        ],
+        [
+          319,
+          106
+        ],
+        [
+          319,
+          146
+        ],
+        [
+          294,
+          146
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "The waiting bench by the door, cushioned in the same rose as everything Kim loves, magazines fanned at a maintained angle. People WAIT here, on purpose, contentedly — a queue with snacks and gossip and a 100% service rate. You've run message queues with worse SLAs and none of the upholstery."
+          }
+        ],
+        "use": [
+          {
+            "text": "Sitting down in a warm salon at dusk, mid-incident? You'd never get up. The bench knows it. The bench has ended stronger men's afternoons."
           }
         ]
       }

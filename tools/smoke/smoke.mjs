@@ -658,8 +658,8 @@ await run("open nail salon");
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_salon", "salon door opens");
 const salonNpcs = await npcIds();
 ok(salonNpcs.includes("kim") && salonNpcs.includes("dot"), "Kim + Dot sprites present", JSON.stringify(salonNpcs));
-ok(await canvasHas("rose_m", [104, 56, 140, 110]), "Kim drawn standing at her station");
-ok(await canvasHas("lavender_m", [204, 58, 256, 118]), "Dot drawn on the dryer chair");
+ok(await canvasHas("rose_m", [114, 52, 154, 110]), "Kim drawn standing at her station");
+ok(await canvasHas("lavender_m", [206, 50, 248, 106]), "Dot drawn on the dryer chair");
 await run("talk to kim");
 ok((await lastLines()).includes("Malcolm"), "Kim wrongs the name a new way (Malcolm)", await lastLines());
 ok((await npcTalking()) === "kim", "Kim's talk cycle runs");
@@ -738,7 +738,7 @@ ok((await logText()).includes("Front of house"), "backlot onScoreComplete aside"
 
 // the gray door: the key turns, spends itself, the closet receives
 await clickScene(312, 150);
-await page.waitForTimeout(2600);
+await page.waitForTimeout(3800);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "service drive back around front");
 await run("use key on door");
 await page.waitForTimeout(150);
@@ -789,8 +789,8 @@ ok((await score()) === "100", "Acts 1+2 full clear at exactly 100", await score(
 ok((await status()) === "TICKETS OPEN 150/250", "the queue reads 150 open", await status());
 
 // world stays open at act end; kit crossed, consumables spent
-await page.evaluate(() => { window.spof.state.player.x = 30; window.spof.state.player.y = 150; });
-await clickScene(9, 150);
+await page.evaluate(() => { window.spof.state.player.x = 30; window.spof.state.player.y = 165; });
+await clickScene(9, 165);
 await page.waitForTimeout(1400);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "act two's end is not a dead end");
 const m4inv = await page.evaluate(() => [...window.spof.state.inventory]);

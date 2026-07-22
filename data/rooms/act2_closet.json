@@ -2,16 +2,50 @@
   "id": "act2_closet",
   "name": "The Edge Node",
   "background": "assets/backgrounds/act2_closet.png",
-  "walkable": [[24, 113], [318, 113], [312, 178], [16, 178]],
+  "walkable": [
+    [
+      26,
+      132
+    ],
+    [
+      302,
+      134
+    ],
+    [
+      298,
+      178
+    ],
+    [
+      18,
+      178
+    ]
+  ],
   "playerStart": {
-    "x": 294,
+    "x": 284,
     "y": 148,
     "facing": "left"
   },
   "exits": [
     {
       "to": "act1_edge_of_town",
-      "polygon": [[308, 113], [319, 113], [319, 178], [308, 178]],
+      "polygon": [
+        [
+          256,
+          128
+        ],
+        [
+          308,
+          128
+        ],
+        [
+          308,
+          154
+        ],
+        [
+          256,
+          154
+        ]
+      ],
       "arrive": {
         "x": 262,
         "y": 140,
@@ -43,11 +77,15 @@
       ]
     },
     {
-      "if": { "flag": "act2_trail_found" },
+      "if": {
+        "flag": "act2_trail_found"
+      },
       "text": "The closet, diagnosed and dignified. The rack hums on. Its problem — your problem — is west of here, at the end of a buried thread of glass."
     },
     {
-      "if": { "flag": "cl_patched" },
+      "if": {
+        "flag": "cl_patched"
+      },
       "text": "The closet. Your cable hangs in the switch like a flag on a summit. The local side lives; the truth is upstream."
     },
     {
@@ -73,7 +111,24 @@
         "the rack",
         "gear"
       ],
-      "polygon": [[126, 14], [208, 14], [208, 112], [126, 112]],
+      "polygon": [
+        [
+          120,
+          18
+        ],
+        [
+          188,
+          18
+        ],
+        [
+          188,
+          130
+        ],
+        [
+          120,
+          130
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -102,15 +157,36 @@
         "leds",
         "lights"
       ],
-      "polygon": [[130, 20], [204, 20], [204, 46], [130, 46]],
+      "polygon": [
+        [
+          128,
+          36
+        ],
+        [
+          180,
+          36
+        ],
+        [
+          180,
+          50
+        ],
+        [
+          128,
+          50
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "cl_diagnosed" },
+            "if": {
+              "flag": "cl_diagnosed"
+            },
             "text": "The edge router, verdict rendered: local ports green, uplink dark, fault upstream. It blinks its half-alive pattern with what you now recognize as patience, not confusion. It's been paging an empty hallway for days. You're the first thing that ever paged back."
           },
           {
-            "if": { "flag": "cl_patched" },
+            "if": {
+              "flag": "cl_patched"
+            },
             "do": [
               {
                 "narrate": "With your cable proving the switch alive, the router's story clarifies into a verdict. Local interfaces: green, green, green — the county is still knocking and the room still hears it. The uplink module: dark. Not blinking-dark. Dark-dark. Unlit-from-the-far-end dark. The fault is not in this closet. The fault has never been in this closet. Somewhere west of here, whatever feeds this room went silent, and every dashboard on Earth turned red in sympathy."
@@ -135,7 +211,9 @@
         ],
         "use": [
           {
-            "if": { "instrument": "cable" },
+            "if": {
+              "instrument": "cable"
+            },
             "text": "You consider consoling into the router, then remember the console cable is whatever Dale took with him nine years ago. Your cat 5 is a LINK tool, not a confession booth. The switch below has forty-eight honest ports that will tell you what layer one knows."
           },
           {
@@ -153,11 +231,30 @@
         "port",
         "management port"
       ],
-      "polygon": [[130, 46], [204, 46], [204, 62], [130, 62]],
+      "polygon": [
+        [
+          128,
+          50
+        ],
+        [
+          180,
+          50
+        ],
+        [
+          180,
+          64
+        ],
+        [
+          128,
+          64
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "cl_patched" },
+            "if": {
+              "flag": "cl_patched"
+            },
             "text": "The 48-port switch, with your hand-crimped cable seated in port 47 and a green link light burning over it like a candle in a window. The county's LAN lives. You have never been prouder of fourteen feet of copper."
           },
           {
@@ -168,8 +265,12 @@
           {
             "if": {
               "all": [
-                { "instrument": "cable" },
-                { "flagNot": "cl_patched" }
+                {
+                  "instrument": "cable"
+                },
+                {
+                  "flagNot": "cl_patched"
+                }
               ]
             },
             "do": [
@@ -191,11 +292,15 @@
             ]
           },
           {
-            "if": { "instrument": "cable" },
+            "if": {
+              "instrument": "cable"
+            },
             "text": "The cable is already seated in port 47, link light green, testimony delivered. Moving it around the switch now would just be fidgeting with extra steps."
           },
           {
-            "if": { "anyInstrument": true },
+            "if": {
+              "anyInstrument": true
+            },
             "text": "The switch accepts RJ45 and nothing else. It has forty-eight opinions and they are all the same opinion."
           },
           {
@@ -213,7 +318,24 @@
         "wiring",
         "patches"
       ],
-      "polygon": [[130, 62], [204, 62], [204, 82], [130, 82]],
+      "polygon": [
+        [
+          128,
+          64
+        ],
+        [
+          180,
+          64
+        ],
+        [
+          180,
+          94
+        ],
+        [
+          128,
+          94
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -241,7 +363,24 @@
         "beep",
         "beeping"
       ],
-      "polygon": [[130, 84], [204, 84], [204, 112], [130, 112]],
+      "polygon": [
+        [
+          128,
+          94
+        ],
+        [
+          182,
+          94
+        ],
+        [
+          182,
+          126
+        ],
+        [
+          128,
+          126
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -250,7 +389,9 @@
         ],
         "use": [
           {
-            "if": { "flagNot": "cl_ups_hushed" },
+            "if": {
+              "flagNot": "cl_ups_hushed"
+            },
             "do": [
               {
                 "narrate": "You press and hold the alarm-silence button — the sacred gesture, taught to every apprentice, older than the vendors themselves. The beep stops mid-beep. The room's hum steps forward into the silence, fuller now, almost grateful. Nine years this machine cried into the dark, and the first human to ever answer said: acknowledged. You log it as such."
@@ -287,7 +428,24 @@
         "extension cord",
         "cords"
       ],
-      "polygon": [[212, 30], [268, 30], [268, 108], [212, 108]],
+      "polygon": [
+        [
+          196,
+          2
+        ],
+        [
+          264,
+          2
+        ],
+        [
+          264,
+          54
+        ],
+        [
+          196,
+          54
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -306,7 +464,9 @@
         ],
         "use": [
           {
-            "if": { "flagNot": "cl_fan_warned" },
+            "if": {
+              "flagNot": "cl_fan_warned"
+            },
             "do": [
               {
                 "narrate": "You reach toward the transom to adjust the fan's angle — and stop, fingers an inch from the blur. It's running full tilt with the grille long gone, a nineteen-dollar turbine with nine years of momentum and no opinion about flesh. You retract the hand. The county's cooling does not need your fingerprints. Any of them."
@@ -342,7 +502,24 @@
         "log",
         "signoff"
       ],
-      "polygon": [[242, 42], [270, 42], [270, 78], [242, 78]],
+      "polygon": [
+        [
+          280,
+          46
+        ],
+        [
+          302,
+          46
+        ],
+        [
+          302,
+          84
+        ],
+        [
+          280,
+          84
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -384,14 +561,35 @@
         "label",
         "address"
       ],
-      "polygon": [[32, 70], [88, 70], [88, 112], [32, 112]],
+      "polygon": [
+        [
+          56,
+          98
+        ],
+        [
+          104,
+          98
+        ],
+        [
+          104,
+          136
+        ],
+        [
+          56,
+          136
+        ]
+      ],
       "responses": {
         "look": [
           {
             "if": {
               "all": [
-                { "flag": "cl_diagnosed" },
-                { "flagNot": "act2_trail_found" }
+                {
+                  "flag": "cl_diagnosed"
+                },
+                {
+                  "flagNot": "act2_trail_found"
+                }
               ]
             },
             "do": [
@@ -420,7 +618,9 @@
             ]
           },
           {
-            "if": { "flag": "act2_trail_found" },
+            "if": {
+              "flag": "act2_trail_found"
+            },
             "do": [
               {
                 "narrate": "The packing slip, now the most consequential document in your possession that you do not technically possess. US-CENTRAL-1. Westbound fiber. A road you can stand on. You re-read it the way other people check their tickets at the airport."
@@ -465,7 +665,24 @@
         "glass",
         "west wall"
       ],
-      "polygon": [[0, 40], [36, 40], [36, 72], [0, 72]],
+      "polygon": [
+        [
+          40,
+          16
+        ],
+        [
+          62,
+          16
+        ],
+        [
+          62,
+          126
+        ],
+        [
+          40,
+          126
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -488,7 +705,24 @@
         "sound",
         "heat"
       ],
-      "polygon": [[36, 14], [120, 14], [120, 60], [36, 60]],
+      "polygon": [
+        [
+          100,
+          0
+        ],
+        [
+          206,
+          0
+        ],
+        [
+          206,
+          18
+        ],
+        [
+          100,
+          18
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -510,11 +744,30 @@
         "exit",
         "outside"
       ],
-      "polygon": [[274, 26], [318, 26], [318, 110], [274, 110]],
+      "polygon": [
+        [
+          256,
+          40
+        ],
+        [
+          312,
+          40
+        ],
+        [
+          312,
+          132
+        ],
+        [
+          256,
+          132
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "act2_trail_found" },
+            "if": {
+              "flag": "act2_trail_found"
+            },
             "text": "The gray door from the inside, propped open on the dusk. Through it: the lot, the pylon — and from the east, faint under the closet's chord, an engine idling. Patient. Carbureted. Somebody in this county still drives out, and he's parked where the road leaves town."
           },
           {
@@ -529,7 +782,11 @@
               },
               {
                 "goto": "act1_edge_of_town",
-                "arrive": { "x": 262, "y": 140, "facing": "down" }
+                "arrive": {
+                  "x": 262,
+                  "y": 140,
+                  "facing": "down"
+                }
               }
             ]
           }
@@ -542,9 +799,58 @@
               },
               {
                 "goto": "act1_edge_of_town",
-                "arrive": { "x": 262, "y": 140, "facing": "down" }
+                "arrive": {
+                  "x": 262,
+                  "y": 140,
+                  "facing": "down"
+                }
               }
             ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dale_shelf",
+      "name": "shelf",
+      "synonyms": [
+        "wall shelf",
+        "toolbox",
+        "cans",
+        "supplies"
+      ],
+      "polygon": [
+        [
+          58,
+          6
+        ],
+        [
+          114,
+          6
+        ],
+        [
+          114,
+          50
+        ],
+        [
+          58,
+          50
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "A wall shelf of Dale's leavings: a paint can repurposed for mystery hardware, a toolbox that declined the trip home, one rag folded with surprising tenderness. Every install sheds a stratum, and this is the closet's — nine years undisturbed, dust like snowfall, waiting for an archaeologist with your exact qualifications."
+          }
+        ],
+        "take": [
+          {
+            "text": "You inventory the shelf and leave it in place. Site tools stay with the site — Dale knew the law, and so do you."
+          }
+        ],
+        "open": [
+          {
+            "text": "The toolbox lid gives an inch and sighs a decade of dust. Inside: crimpers, a punch-down tool, and loose cage nuts. A complete confession, in hardware."
           }
         ]
       }

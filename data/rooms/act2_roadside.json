@@ -2,16 +2,66 @@
   "id": "act2_roadside",
   "name": "The County Road",
   "background": "assets/backgrounds/act2_roadside.png",
-  "walkable": [[8, 130], [316, 130], [310, 178], [8, 178]],
+  "walkable": [
+    [
+      72,
+      126
+    ],
+    [
+      222,
+      126
+    ],
+    [
+      222,
+      140
+    ],
+    [
+      316,
+      140
+    ],
+    [
+      310,
+      178
+    ],
+    [
+      8,
+      178
+    ],
+    [
+      8,
+      158
+    ],
+    [
+      70,
+      158
+    ]
+  ],
   "playerStart": {
     "x": 30,
-    "y": 162,
+    "y": 164,
     "facing": "right"
   },
   "exits": [
     {
       "to": "act1_edge_of_town",
-      "polygon": [[0, 130], [12, 130], [12, 178], [0, 178]],
+      "polygon": [
+        [
+          0,
+          156
+        ],
+        [
+          12,
+          156
+        ],
+        [
+          12,
+          180
+        ],
+        [
+          0,
+          180
+        ]
+      ],
       "arrive": {
         "x": 300,
         "y": 164,
@@ -64,7 +114,24 @@
         "cab",
         "thermos"
       ],
-      "polygon": [[184, 88], [306, 88], [306, 156], [184, 156]],
+      "polygon": [
+        [
+          214,
+          80
+        ],
+        [
+          319,
+          80
+        ],
+        [
+          319,
+          136
+        ],
+        [
+          214,
+          136
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -98,7 +165,24 @@
         "warning posts",
         "buried cable"
       ],
-      "polygon": [[108, 90], [182, 90], [182, 130], [108, 130]],
+      "polygon": [
+        [
+          114,
+          80
+        ],
+        [
+          216,
+          80
+        ],
+        [
+          216,
+          104
+        ],
+        [
+          114,
+          104
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -130,13 +214,30 @@
         "milepost",
         "sign post"
       ],
-      "polygon": [[80, 84], [98, 84], [98, 130], [80, 130]],
+      "polygon": [
+        [
+          88,
+          80
+        ],
+        [
+          110,
+          80
+        ],
+        [
+          110,
+          108
+        ],
+        [
+          88,
+          108
+        ]
+      ],
       "responses": {
         "look": [
           {
             "do": [
               {
-                "narrate": "MILE 1. The county measured from town, outward — this is where every distance in your childhood started counting. You stand at mile one of the rest of the incident, which the narrator would like entered into the record as: not nothing. The next number you care about is somewhere past three hundred."
+                "narrate": "MILE 47. The county numbered its roads outward from the courthouse, indifferent to narrative — you'd have preferred a 1. Fine. Call it mile one of the incident, forty-seventh of your life, first of the three hundred that stand between this shoulder and the building where the cloud keeps its body. The marker holds its number. Somebody should, today."
               },
               {
                 "score": {
@@ -157,7 +258,24 @@
         "sign",
         "back of sign"
       ],
-      "polygon": [[32, 4], [62, 4], [62, 124], [32, 124]],
+      "polygon": [
+        [
+          14,
+          2
+        ],
+        [
+          80,
+          2
+        ],
+        [
+          80,
+          158
+        ],
+        [
+          14,
+          158
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -175,7 +293,24 @@
         "west",
         "east"
       ],
-      "polygon": [[0, 156], [320, 156], [320, 180], [0, 180]],
+      "polygon": [
+        [
+          0,
+          152
+        ],
+        [
+          320,
+          152
+        ],
+        [
+          320,
+          180
+        ],
+        [
+          0,
+          180
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -198,7 +333,24 @@
         "crops",
         "horizon"
       ],
-      "polygon": [[64, 92], [180, 92], [180, 128], [100, 128], [100, 130], [64, 130]],
+      "polygon": [
+        [
+          66,
+          80
+        ],
+        [
+          214,
+          80
+        ],
+        [
+          214,
+          110
+        ],
+        [
+          66,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -217,7 +369,24 @@
         "sunset",
         "venus"
       ],
-      "polygon": [[0, 0], [320, 0], [320, 60], [64, 60], [64, 80], [0, 80]],
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          320,
+          0
+        ],
+        [
+          320,
+          80
+        ],
+        [
+          0,
+          80
+        ]
+      ],
       "responses": {
         "look": [
           {

@@ -2,7 +2,24 @@
   "id": "act2_backlot",
   "name": "Behind the Plaza",
   "background": "assets/backgrounds/act2_backlot.png",
-  "walkable": [[8, 106], [316, 106], [310, 178], [10, 178]],
+  "walkable": [
+    [
+      10,
+      108
+    ],
+    [
+      314,
+      108
+    ],
+    [
+      308,
+      178
+    ],
+    [
+      12,
+      178
+    ]
+  ],
   "playerStart": {
     "x": 296,
     "y": 150,
@@ -11,7 +28,24 @@
   "exits": [
     {
       "to": "act1_edge_of_town",
-      "polygon": [[306, 106], [319, 106], [319, 178], [306, 178]],
+      "polygon": [
+        [
+          306,
+          108
+        ],
+        [
+          319,
+          108
+        ],
+        [
+          319,
+          178
+        ],
+        [
+          306,
+          178
+        ]
+      ],
       "arrive": {
         "x": 300,
         "y": 140,
@@ -20,9 +54,26 @@
     },
     {
       "to": "act2_corridor",
-      "polygon": [[136, 100], [174, 100], [174, 122], [136, 122]],
+      "polygon": [
+        [
+          104,
+          102
+        ],
+        [
+          142,
+          102
+        ],
+        [
+          142,
+          128
+        ],
+        [
+          104,
+          128
+        ]
+      ],
       "arrive": {
-        "x": 212,
+        "x": 204,
         "y": 132,
         "facing": "down"
       }
@@ -64,7 +115,24 @@
         "kims generator",
         "kim's generator"
       ],
-      "polygon": [[74, 60], [126, 60], [126, 106], [74, 106]],
+      "polygon": [
+        [
+          64,
+          76
+        ],
+        [
+          106,
+          76
+        ],
+        [
+          106,
+          114
+        ],
+        [
+          64,
+          114
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -103,7 +171,24 @@
         "pipes",
         "dials"
       ],
-      "polygon": [[178, 48], [230, 48], [230, 96], [178, 96]],
+      "polygon": [
+        [
+          148,
+          68
+        ],
+        [
+          196,
+          68
+        ],
+        [
+          196,
+          102
+        ],
+        [
+          148,
+          102
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -128,18 +213,41 @@
         "box",
         "dial"
       ],
-      "polygon": [[192, 58], [214, 58], [214, 86], [192, 86]],
+      "polygon": [
+        [
+          188,
+          58
+        ],
+        [
+          212,
+          58
+        ],
+        [
+          212,
+          86
+        ],
+        [
+          188,
+          86
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "lockbox_opened" },
+            "if": {
+              "flag": "lockbox_opened"
+            },
             "text": "The key box hangs open and empty, dial spun back to a scramble out of habit. Nine years of guarding the county's internet, discharged in one afternoon. It looks lighter. Boxes can't look lighter. This one manages."
           },
           {
             "if": {
               "all": [
-                { "flag": "knows_lockbox_rule" },
-                { "flag": "read_noc_flyer" }
+                {
+                  "flag": "knows_lockbox_rule"
+                },
+                {
+                  "flag": "read_noc_flyer"
+                }
               ]
             },
             "text": "The contractor key box, clipped to the gas pipe. Four-digit combination dial. You know Dale's rule — last four of the NOC hotline — and you have the hotline off the flyer, on glossy corporate paper, burned into your working memory. All that's left is to open it."
@@ -150,14 +258,20 @@
         ],
         "open": [
           {
-            "if": { "flag": "lockbox_opened" },
+            "if": {
+              "flag": "lockbox_opened"
+            },
             "text": "Already open, already empty. The box has given everything it had. Let it rest."
           },
           {
             "if": {
               "all": [
-                { "flag": "knows_lockbox_rule" },
-                { "flag": "read_noc_flyer" }
+                {
+                  "flag": "knows_lockbox_rule"
+                },
+                {
+                  "flag": "read_noc_flyer"
+                }
               ]
             },
             "do": [
@@ -182,11 +296,15 @@
             ]
           },
           {
-            "if": { "flag": "knows_lockbox_rule" },
+            "if": {
+              "flag": "knows_lockbox_rule"
+            },
             "text": "You know Dale's rule — the combination is the last four digits of the NOC hotline. What you don't have is the hotline. Corporate printed it on every glossy thing they ever sent this town, and the town, bless it, never throws anything glossy away. Somewhere on a board or in a box back in town, that number is still legible."
           },
           {
-            "if": { "flag": "read_noc_flyer" },
+            "if": {
+              "flag": "read_noc_flyer"
+            },
             "text": "Four digits. You know plenty of four-digit numbers — including, hm, the tail of that hotline off the flyer — but guessing at a dial is how amateurs spend an evening. Dale followed a system, because installers always follow a system. His paperwork would name it. Men in hurries leave paperwork where they leave everything else."
           },
           {
@@ -195,14 +313,20 @@
         ],
         "use": [
           {
-            "if": { "flag": "lockbox_opened" },
+            "if": {
+              "flag": "lockbox_opened"
+            },
             "text": "Already open, already empty. The box has given everything it had. Let it rest."
           },
           {
             "if": {
               "all": [
-                { "flag": "knows_lockbox_rule" },
-                { "flag": "read_noc_flyer" }
+                {
+                  "flag": "knows_lockbox_rule"
+                },
+                {
+                  "flag": "read_noc_flyer"
+                }
               ]
             },
             "do": [
@@ -227,11 +351,15 @@
             ]
           },
           {
-            "if": { "flag": "knows_lockbox_rule" },
+            "if": {
+              "flag": "knows_lockbox_rule"
+            },
             "text": "You know Dale's rule — the combination is the last four digits of the NOC hotline. What you don't have is the hotline. Corporate printed it on every glossy thing they ever sent this town, and the town, bless it, never throws anything glossy away. Somewhere on a board or in a box back in town, that number is still legible."
           },
           {
-            "if": { "flag": "read_noc_flyer" },
+            "if": {
+              "flag": "read_noc_flyer"
+            },
             "text": "Four digits. You know plenty of four-digit numbers — including, hm, the tail of that hotline off the flyer — but guessing at a dial is how amateurs spend an evening. Dale followed a system, because installers always follow a system. His paperwork would name it. Men in hurries leave paperwork where they leave everything else."
           },
           {
@@ -254,7 +382,24 @@
         "metal door",
         "deliveries"
       ],
-      "polygon": [[136, 36], [174, 36], [174, 104], [136, 104]],
+      "polygon": [
+        [
+          102,
+          40
+        ],
+        [
+          142,
+          40
+        ],
+        [
+          142,
+          108
+        ],
+        [
+          102,
+          108
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -269,7 +414,11 @@
               },
               {
                 "goto": "act2_corridor",
-                "arrive": { "x": 212, "y": 132, "facing": "down" }
+                "arrive": {
+                  "x": 204,
+                  "y": 132,
+                  "facing": "down"
+                }
               }
             ]
           }
@@ -282,7 +431,11 @@
               },
               {
                 "goto": "act2_corridor",
-                "arrive": { "x": 212, "y": 132, "facing": "down" }
+                "arrive": {
+                  "x": 204,
+                  "y": 132,
+                  "facing": "down"
+                }
               }
             ]
           }
@@ -297,7 +450,24 @@
         "kim's door",
         "back door"
       ],
-      "polygon": [[32, 38], [66, 38], [66, 102], [32, 102]],
+      "polygon": [
+        [
+          18,
+          38
+        ],
+        [
+          62,
+          38
+        ],
+        [
+          62,
+          110
+        ],
+        [
+          18,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -319,7 +489,24 @@
         "old door",
         "stuck door"
       ],
-      "polygon": [[236, 38], [268, 38], [268, 100], [236, 100]],
+      "polygon": [
+        [
+          210,
+          44
+        ],
+        [
+          246,
+          44
+        ],
+        [
+          246,
+          104
+        ],
+        [
+          210,
+          104
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -342,7 +529,24 @@
         "pipe",
         "cable riser"
       ],
-      "polygon": [[274, 8], [296, 8], [296, 100], [274, 100]],
+      "polygon": [
+        [
+          258,
+          16
+        ],
+        [
+          270,
+          16
+        ],
+        [
+          270,
+          58
+        ],
+        [
+          258,
+          58
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -374,7 +578,24 @@
         "utility box",
         "gray box"
       ],
-      "polygon": [[268, 56], [302, 56], [302, 94], [268, 94]],
+      "polygon": [
+        [
+          250,
+          58
+        ],
+        [
+          276,
+          58
+        ],
+        [
+          276,
+          86
+        ],
+        [
+          250,
+          86
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -396,7 +617,24 @@
         "skids",
         "wood"
       ],
-      "polygon": [[296, 70], [319, 70], [319, 106], [296, 106]],
+      "polygon": [
+        [
+          266,
+          74
+        ],
+        [
+          319,
+          74
+        ],
+        [
+          319,
+          110
+        ],
+        [
+          266,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -418,7 +656,24 @@
         "lamp",
         "security light"
       ],
-      "polygon": [[142, 2], [170, 2], [170, 26], [142, 26]],
+      "polygon": [
+        [
+          132,
+          20
+        ],
+        [
+          160,
+          20
+        ],
+        [
+          160,
+          42
+        ],
+        [
+          132,
+          42
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -435,7 +690,24 @@
         "hum",
         "block wall"
       ],
-      "polygon": [[8, 24], [30, 24], [30, 100], [8, 100]],
+      "polygon": [
+        [
+          0,
+          28
+        ],
+        [
+          18,
+          28
+        ],
+        [
+          18,
+          102
+        ],
+        [
+          0,
+          102
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -452,7 +724,24 @@
         "growth",
         "cracks"
       ],
-      "polygon": [[240, 96], [264, 96], [264, 116], [240, 116]],
+      "polygon": [
+        [
+          214,
+          92
+        ],
+        [
+          236,
+          92
+        ],
+        [
+          236,
+          112
+        ],
+        [
+          214,
+          112
+        ]
+      ],
       "responses": {
         "look": [
           {

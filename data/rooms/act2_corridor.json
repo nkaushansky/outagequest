@@ -2,38 +2,106 @@
   "id": "act2_corridor",
   "name": "Service Corridor",
   "background": "assets/backgrounds/act2_corridor.png",
-  "walkable": [[10, 113], [318, 113], [312, 178], [12, 178]],
+  "walkable": [
+    [
+      12,
+      110
+    ],
+    [
+      316,
+      110
+    ],
+    [
+      310,
+      178
+    ],
+    [
+      12,
+      178
+    ]
+  ],
   "playerStart": {
-    "x": 24,
-    "y": 150,
-    "facing": "right"
+    "x": 26,
+    "y": 136,
+    "facing": "down"
   },
   "exits": [
     {
       "to": "act2_salon",
-      "polygon": [[0, 113], [10, 113], [10, 178], [0, 178]],
+      "polygon": [
+        [
+          8,
+          104
+        ],
+        [
+          46,
+          104
+        ],
+        [
+          46,
+          128
+        ],
+        [
+          8,
+          128
+        ]
+      ],
       "arrive": {
-        "x": 20,
-        "y": 150,
+        "x": 26,
+        "y": 170,
         "facing": "right"
       }
     },
     {
       "to": "act2_backlot",
-      "polygon": [[194, 104], [230, 104], [230, 124], [194, 124]],
+      "polygon": [
+        [
+          186,
+          104
+        ],
+        [
+          226,
+          104
+        ],
+        [
+          226,
+          126
+        ],
+        [
+          186,
+          126
+        ]
+      ],
       "arrive": {
-        "x": 155,
-        "y": 130,
+        "x": 122,
+        "y": 132,
         "facing": "down"
       }
     },
     {
       "to": "act2_staging",
-      "polygon": [[236, 104], [270, 104], [270, 124], [236, 124]],
+      "polygon": [
+        [
+          234,
+          104
+        ],
+        [
+          268,
+          104
+        ],
+        [
+          268,
+          126
+        ],
+        [
+          234,
+          126
+        ]
+      ],
       "arrive": {
         "x": 24,
-        "y": 150,
-        "facing": "right"
+        "y": 136,
+        "facing": "down"
       }
     }
   ],
@@ -76,7 +144,24 @@
         "paper",
         "instructions"
       ],
-      "polygon": [[24, 30], [54, 30], [54, 66], [24, 66]],
+      "polygon": [
+        [
+          48,
+          44
+        ],
+        [
+          68,
+          44
+        ],
+        [
+          68,
+          72
+        ],
+        [
+          48,
+          72
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -121,7 +206,24 @@
         "fusebox",
         "switches"
       ],
-      "polygon": [[62, 24], [106, 24], [106, 80], [62, 80]],
+      "polygon": [
+        [
+          64,
+          30
+        ],
+        [
+          98,
+          30
+        ],
+        [
+          98,
+          80
+        ],
+        [
+          64,
+          80
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -140,7 +242,9 @@
         ],
         "use": [
           {
-            "if": { "flagNot": "cr_breaker_warned" },
+            "if": {
+              "flagNot": "cr_breaker_warned"
+            },
             "do": [
               {
                 "narrate": "Your hand drifts toward the scorched breaker — the sysadmin reflex: when in doubt, cycle it. An inch out, the air changes. Warmer. Attentive. The smell of pennies and past mistakes. You withdraw the hand. That slot has already eaten one journeyman's afternoon; it isn't getting your whole career."
@@ -176,7 +280,24 @@
         "basin",
         "janitor sink"
       ],
-      "polygon": [[110, 34], [142, 34], [142, 108], [110, 108]],
+      "polygon": [
+        [
+          100,
+          62
+        ],
+        [
+          148,
+          62
+        ],
+        [
+          148,
+          110
+        ],
+        [
+          100,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -203,7 +324,24 @@
         "tank",
         "boiler"
       ],
-      "polygon": [[150, 12], [188, 12], [188, 106], [150, 106]],
+      "polygon": [
+        [
+          146,
+          34
+        ],
+        [
+          182,
+          34
+        ],
+        [
+          182,
+          108
+        ],
+        [
+          146,
+          108
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -236,7 +374,24 @@
         "old door",
         "hinges"
       ],
-      "polygon": [[280, 24], [314, 24], [314, 108], [280, 108]],
+      "polygon": [
+        [
+          276,
+          30
+        ],
+        [
+          314,
+          30
+        ],
+        [
+          314,
+          106
+        ],
+        [
+          276,
+          106
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -274,7 +429,24 @@
         "tube",
         "ballast"
       ],
-      "polygon": [[0, 0], [320, 0], [320, 14], [0, 14]],
+      "polygon": [
+        [
+          122,
+          0
+        ],
+        [
+          202,
+          0
+        ],
+        [
+          202,
+          16
+        ],
+        [
+          122,
+          16
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -295,7 +467,24 @@
         "drain",
         "grate"
       ],
-      "polygon": [[152, 134], [188, 134], [188, 156], [152, 156]],
+      "polygon": [
+        [
+          152,
+          136
+        ],
+        [
+          188,
+          136
+        ],
+        [
+          188,
+          154
+        ],
+        [
+          152,
+          154
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -313,7 +502,24 @@
         "kim's curtain",
         "salon door"
       ],
-      "polygon": [[0, 26], [18, 26], [18, 110], [0, 110]],
+      "polygon": [
+        [
+          6,
+          26
+        ],
+        [
+          48,
+          26
+        ],
+        [
+          48,
+          110
+        ],
+        [
+          6,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -328,7 +534,11 @@
               },
               {
                 "goto": "act2_salon",
-                "arrive": { "x": 20, "y": 150, "facing": "right" }
+                "arrive": {
+                  "x": 26,
+                  "y": 170,
+                  "facing": "right"
+                }
               }
             ]
           }
@@ -341,7 +551,11 @@
               },
               {
                 "goto": "act2_salon",
-                "arrive": { "x": 20, "y": 150, "facing": "right" }
+                "arrive": {
+                  "x": 26,
+                  "y": 170,
+                  "facing": "right"
+                }
               }
             ]
           }
@@ -356,7 +570,24 @@
         "outside door",
         "exit door"
       ],
-      "polygon": [[194, 26], [230, 26], [230, 108], [194, 108]],
+      "polygon": [
+        [
+          184,
+          30
+        ],
+        [
+          226,
+          30
+        ],
+        [
+          226,
+          108
+        ],
+        [
+          184,
+          108
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -371,7 +602,11 @@
               },
               {
                 "goto": "act2_backlot",
-                "arrive": { "x": 155, "y": 130, "facing": "down" }
+                "arrive": {
+                  "x": 122,
+                  "y": 132,
+                  "facing": "down"
+                }
               }
             ]
           }
@@ -384,7 +619,11 @@
               },
               {
                 "goto": "act2_backlot",
-                "arrive": { "x": 155, "y": 130, "facing": "down" }
+                "arrive": {
+                  "x": 122,
+                  "y": 132,
+                  "facing": "down"
+                }
               }
             ]
           }
@@ -400,7 +639,24 @@
         "pagepro door",
         "unit 4"
       ],
-      "polygon": [[236, 26], [270, 26], [270, 108], [236, 108]],
+      "polygon": [
+        [
+          232,
+          32
+        ],
+        [
+          268,
+          32
+        ],
+        [
+          268,
+          106
+        ],
+        [
+          232,
+          106
+        ]
+      ],
       "responses": {
         "look": [
           {

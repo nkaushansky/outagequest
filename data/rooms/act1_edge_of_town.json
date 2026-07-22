@@ -2,7 +2,32 @@
   "id": "act1_edge_of_town",
   "name": "The Edge of Town",
   "background": "assets/backgrounds/act1_edge_of_town.png",
-  "walkable": [[74, 126], [316, 126], [310, 178], [8, 178], [8, 150], [72, 150]],
+  "walkable": [
+    [
+      74,
+      126
+    ],
+    [
+      316,
+      126
+    ],
+    [
+      310,
+      178
+    ],
+    [
+      8,
+      178
+    ],
+    [
+      8,
+      150
+    ],
+    [
+      72,
+      150
+    ]
+  ],
   "playerStart": {
     "x": 30,
     "y": 158,
@@ -11,7 +36,24 @@
   "exits": [
     {
       "to": "act1_main_street",
-      "polygon": [[0, 126], [20, 126], [20, 178], [0, 178]],
+      "polygon": [
+        [
+          0,
+          126
+        ],
+        [
+          20,
+          126
+        ],
+        [
+          20,
+          178
+        ],
+        [
+          0,
+          178
+        ]
+      ],
       "arrive": {
         "x": 300,
         "y": 140,
@@ -20,25 +62,63 @@
     },
     {
       "to": "act2_salon",
-      "polygon": [[86, 118], [118, 118], [118, 136], [86, 136]],
+      "polygon": [
+        [
+          86,
+          118
+        ],
+        [
+          118,
+          118
+        ],
+        [
+          118,
+          136
+        ],
+        [
+          86,
+          136
+        ]
+      ],
       "arrive": {
-        "x": 296,
-        "y": 150,
+        "x": 288,
+        "y": 110,
         "facing": "left"
       }
     },
     {
       "to": "act2_closet",
-      "polygon": [[246, 116], [274, 116], [274, 138], [246, 138]],
+      "polygon": [
+        [
+          246,
+          116
+        ],
+        [
+          274,
+          116
+        ],
+        [
+          274,
+          138
+        ],
+        [
+          246,
+          138
+        ]
+      ],
       "arrive": {
-        "x": 294,
+        "x": 284,
         "y": 148,
         "facing": "left"
       },
-      "if": { "flag": "edge_door_open" },
+      "if": {
+        "flag": "edge_door_open"
+      },
       "blocked": [
         {
-          "if": { "hasItem": "edge_key" },
+          "if": {
+            "hasItem": "edge_key"
+          },
           "text": "The door is still locked and the key is still in your pocket. These two facts have an obvious meeting scheduled. Use the key on the door."
         },
         {
@@ -48,7 +128,24 @@
     },
     {
       "to": "act2_backlot",
-      "polygon": [[304, 126], [319, 126], [319, 164], [304, 164]],
+      "polygon": [
+        [
+          304,
+          126
+        ],
+        [
+          319,
+          126
+        ],
+        [
+          319,
+          164
+        ],
+        [
+          304,
+          164
+        ]
+      ],
       "arrive": {
         "x": 296,
         "y": 150,
@@ -57,16 +154,37 @@
     },
     {
       "to": "act2_roadside",
-      "polygon": [[236, 172], [319, 172], [319, 180], [236, 180]],
+      "polygon": [
+        [
+          236,
+          172
+        ],
+        [
+          319,
+          172
+        ],
+        [
+          319,
+          180
+        ],
+        [
+          236,
+          180
+        ]
+      ],
       "arrive": {
         "x": 30,
         "y": 162,
         "facing": "right"
       },
-      "if": { "flag": "act2_trail_found" },
+      "if": {
+        "flag": "act2_trail_found"
+      },
       "blocked": [
         {
-          "if": { "flag": "edge_door_open" },
+          "if": {
+            "flag": "edge_door_open"
+          },
           "text": "The county road runs east into the dark, and someday soon it will want you. Not yet. The closet is open and it hasn't finished telling you things."
         },
         {
@@ -102,11 +220,15 @@
       ]
     },
     {
-      "if": { "flag": "act2_trail_found" },
+      "if": {
+        "flag": "act2_trail_found"
+      },
       "text": "The plaza, the hum, and — from the road east — an idle you recognize. Big, patient, carbureted. Half the diner's parking lot sounds like that. Somebody is waiting where the asphalt leaves town."
     },
     {
-      "if": { "flag": "edge_door_open" },
+      "if": {
+        "flag": "edge_door_open"
+      },
       "text": "The plaza. The gray door stands open, exhaling warm air and institutional hum. The closet is receiving visitors."
     },
     {
@@ -122,7 +244,24 @@
         "pylon",
         "parkview"
       ],
-      "polygon": [[18, 6], [52, 6], [52, 140], [18, 140]],
+      "polygon": [
+        [
+          18,
+          6
+        ],
+        [
+          52,
+          6
+        ],
+        [
+          52,
+          140
+        ],
+        [
+          18,
+          140
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -155,7 +294,24 @@
         "pavement",
         "asphalt"
       ],
-      "polygon": [[0, 118], [70, 118], [70, 146], [0, 146]],
+      "polygon": [
+        [
+          0,
+          118
+        ],
+        [
+          70,
+          118
+        ],
+        [
+          70,
+          146
+        ],
+        [
+          0,
+          146
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -176,7 +332,24 @@
         "storefront",
         "generator"
       ],
-      "polygon": [[76, 72], [128, 72], [128, 120], [76, 120]],
+      "polygon": [
+        [
+          76,
+          72
+        ],
+        [
+          128,
+          72
+        ],
+        [
+          128,
+          120
+        ],
+        [
+          76,
+          120
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -223,7 +396,24 @@
         "transom",
         "exhaust"
       ],
-      "polygon": [[253, 69], [268, 69], [268, 84], [253, 84]],
+      "polygon": [
+        [
+          253,
+          69
+        ],
+        [
+          268,
+          69
+        ],
+        [
+          268,
+          84
+        ],
+        [
+          253,
+          84
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -254,11 +444,30 @@
         "graffiti",
         "lock"
       ],
-      "polygon": [[249, 82], [270, 82], [270, 120], [249, 120]],
+      "polygon": [
+        [
+          249,
+          82
+        ],
+        [
+          270,
+          82
+        ],
+        [
+          270,
+          120
+        ],
+        [
+          249,
+          120
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "edge_door_open" },
+            "if": {
+              "flag": "edge_door_open"
+            },
             "text": "The gray door stands open on the county's entire internet: one rack, one hum, zero staff. The sticker — 'CUMULONIMBUS EDGE — AUTHORIZED PERSONNEL' — now describes you, if you squint at the word 'authorized' and don't stop squinting."
           },
           {
@@ -267,7 +476,9 @@
         ],
         "open": [
           {
-            "if": { "flag": "edge_door_open" },
+            "if": {
+              "flag": "edge_door_open"
+            },
             "do": [
               {
                 "narrate": "You step into the hum."
@@ -278,7 +489,9 @@
             ]
           },
           {
-            "if": { "hasItem": "edge_key" },
+            "if": {
+              "hasItem": "edge_key"
+            },
             "do": [
               {
                 "narrate": "The janitor's key slides in like it was cut yesterday, because hardware doesn't rot, it waits. One turn. The deadbolt retracts with a clack you feel in your teeth, the door swings, and the hum rolls out over you — warm, dusty, alive. Nine years this door has been closed. The internet's most neglected room would like to see you now."
@@ -309,7 +522,9 @@
         ],
         "use": [
           {
-            "if": { "flag": "edge_door_open" },
+            "if": {
+              "flag": "edge_door_open"
+            },
             "do": [
               {
                 "narrate": "You step into the hum."
@@ -320,7 +535,9 @@
             ]
           },
           {
-            "if": { "instrument": "edge_key" },
+            "if": {
+              "instrument": "edge_key"
+            },
             "do": [
               {
                 "narrate": "The janitor's key slides in like it was cut yesterday, because hardware doesn't rot, it waits. One turn. The deadbolt retracts with a clack you feel in your teeth, the door swings, and the hum rolls out over you — warm, dusty, alive. Nine years this door has been closed. The internet's most neglected room would like to see you now."
@@ -346,7 +563,9 @@
             ]
           },
           {
-            "if": { "hasItem": "edge_key" },
+            "if": {
+              "hasItem": "edge_key"
+            },
             "do": [
               {
                 "narrate": "The janitor's key slides in like it was cut yesterday, because hardware doesn't rot, it waits. One turn. The deadbolt retracts with a clack you feel in your teeth, the door swings, and the hum rolls out over you — warm, dusty, alive. Nine years this door has been closed. The internet's most neglected room would like to see you now."
@@ -377,7 +596,9 @@
         ],
         "talk": [
           {
-            "if": { "flag": "edge_door_open" },
+            "if": {
+              "flag": "edge_door_open"
+            },
             "text": "You and the open doorway hum at each other. The relationship has entered a new phase."
           },
           {
@@ -396,11 +617,30 @@
         "debris",
         "work order"
       ],
-      "polygon": [[272, 90], [319, 90], [319, 126], [272, 126]],
+      "polygon": [
+        [
+          272,
+          90
+        ],
+        [
+          319,
+          90
+        ],
+        [
+          319,
+          126
+        ],
+        [
+          272,
+          126
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "eot_dumpster_dived" },
+            "if": {
+              "flag": "eot_dumpster_dived"
+            },
             "text": "The plaza dumpster, already surrendered its paperwork. The switch box, the cable offcuts, the energy-drink flat — Dale's whole apprenticeship in sediment. Archaeology complete."
           },
           {
@@ -437,7 +677,9 @@
         ],
         "use": [
           {
-            "if": { "flagNot": "eot_dumpster_warned" },
+            "if": {
+              "flagNot": "eot_dumpster_warned"
+            },
             "do": [
               {
                 "narrate": "You get one knee up on the lip, ready to go in like a raccoon with a mortgage. The lid — nine hundred pounds of county-spec steel — shifts an inch and rings like a church bell. You step back down. There is diving into a dumpster, and there is being filed in one."
@@ -474,7 +716,24 @@
         "shopping center",
         "vacancies"
       ],
-      "polygon": [[74, 52], [302, 52], [302, 124], [74, 124]],
+      "polygon": [
+        [
+          74,
+          52
+        ],
+        [
+          302,
+          52
+        ],
+        [
+          302,
+          124
+        ],
+        [
+          74,
+          124
+        ]
+      ],
       "responses": {
         "look": [
           {
