@@ -57,6 +57,8 @@ const RAMP = {
   polo_m: [122, 156, 182],    // Gary
   apron_l: [240, 234, 220],   // Darlene
   flannel_m: [146, 62, 42],   // Merle
+  rose_m: [188, 108, 122],    // Kim's tunic (M4)
+  lavender_m: [156, 136, 176], // Dot's cardigan (M4)
 };
 const playerSprite = () => page.evaluate(() => window.spof.sprites.player());
 const npcIds = () => page.evaluate(() => window.spof.sprites.npcs());
@@ -617,6 +619,183 @@ await run("wear coat");
 ok((await lastLines()).includes("already at its post"), "worn coat stays addressable (presentIf)", await lastLines());
 const coffeeLog = await page.evaluate(() => window.spof.state.flags.has("coffee_act1"));
 ok(coffeeLog, "coffee log stamped for act 1");
+
+// ==== M4: Act 2 — the Edge Node ==============================================
+// State on entry: Main Street, eot_arrived long set, score 47, kit carried
+// (cable + the emptied mug), coat + pants worn. The block below plays the
+// whole act — door hunt, salon, corridor, staging, backlot, closet,
+// roadside — and lands Acts 1+2 at exactly 100 tickets closed.
+
+await page.evaluate(() => { window.spof.state.player.x = 300; window.spof.state.player.y = 140; });
+await clickScene(315, 138);
+await page.waitForTimeout(1200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "east to the plaza hub");
+
+// EOT curiosity tickets (the M3 debt: this room awarded zero LOOK points)
+await run("look box fan");
+await run("look plaza sign");
+ok((await score()) === "49", "EOT curiosity looks award (fan + pylon)", await score());
+
+// the dumpster surrenders Dale's work order (lockbox-rule source #1)
+await run("open dumpster");
+ok(await page.evaluate(() => !document.querySelector(".docview").hidden), "work-order close-up opens");
+await dismissDoc();
+ok(await page.evaluate(() => window.spof.state.flags.has("knows_lockbox_rule")), "dumpster teaches the lockbox rule");
+ok((await score()) === "51", "dumpster dive scored", await score());
+
+// death: climbing in (warn-first, registered)
+await run("use dumpster");
+ok((await lastLines()).includes("raccoon with a mortgage"), "dumpster warns first", await lastLines());
+await run("use dumpster");
+await page.waitForTimeout(200);
+ok(!(await page.locator(".death").isHidden()), "Garbage Collected death screen");
+await page.locator(".death-retry").click();
+await page.waitForTimeout(200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "dumpster retry lands one step back");
+
+// the salon: Kim + Dot, minted per the bible
+await run("open nail salon");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_salon", "salon door opens");
+const salonNpcs = await npcIds();
+ok(salonNpcs.includes("kim") && salonNpcs.includes("dot"), "Kim + Dot sprites present", JSON.stringify(salonNpcs));
+ok(await canvasHas("rose_m", [138, 30, 192, 82]), "Kim drawn behind the manicure table");
+ok(await canvasHas("lavender_m", [204, 58, 256, 118]), "Dot drawn on the dryer chair");
+await run("talk to kim");
+ok((await lastLines()).includes("Malcolm"), "Kim wrongs the name a new way (Malcolm)", await lastLines());
+ok((await npcTalking()) === "kim", "Kim's talk cycle runs");
+await run("talk to dot");
+ok((await lastLines()).includes("Funkhouser"), "Dot wrongs the name a new way (Funkhouser)", await lastLines());
+ok((await npcTalking()) === "dot", "Dot's talk cycle runs");
+await run("ask kim about dale");
+ok(await page.evaluate(() => window.spof.state.flags.has("kim_told_lockbox")), "Kim's thread marks the lockbox location");
+await run("ask kim about coffee");
+ok(await page.evaluate(() => window.spof.state.flags.has("kim_coffee_ok")), "Kim flips guest mode");
+await run("use mug on pod machine");
+ok((await lastLines()).includes("legally describable as coffee"), "mug fills at the pod machine", await lastLines());
+ok(await page.evaluate(() => window.spof.state.flags.has("coffee_act2")), "coffee log stamped for act 2");
+await run("look polish wall");
+await run("look appointment book");
+ok((await lastLines(6)).includes("MALCOLM (computers)"), "the ledger of record has ruled", await lastLines(6));
+await run("use rotary phone");
+ok((await lastLines(6)).includes("Pan-flute"), "the NOC hotline's hold music", await lastLines(6));
+ok((await score()) === "59", "salon ledger complete (51+8)", await score());
+ok((await logText()).includes("closet won't open itself"), "salon onScoreComplete aside");
+
+// corridor: the laminate (rule source #2), the scorched breaker, the sealed door
+await run("open curtain");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_corridor", "curtain to the service corridor");
+await run("look laminate");
+await run("look breaker panel");
+await run("use breaker panel");
+ok((await lastLines()).includes("pennies"), "breaker warns first", await lastLines());
+await run("use breaker panel");
+await page.waitForTimeout(200);
+ok(!(await page.locator(".death").isHidden()), "Load Shedding death screen");
+await page.locator(".death-retry").click();
+await page.waitForTimeout(200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_corridor", "breaker retry lands one step back");
+await run("look sealed door");
+await run("look water heater");
+ok((await score()) === "64", "corridor ledger complete (59+5)", await score());
+ok((await logText()).includes("corridor stands fully surveyed"), "corridor onScoreComplete aside");
+
+// staging: the runbook (rule source #3) + Dale's residue
+await run("open unit door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_staging", "into the old PagePro");
+await run("look runbook");
+ok(await page.evaluate(() => !document.querySelector(".docview").hidden), "runbook close-up opens");
+await dismissDoc();
+await run("look demo phones");
+await run("look cable spool");
+await run("look energy drink shrine");
+ok((await score()) === "69", "staging ledger complete (64+5)", await score());
+ok((await logText()).includes("Leave the shrine"), "staging onScoreComplete aside");
+
+// backlot: generator, conduit, and the key box
+await run("open corridor door");
+await run("open delivery door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_backlot", "delivery door to the back lot");
+await run("look generator");
+await run("look conduit");
+// partial knowledge refuses correctly: rule without the number points to town
+const m4real = await page.evaluate(() => {
+  const s = window.spof.state;
+  return { v: 1, snap: { roomId: s.roomId, flags: [...s.flags], inventory: [...s.inventory],
+    score: s.score, awarded: [...s.awarded], player: { ...s.player } }, deathsFound: [...s.deathsFound] };
+});
+await page.evaluate((base) => {
+  const save = { ...base, snap: { ...base.snap, flags: ["eot_arrived", "knows_lockbox_rule"], inventory: [] } };
+  window.spof.exec("load SPOF1." + btoa(JSON.stringify(save)));
+}, m4real);
+await run("open key box");
+ok((await lastLines()).includes("glossy"), "rule-without-number points back to town", await lastLines());
+await page.evaluate((s) => window.spof.exec("load SPOF1." + btoa(JSON.stringify(s))), m4real);
+await run("open key box");
+ok((await lastLines(8)).includes("Eight. Five. Six. One."), "the hotline's last four open the box", await lastLines(8));
+ok(await page.evaluate(() => window.spof.state.inventory.includes("edge_key")), "janitor's key acquired");
+ok((await score()) === "74", "backlot ledger complete (69+5)", await score());
+ok((await logText()).includes("Front of house"), "backlot onScoreComplete aside");
+
+// the gray door: the key turns, spends itself, the closet receives
+await clickScene(312, 150);
+await page.waitForTimeout(2600);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "service drive back around front");
+await run("use key on door");
+await page.waitForTimeout(150);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_closet", "the gray door opens on the closet");
+ok(await page.evaluate(() => !window.spof.state.inventory.includes("edge_key")), "the key spends itself in the lock");
+ok((await score()) === "81", "unlock + first entry scored (74+4+3)", await score());
+
+// the closet: slip filed, cable proves the LAN, verdict points upstream
+await run("look packing slip");
+ok(await page.evaluate(() => !document.querySelector(".docview").hidden), "packing-slip close-up opens");
+await dismissDoc();
+ok(await page.evaluate(() => !window.spof.state.flags.has("act2_trail_found")), "the address means nothing before the diagnosis");
+await run("use cable on switch");
+ok((await lastLines()).includes("port 47"), "the kit cable finds its Act 2 device", await lastLines());
+await run("look router");
+ok((await lastLines(6)).includes("one layer down"), "uplink verdict: fault upstream", await lastLines(6));
+await run("look packing slip");
+ok(await page.evaluate(() => window.spof.state.flags.has("act2_trail_found")), "the slip becomes the trail");
+await run("use ups");
+ok((await lastLines()).includes("acknowledged"), "nine years of beeping, hushed", await lastLines());
+await run("look box fan");
+await run("use box fan");
+ok((await lastLines()).includes("retract the hand"), "fan warns first", await lastLines());
+await run("use box fan");
+await page.waitForTimeout(200);
+ok(!(await page.locator(".death").isHidden()), "Cooling Architecture death screen");
+await page.locator(".death-retry").click();
+await page.waitForTimeout(200);
+await run("look clipboard");
+ok((await score()) === "95", "closet ledger complete (81+14)", await score());
+ok((await logText()).includes("no more secrets"), "closet onScoreComplete aside");
+const m4deaths = await page.evaluate(() => [...window.spof.state.deathsFound]);
+ok(["garbage_collected", "load_shedding", "cooling_architecture"].every((d) => m4deaths.includes(d)),
+  "all three Act 2 deaths collected + registered", JSON.stringify(m4deaths));
+
+// the act-out: the road east opens with the trail; Merle drives out
+await run("open door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "back out the gray door");
+await page.evaluate(() => { window.spof.state.player.x = 280; window.spof.state.player.y = 170; });
+await clickScene(300, 176);
+await page.waitForTimeout(1500);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_roadside", "the road east opens with the trail");
+ok((await logText()).includes("END OF ACT TWO"), "act-out stinger narrates");
+ok((await logText()).includes("Get in, IT"), "Merle drives out");
+await run("look fiber markers");
+await run("look mile marker");
+ok((await score()) === "100", "Acts 1+2 full clear at exactly 100", await score());
+ok((await status()) === "TICKETS OPEN 150/250", "the queue reads 150 open", await status());
+
+// world stays open at act end; kit crossed, consumables spent
+await page.evaluate(() => { window.spof.state.player.x = 30; window.spof.state.player.y = 150; });
+await clickScene(9, 150);
+await page.waitForTimeout(1400);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "act two's end is not a dead end");
+const m4inv = await page.evaluate(() => [...window.spof.state.inventory]);
+ok(m4inv.includes("cable") && m4inv.includes("mug") && !m4inv.includes("edge_key"),
+  "kit crosses acts; the key stayed in the lock", JSON.stringify(m4inv));
 
 // ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
 const lookGaps = await page.evaluate(() => {
