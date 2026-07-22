@@ -454,6 +454,22 @@ export class Engine {
       },
       die: (id, text, title) => this.die(id, text, title),
       gotoRoom: (id) => this.changeRoom(id),
+      showDocument: (spec) => {
+        let imageUrl: string | undefined;
+        if (spec.image) {
+          imageUrl = this.content.documentUrl(spec.image);
+          if (!imageUrl) {
+            this.narrate(`[engine] missing document image: ${spec.image}`, "err");
+          }
+        }
+        this.ui.showDocument({
+          style: spec.style,
+          title: spec.title,
+          body: spec.body,
+          imageUrl,
+          caption: spec.caption,
+        });
+      },
     };
   }
 

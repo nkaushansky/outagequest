@@ -69,7 +69,18 @@
       "responses": {
         "look": [
           {
-            "text": "A corkboard running several geological strata of TODO. The oldest visible note says 'cancel unused subscriptions.' It has outlived three of the subscriptions' parent companies."
+            "do": [
+              {
+                "narrate": "A corkboard running several geological strata of TODO. The oldest visible note says 'cancel unused subscriptions.' It has outlived three of the subscriptions' parent companies. You peel it forward and read the whole stratum."
+              },
+              {
+                "document": {
+                  "style": "postit",
+                  "title": "TODO",
+                  "body": "— cancel unused subscriptions\n— water plant\n— reply to Mom (drafted ✓)\n— gym???\n— buy backup pants\n— unsubscribe from TODO app (ironic?)\n— (in different ink) cancel unused subscriptions"
+                }
+              }
+            ]
           }
         ],
         "take": [
@@ -571,6 +582,10 @@
       "responses": {
         "look": [
           {
+            "if": { "flag": "cable_found" },
+            "text": "The file cabinet, bottom drawer now ajar and lighter by one cable. The tax returns watched you take it. They'll keep your secret; append-only storage always does."
+          },
+          {
             "text": "A fireproof file cabinet from an era when documents were paper and fire was the threat model. The bottom drawer hasn't been opened since your last in-person job interview."
           }
         ],
@@ -924,6 +939,40 @@
         "take": [
           {
             "text": "The mugs here are the reserves. You don't call up the reserves on day one."
+          }
+        ]
+      }
+    },
+    {
+      "id": "desk",
+      "name": "desk",
+      "synonyms": [
+        "workstation",
+        "battlestation",
+        "desktop",
+        "keyboard",
+        "mouse"
+      ],
+      "polygon": [[100, 60], [204, 60], [204, 94], [100, 94]],
+      "responses": {
+        "look": [
+          {
+            "text": "The desk: an L of laminate that has hosted every meeting, meal, and minor breakdown of the last four years. There's a pale rectangle where the keyboard lives, tan-lined into the surface like the desk is wearing a watch. Command central. Currently commanding nothing."
+          }
+        ],
+        "use": [
+          {
+            "text": "You put both palms flat on the desk, the way captains touch the helm. The desk accepts this. Neither of you can steer anything today."
+          }
+        ],
+        "take": [
+          {
+            "text": "You and the desk are a load-bearing pair. Separating you is a job for professionals, or a landlord."
+          }
+        ],
+        "open": [
+          {
+            "text": "The desk has one shallow drawer, containing loose batteries in an unknown state of charge. Schrödinger's junk drawer. You close it to preserve the superposition."
           }
         ]
       }

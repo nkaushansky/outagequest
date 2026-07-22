@@ -40,6 +40,12 @@ const spriteSheetUrls = import.meta.glob("../assets/sprites/*.png", {
   query: "?url",
 });
 
+const documentUrls = import.meta.glob("../assets/documents/*.png", {
+  eager: true,
+  import: "default",
+  query: "?url",
+});
+
 function toPts(raw: unknown): Pt[] {
   if (!Array.isArray(raw)) return [];
   return raw.map((pair) => {
@@ -128,6 +134,8 @@ export interface Content {
   backgroundUrl(path: string): string | undefined;
   /** sprite sheet path (as written in sprites.json) -> served asset URL */
   spriteUrl(path: string): string | undefined;
+  /** document image path (as written in a document action) -> served URL */
+  documentUrl(path: string): string | undefined;
 }
 
 export function loadContent(): Content {
@@ -149,6 +157,11 @@ export function loadContent(): Content {
     spriteByPath.set(key.replace(/^\.\.\//, ""), String(url));
   }
 
+  const docByPath = new Map<string, string>();
+  for (const [key, url] of Object.entries(documentUrls)) {
+    docByPath.set(key.replace(/^\.\.\//, ""), String(url));
+  }
+
   const sprites = new Map<string, SpriteDef>();
   const spritesFile = spritesJson as unknown as SpritesFile;
   for (const [id, def] of Object.entries(spritesFile.sprites ?? {})) {
@@ -164,5 +177,6 @@ export function loadContent(): Content {
     sprites,
     backgroundUrl: (path) => bgByPath.get(path.replace(/^\.?\//, "")),
     spriteUrl: (path) => spriteByPath.get(path.replace(/^\.?\//, "")),
+    documentUrl: (path) => docByPath.get(path.replace(/^\.?\//, "")),
   };
 }

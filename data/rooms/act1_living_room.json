@@ -282,6 +282,10 @@
         ],
         "use": [
           {
+            "if": { "instrument": "couch" },
+            "text": "You aim the excavated remote at the smart TV and click. The remote does its entire job — infrared fires, physics complies, the click lands. The TV, which answers only to an app, which answers only to the cloud, does not acknowledge the transmission. Somewhere in that pulsing logo, a perfectly good signal dies in a queue."
+          },
+          {
             "text": "You press power. The cloud logo pulses a little faster, flattered by the attention, and delivers nothing. The TV cannot show you anything without asking permission first, and permission is down."
           }
         ],
@@ -588,11 +592,17 @@
         "sofa",
         "cushions",
         "cushion",
-        "seat"
+        "seat",
+        "remote",
+        "clicker"
       ],
       "polygon": [[33, 63], [64, 63], [64, 80], [152, 80], [152, 136], [33, 136]],
       "responses": {
         "look": [
+          {
+            "if": { "flag": "lr_couch_dug" },
+            "text": "The couch, post-excavation: cushions resettled, coins reinterred, and the resurrected TV remote lying in state on the middle seat. A device with buttons that do what the buttons say. You keep it where you can see it, the way some people keep candles."
+          },
           {
             "text": "A couch with a body-shaped depression at one end, like a fossil forming in real time. The other two cushions are showroom-fresh. Guests were always theoretical."
           }
@@ -640,6 +650,10 @@
                 }
               }
             ]
+          },
+          {
+            "if": { "flag": "lr_couch_dug" },
+            "text": "You could sit. No — sitting is how the last four years happened. Instead you pick up the resurrected remote and click it at the room, once, like a sommelier ringing a glass. Nothing obeys. Everything, you feel, is notified."
           },
           {
             "text": "You consider sitting. The body-shaped depression yawns invitingly. No. Sitting is how the last four years happened."

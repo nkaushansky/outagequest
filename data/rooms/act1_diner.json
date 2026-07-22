@@ -114,7 +114,49 @@
       "responses": {
         "look": [
           {
-            "text": "The diner corkboard, the town's actual backbone: babysitters, a tractor for sale, choir practice moved to Tuesdays. One yellowed clipping from the Gazette — 'LOCAL MAN'S NEPHEW INSTALLS INTERNET EQUIPMENT AT PLAZA' — with a photo of a proud kid in a hard hat outside the nail salon. Merle is in the background of the photo, pointing at the equipment like he built it."
+            "if": { "flag": "eot_arrived" },
+            "do": [
+              {
+                "narrate": "The corkboard, and on it the yellowed Gazette clipping — which has, since you stood in front of that gray door, stopped being nostalgia and started being documentation. You read it like a runbook this time."
+              },
+              {
+                "document": {
+                  "style": "clipping",
+                  "title": "LOCAL MAN'S NEPHEW INSTALLS INTERNET EQUIPMENT AT PLAZA",
+                  "body": "PARKVIEW PLAZA — The internet arrived in the county Tuesday, in a van.\nDale, 22, nephew of diner regular Merle, spent three weeks fitting the former storage closet behind Kim's Nails with what his employer, Cumulonimbus Inc., calls a 'regional edge node.' 'Whole county goes through here now,' said Dale, gesturing at the closet. 'Pretty much can't fail.'\nAsked about security, Dale was reassuring: 'It locks. Spare's in the key box on the gas meter out back — standard install.' The Gazette thanks Dale for his thoroughness.\nKim Nguyen, proprietor of Kim's Nails, was asked whether the closet would disturb business. 'It hums,' she said. 'Flat B-flat. My clients like it.'\nMerle, reached at the counter, confirmed the closet was 'humming pretty good.'",
+                  "image": "assets/documents/gazette_plaza.png",
+                  "caption": "The Parkview Plaza on install day. The equipment hums behind the gray door (far right). Not pictured: Merle, pointing."
+                }
+              },
+              {
+                "setFlag": "read_install_clipping"
+              },
+              {
+                "score": {
+                  "id": "dn_clipping_evidence",
+                  "points": 1
+                }
+              }
+            ]
+          },
+          {
+            "do": [
+              {
+                "narrate": "The diner corkboard, the town's actual backbone: babysitters, a tractor for sale, choir practice moved to Tuesdays. And one yellowed clipping from the Gazette, the plaza looking almost young in the photo. Merle swears he's just out of frame, pointing at the equipment like he built it. You read the whole thing — it's that or the tractor ad."
+              },
+              {
+                "document": {
+                  "style": "clipping",
+                  "title": "LOCAL MAN'S NEPHEW INSTALLS INTERNET EQUIPMENT AT PLAZA",
+                  "body": "PARKVIEW PLAZA — The internet arrived in the county Tuesday, in a van.\nDale, 22, nephew of diner regular Merle, spent three weeks fitting the former storage closet behind Kim's Nails with what his employer, Cumulonimbus Inc., calls a 'regional edge node.' 'Whole county goes through here now,' said Dale, gesturing at the closet. 'Pretty much can't fail.'\nAsked about security, Dale was reassuring: 'It locks. Spare's in the key box on the gas meter out back — standard install.' The Gazette thanks Dale for his thoroughness.\nKim Nguyen, proprietor of Kim's Nails, was asked whether the closet would disturb business. 'It hums,' she said. 'Flat B-flat. My clients like it.'\nMerle, reached at the counter, confirmed the closet was 'humming pretty good.'",
+                  "image": "assets/documents/gazette_plaza.png",
+                  "caption": "The Parkview Plaza on install day. The equipment hums behind the gray door (far right). Not pictured: Merle, pointing."
+                }
+              },
+              {
+                "setFlag": "read_install_clipping"
+              }
+            ]
           }
         ],
         "take": [
@@ -745,6 +787,50 @@
         "take": [
           {
             "text": "It weighs three hundred pounds and belongs to the town's soul. Both facts are disqualifying."
+          }
+        ]
+      }
+    },
+    {
+      "id": "griddle",
+      "name": "griddle",
+      "synonyms": [
+        "grill",
+        "flattop",
+        "flat top",
+        "kitchen",
+        "pass",
+        "hash browns"
+      ],
+      "polygon": [[100, 26], [146, 26], [146, 48], [100, 48]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flag": "eot_arrived" },
+            "do": [
+              {
+                "narrate": "Through the kitchen pass: the griddle, gas-fired, forty years seasoned to a black-mirror finish, running four orders of hash browns in perfect parallel. Zero downtime since 1961, except the Great Regrease of '89 — which was scheduled maintenance, announced by flyer. Now that you've met the county's 'regional infrastructure,' you can say with authority: this griddle outclasses it."
+              },
+              {
+                "score": {
+                  "id": "dn_griddle_uptime",
+                  "points": 1
+                }
+              }
+            ]
+          },
+          {
+            "text": "Through the kitchen pass: the griddle, gas-fired, forty years seasoned to a black-mirror finish, running four orders of hash browns in perfect parallel. Zero downtime since 1961, except the Great Regrease of '89 — which was scheduled maintenance, announced by flyer. The cloud could not survive this room."
+          }
+        ],
+        "use": [
+          {
+            "text": "The griddle has an owner, a priesthood, and a health code, none of which are you. You administrate your systems; this kitchen administrates its own."
+          }
+        ],
+        "take": [
+          {
+            "text": "It weighs more than your rack and has done more for humanity. It stays."
           }
         ]
       }

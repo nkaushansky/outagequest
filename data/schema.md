@@ -141,6 +141,18 @@ exits, topics), `instrument` is never satisfied and `anyInstrument` equals
   registration + instant retry one step back. Copy lives in `data/deaths.json`
   (id, title, text); an inline `"text"`/`"title"` here is only a fallback for
   ids the registry doesn't know yet. Register every death.
+- `{ "document": { "style": "clipping", "title": "...", "body": "...",
+  "image": "assets/documents/x.png", "caption": "..." } }` — a paper
+  close-up: the death-screen pattern generalized into a focus-trapped,
+  dismissible DOM overlay (button, Escape, or backdrop tap). CSS renders
+  the paper; the text stays real DOM text, never canvas. Styles:
+  `newsprint`, `clipping`, `postit`, `flyer`. `title`, `image`, `caption`
+  are optional; `body` paragraphs split on `\n`. Document images live in
+  `assets/documents/` — typically treated crops of existing background art
+  (the Gazette clipping's plaza photo IS the edge-of-town art, sepia'd).
+  Actions after `document` in the same list still run behind the overlay.
+  Writing rule: the overlay is the exhibit, the log is the narrator — pair
+  every document with narration so the joke survives in the transcript.
 - `{ "goto": "room_id" }`
 - `{ "playSound": "id" }` (M8)
 

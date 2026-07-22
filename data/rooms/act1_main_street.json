@@ -326,10 +326,20 @@
             },
             "do": [
               {
-                "narrate": "The town notice board. Centerpiece: a glossy corporate flyer — 'CUMULONIMBUS COMMUNITY CLOUD DAY! Meet the cloud that powers your town!' Someone has written 'nimbus day' across it in marker; a corporate hand has crossed that out and re-printed 'CUMULONIMBUS™' with a taped-on addendum citing brand guidelines, section 4. Beneath it all, a smaller sticker: CANCELLED. Three layers of institutional wound, one thumbtack."
+                "narrate": "The town notice board. Centerpiece: a glossy corporate flyer — 'CUMULONIMBUS COMMUNITY CLOUD DAY! Meet the cloud that powers your town!' Someone has written 'nimbus day' across it in marker; a corporate hand has crossed that out and re-printed 'CUMULONIMBUS™' with a taped-on addendum citing brand guidelines, section 4. Beneath it all, a smaller sticker: CANCELLED. Three layers of institutional wound, one thumbtack. You lean in and read the whole thing."
+              },
+              {
+                "document": {
+                  "style": "flyer",
+                  "title": "CUMULONIMBUS™ COMMUNITY CLOUD DAY!",
+                  "body": "MEET THE CLOUD THAT POWERS YOUR TOWN! Live demos • Edge Node Open House* • Face painting (clouds only) • Free 30-day trials of things you already owned!\n*Open House cancelled per Security Bulletin CB-114. The Edge Node thanks you for your curiosity.\nRefreshments provided by the cloud. Rain or shine. (Shine is a legacy configuration.)\nQuestions? Comments? Outages? Our Community NOC hotline is staffed 24/7/365: 1-800-CUMULO-1 (1-800-286-8561). Your call is important. All calls are important. Importance is a service.\nScrawled across the middle in marker: NIMBUS DAY!!\nRe-printed over the scrawl, in the company serif: CUMULONIMBUS™ — per Brand Guidelines §4 ('The Company Name Is A Complete Sentence').\nStickered over everything, slightly crooked: CANCELLED — WEATHER."
+                }
               },
               {
                 "setFlag": "ms_board_read"
+              },
+              {
+                "setFlag": "read_noc_flyer"
               },
               {
                 "score": {
@@ -340,7 +350,21 @@
             ]
           },
           {
-            "text": "Also on the board: a lost cat (found, per a second note), zumba at the grange hall, and a phone number for gutter cleaning you are absolutely not writing down today."
+            "do": [
+              {
+                "narrate": "You give the flyer another read — it's the only document in town with a working phone number on it. Also on the board: a lost cat (found, per a second note), zumba at the grange hall, and a gutter-cleaning number you are absolutely not writing down today."
+              },
+              {
+                "document": {
+                  "style": "flyer",
+                  "title": "CUMULONIMBUS™ COMMUNITY CLOUD DAY!",
+                  "body": "MEET THE CLOUD THAT POWERS YOUR TOWN! Live demos • Edge Node Open House* • Face painting (clouds only) • Free 30-day trials of things you already owned!\n*Open House cancelled per Security Bulletin CB-114. The Edge Node thanks you for your curiosity.\nRefreshments provided by the cloud. Rain or shine. (Shine is a legacy configuration.)\nQuestions? Comments? Outages? Our Community NOC hotline is staffed 24/7/365: 1-800-CUMULO-1 (1-800-286-8561). Your call is important. All calls are important. Importance is a service.\nScrawled across the middle in marker: NIMBUS DAY!!\nRe-printed over the scrawl, in the company serif: CUMULONIMBUS™ — per Brand Guidelines §4 ('The Company Name Is A Complete Sentence').\nStickered over everything, slightly crooked: CANCELLED — WEATHER."
+                }
+              },
+              {
+                "setFlag": "read_noc_flyer"
+              }
+            ]
           }
         ],
         "take": [
@@ -432,10 +456,56 @@
       "responses": {
         "look": [
           {
+            "if": { "flag": "bought_gazette" },
+            "text": "The Gazette box, one paper lighter. Yours is folded under your arm with the practiced grip of a man who has read a newspaper as recently as this morning. Open the box again to give it another read."
+          },
+          {
             "text": "A coin-op box for the County Gazette, weekly, printed two towns over on an actual press. This week's front page, through the scratched plastic: 'CLOUD OUT; LIBRARY EXTENDS HOURS.' The Gazette has been waiting forty years to win a news cycle, and it intends to enjoy this one."
           }
         ],
         "open": [
+          {
+            "if": {
+              "all": [
+                { "flag": "wearing_pants" },
+                { "flagNot": "bought_gazette" }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "You reach for change and find your wallet — which has been in the Real Pants this whole time, waiting, like the pants knew. Fifty cents into the slot. The door drops open with newspaper-box authority, and you are holding this week's Gazette, still warm from being two towns over."
+              },
+              {
+                "document": {
+                  "style": "newsprint",
+                  "title": "CLOUD OUT; LIBRARY EXTENDS HOURS",
+                  "body": "COUNTY — The internet stopped Tuesday at 6:47 a.m., taking with it the doors, thermostats, registers, and refrigerators of every resident who had signed one up. The sky was unaffected (see photo).\n'Third one I've seen,' said Merle, of the counter. Asked to elaborate, he did not.\nKim Nguyen of Kim's Nails, the only business at Parkview Plaza with a continuity plan, reported no interruption: 'I have a generator. I have appointments. I don't have time for their weather.' Ms. Nguyen's generator is now the plaza's leading utility.\nThe Library has extended hours for the duration. 'Books were always offline,' said the librarian, shelving one, devastatingly.\nThe Gazette prints Thursdays, on paper, as it has since 1946, and would like this noted.",
+                  "image": "assets/documents/gazette_main_street.png",
+                  "caption": "Main Street, Wednesday. The sky, a competing provider, remained operational."
+                }
+              },
+              {
+                "setFlag": "bought_gazette"
+              }
+            ]
+          },
+          {
+            "if": { "flag": "bought_gazette" },
+            "do": [
+              {
+                "narrate": "You re-read your Gazette against the box's scratched window. Fifty cents bought you unlimited re-reads. Find another business model like that. You'll wait."
+              },
+              {
+                "document": {
+                  "style": "newsprint",
+                  "title": "CLOUD OUT; LIBRARY EXTENDS HOURS",
+                  "body": "COUNTY — The internet stopped Tuesday at 6:47 a.m., taking with it the doors, thermostats, registers, and refrigerators of every resident who had signed one up. The sky was unaffected (see photo).\n'Third one I've seen,' said Merle, of the counter. Asked to elaborate, he did not.\nKim Nguyen of Kim's Nails, the only business at Parkview Plaza with a continuity plan, reported no interruption: 'I have a generator. I have appointments. I don't have time for their weather.' Ms. Nguyen's generator is now the plaza's leading utility.\nThe Library has extended hours for the duration. 'Books were always offline,' said the librarian, shelving one, devastatingly.\nThe Gazette prints Thursdays, on paper, as it has since 1946, and would like this noted.",
+                  "image": "assets/documents/gazette_main_street.png",
+                  "caption": "Main Street, Wednesday. The sky, a competing provider, remained operational."
+                }
+              }
+            ]
+          },
           {
             "text": "Fifty cents. Your wallet is at home, in the pocket of pants you refused to wear. The Gazette would appreciate the irony, in print, next Thursday."
           }

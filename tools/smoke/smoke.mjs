@@ -27,7 +27,14 @@ await page.waitForTimeout(400);
 
 const logText = () => page.locator(".log").innerText();
 const status = () => page.locator(".status-score").innerText();
+/** Put back any open document close-up (the player's Esc). Commands that
+ *  open papers would otherwise leave the overlay eating the next click. */
+const dismissDoc = () => page.evaluate(() => {
+  const d = document.querySelector(".docview");
+  if (d && !d.hidden) document.querySelector(".doc-dismiss").click();
+});
 const run = async (cmd) => {
+  await dismissDoc();
   await page.fill(".cmd-input", cmd);
   await page.press(".cmd-input", "Enter");
   await page.waitForTimeout(60);
@@ -279,6 +286,7 @@ await page.locator(".suggest-chip").first().click(); // chip completes and runs
 await page.waitForTimeout(60);
 ok((await lastLines()).includes("geological strata"), "suggestion chip auto-runs", await lastLines());
 ok((await page.inputValue(".cmd-input")) === "", "input cleared after chip run", await page.inputValue(".cmd-input"));
+await dismissDoc(); // the corkboard look opened the TODO close-up
 await page.fill(".cmd-input", "look co");
 await page.dispatchEvent(".cmd-input", "input");
 await page.waitForTimeout(50);
@@ -492,7 +500,10 @@ ok((await lastLines()).includes("not whatever that is"), "generic wrong-instrume
 await run("use mug on urn");
 ok((await lastLines()).includes("brought your own"), "mug fills at the urn (instrument)", await lastLines());
 ok((await score()) === "42", "coffee scored (+2)", await score());
-ok((await logText()).includes("ledger closes"), "diner onScoreComplete aside");
+// M4: the diner's ledger now includes two evidence reads (clipping +
+// griddle) whose points are Act 2's, gated on the act boundary — so the
+// aside must NOT close the room during Act 1.
+ok(!(await logText()).includes("ledger closes"), "diner aside waits for the Act 2 evidence reads");
 await run("use mug");
 ok((await lastLines()).includes("route packets"), "drinking the coffee", await lastLines());
 
@@ -516,6 +527,19 @@ await page.evaluate(() => { window.spof.state.player.x = 30; window.spof.state.p
 await clickScene(10, 164);
 await page.waitForTimeout(1200);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_main_street", "act end is not a dead end");
+
+// ---- M4: Act-1-room retrofit points live on Act 2's ledger ------------------
+// Back in town with eot_arrived set, the corkboard clipping and the
+// griddle award their curiosity tickets — and the diner's tab closes.
+await run("open diner");
+await run("look corkboard");
+ok(await page.evaluate(() => !document.querySelector(".docview").hidden), "clipping close-up opens");
+ok((await lastLines(6)).includes("documentation"), "clipping reads as evidence post-arrival", await lastLines(6));
+await run("look griddle");
+ok((await score()) === "47", "diner curiosity tickets award once arrived (45+2)", await score());
+ok((await logText()).includes("ledger closes"), "diner aside fires once the evidence is read");
+await run("open door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_main_street", "back on Main Street");
 
 // ---- M3: drag-to-walk -------------------------------------------------------
 await page.evaluate(() => { window.spof.state.player.x = 60; window.spof.state.player.y = 138; });

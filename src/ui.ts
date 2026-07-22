@@ -29,6 +29,14 @@ export class UI {
   private deathTitle: HTMLDivElement;
   private deathText: HTMLDivElement;
   private deathRetry: HTMLButtonElement;
+  private doc: HTMLDivElement;
+  private docPaper: HTMLDivElement;
+  private docTitle: HTMLDivElement;
+  private docBody: HTMLDivElement;
+  private docImg: HTMLImageElement;
+  private docCaption: HTMLDivElement;
+  private docDismiss: HTMLButtonElement;
+  private docCleanup: (() => void) | null = null;
   private cb: UICallbacks;
   private history: string[] = [];
   private historyPos = -1;
@@ -106,8 +114,27 @@ export class UI {
     deathBox.append(deathKicker, this.deathTitle, this.deathText, this.deathRetry);
     this.death.appendChild(deathBox);
 
+    // Document close-up: the death-screen pattern generalized — a paper
+    // (newsprint / Post-it / clipping / flyer) rendered entirely in CSS,
+    // text as real DOM text, dismissible from anywhere on the backdrop.
+    this.doc = el("div", "docview");
+    this.doc.hidden = true;
+    this.doc.setAttribute("role", "dialog");
+    this.doc.setAttribute("aria-modal", "true");
+    this.docPaper = el("div", "doc-paper");
+    this.docTitle = el("div", "doc-title");
+    this.docBody = el("div", "doc-body");
+    this.docImg = document.createElement("img");
+    this.docImg.className = "doc-img";
+    this.docImg.alt = "";
+    this.docCaption = el("div", "doc-caption");
+    this.docPaper.append(this.docTitle, this.docImg, this.docCaption, this.docBody);
+    this.docDismiss = el("button", "doc-dismiss") as HTMLButtonElement;
+    this.docDismiss.textContent = "PUT IT BACK";
+    this.doc.append(this.docPaper, this.docDismiss);
+
     root.append(status, this.log, this.suggest, inputRow, verbStrip, inv);
-    document.body.appendChild(this.death);
+    document.body.append(this.death, this.doc);
 
     this.input.addEventListener("input", () => {
       this.historyPos = this.history.length; // typing resets the history walk
@@ -154,7 +181,7 @@ export class UI {
       this.cb.onSteer(e.key, false); // releases always land — no stuck keys
       return;
     }
-    if (!this.death.hidden || e.altKey) return; // the dead don't pace
+    if (!this.death.hidden || !this.doc.hidden || e.altKey) return; // the dead don't pace; readers don't either
     if (e.ctrlKey || e.metaKey) {
       // Ctrl+arrow: history recall from anywhere, for the shell diehards.
       if (
@@ -281,6 +308,7 @@ export class UI {
   }
 
   showDeath(title: string, text: string, onRetry: () => void): void {
+    this.hideDocument(); // a death outranks any paperwork on screen
     this.deathTitle.textContent = title;
     this.deathText.textContent = text;
     this.death.hidden = false;
@@ -301,6 +329,76 @@ export class UI {
     };
     this.deathRetry.addEventListener("click", handler);
     this.deathRetry.focus();
+  }
+
+  /** Paper close-up overlay. Focus-trapped while up; dismissed by the
+   *  button, Escape, or a tap on the backdrop. Re-showing while one is
+   *  already up just swaps the paper (last document wins). */
+  showDocument(spec: {
+    style: string;
+    title?: string;
+    body: string;
+    imageUrl?: string;
+    caption?: string;
+  }): void {
+    if (!this.death.hidden) return; // the dead don't read
+    this.hideDocument();
+    this.docPaper.className =
+      "doc-paper doc-" + (spec.style || "newsprint").replace(/[^a-z0-9_-]/gi, "");
+    this.docTitle.textContent = spec.title ?? "";
+    this.docTitle.hidden = !spec.title;
+    this.docBody.replaceChildren();
+    for (const para of spec.body.split("\n")) {
+      if (!para.trim()) continue;
+      const p = el("p", "doc-para");
+      p.textContent = para;
+      this.docBody.appendChild(p);
+    }
+    if (spec.imageUrl) {
+      this.docImg.src = spec.imageUrl;
+      this.docImg.hidden = false;
+    } else {
+      this.docImg.removeAttribute("src");
+      this.docImg.hidden = true;
+    }
+    this.docCaption.textContent = spec.caption ?? "";
+    this.docCaption.hidden = !spec.caption;
+    this.doc.setAttribute("aria-label", spec.title ?? "document");
+    this.doc.hidden = false;
+    this.docPaper.scrollTop = 0;
+
+    // Focus trap, death-screen style: while the paper is up, Tab stays on
+    // the dismiss button and Escape puts the paper back.
+    const trap = (e: KeyboardEvent) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        this.docDismiss.focus();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        this.hideDocument();
+      }
+    };
+    const onBackdrop = (e: MouseEvent) => {
+      if (e.target === this.doc) this.hideDocument();
+    };
+    const onDismiss = () => this.hideDocument();
+    document.addEventListener("keydown", trap, true);
+    this.doc.addEventListener("click", onBackdrop);
+    this.docDismiss.addEventListener("click", onDismiss);
+    this.docCleanup = () => {
+      document.removeEventListener("keydown", trap, true);
+      this.doc.removeEventListener("click", onBackdrop);
+      this.docDismiss.removeEventListener("click", onDismiss);
+    };
+    this.docDismiss.focus();
+  }
+
+  hideDocument(): void {
+    if (this.doc.hidden) return;
+    this.docCleanup?.();
+    this.docCleanup = null;
+    this.doc.hidden = true;
+    if (this.finePointer) this.input.focus();
   }
 }
 

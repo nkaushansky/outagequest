@@ -98,6 +98,21 @@ export type Condition =
   | { all: Condition[] }
   | { any: Condition[] };
 
+/** A paper close-up (the death-screen pattern, generalized): a
+ *  focus-trapped, dismissible DOM overlay. CSS renders the paper; the
+ *  text stays real DOM text — never canvas. */
+export interface DocumentSpec {
+  /** Paper skin, rendered by CSS: "newsprint" | "clipping" | "postit" | "flyer". */
+  style: string;
+  title?: string;
+  /** Body text; "\n" splits paragraphs. */
+  body: string;
+  /** Optional image under assets/documents/ — typically a treated crop
+   *  of existing background art (free continuity). */
+  image?: string;
+  caption?: string;
+}
+
 export type Action =
   | { narrate: string }
   | { setFlag: string }
@@ -106,6 +121,7 @@ export type Action =
   | { removeItem: string }
   | { score: { id: string; points: number } }
   | { death: { id: string; text?: string; title?: string } }
+  | { document: DocumentSpec }
   | { goto: string }
   | { playSound: string };
 
