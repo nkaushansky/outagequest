@@ -422,6 +422,11 @@ ok((await npcIds()).includes("gary"), "Gary's sprite present on Main Street", JS
 ok(await canvasHas("polo_m", [23, 70, 64, 126]), "Gary drawn at his hotspot spot");
 
 await run("look notice board");
+ok(await page.evaluate(() => {
+  const d = document.querySelector(".docview");
+  return d && !d.hidden && !!d.querySelector(".doc-line-stamp") && !!d.querySelector(".doc-line-marker");
+}), "flyer annotations render as marks (stamp + scrawl)");
+await dismissDoc();
 ok((await lastLines(4)).includes("CANCELLED"), "Nimbus lore on the notice board", await lastLines(4));
 await run("talk to gary");
 ok((await lastLines(4)).includes("NEIL"), "Gary gets the name wrong", await lastLines(4));
@@ -653,9 +658,46 @@ await page.locator(".death-retry").click();
 await page.waitForTimeout(200);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town", "dumpster retry lands one step back");
 
+// data invariant: no arrival point may sit inside a destination exit
+// polygon — the device-pass bounce bug (enter a room, press any key,
+// get thrown straight back out). The engine now suppresses the
+// containing exit, but the data should not lean on that.
+const placementBugs = await page.evaluate(() => {
+  const inside = (p, poly) => {
+    let hit = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const a = poly[i], b = poly[j];
+      if ((a.y > p.y) !== (b.y > p.y) &&
+          p.x < ((b.x - a.x) * (p.y - a.y)) / (b.y - a.y) + a.x) hit = !hit;
+    }
+    return hit;
+  };
+  const bugs = [];
+  for (const [id, room] of window.spof.content.rooms) {
+    for (const exit of room.exits) {
+      if (inside(room.playerStart, exit.polygon)) bugs.push(`${id}.playerStart`);
+      const dest = window.spof.content.rooms.get(exit.to);
+      if (!dest) continue;
+      for (const dx of dest.exits) {
+        if (inside(exit.arrive, dx.polygon)) bugs.push(`${id}->${exit.to}`);
+      }
+    }
+  }
+  return bugs;
+});
+ok(placementBugs.length === 0, "no arrival point inside a destination exit", JSON.stringify(placementBugs));
+
 // the salon: Kim + Dot, minted per the bible
 await run("open nail salon");
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_salon", "salon door opens");
+// device-pass regression: arriving through the door and pressing a key
+// must NOT bounce the player straight back out
+await page.keyboard.down("ArrowLeft");
+await page.waitForTimeout(400);
+await page.keyboard.up("ArrowLeft");
+await page.waitForTimeout(150);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_salon",
+  "movement just inside the door stays in the salon");
 const salonNpcs = await npcIds();
 ok(salonNpcs.includes("kim") && salonNpcs.includes("dot"), "Kim + Dot sprites present", JSON.stringify(salonNpcs));
 ok(await canvasHas("rose_m", [114, 52, 154, 110]), "Kim drawn standing at her station");

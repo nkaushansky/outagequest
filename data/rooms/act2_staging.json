@@ -37,8 +37,8 @@
     ]
   ],
   "playerStart": {
-    "x": 24,
-    "y": 138,
+    "x": 26,
+    "y": 144,
     "facing": "down"
   },
   "exits": [

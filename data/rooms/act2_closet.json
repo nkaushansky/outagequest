@@ -21,8 +21,8 @@
     ]
   ],
   "playerStart": {
-    "x": 284,
-    "y": 148,
+    "x": 240,
+    "y": 152,
     "facing": "left"
   },
   "exits": [
@@ -48,7 +48,7 @@
       ],
       "arrive": {
         "x": 262,
-        "y": 140,
+        "y": 146,
         "facing": "down"
       }
     }
@@ -531,7 +531,17 @@
                 "document": {
                   "style": "postit",
                   "title": "SITE INSPECTION LOG — PARKVIEW EDGE",
-                  "body": "Visit 1 — install complete. Rack set, uplink hot, fan cooling per site conditions. All good. Left spare per SOP-7. Somebody should check the fan filter sometime. — D⚡\n(twenty-nine blank lines follow, each one a small institutional promise, each one kept by nobody)"
+                  "body": [
+                    "SITE INSPECTION LOG — sign and date each visit. Sites are inspected quarterly (SOP-12).",
+                    {
+                      "text": "Visit 1 — install complete. Rack set, uplink hot, fan cooling per site conditions. All good. Left spare per SOP-7. Somebody should check the fan filter sometime. — D⚡",
+                      "style": "hand"
+                    },
+                    {
+                      "text": "(twenty-nine blank lines follow, each one a small institutional promise, each one kept by nobody)",
+                      "style": "fine"
+                    }
+                  ]
                 }
               },
               {
@@ -784,7 +794,7 @@
                 "goto": "act1_edge_of_town",
                 "arrive": {
                   "x": 262,
-                  "y": 140,
+                  "y": 146,
                   "facing": "down"
                 }
               }
@@ -801,7 +811,7 @@
                 "goto": "act1_edge_of_town",
                 "arrive": {
                   "x": 262,
-                  "y": 140,
+                  "y": 146,
                   "facing": "down"
                 }
               }

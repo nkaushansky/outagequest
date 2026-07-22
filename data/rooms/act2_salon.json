@@ -69,8 +69,8 @@
     ]
   ],
   "playerStart": {
-    "x": 288,
-    "y": 110,
+    "x": 274,
+    "y": 112,
     "facing": "left"
   },
   "exits": [
@@ -96,7 +96,7 @@
       ],
       "arrive": {
         "x": 100,
-        "y": 134,
+        "y": 144,
         "facing": "down"
       }
     },
@@ -1105,7 +1105,7 @@
                 "goto": "act1_edge_of_town",
                 "arrive": {
                   "x": 100,
-                  "y": 134,
+                  "y": 144,
                   "facing": "down"
                 }
               }
@@ -1122,7 +1122,7 @@
                 "goto": "act1_edge_of_town",
                 "arrive": {
                   "x": 100,
-                  "y": 134,
+                  "y": 144,
                   "facing": "down"
                 }
               }

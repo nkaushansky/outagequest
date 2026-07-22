@@ -81,8 +81,8 @@
         ]
       ],
       "arrive": {
-        "x": 288,
-        "y": 110,
+        "x": 274,
+        "y": 112,
         "facing": "left"
       }
     },
@@ -107,8 +107,8 @@
         ]
       ],
       "arrive": {
-        "x": 284,
-        "y": 148,
+        "x": 240,
+        "y": 152,
         "facing": "left"
       },
       "if": {
@@ -657,7 +657,19 @@
                 "document": {
                   "style": "flyer",
                   "title": "CUMULONIMBUS FIELD SERVICE — WORK ORDER #CN-0447",
-                  "body": "SITE: Parkview Plaza Unit 6 ('Regional Edge') — install, rack, terminate, energize.\nCHECKLIST: ☑ Rack set ☑ Uplink terminated ☑ Switch energized ☑ Cooling per site conditions (see note) ☑ Site secured per SOP-7\nNOTE (handwritten): 'cooling' is a box fan. Not filing a variance. Nobody reads these.\nSOP-7 REMINDER (printed): Affix contractor lockbox to nearest immovable gas fitting. Set combination to the final four digits of the Community NOC hotline (printed on all community-facing collateral — field techs always have collateral).\nHANDWRITTEN, CIRCLED TWICE: combo = hotline. DO NOT write it on the box again. — D⚡"
+                  "body": [
+                    "SITE: Parkview Plaza Unit 6 ('Regional Edge') — install, rack, terminate, energize.",
+                    "CHECKLIST: ☑ Rack set ☑ Uplink terminated ☑ Switch energized ☑ Cooling per site conditions (see note) ☑ Site secured per SOP-7",
+                    {
+                      "text": "note — 'cooling' is a box fan. not filing a variance. nobody reads these.",
+                      "style": "hand"
+                    },
+                    "SOP-7 REMINDER (printed): Affix contractor lockbox to nearest immovable gas fitting. Set combination to the final four digits of the Community NOC hotline (printed on all community-facing collateral — field techs always have collateral).",
+                    {
+                      "text": "combo = hotline!! DO NOT write it on the box again — D⚡",
+                      "style": "marker"
+                    }
+                  ]
                 }
               },
               {

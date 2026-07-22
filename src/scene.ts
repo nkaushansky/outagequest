@@ -152,9 +152,22 @@ export class Scene {
     this.marker = null;
     this.talk = null;
     // Don't fire an exit until the player has actually walked somewhere,
-    // in case an arrive point sits inside an exit polygon.
+    // in case an arrive point sits inside an exit polygon — and if it
+    // does, hold THAT exit until the player has stepped clear of it once.
+    // Without this, the first movement input of any kind re-arms exits
+    // while the player is still standing in the polygon and bounces them
+    // straight back through the door they came from.
     this.exitArmed = false;
     this.suppressedExit = null;
+    for (const exit of room.exits) {
+      if (
+        exit.polygon.length >= 3 &&
+        pointInPolygon(this.state.player, exit.polygon)
+      ) {
+        this.suppressedExit = exit;
+        break;
+      }
+    }
     // A drag that carried Mel through a door ends at the threshold —
     // otherwise the finger, still down near the reciprocal exit, would
     // bounce straight back. Held arrows likewise: key auto-repeat

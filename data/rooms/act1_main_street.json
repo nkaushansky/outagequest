@@ -2,7 +2,24 @@
   "id": "act1_main_street",
   "name": "Main Street",
   "background": "assets/backgrounds/act1_main_street.png",
-  "walkable": [[4, 126], [318, 126], [318, 148], [4, 148]],
+  "walkable": [
+    [
+      4,
+      126
+    ],
+    [
+      318,
+      126
+    ],
+    [
+      318,
+      148
+    ],
+    [
+      4,
+      148
+    ]
+  ],
   "playerStart": {
     "x": 16,
     "y": 140,
@@ -11,7 +28,24 @@
   "exits": [
     {
       "to": "act1_living_room",
-      "polygon": [[0, 126], [10, 126], [10, 148], [0, 148]],
+      "polygon": [
+        [
+          0,
+          126
+        ],
+        [
+          10,
+          126
+        ],
+        [
+          10,
+          148
+        ],
+        [
+          0,
+          148
+        ]
+      ],
       "arrive": {
         "x": 266,
         "y": 150,
@@ -20,7 +54,24 @@
     },
     {
       "to": "act1_diner",
-      "polygon": [[266, 126], [292, 126], [292, 138], [266, 138]],
+      "polygon": [
+        [
+          266,
+          126
+        ],
+        [
+          292,
+          126
+        ],
+        [
+          292,
+          138
+        ],
+        [
+          266,
+          138
+        ]
+      ],
       "arrive": {
         "x": 114,
         "y": 148,
@@ -29,7 +80,24 @@
     },
     {
       "to": "act1_edge_of_town",
-      "polygon": [[310, 126], [318, 126], [318, 148], [310, 148]],
+      "polygon": [
+        [
+          310,
+          126
+        ],
+        [
+          318,
+          126
+        ],
+        [
+          318,
+          148
+        ],
+        [
+          310,
+          148
+        ]
+      ],
       "arrive": {
         "x": 30,
         "y": 158,
@@ -92,8 +160,31 @@
         "lawn",
         "hose"
       ],
-      "polygon": [[32, 74], [54, 74], [54, 124], [32, 124]],
-      "sprite": { "use": "gary", "at": [43, 126] },
+      "polygon": [
+        [
+          32,
+          74
+        ],
+        [
+          54,
+          74
+        ],
+        [
+          54,
+          124
+        ],
+        [
+          32,
+          124
+        ]
+      ],
+      "sprite": {
+        "use": "gary",
+        "at": [
+          43,
+          126
+        ]
+      },
       "responses": {
         "look": [
           {
@@ -198,7 +289,24 @@
         "home",
         "porch"
       ],
-      "polygon": [[17, 80], [34, 80], [34, 122], [17, 122]],
+      "polygon": [
+        [
+          17,
+          80
+        ],
+        [
+          34,
+          80
+        ],
+        [
+          34,
+          122
+        ],
+        [
+          17,
+          122
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -241,7 +349,24 @@
         "doorbell",
         "smart doorbell"
       ],
-      "polygon": [[0, 20], [50, 20], [50, 127], [0, 127]],
+      "polygon": [
+        [
+          0,
+          20
+        ],
+        [
+          50,
+          20
+        ],
+        [
+          50,
+          127
+        ],
+        [
+          0,
+          127
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -263,7 +388,24 @@
         "flowers",
         "flower bed"
       ],
-      "polygon": [[96, 114], [112, 114], [112, 129], [96, 129]],
+      "polygon": [
+        [
+          96,
+          114
+        ],
+        [
+          112,
+          114
+        ],
+        [
+          112,
+          129
+        ],
+        [
+          96,
+          129
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -285,7 +427,24 @@
         "shop",
         "wicked awesome"
       ],
-      "polygon": [[104, 50], [153, 50], [153, 125], [104, 125]],
+      "polygon": [
+        [
+          104,
+          50
+        ],
+        [
+          153,
+          50
+        ],
+        [
+          153,
+          125
+        ],
+        [
+          104,
+          125
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -317,7 +476,24 @@
         "sign",
         "signs"
       ],
-      "polygon": [[160, 90], [194, 90], [194, 133], [160, 133]],
+      "polygon": [
+        [
+          160,
+          90
+        ],
+        [
+          194,
+          90
+        ],
+        [
+          194,
+          133
+        ],
+        [
+          160,
+          133
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -332,7 +508,24 @@
                 "document": {
                   "style": "flyer",
                   "title": "CUMULONIMBUS™ COMMUNITY CLOUD DAY!",
-                  "body": "MEET THE CLOUD THAT POWERS YOUR TOWN! Live demos • Edge Node Open House* • Face painting (clouds only) • Free 30-day trials of things you already owned!\n*Open House cancelled per Security Bulletin CB-114. The Edge Node thanks you for your curiosity.\nRefreshments provided by the cloud. Rain or shine. (Shine is a legacy configuration.)\nQuestions? Comments? Outages? Our Community NOC hotline is staffed 24/7/365: 1-800-CUMULO-1 (1-800-286-8561). Your call is important. All calls are important. Importance is a service.\nScrawled across the middle in marker: NIMBUS DAY!!\nRe-printed over the scrawl, in the company serif: CUMULONIMBUS™ — per Brand Guidelines §4 ('The Company Name Is A Complete Sentence').\nStickered over everything, slightly crooked: CANCELLED — WEATHER."
+                  "body": [
+                    "MEET THE CLOUD THAT POWERS YOUR TOWN! Live demos • Edge Node Open House* • Face painting (clouds only) • Free 30-day trials of things you already owned!",
+                    "*Open House cancelled per Security Bulletin CB-114. The Edge Node thanks you for your curiosity.",
+                    "Refreshments provided by the cloud. Rain or shine. (Shine is a legacy configuration.)",
+                    "Questions? Comments? Outages? Our Community NOC hotline is staffed 24/7/365: 1-800-CUMULO-1 (1-800-286-8561). Your call is important. All calls are important. Importance is a service.",
+                    {
+                      "text": "NIMBUS DAY!!",
+                      "style": "marker"
+                    },
+                    {
+                      "text": "CUMULONIMBUS™ — corrected per Brand Guidelines §4: 'The Company Name Is A Complete Sentence.'",
+                      "style": "fine"
+                    },
+                    {
+                      "text": "Cancelled — weather",
+                      "style": "stamp"
+                    }
+                  ]
                 }
               },
               {
@@ -358,7 +551,24 @@
                 "document": {
                   "style": "flyer",
                   "title": "CUMULONIMBUS™ COMMUNITY CLOUD DAY!",
-                  "body": "MEET THE CLOUD THAT POWERS YOUR TOWN! Live demos • Edge Node Open House* • Face painting (clouds only) • Free 30-day trials of things you already owned!\n*Open House cancelled per Security Bulletin CB-114. The Edge Node thanks you for your curiosity.\nRefreshments provided by the cloud. Rain or shine. (Shine is a legacy configuration.)\nQuestions? Comments? Outages? Our Community NOC hotline is staffed 24/7/365: 1-800-CUMULO-1 (1-800-286-8561). Your call is important. All calls are important. Importance is a service.\nScrawled across the middle in marker: NIMBUS DAY!!\nRe-printed over the scrawl, in the company serif: CUMULONIMBUS™ — per Brand Guidelines §4 ('The Company Name Is A Complete Sentence').\nStickered over everything, slightly crooked: CANCELLED — WEATHER."
+                  "body": [
+                    "MEET THE CLOUD THAT POWERS YOUR TOWN! Live demos • Edge Node Open House* • Face painting (clouds only) • Free 30-day trials of things you already owned!",
+                    "*Open House cancelled per Security Bulletin CB-114. The Edge Node thanks you for your curiosity.",
+                    "Refreshments provided by the cloud. Rain or shine. (Shine is a legacy configuration.)",
+                    "Questions? Comments? Outages? Our Community NOC hotline is staffed 24/7/365: 1-800-CUMULO-1 (1-800-286-8561). Your call is important. All calls are important. Importance is a service.",
+                    {
+                      "text": "NIMBUS DAY!!",
+                      "style": "marker"
+                    },
+                    {
+                      "text": "CUMULONIMBUS™ — corrected per Brand Guidelines §4: 'The Company Name Is A Complete Sentence.'",
+                      "style": "fine"
+                    },
+                    {
+                      "text": "Cancelled — weather",
+                      "style": "stamp"
+                    }
+                  ]
                 }
               },
               {
@@ -387,7 +597,24 @@
         "repair shop",
         "computer repair"
       ],
-      "polygon": [[155, 55], [254, 55], [254, 124], [155, 124]],
+      "polygon": [
+        [
+          155,
+          55
+        ],
+        [
+          254,
+          55
+        ],
+        [
+          254,
+          124
+        ],
+        [
+          155,
+          124
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -410,7 +637,24 @@
         "restaurant",
         "diner door"
       ],
-      "polygon": [[255, 52], [306, 52], [306, 126], [255, 126]],
+      "polygon": [
+        [
+          255,
+          52
+        ],
+        [
+          306,
+          52
+        ],
+        [
+          306,
+          126
+        ],
+        [
+          255,
+          126
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -452,11 +696,30 @@
         "news box",
         "gazette"
       ],
-      "polygon": [[222, 111], [237, 111], [237, 132], [222, 132]],
+      "polygon": [
+        [
+          222,
+          111
+        ],
+        [
+          237,
+          111
+        ],
+        [
+          237,
+          132
+        ],
+        [
+          222,
+          132
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "bought_gazette" },
+            "if": {
+              "flag": "bought_gazette"
+            },
             "text": "The Gazette box, one paper lighter. Yours is folded under your arm with the practiced grip of a man who has read a newspaper as recently as this morning. Open the box again to give it another read."
           },
           {
@@ -467,8 +730,12 @@
           {
             "if": {
               "all": [
-                { "flag": "wearing_pants" },
-                { "flagNot": "bought_gazette" }
+                {
+                  "flag": "wearing_pants"
+                },
+                {
+                  "flagNot": "bought_gazette"
+                }
               ]
             },
             "do": [
@@ -490,7 +757,9 @@
             ]
           },
           {
-            "if": { "flag": "bought_gazette" },
+            "if": {
+              "flag": "bought_gazette"
+            },
             "do": [
               {
                 "narrate": "You re-read your Gazette against the box's scratched window. Fifty cents bought you unlimited re-reads. Find another business model like that. You'll wait."
@@ -526,11 +795,30 @@
         "signal",
         "pole"
       ],
-      "polygon": [[300, 0], [319, 0], [319, 127], [300, 127]],
+      "polygon": [
+        [
+          300,
+          0
+        ],
+        [
+          319,
+          0
+        ],
+        [
+          319,
+          127
+        ],
+        [
+          300,
+          127
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "edge_node_located" },
+            "if": {
+              "flag": "edge_node_located"
+            },
             "do": [
               {
                 "narrate": "The dead traffic light, pointing nowhere as usual — except now you know what's past it. East, behind the nail salon, the county's internet hums in a closet. The light stays dark. You go anyway. That's practically a green."
@@ -557,7 +845,24 @@
         "sun",
         "up"
       ],
-      "polygon": [[0, 0], [319, 0], [319, 46], [0, 46]],
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          319,
+          0
+        ],
+        [
+          319,
+          46
+        ],
+        [
+          0,
+          46
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -580,7 +885,24 @@
         "crosswalk",
         "traffic"
       ],
-      "polygon": [[0, 148], [319, 148], [319, 180], [0, 180]],
+      "polygon": [
+        [
+          0,
+          148
+        ],
+        [
+          319,
+          148
+        ],
+        [
+          319,
+          180
+        ],
+        [
+          0,
+          180
+        ]
+      ],
       "responses": {
         "look": [
           {

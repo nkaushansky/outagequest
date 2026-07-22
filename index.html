@@ -246,6 +246,49 @@
   }
   .doc-flyer .doc-para { font-size: 14px; line-height: 1.5; }
 
+  /* Paper grain — subtle CSS-only texture so the sheets read as stock,
+     not as UI panels. Layered under the flat background colors above. */
+  .doc-newsprint, .doc-clipping {
+    background-image:
+      repeating-linear-gradient(0deg, rgba(90, 74, 44, 0.05) 0 1px, rgba(0,0,0,0) 1px 3px),
+      repeating-linear-gradient(90deg, rgba(90, 74, 44, 0.03) 0 2px, rgba(0,0,0,0) 2px 5px);
+  }
+  .doc-postit {
+    background-image:
+      linear-gradient(180deg, rgba(120, 104, 30, 0.16) 0, rgba(0,0,0,0) 14px),
+      repeating-linear-gradient(0deg, rgba(120, 104, 30, 0.04) 0 1px, rgba(0,0,0,0) 1px 4px);
+  }
+  .doc-flyer {
+    background-image:
+      radial-gradient(ellipse 70% 40% at 85% 8%, rgba(46, 94, 184, 0.07), rgba(0,0,0,0) 60%),
+      repeating-linear-gradient(0deg, rgba(32, 38, 54, 0.025) 0 1px, rgba(0,0,0,0) 1px 4px);
+  }
+
+  /* Annotation lines: marks ON the paper, rendered as marks. */
+  .doc-para.doc-line-marker {
+    font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+    font-size: 24px; font-weight: bold; line-height: 1.1;
+    color: #1A1A2E; text-align: center;
+    transform: rotate(-3deg); margin: 14px 0;
+    text-shadow: 0.5px 0.5px 0 rgba(26, 26, 46, 0.4);
+  }
+  .doc-para.doc-line-hand {
+    font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+    font-size: 14px; line-height: 1.4; color: #23327A;
+    transform: rotate(-0.8deg); margin: 10px 4px;
+  }
+  .doc-para.doc-line-stamp {
+    display: block; width: fit-content; margin: 16px auto 10px;
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    font-size: 17px; font-weight: bold; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #B22A22;
+    border: 3px double #B22A22; border-radius: 3px;
+    padding: 5px 14px; transform: rotate(4deg); opacity: 0.85;
+  }
+  .doc-para.doc-line-fine {
+    font-size: 11px; line-height: 1.4; opacity: 0.75; margin: 8px 0;
+  }
+
   @media (pointer: coarse) {
     .doc-dismiss { min-height: 44px; }
   }

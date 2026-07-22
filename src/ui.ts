@@ -337,7 +337,7 @@ export class UI {
   showDocument(spec: {
     style: string;
     title?: string;
-    body: string;
+    body: string | Array<string | { text: string; style?: string }>;
     imageUrl?: string;
     caption?: string;
   }): void {
@@ -348,10 +348,18 @@ export class UI {
     this.docTitle.textContent = spec.title ?? "";
     this.docTitle.hidden = !spec.title;
     this.docBody.replaceChildren();
-    for (const para of spec.body.split("\n")) {
-      if (!para.trim()) continue;
-      const p = el("p", "doc-para");
-      p.textContent = para;
+    const lines = Array.isArray(spec.body)
+      ? spec.body
+      : spec.body.split("\n");
+    for (const line of lines) {
+      const text = typeof line === "string" ? line : line.text;
+      if (!text.trim()) continue;
+      const cls = typeof line === "string" ? undefined : line.style;
+      const p = el(
+        "p",
+        "doc-para" + (cls ? " doc-line-" + cls.replace(/[^a-z0-9_-]/gi, "") : ""),
+      );
+      p.textContent = text;
       this.docBody.appendChild(p);
     }
     if (spec.imageUrl) {

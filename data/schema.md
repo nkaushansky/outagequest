@@ -147,7 +147,13 @@ exits, topics), `instrument` is never satisfied and `anyInstrument` equals
   dismissible DOM overlay (button, Escape, or backdrop tap). CSS renders
   the paper; the text stays real DOM text, never canvas. Styles:
   `newsprint`, `clipping`, `postit`, `flyer`. `title`, `image`, `caption`
-  are optional; `body` paragraphs split on `\n`. Document images live in
+  are optional; `body` is either a string (paragraphs split on `\n`) or an
+  array mixing plain paragraphs with annotated lines:
+  `{ "text": "NIMBUS DAY!!", "style": "marker" }`. Line styles render the
+  mark AS a mark — `marker` (big scrawl), `hand` (pen note), `stamp`
+  (rubber stamp), `fine` (fine print). Never write stage directions
+  ("scrawled across the middle:") into body text; put the mark on the
+  paper instead. Document images live in
   `assets/documents/` — typically treated crops of existing background art
   (the Gazette clipping's plaza photo IS the edge-of-town art, sepia'd).
   Actions after `document` in the same list still run behind the overlay.

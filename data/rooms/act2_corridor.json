@@ -99,8 +99,8 @@
         ]
       ],
       "arrive": {
-        "x": 24,
-        "y": 136,
+        "x": 26,
+        "y": 144,
         "facing": "down"
       }
     }
@@ -670,7 +670,12 @@
                 "narrate": "The loose knob turns with a shrug."
               },
               {
-                "goto": "act2_staging"
+                "goto": "act2_staging",
+                "arrive": {
+                  "x": 26,
+                  "y": 144,
+                  "facing": "down"
+                }
               }
             ]
           }
@@ -682,7 +687,12 @@
                 "narrate": "The loose knob turns with a shrug."
               },
               {
-                "goto": "act2_staging"
+                "goto": "act2_staging",
+                "arrive": {
+                  "x": 26,
+                  "y": 144,
+                  "facing": "down"
+                }
               }
             ]
           }

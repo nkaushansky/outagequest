@@ -105,8 +105,11 @@ export interface DocumentSpec {
   /** Paper skin, rendered by CSS: "newsprint" | "clipping" | "postit" | "flyer". */
   style: string;
   title?: string;
-  /** Body text; "\n" splits paragraphs. */
-  body: string;
+  /** Body text. A plain string splits into paragraphs on "\n". An array
+   *  mixes plain paragraphs with annotated lines — marks ON the paper
+   *  (marker scrawl, rubber stamp, handwriting, fine print) rendered as
+   *  marks, never described as stage directions. */
+  body: string | Array<string | { text: string; style?: string }>;
   /** Optional image under assets/documents/ — typically a treated crop
    *  of existing background art (free continuity). */
   image?: string;
