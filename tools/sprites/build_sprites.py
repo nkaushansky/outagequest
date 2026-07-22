@@ -27,7 +27,7 @@ sys.path.insert(0, str(TOOL_DIR))
 
 import spritelib  # noqa: E402
 
-CHAR_MODULES = ["mel", "gary", "darlene", "merle"]
+CHAR_MODULES = ["mel", "gary", "darlene", "merle", "kim", "dot"]
 
 # Floor tones sampled from treated backgrounds — preview + reference
 # swatches so palette discipline is checked against real ground colors.
@@ -73,7 +73,7 @@ def reference_sheet(sheets):
     """The style bible's plate (CHARACTERS.md): the whole cast's idles at
     1x and 3x, plus Mel's right-facing walk row at 3x."""
     order = ["mel_base", "mel_pants", "mel_coat", "mel_coat_pants",
-             "gary", "darlene", "merle"]
+             "gary", "darlene", "merle", "kim", "dot"]
     cast = _strip([sheets[n][0][0] for n in order if n in sheets])
     bands = [cast, cast.resize((cast.width * 3, cast.height * 3),
                                Image.NEAREST)]

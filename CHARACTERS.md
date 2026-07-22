@@ -144,6 +144,21 @@ engine work.
   Rust flannel with cream check lattice, denim, boots on the rail,
   white saucer of coffee cooling in both hands. Talk: the saucer lifts
   toward the blow.
+- **Kim Nguyen** (Kim's Nails, behind the manicure table) — 30x40
+  static, waist-up behind furniture (the Darlene trick; anchor row
+  tucks behind the table's FAR edge). Sleek black bob, gold claw clip,
+  white-trim collar, and the cast's rose pop: the salon tunic. The
+  emery board never leaves her left hand. Talk: the file lifts
+  mid-flourish, then the right hand points you at your next task —
+  without looking up. Minted M4, first product of the make-a-character
+  process.
+- **Dot** (Kim's Nails, the chair under the bonnet dryer) — 34x48
+  static, seated on the *painted* chair (the Merle trick; anchor at
+  shoe soles). Silver hair in rose curlers, cat-eye glasses, white
+  blouse, and the cast's lavender pop: the cardigan. Hands held flat
+  and splayed, fresh rose fingertips — the hands NEVER close. Talk: the
+  elbows wing outward, nails level throughout ("a small flightless
+  bird taking off"). Minted M4.
 
 ## Make-a-character (the repeatable process)
 
