@@ -153,7 +153,11 @@ exits, topics), `instrument` is never satisfied and `anyInstrument` equals
   Actions after `document` in the same list still run behind the overlay.
   Writing rule: the overlay is the exhibit, the log is the narrator — pair
   every document with narration so the joke survives in the transcript.
-- `{ "goto": "room_id" }`
+- `{ "goto": "room_id", "arrive": { "x": 100, "y": 134, "facing": "down" } }`
+  — `arrive` is optional; without it the player lands on the target room's
+  `playerStart`. Set it when a hub room has several named entrances (a
+  command-driven door should drop the player at *that* door, not wherever
+  the room's default spawn is).
 - `{ "playSound": "id" }` (M8)
 
 ## Sprites

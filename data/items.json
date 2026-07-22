@@ -17,6 +17,7 @@
       ]
     } },
   "cable":  { "name": "ethernet cable", "synonyms": ["cable", "cat5", "cat 5", "ethernet", "patch cable", "network cable"], "look": "Fourteen feet of cat 5 you crimped by hand, back when you trusted nothing. Both ends test clean. It may be the most reliable object in the hemisphere right now." },
+  "edge_key": { "name": "janitor's key", "synonyms": ["key", "janitor key", "janitors key", "brass key", "spare key", "spare"], "look": "Dale's spare: brass, unremarkable, nine years patient inside a lockbox. The most important physical object in the western internet, and it cost $2.40 to duplicate. It opens exactly one gray door, and the gray door knows it's coming." },
   "coat":   { "name": "coat", "synonyms": ["jacket", "overcoat"], "look": "The Going Outside coat, over your arm. It smells faintly of the previous decade, which is when it last worked a full shift.",
     "presentIf": { "flag": "wearing_coat" },
     "responses": {

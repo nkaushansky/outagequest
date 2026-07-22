@@ -10,8 +10,12 @@ real art arrives, re-fit polygons with ?dev=1 and delete the matching
 assets/source/<room>_placeholder.png.
 
 Usage:
-    python3 tools/placeholder_bg.py            # all rooms
-    python3 tools/placeholder_bg.py act1_diner # one room
+    python3 tools/placeholder_bg.py             # all placeholder-era rooms
+    python3 tools/placeholder_bg.py act2_salon  # one room
+
+Act 1's five rooms graduated to real art in the M3 art pass — their
+painters were removed from ROOMS so this script can never overwrite
+canon backgrounds. Act 2 lives here until its art lands.
 """
 import random
 import subprocess
@@ -80,281 +84,296 @@ def texture(im, amount=9):
 
 # ---- rooms ----------------------------------------------------------------
 
-def living_room(im, d):
-    # Architecture: interior doors cluster LEFT (office on the left wall,
-    # bedroom doorway far-left of the back wall, deeper into the house);
-    # the RIGHT rear corner is the exterior corner (window, then front
-    # door on the right wall). Keep the real-art prompt in sync.
-    vgrad(im, 0, 120, (188, 148, 112), (214, 176, 138))     # warm wall
-    vgrad(im, 120, 180, (128, 88, 62), (96, 64, 46))        # wood floor
-    d.rectangle(box(0, 116, 320, 121), fill=(150, 108, 78)) # baseboard
-    # office door (left wall, warm glow within)
-    rect(d, (2, 26, 28, 120), (64, 48, 44))
-    rect(d, (6, 32, 24, 118), (196, 150, 96))
-    # bedroom doorway (back wall far left, dark — deeper into the house)
-    rect(d, (34, 20, 64, 112), (70, 52, 46))
-    rect(d, (38, 26, 60, 112), (44, 34, 34))
-    # photos
-    for px, py in [(69, 24), (86, 24), (69, 42), (86, 42)]:
-        rect(d, (px, py, px + 13, py + 14), (108, 84, 64))
-        rect(d, (px + 2, py + 2, px + 11, py + 12), (222, 210, 188))
-    # thermostat
-    d.ellipse(box(104, 41, 118, 57), fill=(236, 234, 230), outline=(120, 120, 124), width=3)
-    d.ellipse(box(108, 45, 114, 53), fill=(180, 190, 200))
-    # TV + console
-    rect(d, (122, 28, 186, 78), (34, 34, 44))
-    d.ellipse(box(144, 42, 164, 58), fill=(70, 76, 96))     # cloud logo blob
-    rect(d, (120, 78, 188, 96), (122, 88, 60))
-    rect(d, (166, 80, 184, 94), (46, 60, 66))               # mesh node
-    d.ellipse(box(172, 84, 176, 88), fill=(96, 210, 200))
-    # speaker on shelf
-    rect(d, (188, 68, 208, 72), (122, 88, 60))
-    rect(d, (192, 48, 204, 68), (58, 58, 64))
-    # window near the exterior corner (side yard + fence)
-    rect(d, (210, 16, 252, 62), (110, 86, 66))
-    rect(d, (213, 19, 249, 59), (170, 200, 220))
-    d.rectangle(box(213, 44, 249, 59), fill=(128, 142, 96))
-    d.rectangle(box(213, 38, 249, 46), fill=(150, 128, 96))  # fence
-    # doorbell chime beside the door frame
-    rect(d, (240, 68, 252, 86), (236, 232, 226))
-    d.ellipse(box(243, 73, 249, 81), fill=(150, 160, 176))
-    # DVD shelf + bike parked in front (right side)
-    rect(d, (256, 16, 284, 70), (112, 80, 56))
-    for row in (26, 42, 58):
-        d.rectangle(box(259, row - 8, 281, row), fill=(90, 64, 46))
-        for i in range(5):
-            x = 260 + i * 4
-            d.rectangle(box(x, row - 8, x + 3, row), fill=rng.choice([(160, 60, 50), (60, 100, 140), (196, 170, 90), (80, 130, 90)]))
-    shadow(d, 254, 290, 130)
-    rect(d, (258, 98, 288, 110), (70, 70, 80))              # bike frame
-    rect(d, (266, 76, 284, 98), (40, 40, 48))               # tablet
-    d.ellipse(box(256, 110, 270, 130), outline=(50, 50, 58), width=6)
-    d.ellipse(box(276, 110, 290, 130), outline=(50, 50, 58), width=6)
-    # front door (right wall — the exterior corner)
-    rect(d, (292, 10, 318, 118), (128, 74, 52))
-    rect(d, (296, 18, 314, 62), (108, 60, 42))
-    rect(d, (296, 68, 314, 110), (108, 60, 42))
-    d.ellipse(box(293, 62, 298, 68), fill=(210, 180, 90))
-    # couch + plant
-    shadow(d, 64, 158, 134)
-    rect(d, (66, 96, 156, 128), (150, 96, 84))
-    rect(d, (66, 118, 156, 134), (128, 80, 70))
-    for cx in (88, 111, 134):
-        rect(d, (cx - 10, 100, cx + 10, 118), (162, 106, 92))
-    shadow(d, 2, 28, 124)
-    rect(d, (10, 108, 22, 124), (150, 92, 60))
-    d.ellipse(box(2, 86, 30, 112), fill=(78, 122, 66))
+def salon(im, d):
+    # Kim's Nails: warm pink interior. Back wall L->R: curtained staff
+    # doorway (far left edge), polish wall, service counter with the pod
+    # coffee machine + rotary phone, Kim's manicure table (mirror behind),
+    # Dot's bonnet dryer chair, window to the dusk lot, front door right.
+    vgrad(im, 0, 116, (214, 168, 168), (232, 192, 186))       # rose wall
+    vgrad(im, 116, 180, (176, 150, 142), (140, 116, 110))     # tile floor
+    d.rectangle(box(0, 112, 320, 117), fill=(190, 150, 146))
+    # staff curtain (left edge, to the service corridor)
+    rect(d, (0, 26, 18, 112), (110, 70, 84))
+    for cx_ in (3, 8, 13):
+        d.line(sc((cx_, 30), (cx_, 110)), fill=(90, 56, 70), width=2)
+    # polish wall: shelves of tiny bottles
+    rect(d, (22, 22, 70, 84), (150, 110, 104))
+    for row in (34, 48, 62, 76):
+        d.rectangle(box(24, row - 3, 68, row), fill=(120, 86, 84))
+        for i in range(9):
+            x = 25 + i * 5
+            d.rectangle(box(x, row - 9, x + 3, row - 3),
+                        fill=rng.choice([(214, 60, 90), (240, 140, 160), (150, 40, 60),
+                                         (240, 200, 120), (120, 60, 140), (230, 230, 220)]))
+    # service counter: pod machine + rotary phone
+    rect(d, (74, 62, 122, 108), (166, 128, 108))
+    rect(d, (78, 40, 100, 62), (60, 62, 70))                  # pod machine
+    d.rectangle(box(82, 44, 96, 50), fill=(120, 200, 190))    # smug lit screen
+    rect(d, (104, 48, 120, 62), (190, 60, 60))                # rotary phone
+    d.ellipse(box(107, 50, 117, 60), fill=(230, 220, 210))
+    # Kim's manicure table, mirror behind
+    rect(d, (136, 20, 196, 62), (200, 210, 214))              # mirror
+    rect(d, (130, 76, 196, 104), (222, 214, 206))             # table
+    rect(d, (134, 66, 154, 76), (240, 236, 228))              # gel lamp
+    d.rectangle(box(138, 70, 150, 74), fill=(150, 190, 240))
+    # Dot's dryer chair (bonnet)
+    shadow(d, 206, 252, 122)
+    rect(d, (210, 78, 248, 118), (170, 120, 130))             # chair
+    d.ellipse(box(214, 40, 244, 72), fill=(200, 204, 212))    # bonnet hood
+    # window to the lot + front door (right)
+    rect(d, (254, 22, 288, 68), (150, 110, 104))
+    rect(d, (257, 25, 285, 65), (238, 186, 138))              # dusk outside
+    rect(d, (292, 20, 318, 108), (170, 120, 116))             # door
+    rect(d, (296, 26, 314, 70), (238, 186, 138))
+    # pedicure thrones (front left floor)
+    for tx in (30, 58):
+        shadow(d, tx - 6, tx + 22, 136)
+        rect(d, (tx - 4, 108, tx + 20, 134), (140, 90, 100))
+        rect(d, (tx - 2, 100, tx + 18, 112), (160, 104, 112))
 
 
-def bedroom(im, d):
-    vgrad(im, 0, 120, (150, 138, 158), (182, 168, 182))     # dim lavender wall
-    vgrad(im, 120, 180, (110, 92, 96), (86, 70, 76))        # carpet
-    d.rectangle(box(0, 116, 320, 121), fill=(130, 116, 130))
-    # closet + shelf of boxes/CRTs
-    rect(d, (28, 2, 90, 18), (120, 100, 84))
-    for bx in (30, 46, 62):
-        rect(d, (bx, 5, bx + 14, 18), (168, 136, 96))
-    for cx in (76, 84):
-        rect(d, (cx - 4, 4, cx + 4, 18), (92, 92, 100))
-    rect(d, (28, 18, 90, 112), (86, 70, 62))
-    for i in range(6):                                       # hoodie rack
-        x = 33 + i * 9
-        rect(d, (x, 30, x + 7, 74), rng.choice([(90, 100, 120), (70, 80, 90), (100, 90, 110), (60, 70, 84)]))
-    d.rectangle(box(28, 24, 90, 27), fill=(60, 48, 44))
-    # window: blackout curtains
-    rect(d, (96, 14, 140, 58), (70, 62, 84))
-    d.rectangle(box(116, 16, 120, 56), fill=(240, 226, 180))  # light slit
-    # diploma + nightstand
-    rect(d, (98, 64, 116, 82), (120, 96, 60))
-    rect(d, (101, 67, 113, 79), (238, 232, 214))
-    shadow(d, 118, 142, 120)
-    rect(d, (118, 76, 142, 120), (110, 84, 60))
-    d.rectangle(box(118, 90, 142, 93), fill=(90, 66, 48))
-    # bed + under-bed dark
-    shadow(d, 142, 236, 138, 6)
-    rect(d, (144, 118, 234, 136), (40, 32, 40))              # under-bed void
-    rect(d, (144, 52, 234, 118), (150, 150, 170))            # mattress/duvet
-    d.rectangle(box(144, 52, 234, 70), fill=(120, 120, 146)) # folded top
-    for px_ in (152, 176):
-        rect(d, (px_, 44, px_ + 22, 58), (222, 220, 226))    # pillows
-    rect(d, (140, 36, 238, 52), (96, 74, 56))                # headboard
-    # dresser + clock
-    rect(d, (240, 40, 292, 120), (118, 90, 66))
-    for yy in (58, 80, 102):
-        d.rectangle(box(244, yy - 12, 288, yy), outline=(86, 64, 48), width=3)
-        d.rectangle(box(262, yy - 7, 270, yy - 4), fill=(70, 52, 40))
-    rect(d, (246, 26, 264, 40), (46, 46, 52))
-    d.rectangle(box(249, 30, 261, 36), fill=(180, 60, 60))   # 12:00 glow
-    # the chair (clothes pile)
-    rect(d, (296, 84, 318, 124), (104, 84, 72))
-    for i in range(7):
-        x0 = 296 + rng.randint(0, 10)
-        y0 = 60 + i * 7
-        rect(d, (x0, y0, x0 + rng.randint(10, 20), y0 + 8), rng.choice([(140, 120, 110), (110, 120, 140), (150, 140, 110), (120, 100, 120)]))
-    # doorway back
-    rect(d, (2, 30, 26, 120), (70, 56, 50))
-    rect(d, (6, 36, 22, 118), (150, 128, 108))
+def backlot(im, d):
+    # Behind the plaza: cinderblock service wall. L->R: salon back door
+    # (generator cable under it), Kim's generator on a pad, corridor
+    # delivery door, gas meter bank with the contractor KEY BOX, staging
+    # unit's painted-shut door, the fiber conduit riser + junction box,
+    # pallet stack. Dusk, one floodlight.
+    vgrad(im, 0, 24, (196, 150, 120), (222, 180, 140))        # dusk sliver
+    vgrad(im, 24, 104, (146, 140, 134), (168, 160, 152))      # cinderblock
+    for yy in range(30, 100, 10):
+        d.line(sc((0, yy), (320, yy)), fill=(130, 124, 118), width=1)
+    vgrad(im, 104, 180, (110, 104, 102), (84, 80, 80))        # cracked pad
+    d.rectangle(box(0, 100, 320, 105), fill=(126, 120, 114))
+    # floodlight
+    rect(d, (150, 6, 162, 16), (90, 90, 96))
+    d.ellipse(box(146, 10, 166, 22), fill=(240, 224, 170))
+    # salon back door + cable
+    rect(d, (34, 40, 64, 100), (120, 96, 104))
+    d.rectangle(box(36, 44, 62, 98), outline=(96, 74, 84), width=3)
+    d.line(sc((60, 98), (92, 88)), fill=(40, 40, 44), width=4)  # genny cable
+    # Kim's generator on its pad
+    shadow(d, 74, 126, 106, 6)
+    rect(d, (76, 70, 124, 102), (190, 120, 60))
+    rect(d, (80, 62, 100, 70), (60, 56, 52))
+    d.ellipse(box(108, 74, 120, 86), fill=(90, 84, 78))
+    # corridor delivery door
+    rect(d, (138, 36, 172, 102), (110, 112, 118))
+    d.rectangle(box(141, 40, 169, 99), outline=(88, 90, 96), width=3)
+    d.rectangle(box(144, 64, 150, 72), fill=(80, 82, 88))
+    # gas meters + KEY BOX
+    for mx in (182, 198, 214):
+        rect(d, (mx, 58, mx + 12, 84), (160, 158, 150))
+        d.ellipse(box(mx + 1, 52, mx + 11, 62), fill=(178, 176, 166))
+    d.rectangle(box(180, 84, 228, 92), fill=(130, 128, 120))   # pipe run
+    rect(d, (196, 64, 210, 80), (70, 74, 82))                  # the key box
+    d.rectangle(box(199, 68, 207, 74), fill=(100, 104, 114))
+    # staging back door: painted shut
+    rect(d, (238, 40, 266, 100), (150, 144, 136))
+    d.rectangle(box(240, 44, 264, 98), outline=(134, 128, 120), width=2)
+    # conduit riser + junction box
+    rect(d, (280, 0, 290, 100), (120, 118, 124))
+    rect(d, (272, 62, 298, 90), (100, 102, 110))
+    d.rectangle(box(276, 68, 294, 84), outline=(80, 82, 90), width=2)
+    # pallets + weeds
+    for py in (96, 88, 80):
+        rect(d, (300, py, 319, py + 8), (140, 108, 74))
+    for wx in (8, 16, 24, 250):
+        d.line(sc((wx, 108), (wx - 3, 84)), fill=(96, 118, 66), width=3)
+        d.line(sc((wx, 108), (wx + 4, 90)), fill=(110, 130, 76), width=3)
 
 
-def main_street(im, d):
-    vgrad(im, 0, 60, (150, 196, 228), (196, 220, 234))       # sky
-    for cx, cy, wd in [(90, 8, 34), (190, 5, 26), (270, 10, 30)]:
-        d.ellipse(box(cx, cy, cx + wd, cy + 9), fill=(240, 244, 246))
-    vgrad(im, 60, 118, (196, 178, 158), (210, 192, 170))     # far facade tone
-    vgrad(im, 118, 164, (176, 166, 158), (150, 140, 132))    # sidewalk
-    vgrad(im, 164, 180, (92, 90, 94), (70, 68, 72))          # road
-    for x in range(8, 320, 26):                               # crosswalk-ish dashes
-        d.rectangle(box(x, 170, x + 12, 173), fill=(180, 178, 172))
-    d.rectangle(box(0, 114, 320, 119), fill=(120, 112, 106)) # curbline
-    # your house (left)
-    rect(d, (0, 8, 46, 118), (176, 188, 196))                # vinyl siding
-    for yy in range(16, 112, 8):
-        d.line(sc((0, yy), (46, yy)), fill=(150, 162, 172), width=2)
-    rect(d, (2, 28, 30, 118), (120, 70, 50))                 # front door
-    d.ellipse(box(24, 70, 28, 75), fill=(210, 180, 90))
-    rect(d, (32, 40, 44, 58), (240, 214, 150))               # lit office window
-    # storefront strip
-    rect(d, (46, 14, 300, 118), (188, 158, 128))
-    d.rectangle(box(46, 14, 300, 24), fill=(150, 118, 92))   # cornice
-    # candle shop
-    rect(d, (100, 26, 150, 114), (166, 128, 96))
-    rect(d, (104, 40, 146, 106), (244, 222, 168))
-    for cxx in (112, 124, 136):
-        rect(d, (cxx - 2, 66, cxx + 2, 84), (238, 232, 210))
-    # for-lease ghosts
-    rect(d, (152, 26, 196, 114), (150, 140, 130))
-    rect(d, (156, 40, 192, 106), (108, 104, 100))
-    rect(d, (162, 56, 186, 70), (218, 214, 202))             # FOR LEASE card
-    # notice board
-    rect(d, (198, 22, 224, 106), (110, 82, 56))
-    rect(d, (201, 26, 221, 100), (196, 168, 120))
-    for _ in range(7):
-        x0 = 202 + rng.randint(0, 12)
-        y0 = 28 + rng.randint(0, 60)
-        rect(d, (x0, y0, x0 + 7, y0 + 9), rng.choice([(240, 240, 230), (230, 220, 170), (200, 220, 230)]))
-    # diner
-    rect(d, (226, 14, 280, 118), (170, 60, 54))
-    rect(d, (228, 30, 278, 44), (240, 234, 210))             # sign band
-    rect(d, (228, 48, 234, 112), (196, 190, 178))
-    rect(d, (270, 48, 278, 112), (196, 190, 178))
-    rect(d, (236, 46, 268, 118), (120, 140, 150))            # glass door bay
-    d.rectangle(box(248, 70, 258, 118), fill=(96, 116, 128))
-    # newspaper box + traffic light
-    rect(d, (284, 88, 302, 122), (60, 90, 150))
-    rect(d, (287, 92, 299, 104), (200, 208, 214))
-    rect(d, (308, 8, 314, 118), (70, 72, 76))
-    rect(d, (302, 8, 318, 44), (52, 54, 58))
-    for i, yy in enumerate((14, 24, 34)):
-        d.ellipse(box(306, yy, 314, yy + 8), fill=(70, 66, 64))
-    # planter + bench + Gary
-    rect(d, (88, 100, 112, 122), (128, 100, 76))
-    d.ellipse(box(90, 92, 110, 104), fill=(130, 110, 130))
-    shadow(d, 128, 174, 122)
-    rect(d, (130, 100, 172, 106), (140, 104, 70))
-    rect(d, (130, 108, 172, 122), (120, 88, 60))
-    figure(d, 70, 126, 62, (150, 110, 70))
-    d.line(sc((76, 108), (96, 118)), fill=(80, 110, 70), width=4)  # hose
+def corridor(im, d):
+    # Shared service corridor: fluorescent hum, concrete floor. L->R:
+    # salon curtain (left edge), Dale's laminated SOP sheet, the breaker
+    # panel (cover ajar, one scorched slot), mop sink, water heater,
+    # delivery door to the back lot, staging unit door, and the closet's
+    # old inner door — painted over, sealed, a door in denial.
+    vgrad(im, 0, 112, (168, 166, 156), (188, 186, 176))       # scuffed wall
+    vgrad(im, 112, 180, (128, 126, 122), (104, 102, 100))     # concrete
+    d.rectangle(box(0, 108, 320, 113), fill=(150, 148, 140))
+    d.rectangle(box(0, 4, 320, 10), fill=(210, 212, 206))     # tube light
+    d.rectangle(box(120, 4, 150, 10), fill=(238, 240, 228))   # the flickery bit
+    # salon curtain (left edge)
+    rect(d, (0, 28, 16, 108), (110, 70, 84))
+    # Dale's laminate
+    rect(d, (26, 34, 52, 62), (232, 232, 224))
+    d.rectangle(box(29, 38, 49, 42), fill=(120, 120, 130))
+    d.rectangle(box(29, 46, 49, 49), fill=(160, 160, 168))
+    d.rectangle(box(29, 52, 49, 55), fill=(160, 160, 168))
+    # breaker panel, cover ajar, one scorched slot
+    rect(d, (64, 26, 96, 78), (140, 142, 148))
+    d.rectangle(box(67, 30, 93, 74), fill=(110, 112, 120))
+    for i in range(6):
+        yy = 33 + i * 7
+        d.rectangle(box(70, yy, 78, yy + 4), fill=(60, 62, 70))
+        d.rectangle(box(82, yy, 90, yy + 4), fill=(60, 62, 70))
+    d.rectangle(box(82, 47, 90, 51), fill=(30, 26, 26))       # the scorched one
+    d.polygon(sc((96, 30), (104, 40), (96, 74)), fill=(150, 152, 158))  # ajar cover
+    # mop sink + mop
+    rect(d, (112, 74, 140, 106), (150, 150, 146))
+    d.rectangle(box(115, 78, 137, 102), fill=(120, 122, 120))
+    d.line(sc((136, 40), (128, 78)), fill=(140, 110, 80), width=3)
+    d.ellipse(box(122, 34, 138, 46), fill=(190, 186, 176))
+    # water heater
+    rect(d, (152, 18, 186, 104), (188, 184, 174))
+    d.ellipse(box(152, 12, 186, 26), fill=(196, 192, 182))
+    d.rectangle(box(162, 60, 176, 70), fill=(150, 146, 138))
+    # delivery door to back lot
+    rect(d, (196, 28, 228, 106), (110, 112, 118))
+    d.rectangle(box(199, 32, 225, 103), outline=(88, 90, 96), width=3)
+    # staging unit door
+    rect(d, (238, 28, 268, 106), (140, 116, 92))
+    d.rectangle(box(241, 32, 265, 103), outline=(112, 92, 72), width=3)
+    # the sealed closet door: painted wall-color, hinges betraying it
+    rect(d, (282, 28, 312, 106), (172, 170, 160))
+    d.rectangle(box(284, 32, 310, 103), outline=(158, 156, 146), width=2)
+    for hy in (40, 66, 92):
+        d.rectangle(box(283, hy, 287, hy + 8), fill=(140, 138, 128))
+    # floor drain
+    d.ellipse(box(160, 140, 180, 150), fill=(88, 86, 84))
 
 
-def diner(im, d):
-    vgrad(im, 0, 120, (208, 196, 168), (226, 214, 184))      # cream wall
-    d.rectangle(box(0, 100, 320, 120), fill=(120, 150, 140)) # wainscot band
-    for y0 in range(120, 180, 12):                            # checker floor
-        for x0 in range(0, 320, 12):
-            if ((x0 + y0) // 12) % 2 == 0:
-                d.rectangle(box(x0, y0, x0 + 12, y0 + 12), fill=(210, 204, 190))
-            else:
-                d.rectangle(box(x0, y0, x0 + 12, y0 + 12), fill=(140, 60, 56))
-    # door + corkboard
-    rect(d, (2, 26, 28, 118), (150, 160, 168))
-    rect(d, (6, 32, 24, 90), (190, 210, 220))
-    rect(d, (32, 30, 58, 74), (110, 82, 56))
-    for _ in range(6):
-        x0 = 34 + rng.randint(0, 16)
-        y0 = 33 + rng.randint(0, 32)
-        rect(d, (x0, y0, x0 + 7, y0 + 8), (238, 234, 220))
-    # specials board + TV
-    rect(d, (126, 8, 176, 40), (40, 48, 44))
-    for yy in (16, 24, 32):
-        d.line(sc((131, yy), (171, yy)), fill=(220, 220, 200), width=3)
-    rect(d, (214, 6, 258, 36), (50, 50, 58))
-    d.ellipse(box(228, 14, 244, 28), fill=(84, 92, 112))
-    # back counter + urn + pie case + POS + napkins
-    d.rectangle(box(96, 42, 264, 92), fill=(196, 180, 150))
-    rect(d, (160, 48, 184, 88), (170, 172, 178))             # urn
-    d.ellipse(box(166, 44, 178, 52), fill=(150, 152, 158))
-    rect(d, (100, 60, 124, 88), (200, 214, 220))             # pie case
-    d.rectangle(box(103, 74, 121, 86), fill=(190, 130, 80))
-    rect(d, (190, 56, 212, 90), (60, 60, 70))                # POS tablet
-    rect(d, (193, 62, 209, 78), (120, 130, 150))
-    rect(d, (216, 74, 230, 90), (188, 190, 196))             # napkins
-    # counter + stools
-    rect(d, (100, 88, 260, 112), (216, 208, 190))
-    d.rectangle(box(100, 88, 260, 94), fill=(232, 226, 208))
-    rect(d, (100, 112, 260, 126), (150, 120, 90))
-    for cx in (116, 148, 180, 212, 246):
-        rect(d, (cx - 5, 126, cx + 5, 130), (170, 60, 56))
-        rect(d, (cx - 2, 130, cx + 2, 142), (120, 122, 128))
-    # booths
-    for bx in (30, 64):
-        rect(d, (bx, 92, bx + 30, 140), (94, 130, 106))
-        rect(d, (bx + 4, 84, bx + 26, 92), (114, 150, 122))
-    # jukebox
-    shadow(d, 284, 320, 124)
-    rect(d, (286, 48, 318, 124), (150, 90, 60))
-    d.ellipse(box(292, 52, 312, 72), fill=(240, 190, 110))
-    rect(d, (292, 84, 312, 108), (90, 60, 46))
-    # people
-    figure(d, 136, 92, 52, (120, 150, 180))                   # Darlene
-    figure(d, 249, 128, 80, (150, 80, 70), hair=(190, 190, 190))  # Merle on stool
-    rect(d, (240, 100, 258, 104), (120, 122, 128))
+def staging(im, d):
+    # Dale's old base camp: the dead PagePro Wireless storefront. L->R:
+    # corridor door (left edge), wall of bolted demo phones, dusty glass
+    # counter (the RUNBOOK binder on it), Dale's leftovers — cable spool,
+    # rail boxes — the energy-drink shrine, and the papered front window
+    # glowing with parking-lot dusk.
+    vgrad(im, 0, 112, (140, 136, 146), (160, 156, 162))       # dim retail wall
+    vgrad(im, 112, 180, (120, 112, 108), (96, 90, 88))        # worn carpet
+    d.rectangle(box(0, 108, 320, 113), fill=(126, 122, 128))
+    # corridor door (left edge)
+    rect(d, (0, 26, 18, 108), (140, 116, 92))
+    # ghost sign
+    d.rectangle(box(60, 12, 200, 26), fill=(150, 146, 154))
+    d.rectangle(box(66, 15, 130, 23), fill=(132, 128, 138))
+    # demo phone wall: brick phones bolted to a board
+    rect(d, (28, 30, 96, 92), (110, 106, 116))
+    for i in range(6):
+        px_ = 34 + (i % 3) * 21
+        py_ = 38 + (i // 3) * 26
+        rect(d, (px_, py_, px_ + 13, py_ + 20), (52, 52, 58))
+        d.rectangle(box(px_ + 3, py_ + 3, px_ + 10, py_ + 8), fill=(90, 110, 90))
+    # glass counter + the runbook binder
+    rect(d, (108, 62, 176, 104), (170, 172, 176))
+    d.rectangle(box(112, 66, 172, 84), fill=(140, 144, 150))
+    rect(d, (126, 50, 158, 62), (210, 210, 216))              # binder
+    d.rectangle(box(130, 53, 154, 58), fill=(90, 110, 170))
+    # cable spool + rail boxes
+    shadow(d, 186, 226, 126)
+    d.ellipse(box(186, 78, 226, 118), fill=(150, 118, 80))
+    d.ellipse(box(198, 90, 214, 106), fill=(120, 92, 62))
+    for i, bx in enumerate((234, 246, 240)):
+        rect(d, (bx, 90 - i * 14, bx + 26, 104 - i * 14), (168, 140, 104))
+    # the energy-drink shrine
+    for row in range(4):
+        for i in range(4 - row):
+            x = 282 + row * 4 + i * 8
+            y = 100 - row * 12
+            rect(d, (x, y, x + 6, y + 12), rng.choice([(60, 180, 140), (40, 140, 180), (80, 200, 90)]))
+    # papered front window, dusk through paper
+    rect(d, (258, 20, 318, 76), (150, 110, 104))
+    rect(d, (261, 23, 315, 73), (216, 186, 156))
+    d.rectangle(box(261, 23, 315, 73), outline=(190, 160, 130), width=2)
 
 
-def edge_of_town(im, d):
-    vgrad(im, 0, 100, (232, 176, 128), (244, 210, 160))      # warm dusk sky
-    vgrad(im, 100, 180, (128, 120, 118), (96, 90, 90))       # asphalt
-    d.rectangle(box(0, 118, 320, 122), fill=(150, 142, 138))
-    # plaza
-    rect(d, (40, 10, 280, 102), (196, 186, 172))
-    d.rectangle(box(40, 10, 280, 22), fill=(150, 140, 128))
-    # units: tanning, tax, vacancy, nails, vacancy, gray door
-    rect(d, (44, 26, 58, 98), (150, 148, 140))
-    # nail salon: warm glow
-    rect(d, (60, 24, 140, 98), (160, 120, 120))
-    rect(d, (64, 30, 136, 94), (248, 190, 170))
-    figure(d, 100, 92, 34, (200, 120, 140))
-    rect(d, (66, 26, 134, 34), (230, 100, 130))              # sign band
-    # vacancies
-    rect(d, (144, 26, 176, 98), (140, 136, 130))
-    rect(d, (228, 26, 258, 98), (140, 136, 130))
-    # the gray door + fan
-    rect(d, (180, 30, 224, 104), (134, 136, 140))
-    d.rectangle(box(184, 34, 220, 100), outline=(110, 112, 118), width=3)
-    rect(d, (188, 10, 216, 28), (90, 92, 98))
-    for i in range(4):
-        d.line(sc((190, 13 + i * 4), (214, 13 + i * 4)), fill=(130, 132, 138), width=2)
-    d.rectangle(box(198, 62, 204, 70), fill=(90, 92, 98))    # lock plate
-    rect(d, (196, 44, 208, 52), (176, 178, 184))             # the sticker
-    # dumpster + weeds + pylon
-    shadow(d, 238, 302, 128, 6)
-    rect(d, (240, 78, 300, 122), (70, 110, 90))
-    d.rectangle(box(240, 78, 300, 88), fill=(60, 96, 78))
-    rect(d, (246, 66, 268, 80), (170, 150, 120))             # switch box
-    for wx in (12, 20, 28):
-        d.line(sc((wx, 124), (wx - 3, 92)), fill=(96, 128, 70), width=3)
-        d.line(sc((wx, 124), (wx + 4, 98)), fill=(110, 140, 80), width=3)
-    rect(d, (298, 6, 318, 100), (110, 106, 112))
-    rect(d, (301, 12, 315, 40), (200, 196, 186))             # sign panel
-    rect(d, (301, 44, 315, 58), (244, 200, 190))             # lit salon panel
-    rect(d, (301, 62, 315, 76), (236, 236, 232))             # the blank panel
+def closet(im, d):
+    # THE EDGE NODE. A closet. One rack, one box fan, the hum. L->R:
+    # the WAN conduit punching through the left wall, an open shipping
+    # box (packing slip), THE RACK (router / 48-port switch / patch
+    # spaghetti / UPS), extension-cord daisy chain, Dale's sign-off
+    # clipboard, and the gray door with the box fan in the transom.
+    vgrad(im, 0, 112, (96, 94, 104), (118, 116, 124))         # closet gloom
+    vgrad(im, 112, 180, (90, 86, 88), (70, 68, 70))           # concrete
+    d.rectangle(box(0, 108, 320, 113), fill=(106, 104, 110))
+    # WAN conduit in from the left wall
+    rect(d, (0, 52, 26, 64), (130, 128, 134))
+    d.ellipse(box(20, 50, 34, 66), fill=(110, 108, 116))
+    d.line(sc((30, 58), (120, 74)), fill=(240, 190, 60), width=3)  # fiber loop
+    # open shipping box + packing slip
+    rect(d, (36, 84, 82, 110), (168, 140, 104))
+    d.polygon(sc((36, 84), (54, 74), (82, 84)), fill=(150, 122, 88))
+    rect(d, (52, 88, 70, 100), (232, 232, 224))               # the slip
+    # THE RACK
+    shadow(d, 126, 208, 116, 6)
+    rect(d, (128, 16, 206, 112), (56, 58, 66))
+    # router: uplink LED dark
+    rect(d, (134, 24, 200, 42), (74, 78, 88))
+    for i in range(5):
+        d.ellipse(box(140 + i * 8, 28, 144 + i * 8, 32), fill=(70, 170, 90) if i < 4 else (60, 52, 52))
+    # 48-port switch
+    rect(d, (134, 46, 200, 60), (80, 84, 94))
+    for i in range(12):
+        d.rectangle(box(138 + i * 5, 50, 141 + i * 5, 56), fill=(40, 42, 48))
+    # patch spaghetti
+    rect(d, (134, 64, 200, 80), (70, 72, 82))
+    for i in range(8):
+        x0 = 136 + i * 8
+        d.arc(box(x0, 62, x0 + 14, 84), 300, 60, fill=rng.choice([(200, 80, 70), (80, 140, 200), (230, 200, 90), (110, 180, 110)]), width=2)
+    # UPS, one amber eye
+    rect(d, (134, 86, 200, 108), (66, 68, 76))
+    d.ellipse(box(188, 92, 194, 98), fill=(230, 170, 60))
+    # extension-cord daisy chain to the fan
+    d.line(sc((204, 104), (250, 96), (268, 40)), fill=(220, 130, 60), width=3)
+    rect(d, (214, 94, 246, 104), (200, 196, 186))             # power strips
+    rect(d, (222, 84, 238, 94), (200, 196, 186))
+    # Dale's clipboard
+    rect(d, (246, 46, 266, 74), (150, 122, 88))
+    d.rectangle(box(249, 50, 263, 70), fill=(228, 228, 218))
+    # the gray door + box fan transom (interior side)
+    rect(d, (276, 30, 318, 110), (120, 122, 128))
+    d.rectangle(box(279, 34, 315, 107), outline=(96, 98, 104), width=3)
+    rect(d, (280, 8, 314, 28), (90, 92, 98))
+    d.ellipse(box(287, 10, 307, 26), fill=(130, 132, 138))
+    for ang in range(0, 360, 60):
+        d.arc(box(289, 12, 305, 24), ang, ang + 40, fill=(70, 72, 78), width=2)
+
+
+def roadside(im, d):
+    # The county road east of the plaza, last light. The pylon sign from
+    # behind (blank gray), a mile marker, the buried-fiber marker posts
+    # marching west, and MERLE'S TRUCK idling on the shoulder, headlights
+    # on, windshield full of dusk glare.
+    vgrad(im, 0, 90, (110, 80, 110), (240, 170, 110))         # deep dusk
+    d.ellipse(box(20, 60, 34, 74), fill=(250, 240, 210))      # first star? venus? argue
+    vgrad(im, 90, 128, (90, 84, 90), (110, 100, 96))          # far fields
+    vgrad(im, 128, 156, (78, 76, 80), (94, 90, 92))           # shoulder gravel
+    vgrad(im, 156, 180, (70, 68, 74), (56, 54, 60))           # asphalt
+    d.line(sc((0, 166), (320, 168)), fill=(180, 170, 120), width=2)  # paint line
+    # plaza pylon from behind (left)
+    rect(d, (36, 8, 58, 120), (96, 92, 98))
+    rect(d, (39, 14, 55, 60), (76, 74, 80))                   # blank back panel
+    # mile marker
+    rect(d, (86, 96, 92, 126), (110, 112, 108))
+    rect(d, (84, 88, 94, 100), (60, 120, 70))
+    # buried-fiber marker posts, marching west
+    for i, mx in enumerate((116, 138, 158, 175)):
+        h = 26 - i * 4
+        rect(d, (mx, 124 - h, mx + 4, 128), (200, 120, 50))
+        d.rectangle(box(mx - 1, 122 - h, mx + 5, 128 - h), fill=(230, 140, 50))
+    # MERLE'S TRUCK, idling, lights on
+    shadow(d, 190, 306, 152, 8)
+    rect(d, (196, 96, 240, 138), (100, 60, 50))               # cab
+    d.rectangle(box(202, 102, 234, 118), fill=(210, 190, 160))  # windshield glare
+    d.rectangle(box(206, 104, 218, 112), fill=(80, 70, 64))   # cap silhouette
+    rect(d, (240, 108, 302, 140), (110, 66, 54))              # bed
+    d.rectangle(box(240, 108, 302, 116), fill=(90, 54, 46))
+    d.ellipse(box(200, 132, 220, 152), fill=(40, 40, 44))
+    d.ellipse(box(272, 132, 292, 152), fill=(40, 40, 44))
+    d.ellipse(box(190, 112, 198, 122), fill=(250, 236, 180))  # headlight
+    d.polygon(sc((190, 112), (150, 128), (150, 140), (190, 122)), fill=(240, 220, 160))
+    # exhaust idle
+    for ex in range(3):
+        d.ellipse(box(300 + ex * 5, 128 - ex * 6, 308 + ex * 5, 134 - ex * 6), fill=(120, 116, 120))
 
 
 ROOMS = {
-    "act1_living_room": living_room,
-    "act1_bedroom": bedroom,
-    "act1_main_street": main_street,
-    "act1_diner": diner,
-    "act1_edge_of_town": edge_of_town,
+    "act2_salon": salon,
+    "act2_backlot": backlot,
+    "act2_corridor": corridor,
+    "act2_staging": staging,
+    "act2_closet": closet,
+    "act2_roadside": roadside,
 }
 
 

@@ -1,0 +1,553 @@
+{
+  "id": "act2_closet",
+  "name": "The Edge Node",
+  "background": "assets/backgrounds/act2_closet.png",
+  "walkable": [[24, 113], [318, 113], [312, 178], [16, 178]],
+  "playerStart": {
+    "x": 294,
+    "y": 148,
+    "facing": "left"
+  },
+  "exits": [
+    {
+      "to": "act1_edge_of_town",
+      "polygon": [[308, 113], [319, 113], [319, 178], [308, 178]],
+      "arrive": {
+        "x": 262,
+        "y": 140,
+        "facing": "down"
+      }
+    }
+  ],
+  "onEnter": [
+    {
+      "if": {
+        "flagNot": "cl_seen"
+      },
+      "do": [
+        {
+          "narrate": "You are standing inside the internet. It is nine feet by eleven. The hum you've been courting through steel and cinderblock is all around you now, resolved into its parts: one rack, breathing; one UPS, complaining; one box fan, heroically wedged in the transom, moving the county's waste heat into the dusk. The air is server-warm and smells like dust baking on electronics — the incense of the trade."
+        },
+        {
+          "narrate": "Every ping, purchase, prayer, and thermostat in the county funnels through this room. It has no windows, no staff, no signage, and one bare bulb. Somewhere far away, marketing calls this 'the edge of a planetary compute fabric.' The fabric, you can now report, is held up by a fan you could buy for nineteen dollars."
+        },
+        {
+          "setFlag": "cl_seen"
+        },
+        {
+          "score": {
+            "id": "cl_entered",
+            "points": 3
+          }
+        }
+      ]
+    },
+    {
+      "if": { "flag": "act2_trail_found" },
+      "text": "The closet, diagnosed and dignified. The rack hums on. Its problem — your problem — is west of here, at the end of a buried thread of glass."
+    },
+    {
+      "if": { "flag": "cl_patched" },
+      "text": "The closet. Your cable hangs in the switch like a flag on a summit. The local side lives; the truth is upstream."
+    },
+    {
+      "text": "The closet. The rack, the fan, the hum — the county's entire internet, awaiting your professional attention."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "The closet has no more secrets: patched, diagnosed, documented, its fan honored and its UPS finally hushed. Nine years this room waited for someone who could read it, and it got you — which the narrator notes is either a happy ending or the setup for four more acts. The trail runs west. Time to find out."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "rack",
+      "name": "rack",
+      "synonyms": [
+        "server rack",
+        "equipment",
+        "the rack",
+        "gear"
+      ],
+      "polygon": [[126, 14], [208, 14], [208, 112], [126, 112]],
+      "responses": {
+        "look": [
+          {
+            "text": "One four-post rack, half-populated: router on top, 48-port switch below it, a patch panel's worth of spaghetti, and the UPS grumbling at the bottom — the county's whole internet in one column, like a nutrition label for civilization. On the router's flank, a factory sticker: 'SUPPORT: 1-800-CUMULO-1.' The number whose last four digits guard the lockbox that guards the key that guards this room. The circle of security is complete, and it is a zero."
+          }
+        ],
+        "use": [
+          {
+            "text": "The rack is not one thing; it's a stack of things, which is the entire industry in a sentence. Pick a layer: router, switch, patch panel, UPS. Debugging is just choosing where to be disappointed first."
+          }
+        ],
+        "take": [
+          {
+            "text": "It's bolted to the slab, warm as livestock, and legally a felony in forty categories. The rack stays. The rack always stays."
+          }
+        ]
+      }
+    },
+    {
+      "id": "router",
+      "name": "router",
+      "synonyms": [
+        "edge router",
+        "uplink",
+        "wan",
+        "leds",
+        "lights"
+      ],
+      "polygon": [[130, 20], [204, 20], [204, 46], [130, 46]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flag": "cl_diagnosed" },
+            "text": "The edge router, verdict rendered: local ports green, uplink dark, fault upstream. It blinks its half-alive pattern with what you now recognize as patience, not confusion. It's been paging an empty hallway for days. You're the first thing that ever paged back."
+          },
+          {
+            "if": { "flag": "cl_patched" },
+            "do": [
+              {
+                "narrate": "With your cable proving the switch alive, the router's story clarifies into a verdict. Local interfaces: green, green, green — the county is still knocking and the room still hears it. The uplink module: dark. Not blinking-dark. Dark-dark. Unlit-from-the-far-end dark. The fault is not in this closet. The fault has never been in this closet. Somewhere west of here, whatever feeds this room went silent, and every dashboard on Earth turned red in sympathy."
+              },
+              {
+                "narrate": "Diagnosis, day two of the incident: the edge is fine. The problem is one layer down. Of course it is. It is ALWAYS one layer down. Somewhere in this room, something should say where 'down' physically is."
+              },
+              {
+                "setFlag": "cl_diagnosed"
+              },
+              {
+                "score": {
+                  "id": "cl_diagnosis",
+                  "points": 4
+                }
+              }
+            ]
+          },
+          {
+            "text": "The edge router, top of rack, LEDs mid-argument: some steady, some frantic, the big uplink lamp dark as a closed eye. Dark could mean dead-here or dead-upstream — from the outside you can't tell a corpse from a mourner. What you need is a known-good link test. What you have, coiled in your bag like fourteen feet of destiny, might be exactly that."
+          }
+        ],
+        "use": [
+          {
+            "if": { "instrument": "cable" },
+            "text": "You consider consoling into the router, then remember the console cable is whatever Dale took with him nine years ago. Your cat 5 is a LINK tool, not a confession booth. The switch below has forty-eight honest ports that will tell you what layer one knows."
+          },
+          {
+            "text": "You are not rebooting the county's router on vibes. You were RAISED better than that. Diagnose first: prove the local side, then judge the uplink."
+          }
+        ]
+      }
+    },
+    {
+      "id": "switch",
+      "name": "switch",
+      "synonyms": [
+        "48-port switch",
+        "ports",
+        "port",
+        "management port"
+      ],
+      "polygon": [[130, 46], [204, 46], [204, 62], [130, 62]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flag": "cl_patched" },
+            "text": "The 48-port switch, with your hand-crimped cable seated in port 47 and a green link light burning over it like a candle in a window. The county's LAN lives. You have never been prouder of fourteen feet of copper."
+          },
+          {
+            "text": "The 48-port switch Dale unboxed by this very dumpster's testimony: a wall of ports, a scatter of link lights doing their nervous arithmetic. Ports up, ports down, and no way to know what the room believes until you ask it a question in its own language. The language is cable."
+          }
+        ],
+        "use": [
+          {
+            "if": {
+              "all": [
+                { "instrument": "cable" },
+                { "flagNot": "cl_patched" }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "You uncoil the fourteen feet of hand-crimped cat 5 — the cable that confirmed the outage from your desk this morning, four years of your life ago — and seat it in port 47 with the click every technician feels in the sternum. One beat. Two. The link light comes up GREEN, steady, honest: the switch is alive, the LAN is alive, this room is doing its job."
+              },
+              {
+                "narrate": "The kit earns its keep again — every act, a new device; every device, the same faithful cable. Layer one: proven. Which means the darkness starts somewhere above this rack, and the router upstairs just became the most interesting thing in the county. Look at it."
+              },
+              {
+                "setFlag": "cl_patched"
+              },
+              {
+                "score": {
+                  "id": "cl_patched",
+                  "points": 4
+                }
+              }
+            ]
+          },
+          {
+            "if": { "instrument": "cable" },
+            "text": "The cable is already seated in port 47, link light green, testimony delivered. Moving it around the switch now would just be fidgeting with extra steps."
+          },
+          {
+            "if": { "anyInstrument": true },
+            "text": "The switch accepts RJ45 and nothing else. It has forty-eight opinions and they are all the same opinion."
+          },
+          {
+            "text": "Forty-eight ports and no patch cable in your hand. You own one — hand-crimped, both ends tested, currently in your bag being the most reliable object in the hemisphere. Use it ON the switch."
+          }
+        ]
+      }
+    },
+    {
+      "id": "patch_panel",
+      "name": "patch panel",
+      "synonyms": [
+        "spaghetti",
+        "cables",
+        "wiring",
+        "patches"
+      ],
+      "polygon": [[130, 62], [204, 62], [204, 82], [130, 82]],
+      "responses": {
+        "look": [
+          {
+            "text": "The patch panel, and its dependent civilization of cable: nine years of gravity applied to one afternoon of good intentions. Every run labeled in Dale's hand — SALON, TAX, TAN, PYLON SIGN(?), and one marked simply 'EVERYTHING ELSE.' You have administered national infrastructure with worse documentation than this closet. You do not say that out loud, in case the closet gets ideas about its performance review."
+          }
+        ],
+        "use": [
+          {
+            "text": "Re-dressing another technician's patch work uninvited is somewhere between rude and archaeology. The spaghetti holds. Honor the spaghetti."
+          }
+        ],
+        "take": [
+          {
+            "text": "Pulling cables out of a working panel to see what breaks is a diagnostic technique, the way arson is a lighting solution."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ups",
+      "name": "UPS",
+      "synonyms": [
+        "battery",
+        "battery backup",
+        "beep",
+        "beeping"
+      ],
+      "polygon": [[130, 84], [204, 84], [204, 112], [130, 112]],
+      "responses": {
+        "look": [
+          {
+            "text": "The rack UPS, bottom of stack, one amber eye lit: battery service overdue by — you do the label math — six years. It isn't running the room; the grid back here never dropped. It's just BEEPING, periodically, to an empty closet, for years, like a smoke detector in a pharaoh's tomb. The loneliest sound in infrastructure, and you know the button that ends it."
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "cl_ups_hushed" },
+            "do": [
+              {
+                "narrate": "You press and hold the alarm-silence button — the sacred gesture, taught to every apprentice, older than the vendors themselves. The beep stops mid-beep. The room's hum steps forward into the silence, fuller now, almost grateful. Nine years this machine cried into the dark, and the first human to ever answer said: acknowledged. You log it as such."
+              },
+              {
+                "setFlag": "cl_ups_hushed"
+              },
+              {
+                "score": {
+                  "id": "cl_ups_hush",
+                  "points": 1
+                }
+              }
+            ]
+          },
+          {
+            "text": "The UPS rests in blessed acknowledgment, amber eye still lit — silenced is not fixed, as your whole career could testify — but silenced. Some tickets you close. Some you hush."
+          }
+        ],
+        "open": [
+          {
+            "text": "You opened a UPS once. ONCE. Your elbows remember it in wet weather, and the death was collected, and the lesson stands: the battery compartment is a jurisdiction, not a suggestion."
+          }
+        ]
+      }
+    },
+    {
+      "id": "fan_rig",
+      "name": "box fan",
+      "synonyms": [
+        "fan",
+        "transom",
+        "cooling",
+        "extension cord",
+        "cords"
+      ],
+      "polygon": [[212, 30], [268, 30], [268, 108], [212, 108]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "The cooling architecture, interior elevation: one consumer box fan, transom-wedged, fed by a daisy chain of extension cords and power strips that violates codes not yet written. It has run continuously since the install — no bearing was ever asked to do this, and this one simply agreed. Nineteen dollars of retail plastic, keeping a planetary fabric under thermal spec. When this is over, someone should put the fan in a museum. The fan would decline. The fan has a shift."
+              },
+              {
+                "score": {
+                  "id": "cl_fan_rig",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "cl_fan_warned" },
+            "do": [
+              {
+                "narrate": "You reach toward the transom to adjust the fan's angle — and stop, fingers an inch from the blur. It's running full tilt with the grille long gone, a nineteen-dollar turbine with nine years of momentum and no opinion about flesh. You retract the hand. The county's cooling does not need your fingerprints. Any of them."
+              },
+              {
+                "setFlag": "cl_fan_warned"
+              }
+            ]
+          },
+          {
+            "do": [
+              {
+                "death": {
+                  "id": "cooling_architecture"
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "Remove the fan and the closet cooks the county's internet inside an hour. You'd be the first person in history to cause a regional outage during a global one. Leave ambition for act three."
+          }
+        ]
+      }
+    },
+    {
+      "id": "clipboard",
+      "name": "clipboard",
+      "synonyms": [
+        "sign-off sheet",
+        "inspection sheet",
+        "log",
+        "signoff"
+      ],
+      "polygon": [[242, 42], [270, 42], [270, 78], [242, 78]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "A clipboard on a nail by the door: SITE INSPECTION LOG, thirty ruled lines for thirty visits that were confidently expected. One entry. You take it down and read the county's entire maintenance history."
+              },
+              {
+                "document": {
+                  "style": "postit",
+                  "title": "SITE INSPECTION LOG — PARKVIEW EDGE",
+                  "body": "Visit 1 — install complete. Rack set, uplink hot, fan cooling per site conditions. All good. Left spare per SOP-7. Somebody should check the fan filter sometime. — D⚡\n(twenty-nine blank lines follow, each one a small institutional promise, each one kept by nobody)"
+                }
+              },
+              {
+                "score": {
+                  "id": "cl_signoff",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "The log stays with the site, twenty-nine lines of open capacity. Optimism deserves its nail."
+          }
+        ]
+      }
+    },
+    {
+      "id": "manifest",
+      "name": "packing slip",
+      "synonyms": [
+        "manifest",
+        "shipping box",
+        "box",
+        "slip",
+        "label",
+        "address"
+      ],
+      "polygon": [[32, 70], [88, 70], [88, 112], [32, 112]],
+      "responses": {
+        "look": [
+          {
+            "if": {
+              "all": [
+                { "flag": "cl_diagnosed" },
+                { "flagNot": "act2_trail_found" }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "The packing slip again — except now you know the fault is upstream, and 'upstream' stops being a direction and becomes an address. You smooth the slip flat and read it like a subpoena."
+              },
+              {
+                "document": {
+                  "style": "flyer",
+                  "title": "CUMULONIMBUS LOGISTICS — PACKING SLIP",
+                  "body": "SHIP TO: Regional Edge Site 0447, Parkview Plaza, Unit 6 (rear).\nORIGIN / RMA RETURNS: CUMULONIMBUS US-CENTRAL-1 FLAGSHIP CAMPUS, 1 Cumulonimbus Way, Bunker Flats. 'If you can see the building, you are already on campus.'\nCONTENTS: Edge kit, Type C. 1x router, 1x switch, 1x UPS, 1x signage (sticker).\nNOTE: Site uplink homes to US-CENTRAL-1 via buried county fiber, westbound. In case of uplink failure, do not troubleshoot locally. Do not escalate locally. Do not think locally. The Cloud will contact you."
+                }
+              },
+              {
+                "narrate": "There it is. The uplink homes WEST, by buried fiber, to the flagship campus itself — the cathedral, the place the brochures render at dawn. The cloud's own paperwork just deposed it. The outage is one layer down, and one layer down has a street address. You need to get to a road."
+              },
+              {
+                "setFlag": "act2_trail_found"
+              },
+              {
+                "score": {
+                  "id": "cl_manifest",
+                  "points": 3
+                }
+              }
+            ]
+          },
+          {
+            "if": { "flag": "act2_trail_found" },
+            "do": [
+              {
+                "narrate": "The packing slip, now the most consequential document in your possession that you do not technically possess. US-CENTRAL-1. Westbound fiber. A road you can stand on. You re-read it the way other people check their tickets at the airport."
+              },
+              {
+                "document": {
+                  "style": "flyer",
+                  "title": "CUMULONIMBUS LOGISTICS — PACKING SLIP",
+                  "body": "SHIP TO: Regional Edge Site 0447, Parkview Plaza, Unit 6 (rear).\nORIGIN / RMA RETURNS: CUMULONIMBUS US-CENTRAL-1 FLAGSHIP CAMPUS, 1 Cumulonimbus Way, Bunker Flats. 'If you can see the building, you are already on campus.'\nCONTENTS: Edge kit, Type C. 1x router, 1x switch, 1x UPS, 1x signage (sticker).\nNOTE: Site uplink homes to US-CENTRAL-1 via buried county fiber, westbound. In case of uplink failure, do not troubleshoot locally. Do not escalate locally. Do not think locally. The Cloud will contact you."
+                }
+              }
+            ]
+          },
+          {
+            "do": [
+              {
+                "narrate": "An open shipping carton from the install, packing slip still taped inside the flap, gone amber with years. Addresses, part numbers, a corporate motto in eight-point type. Interesting — filed. What it MEANS depends on a question you haven't answered yet: is this room the problem, or just the problem's neighbor? The rack would know. Ask the rack."
+              },
+              {
+                "document": {
+                  "style": "flyer",
+                  "title": "CUMULONIMBUS LOGISTICS — PACKING SLIP",
+                  "body": "SHIP TO: Regional Edge Site 0447, Parkview Plaza, Unit 6 (rear).\nORIGIN / RMA RETURNS: CUMULONIMBUS US-CENTRAL-1 FLAGSHIP CAMPUS, 1 Cumulonimbus Way, Bunker Flats. 'If you can see the building, you are already on campus.'\nCONTENTS: Edge kit, Type C. 1x router, 1x switch, 1x UPS, 1x signage (sticker).\nNOTE: Site uplink homes to US-CENTRAL-1 via buried county fiber, westbound. In case of uplink failure, do not troubleshoot locally. Do not escalate locally. Do not think locally. The Cloud will contact you."
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "The slip is taped into the flap and the flap has tenure. You have the address where it matters now: in the part of your head that holds grudges."
+          }
+        ]
+      }
+    },
+    {
+      "id": "conduit_in",
+      "name": "uplink conduit",
+      "synonyms": [
+        "conduit",
+        "fiber",
+        "glass",
+        "west wall"
+      ],
+      "polygon": [[0, 40], [36, 40], [36, 72], [0, 72]],
+      "responses": {
+        "look": [
+          {
+            "text": "The uplink conduit enters low through the west wall, sweeps up in one graceful bend, and delivers a single yellow loop of fiber to the router — the county's umbilical, westbound under the soybeans to wherever the cloud actually lives. All of everything, in a strand you could bite through. You are not going to bite through it. You are going to stand here a second and feel the entire weight of the metaphor, and then you are going to stop."
+          }
+        ],
+        "use": [
+          {
+            "text": "The fiber is doing its half of the job perfectly. Its far end is somebody else's half. Increasingly, everything is."
+          }
+        ]
+      }
+    },
+    {
+      "id": "hum_air",
+      "name": "hum",
+      "synonyms": [
+        "air",
+        "noise",
+        "sound",
+        "heat"
+      ],
+      "polygon": [[36, 14], [120, 14], [120, 60], [36, 60]],
+      "responses": {
+        "look": [
+          {
+            "text": "From outside, the hum was a rumor. In here it's a chord: fan bass, UPS tenor, switch fans in close harmony, the bare bulb adding a filament of treble. B-flat, Kim said, and Kim was right. The county fell asleep to this note for nine years without knowing it had a bedroom. You stand in it. It stands in you. Somewhere in act five, you suspect, you will miss it."
+          }
+        ],
+        "talk": [
+          {
+            "text": "You say nothing. The hum says nothing. Between professionals, the incident report writes itself."
+          }
+        ]
+      }
+    },
+    {
+      "id": "door_out",
+      "name": "gray door",
+      "synonyms": [
+        "door",
+        "exit",
+        "outside"
+      ],
+      "polygon": [[274, 26], [318, 26], [318, 110], [274, 110]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flag": "act2_trail_found" },
+            "text": "The gray door from the inside, propped open on the dusk. Through it: the lot, the pylon — and from the east, faint under the closet's chord, an engine idling. Patient. Carbureted. Somebody in this county still drives out, and he's parked where the road leaves town."
+          },
+          {
+            "text": "The gray door from the inside — same steel, same sticker adhesive ghosts, plus nine years of the fan's exhaust filming the paint. On the back of it, in Dale's marker, faded but legible: 'LAST ONE OUT: THERE IS NO LAST ONE OUT.' There wasn't. Until you."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              {
+                "narrate": "Back out into the dusk. The hum follows you to the threshold and stops, like a dog that knows its yard."
+              },
+              {
+                "goto": "act1_edge_of_town",
+                "arrive": { "x": 262, "y": 140, "facing": "down" }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "Back out into the dusk. The hum follows you to the threshold and stops, like a dog that knows its yard."
+              },
+              {
+                "goto": "act1_edge_of_town",
+                "arrive": { "x": 262, "y": 140, "facing": "down" }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

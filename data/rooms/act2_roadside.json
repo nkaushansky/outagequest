@@ -1,0 +1,235 @@
+{
+  "id": "act2_roadside",
+  "name": "The County Road",
+  "background": "assets/backgrounds/act2_roadside.png",
+  "walkable": [[8, 130], [316, 130], [310, 178], [8, 178]],
+  "playerStart": {
+    "x": 30,
+    "y": 162,
+    "facing": "right"
+  },
+  "exits": [
+    {
+      "to": "act1_edge_of_town",
+      "polygon": [[0, 130], [12, 130], [12, 178], [0, 178]],
+      "arrive": {
+        "x": 300,
+        "y": 164,
+        "facing": "left"
+      }
+    }
+  ],
+  "onEnter": [
+    {
+      "if": {
+        "flagNot": "rd_arrived"
+      },
+      "do": [
+        {
+          "narrate": "The county road, where the town runs out of town. Last light on the soybeans, the plaza humming at your back, and there on the shoulder — engine idling, headlights on, exactly where the asphalt aims west — Merle's truck. You didn't call him. Nobody called him. There is no calling anyone. He's just HERE, the way weather is here, the way Merle has always been here, one county-sized instinct in a seed cap."
+        },
+        {
+          "narrate": "The window is already down. 'Sixty-five, the ice storm. Eighty-eight, the substation.' Merle looks west down the road like it owes him a third story. 'Both times, somebody drove out.' A thermos — Darlene's, you'd know that dented shine anywhere — sweats gently on the bench seat next to a paper bag with a grease shadow shaped like pie. 'Get in, IT.'"
+        },
+        {
+          "narrate": "Somewhere under the fields, a thread of dark glass runs three hundred miles west to a building shaped like a place answers live. The edge is fine. The problem is one layer down. You're going to go stand on it."
+        },
+        {
+          "narrate": "END OF ACT TWO. (Act Three: 'The Cloud, Physically' — under construction. The truck will wait. Merle, less so.)"
+        },
+        {
+          "setFlag": "rd_arrived"
+        },
+        {
+          "score": {
+            "id": "rd_act_two_complete",
+            "points": 3
+          }
+        }
+      ]
+    },
+    {
+      "text": "The county road. The truck idles. Merle waits with the patience of a man who has outlasted two outages and one interstate. Acts don't start themselves, but this one is loaded and facing west."
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "truck",
+      "name": "truck",
+      "synonyms": [
+        "merles truck",
+        "merle's truck",
+        "pickup",
+        "merle",
+        "cab",
+        "thermos"
+      ],
+      "polygon": [[184, 88], [306, 88], [306, 156], [184, 156]],
+      "responses": {
+        "look": [
+          {
+            "text": "Merle's pickup: forty years of farm reports in the paint, a bench seat, a bed that has carried everything this county ever needed moved, and an engine that idles like a slow clock. On the seat: Darlene's thermos and a paper bag gone translucent at one corner. Pie. She sent PIE. You haven't fixed the internet yet, and Darlene has extended you pie on credit. The economy of this town runs on faith and gravy, five nines each."
+          }
+        ],
+        "talk": [
+          {
+            "text": "'Roads still think in miles out there,' Merle says to the windshield. 'The wire people think in hops. We'll see who gets us there.' He taps the wheel once — boarding call. 'Get in, IT.' The tally notes that Merle, at least, is CONSISTENTLY wrong about your name. In this county, that's practically fidelity."
+          }
+        ],
+        "open": [
+          {
+            "text": "Boarding is an Act Three operation. The door handle will still be there when the curtain is."
+          }
+        ],
+        "use": [
+          {
+            "text": "The truck is running, aimed, and provisioned. Everything else about it — the ride, the miles, the cathedral at the end — belongs to the next act. Some cliffhangers you respect by leaving them hung."
+          }
+        ]
+      }
+    },
+    {
+      "id": "fiber_markers",
+      "name": "fiber markers",
+      "synonyms": [
+        "markers",
+        "orange posts",
+        "posts",
+        "warning posts",
+        "buried cable"
+      ],
+      "polygon": [[108, 90], [182, 90], [182, 130], [108, 130]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "A file of orange marker posts marching west along the shoulder: WARNING — BURIED FIBER OPTIC CABLE — CALL BEFORE YOU DIG. The trail, literalized. Every layer you've descended so far was a room; this one is a LINE, drawn under the soybeans, pointing at the horizon like the world's longest patch cable. You will follow it at sixty miles an hour with a thermos between your knees. This is the most alive your career has ever felt."
+              },
+              {
+                "score": {
+                  "id": "rd_fiber_markers",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "Call before you dig. Call before you take, too, probably. The posts stay on duty."
+          }
+        ]
+      }
+    },
+    {
+      "id": "mile_marker",
+      "name": "mile marker",
+      "synonyms": [
+        "marker",
+        "milepost",
+        "sign post"
+      ],
+      "polygon": [[80, 84], [98, 84], [98, 130], [80, 130]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "MILE 1. The county measured from town, outward — this is where every distance in your childhood started counting. You stand at mile one of the rest of the incident, which the narrator would like entered into the record as: not nothing. The next number you care about is somewhere past three hundred."
+              },
+              {
+                "score": {
+                  "id": "rd_mile_marker",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pylon_back",
+      "name": "plaza sign",
+      "synonyms": [
+        "pylon",
+        "sign",
+        "back of sign"
+      ],
+      "polygon": [[32, 4], [62, 4], [62, 124], [32, 124]],
+      "responses": {
+        "look": [
+          {
+            "text": "The Parkview pylon from behind: bare gray panels, conduit, bird wire. No names, no logos — the internet doesn't advertise in this direction, and neither does anything else. Every sign in the world is a frontend. You have spent the whole day learning what the backs of things look like, and honestly, you prefer them. The backs are load-bearing."
+          }
+        ]
+      }
+    },
+    {
+      "id": "road_east",
+      "name": "road",
+      "synonyms": [
+        "asphalt",
+        "highway",
+        "west",
+        "east"
+      ],
+      "polygon": [[0, 156], [320, 156], [320, 180], [0, 180]],
+      "responses": {
+        "look": [
+          {
+            "text": "Two lanes of county asphalt, patched like a quilt nobody finished, running west until the dusk closes over it. It goes where you're going. It has always gone where everyone was going; that was the whole complaint about it. Tonight, for the first time in years, it has a passenger manifest: one."
+          }
+        ],
+        "use": [
+          {
+            "text": "Three hundred miles is a ride, not a walk — even the Real Pants have limits, and they'd want that noted in the log. The truck idles six feet away with your name on the manifest. Well. A name."
+          }
+        ]
+      }
+    },
+    {
+      "id": "fields",
+      "name": "fields",
+      "synonyms": [
+        "soybeans",
+        "farmland",
+        "crops",
+        "horizon"
+      ],
+      "polygon": [[64, 92], [180, 92], [180, 128], [100, 128], [100, 130], [64, 130]],
+      "responses": {
+        "look": [
+          {
+            "text": "Soybeans to the horizon, breathing out the day's heat. Under them, one thin thread of glass carries — carried — every word this county sent the world. The beans neither know nor care. Root cause analysis has never once involved the beans. There's a purity in that you plan to think about for the first forty miles."
+          }
+        ]
+      }
+    },
+    {
+      "id": "dusk_sky",
+      "name": "sky",
+      "synonyms": [
+        "dusk",
+        "stars",
+        "star",
+        "sunset",
+        "venus"
+      ],
+      "polygon": [[0, 0], [320, 0], [320, 60], [64, 60], [64, 80], [0, 80]],
+      "responses": {
+        "look": [
+          {
+            "text": "Dusk going to night, one bright point already up in the west — Venus, or a very committed airplane. The sky has run its full demo today: dawn, weather, sunset, now this. All of it delivered, zero of it billed. Tomorrow it ships again. You get in trucks and chase outages; the sky just never has one. Somebody at Cumulonimbus should do a site visit."
+          }
+        ],
+        "take": [
+          {
+            "text": "One trillion-dollar company already tried. You've spent all day in the wreckage of the attempt."
+          }
+        ]
+      }
+    }
+  ]
+}

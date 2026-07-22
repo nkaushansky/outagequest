@@ -1,0 +1,437 @@
+{
+  "id": "act2_corridor",
+  "name": "Service Corridor",
+  "background": "assets/backgrounds/act2_corridor.png",
+  "walkable": [[10, 113], [318, 113], [312, 178], [12, 178]],
+  "playerStart": {
+    "x": 24,
+    "y": 150,
+    "facing": "right"
+  },
+  "exits": [
+    {
+      "to": "act2_salon",
+      "polygon": [[0, 113], [10, 113], [10, 178], [0, 178]],
+      "arrive": {
+        "x": 20,
+        "y": 150,
+        "facing": "right"
+      }
+    },
+    {
+      "to": "act2_backlot",
+      "polygon": [[194, 104], [230, 104], [230, 124], [194, 124]],
+      "arrive": {
+        "x": 155,
+        "y": 130,
+        "facing": "down"
+      }
+    },
+    {
+      "to": "act2_staging",
+      "polygon": [[236, 104], [270, 104], [270, 124], [236, 124]],
+      "arrive": {
+        "x": 24,
+        "y": 150,
+        "facing": "right"
+      }
+    }
+  ],
+  "onEnter": [
+    {
+      "if": {
+        "flagNot": "cr_seen"
+      },
+      "do": [
+        {
+          "narrate": "The plaza's service corridor: one fluorescent tube, six doors, and the smell of mop water that achieved permanence during the Bush administration. Either Bush. This is the hallway every strip mall hides behind its smiles — the shared backend where the breakers live, the water heats, and the leases quietly interconnect."
+        },
+        {
+          "setFlag": "cr_seen"
+        }
+      ]
+    },
+    {
+      "text": "The service corridor. The tube light flickers its one flicker. The doors keep their counsel."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "The corridor stands fully surveyed: power respected, plumbing acknowledged, one sealed door pitied. You know this hallway now the way you know a config file — completely, and with mild regret. Nothing else back here needs you. The closet does."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "laminate",
+      "name": "laminated sheet",
+      "synonyms": [
+        "laminate",
+        "sheet",
+        "sop",
+        "notice",
+        "paper",
+        "instructions"
+      ],
+      "polygon": [[24, 30], [54, 30], [54, 66], [24, 66]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "Zip-tied to the conduit at eye height: a laminated sheet, sun-faded to institutional beige. Dale hung this the summer of the install, and lamination — the poor man's immortality — has kept every word. You read the county's entire security architecture in eleven lines."
+              },
+              {
+                "document": {
+                  "style": "flyer",
+                  "title": "CUMULONIMBUS FIELD OPS — SITE QUICK CARD (LAMINATE, DO NOT REMOVE)",
+                  "body": "SITE CLASS: Regional Edge (Type C — 'closet').\nACCESS: One (1) door, gray. One (1) key, janitor pattern. Spare per SOP-7.\nSOP-7, ABRIDGED: Contractor lockbox on nearest immovable gas fitting. Combination: final four digits of the Community NOC hotline. Rationale: field techs always have collateral; memories fail, marketing is forever.\nNOC HOTLINE: see any community flyer, welcome packet, or the hold sticker on unit equipment.\nCOOLING: per site conditions.\nESCALATION: call the NOC. (For NOC number, see above.) (For above, see NOC.)\nDO NOT store combustibles within 3 ft of panel. — This means the mop, Randy."
+                }
+              },
+              {
+                "setFlag": "knows_lockbox_rule"
+              },
+              {
+                "score": {
+                  "id": "cr_laminate_read",
+                  "points": 2
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "The zip tie has fused with the laminate into a single immortal organism. The sheet belongs to the wall now, the way SOPs belong to nobody."
+          }
+        ]
+      }
+    },
+    {
+      "id": "breakers",
+      "name": "breaker panel",
+      "synonyms": [
+        "panel",
+        "breaker",
+        "electrical panel",
+        "fuse box",
+        "fusebox",
+        "switches"
+      ],
+      "polygon": [[62, 24], [106, 24], [106, 80], [62, 80]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "The plaza's breaker panel, cover hanging by one screw like a loose tooth. Six columns of breakers, hand-labeled by six eras of tenant — 'TAN', 'TAX', 'NAILS', 'PAGERS', two blanks — and one slot scorched black around the edges, its label burned to a shadow. The panel radiates the specific menace of electrical work that was signed off verbally. You catalogue it and keep your hands in your jurisdiction."
+              },
+              {
+                "score": {
+                  "id": "cr_breakers_look",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "cr_breaker_warned" },
+            "do": [
+              {
+                "narrate": "Your hand drifts toward the scorched breaker — the sysadmin reflex: when in doubt, cycle it. An inch out, the air changes. Warmer. Attentive. The smell of pennies and past mistakes. You withdraw the hand. That slot has already eaten one journeyman's afternoon; it isn't getting your whole career."
+              },
+              {
+                "setFlag": "cr_breaker_warned"
+              }
+            ]
+          },
+          {
+            "do": [
+              {
+                "death": {
+                  "id": "load_shedding"
+                }
+              }
+            ]
+          }
+        ],
+        "open": [
+          {
+            "text": "The cover is already ajar, which is how you know everything you need to know about the maintenance culture here. You're not making it worse by touching it. You're also not touching it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "mop_sink",
+      "name": "mop sink",
+      "synonyms": [
+        "sink",
+        "mop",
+        "basin",
+        "janitor sink"
+      ],
+      "polygon": [[110, 34], [142, 34], [142, 108], [110, 108]],
+      "responses": {
+        "look": [
+          {
+            "text": "A floor-mounted mop sink with a mop at parade rest beside it — three feet from the breaker panel, in open defiance of the laminate, exactly as Randy left it. Randy has not worked here since the pager era. The mop remains. Institutions forget people; they never forget equipment."
+          }
+        ],
+        "use": [
+          {
+            "text": "The faucet works — cold, mineral, honest. You wash the dumpster off your wrists and feel a full firmware version better."
+          }
+        ],
+        "take": [
+          {
+            "text": "Taking Randy's mop would disturb a monument. Also you have no bucket, no grievance, and no Randy."
+          }
+        ]
+      }
+    },
+    {
+      "id": "water_heater",
+      "name": "water heater",
+      "synonyms": [
+        "heater",
+        "tank",
+        "boiler"
+      ],
+      "polygon": [[150, 12], [188, 12], [188, 106], [150, 106]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "A commercial water heater, tall as a person and warmer company than most. Install sticker: 2003. Expected service life: twelve years. It has been running on borrowed time longer than it ran on scheduled time, which makes it the most relatable machine in the building. You pat its flank. It gurgles. Between veterans, that's a whole conversation."
+              },
+              {
+                "score": {
+                  "id": "cr_water_heater",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "text": "It heats water. It is heating water RIGHT NOW, without a companion app, without a login, without you. Let the master work."
+          }
+        ]
+      }
+    },
+    {
+      "id": "sealed_door",
+      "name": "sealed door",
+      "synonyms": [
+        "painted door",
+        "closet door",
+        "old door",
+        "hinges"
+      ],
+      "polygon": [[280, 24], [314, 24], [314, 108], [280, 108]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "A door in denial: painted wall-color, knob removed, seams caulked — but the hinges still stand proud of the surface like knuckles under a blanket. This was the closet's inner door, back when the closet held mops instead of the county. When the lease went to a cloud company, the landlord sealed the corridor side and the closet turned its back on the building forever. Now the only way into the internet is the gray door out front. Even architecturally, the cloud stopped answering its neighbors."
+              },
+              {
+                "score": {
+                  "id": "cr_sealed_door",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "open": [
+          {
+            "text": "No knob, no seam, no chance. The building itself has signed an NDA. Whatever you want from the closet, you want it from the front."
+          }
+        ],
+        "use": [
+          {
+            "text": "You press an ear to the paint. The hum is RIGHT THERE, one drywall thickness away, close as a coworker and exactly as reachable. The gray door, Malcolm. It was always going to be the gray door."
+          }
+        ]
+      }
+    },
+    {
+      "id": "tube_light",
+      "name": "fluorescent tube",
+      "synonyms": [
+        "light",
+        "fluorescent",
+        "tube",
+        "ballast"
+      ],
+      "polygon": [[0, 0], [320, 0], [320, 14], [0, 14]],
+      "responses": {
+        "look": [
+          {
+            "text": "One fluorescent tube runs the corridor's length, steady except for a hand-span near the middle that flickers at the exact frequency of a thought you can't finish. The ballast has been dying since before streaming television. It will finish dying after the heat death of the universe. Some processes simply do not respect the roadmap."
+          }
+        ],
+        "use": [
+          {
+            "text": "Every janitor, tenant, and delivery driver for twenty years has given the tube the same hopeful tap. You honor the tradition. The flicker acknowledges, and continues."
+          }
+        ]
+      }
+    },
+    {
+      "id": "drain",
+      "name": "floor drain",
+      "synonyms": [
+        "drain",
+        "grate"
+      ],
+      "polygon": [[152, 134], [188, 134], [188, 156], [152, 156]],
+      "responses": {
+        "look": [
+          {
+            "text": "A floor drain, dead center, engineered fall from every corner of the corridor. Somebody sloped this concrete with care in 1974, was paid a fair wage, and never once thought about it again. It has handled every flood since without a status page. You are standing on the most reliable component in a half-mile radius."
+          }
+        ]
+      }
+    },
+    {
+      "id": "salon_curtain_cr",
+      "name": "salon curtain",
+      "synonyms": [
+        "curtain",
+        "kims curtain",
+        "kim's curtain",
+        "salon door"
+      ],
+      "polygon": [[0, 26], [18, 26], [18, 110], [0, 110]],
+      "responses": {
+        "look": [
+          {
+            "text": "Kim's curtain, corridor side: clean, hemmed, hung on actual rings. From this side it glows faintly with salon light and smells like acetone and solvency. The one soft doorway in a hallway of steel — the frontend peeking into the backend and electing to stay beautiful."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              {
+                "narrate": "Back through the curtain into the warmth."
+              },
+              {
+                "goto": "act2_salon",
+                "arrive": { "x": 20, "y": 150, "facing": "right" }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "Back through the curtain into the warmth."
+              },
+              {
+                "goto": "act2_salon",
+                "arrive": { "x": 20, "y": 150, "facing": "right" }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "backlot_door_cr",
+      "name": "delivery door",
+      "synonyms": [
+        "back door",
+        "outside door",
+        "exit door"
+      ],
+      "polygon": [[194, 26], [230, 26], [230, 108], [194, 108]],
+      "responses": {
+        "look": [
+          {
+            "text": "The delivery door from the inside, panic bar polished bright by forty years of hips, elbows, and hand trucks. PUSH, it says. It is the only interface in this building with perfect documentation."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              {
+                "narrate": "The panic bar does its one job flawlessly."
+              },
+              {
+                "goto": "act2_backlot",
+                "arrive": { "x": 155, "y": 130, "facing": "down" }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "The panic bar does its one job flawlessly."
+              },
+              {
+                "goto": "act2_backlot",
+                "arrive": { "x": 155, "y": 130, "facing": "down" }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "staging_door_cr",
+      "name": "unit door",
+      "synonyms": [
+        "vacant door",
+        "pagepro",
+        "pagepro door",
+        "unit 4"
+      ],
+      "polygon": [[236, 26], [270, 26], [270, 108], [236, 108]],
+      "responses": {
+        "look": [
+          {
+            "text": "A tenant door with a ghost roster taped to it: PAGEPRO WIRELESS crossed out, TAN-TASTIC crossed out above that, and at the top, in fossil marker, a name ending in '-orama.' The knob hangs loose in its collar — Dale's doing; he staged his install out of this unit and locks were never his love language."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              {
+                "narrate": "The loose knob turns with a shrug."
+              },
+              {
+                "goto": "act2_staging"
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "The loose knob turns with a shrug."
+              },
+              {
+                "goto": "act2_staging"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

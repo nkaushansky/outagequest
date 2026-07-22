@@ -122,7 +122,7 @@ export type Action =
   | { score: { id: string; points: number } }
   | { death: { id: string; text?: string; title?: string } }
   | { document: DocumentSpec }
-  | { goto: string }
+  | { goto: string; arrive?: { x: number; y: number; facing: Facing } }
   | { playSound: string };
 
 export interface ResponseEntry {

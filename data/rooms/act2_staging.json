@@ -1,0 +1,340 @@
+{
+  "id": "act2_staging",
+  "name": "The Old PagePro",
+  "background": "assets/backgrounds/act2_staging.png",
+  "walkable": [[20, 113], [316, 113], [310, 178], [14, 178]],
+  "playerStart": {
+    "x": 24,
+    "y": 150,
+    "facing": "right"
+  },
+  "exits": [
+    {
+      "to": "act2_corridor",
+      "polygon": [[0, 113], [12, 113], [12, 178], [0, 178]],
+      "arrive": {
+        "x": 250,
+        "y": 132,
+        "facing": "down"
+      }
+    }
+  ],
+  "onEnter": [
+    {
+      "if": {
+        "flagNot": "st_seen"
+      },
+      "do": [
+        {
+          "narrate": "The old PagePro Wireless: a retail tomb with dusk seeping through papered glass. Dead pagers and brick phones still bolted to the wall, a counter with dust shadows where the register lived — and, center floor, an island of newer mess: spool, boxes, binder, cans. Dale staged the whole edge-node install out of this unit one summer, and like every contractor in history, he never fully struck the set."
+        },
+        {
+          "setFlag": "st_seen"
+        }
+      ]
+    },
+    {
+      "text": "The PagePro. The pagers keep their vigil. Dale's leavings keep his."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "Dale's base camp has told you everything it remembers: the runbook, the residue, the diet. You came in looking for a young man's system and found it — he had one, it was corporate, and it worked. Somewhere in a city right now, Dale installs closets and sleeps fine. Leave the shrine to its watch."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "corridor_door_st",
+      "name": "corridor door",
+      "synonyms": [
+        "door",
+        "back door",
+        "exit"
+      ],
+      "polygon": [[0, 26], [18, 26], [18, 108], [0, 108]],
+      "responses": {
+        "look": [
+          {
+            "text": "The door back to the service corridor, propped ajar with a folded pager brochure — 'THE FUTURE, ON YOUR BELT.' Dale wedged it there a decade ago and the future has been on hold ever since, which, checking the wider situation, tracks."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              {
+                "narrate": "You step over the future, back into the corridor."
+              },
+              {
+                "goto": "act2_corridor",
+                "arrive": { "x": 250, "y": 132, "facing": "down" }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "You step over the future, back into the corridor."
+              },
+              {
+                "goto": "act2_corridor",
+                "arrive": { "x": 250, "y": 132, "facing": "down" }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ghost_sign",
+      "name": "ghost sign",
+      "synonyms": [
+        "sign",
+        "pagepro",
+        "lettering",
+        "wall sign"
+      ],
+      "polygon": [[56, 8], [204, 8], [204, 28], [56, 28]],
+      "responses": {
+        "look": [
+          {
+            "text": "Above the phone wall, the shadow of vinyl letters pried off long ago: PAGEPRO WIRELESS — AUTHORIZED DEALER. The sun tattooed the slogan into the paint before the sign came down. Businesses die; their fonts achieve immortality. There's a lesson in that for a certain cloud company's brand-guidelines team, and nobody will ever learn it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo_phones",
+      "name": "demo phones",
+      "synonyms": [
+        "phones",
+        "pagers",
+        "brick phones",
+        "display",
+        "phone wall"
+      ],
+      "polygon": [[26, 28], [98, 28], [98, 94], [26, 94]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "Six demonstration handsets bolted to a display board, security-tethered against a theft wave that never came. Brick phones with rubber antennas, two pagers, one flip model marked NEW! Every single one is a local device with a replaceable battery and a paper manual. In this economy — today, specifically — this wall is the most repairable computing exhibit in the county. You feel a pang you can only describe as infrastructural."
+              },
+              {
+                "score": {
+                  "id": "st_demo_phones",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "text": "You press a dead brick phone to your ear out of pure ritual. 'Function,' you say, into the void, 'go for Function.' The void, like everyone else, does not catch the name."
+          }
+        ],
+        "take": [
+          {
+            "text": "The security tethers outlasted the store, the network, and the concept of pagers. Retail loss prevention: the one system that never goes down."
+          }
+        ]
+      }
+    },
+    {
+      "id": "counter",
+      "name": "counter",
+      "synonyms": [
+        "glass counter",
+        "register",
+        "display case"
+      ],
+      "polygon": [[104, 58], [180, 58], [180, 108], [104, 108]],
+      "responses": {
+        "look": [
+          {
+            "text": "The sales counter, glass top furred with dust except for a rectangle where a register sat and two hand-sized ovals where a decade of elbows leaned. In the case below: a single display pager on a felt pedestal, price tag turned down, like a museum that closed mid-thought. Dale used this counter as a workbench — his binder still holds the throne."
+          }
+        ],
+        "open": [
+          {
+            "text": "The case's little lock holds, guarding one pager for eternity. Correct behavior. Let no one say this store's final process failed."
+          }
+        ]
+      }
+    },
+    {
+      "id": "runbook",
+      "name": "runbook",
+      "synonyms": [
+        "binder",
+        "manual",
+        "install manual",
+        "book",
+        "documentation"
+      ],
+      "polygon": [[122, 44], [162, 44], [162, 62], [122, 62]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "On the counter: a three-ring binder, corporate blue, spine label 'CUMULONIMBUS EDGE DEPLOYMENT RUNBOOK v3.' Coffee ring on the cover, energy-drink ring inside the coffee ring, like tree years. You open it to the tabbed section — Dale tabbed it — and read the county's security model in the vendor's own voice."
+              },
+              {
+                "document": {
+                  "style": "flyer",
+                  "title": "EDGE DEPLOYMENT RUNBOOK v3 — §7: SITE SECURITY",
+                  "body": "7.1 The Edge is everywhere. Security must therefore be somewhere.\n7.2 Each Type C site receives one (1) door and one (1) key, janitor pattern. Keys are the perimeter.\n7.3 Key custody: affix contractor lockbox to nearest immovable gas fitting. Gas fittings are audited by a second utility, providing free physical oversight (see Appendix: 'Other People's Rigor').\n7.4 Combination: the final four digits of the Community NOC hotline. Rationale: field technicians always carry collateral; collateral always carries the hotline; therefore the technician always carries the combination. This is called Defense in Depth.\n7.5 Do NOT write the combination on the lockbox (Incident CN-88).\n7.6 Do NOT write it on the door (Incident CN-91).\n7.7 The hotline is printed on all community-facing collateral. Distribute collateral generously. The combination must never be widely known."
+                }
+              },
+              {
+                "setFlag": "knows_lockbox_rule"
+              },
+              {
+                "score": {
+                  "id": "st_manual_read",
+                  "points": 2
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "Site documentation stays with the site — the first law of the trade, and the reason anything anywhere is ever fixable. You leave the binder its throne."
+          }
+        ]
+      }
+    },
+    {
+      "id": "spool",
+      "name": "cable spool",
+      "synonyms": [
+        "spool",
+        "reel",
+        "cable reel",
+        "wire"
+      ],
+      "polygon": [[182, 74], [230, 74], [230, 122], [182, 122]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "A wooden spool with maybe forty feet of cable left on it, ends taped down neat — Dale's leftover from pulling the closet's runs. The tape job is textbook. Say what the dumpster will about the boy's diet: his terminations were clean, and clean terminations are character."
+              },
+              {
+                "score": {
+                  "id": "st_spool",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "Forty feet of solid-core would be a prize on any other Tuesday, but you already carry the finest fourteen feet in the hemisphere, hand-crimped, both ends tested. A professional does not dilute his kit."
+          }
+        ],
+        "use": [
+          {
+            "text": "You give the spool a turn for old times' sake. It rolls a quarter revolution and settles, like everything else in this town, into a position it can hold indefinitely."
+          }
+        ]
+      }
+    },
+    {
+      "id": "rail_boxes",
+      "name": "rack boxes",
+      "synonyms": [
+        "boxes",
+        "rails",
+        "mounting rails",
+        "cardboard"
+      ],
+      "polygon": [[232, 48], [274, 48], [274, 108], [232, 108]],
+      "responses": {
+        "look": [
+          {
+            "text": "Flattened cartons for rack rails, cage nuts, and a 'CABLE MANAGEMENT SOLUTION' whose picture is a metal comb. The packing lists are all initialed D-with-a-lightning-bolt. Somewhere in these boxes' negative space is the entire skeleton of the closet next door. IKEA for the internet, some assembly required, assembly performed once, by a kid, forever."
+          }
+        ],
+        "take": [
+          {
+            "text": "Empty boxes. Even you, a man who once kept four CRT monitors as 'backups,' can see there is nothing here to keep."
+          }
+        ]
+      }
+    },
+    {
+      "id": "shrine",
+      "name": "energy drink shrine",
+      "synonyms": [
+        "cans",
+        "energy drinks",
+        "shrine",
+        "pyramid",
+        "drinks"
+      ],
+      "polygon": [[278, 48], [318, 48], [318, 108], [278, 108]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "In the corner, a pyramid of empty energy-drink cans, stacked with the same care as the cable terminations — Dale's true monument. Brands with names like VOLTAGE and GAMER JUICE ULTRA and one, prophetically, called UPTIME. Every install in the world leaves one of these behind. Archaeologists will call it grave goods, and they will not be wrong."
+              },
+              {
+                "score": {
+                  "id": "st_shrine",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "text": "One can at the pyramid's heart sloshes faintly — nine years fermenting toward something taurine-based and legally alive. You are brave. You are not THAT brave. Nobody is that brave. Dale wasn't even that brave."
+          }
+        ],
+        "take": [
+          {
+            "text": "You do not loot a shrine. You especially do not loot a shrine that sloshes."
+          }
+        ]
+      }
+    },
+    {
+      "id": "window_paper",
+      "name": "papered window",
+      "synonyms": [
+        "window",
+        "paper",
+        "glass",
+        "front window"
+      ],
+      "polygon": [[256, 16], [318, 16], [318, 46], [256, 46]],
+      "responses": {
+        "look": [
+          {
+            "text": "The front glass, papered over with butcher sheets that dusk has turned to amber lampshade. Taped to the inside, facing a street that stopped looking years ago: 'FOR LEASE — MOTIVATED.' The paper glows like the storefront is mid-seance, contacting the retail beyond. Somewhere out there, the lot, the pylon, the hum. In here, 1998, preserved at 72 degrees."
+          }
+        ],
+        "open": [
+          {
+            "text": "The front door behind the paper is landlord-locked and mummified in tape. The corridor is the way; the corridor was always the way."
+          }
+        ]
+      }
+    }
+  ]
+}

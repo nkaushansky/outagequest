@@ -3,7 +3,7 @@
 // `{ if?, do: [...] }`. Actions mutate state through the EngineContext so
 // the engine stays the only owner of side effects.
 
-import type { Action, Condition, DocumentSpec, ResponseEntry } from "./types";
+import type { Action, Condition, DocumentSpec, Facing, ResponseEntry } from "./types";
 import type { GameState } from "./state";
 
 export interface EngineContext {
@@ -17,7 +17,7 @@ export interface EngineContext {
   addItem(id: string): void;
   removeItem(id: string): void;
   die(id: string, text?: string, title?: string): void;
-  gotoRoom(id: string): void;
+  gotoRoom(id: string, arrive?: { x: number; y: number; facing: Facing }): void;
   showDocument(spec: DocumentSpec): void;
 }
 
@@ -59,7 +59,7 @@ export function runActions(actions: Action[], ctx: EngineContext): void {
     } else if ("document" in action) {
       ctx.showDocument(action.document);
     } else if ("goto" in action) {
-      ctx.gotoRoom(action.goto);
+      ctx.gotoRoom(action.goto, action.arrive);
     } else if ("playSound" in action) {
       // M8. Silence, for now. Fitting.
     }

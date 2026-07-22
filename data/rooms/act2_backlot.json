@@ -1,0 +1,465 @@
+{
+  "id": "act2_backlot",
+  "name": "Behind the Plaza",
+  "background": "assets/backgrounds/act2_backlot.png",
+  "walkable": [[8, 106], [316, 106], [310, 178], [10, 178]],
+  "playerStart": {
+    "x": 296,
+    "y": 150,
+    "facing": "left"
+  },
+  "exits": [
+    {
+      "to": "act1_edge_of_town",
+      "polygon": [[306, 106], [319, 106], [319, 178], [306, 178]],
+      "arrive": {
+        "x": 300,
+        "y": 140,
+        "facing": "left"
+      }
+    },
+    {
+      "to": "act2_corridor",
+      "polygon": [[136, 100], [174, 100], [174, 122], [136, 122]],
+      "arrive": {
+        "x": 212,
+        "y": 132,
+        "facing": "down"
+      }
+    }
+  ],
+  "onEnter": [
+    {
+      "if": {
+        "flagNot": "bl_seen"
+      },
+      "do": [
+        {
+          "narrate": "Behind the plaza: a service strip of cracked concrete, cinderblock, and honesty. This is where the storefronts keep their organs — meters, conduit, a delivery door, and Kim's generator drumming away on its pad like the town's replacement heart. No signage back here. The backend never gets signage."
+        },
+        {
+          "setFlag": "bl_seen"
+        }
+      ]
+    },
+    {
+      "text": "The back of the plaza. The generator drums, the meters tick, and the wall carries the closet's hum like a rumor."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "The backend of the plaza has been fully inventoried: power accounted for, gas accounted for, glass accounted for. Everything back here does its job without being watched, which is more than you can say for anything with a dashboard. Front of house, Malcolm. The door is waiting."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "generator",
+      "name": "generator",
+      "synonyms": [
+        "genny",
+        "kims generator",
+        "kim's generator"
+      ],
+      "polygon": [[74, 60], [126, 60], [126, 106], [74, 106]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "Kim's generator: orange, fueled, bolted to its own poured pad, running a cable under her back door like an IV line. Oil changed on schedule — there's a grease-pencil log on the housing, twelve years of dates in Kim's hand. It has more documented maintenance than the entire regional edge. You stand a moment in professional reverence. THIS is a continuity plan. It cost eight hundred dollars and it is currently outperforming a market cap."
+              },
+              {
+                "score": {
+                  "id": "bl_generator_uptime",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "text": "It's running, it's healthy, and it isn't yours. You do not touch another administrator's production hardware, especially when the administrator does nails for a living and watches everything. This is the deepest law you know."
+          }
+        ],
+        "take": [
+          {
+            "text": "Between the bolts, the weight, and Kim, this generator is the most secure asset in the county. And people wonder why she never got ransomwared."
+          }
+        ]
+      }
+    },
+    {
+      "id": "meters",
+      "name": "gas meters",
+      "synonyms": [
+        "meters",
+        "meter",
+        "gas meter",
+        "pipes",
+        "dials"
+      ],
+      "polygon": [[178, 48], [230, 48], [230, 96], [178, 96]],
+      "responses": {
+        "look": [
+          {
+            "text": "A bank of gas meters, one per unit, dials creeping with the serenity of infrastructure that predates the concept of downtime. The pipe run is painted the gray of things nobody is supposed to notice. Clipped to it, small and deliberate: a contractor's key box. Somebody wanted a spare within reach of the gas company and out of reach of imagination."
+          }
+        ],
+        "use": [
+          {
+            "text": "The meters meter. That's the whole API. It hasn't changed since 1948 and nobody has ever filed a feature request."
+          }
+        ]
+      }
+    },
+    {
+      "id": "key_box",
+      "name": "key box",
+      "synonyms": [
+        "lockbox",
+        "lock box",
+        "keybox",
+        "combination box",
+        "box",
+        "dial"
+      ],
+      "polygon": [[192, 58], [214, 58], [214, 86], [192, 86]],
+      "responses": {
+        "look": [
+          {
+            "if": { "flag": "lockbox_opened" },
+            "text": "The key box hangs open and empty, dial spun back to a scramble out of habit. Nine years of guarding the county's internet, discharged in one afternoon. It looks lighter. Boxes can't look lighter. This one manages."
+          },
+          {
+            "if": {
+              "all": [
+                { "flag": "knows_lockbox_rule" },
+                { "flag": "read_noc_flyer" }
+              ]
+            },
+            "text": "The contractor key box, clipped to the gas pipe. Four-digit combination dial. You know Dale's rule — last four of the NOC hotline — and you have the hotline off the flyer, on glossy corporate paper, burned into your working memory. All that's left is to open it."
+          },
+          {
+            "text": "A contractor's key box clipped to the gas pipe: steel, weathered, four-digit combination dial, currently scrambled. The kind of box that holds exactly one very important key on behalf of people who will never come back for it. Ten thousand combinations, and somewhere, a young man in a hurry chose one by policy."
+          }
+        ],
+        "open": [
+          {
+            "if": { "flag": "lockbox_opened" },
+            "text": "Already open, already empty. The box has given everything it had. Let it rest."
+          },
+          {
+            "if": {
+              "all": [
+                { "flag": "knows_lockbox_rule" },
+                { "flag": "read_noc_flyer" }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "Dale's rule, from Dale's paperwork: the combination is the last four of the Community NOC hotline. The flyer unrolls in your memory, glossy and cancelled: 1-800-286-8561. Eight. Five. Six. One. The dial fights you for exactly zero seconds, the shackle drops, and there it is — brass, unremarkable, patient: the janitor's key to the county's entire internet."
+              },
+              {
+                "narrate": "Nine years, one spare, secured by a phone number printed on every piece of paper the company ever mailed this town. You pocket the key with the reverence it has, at last, earned. Somewhere, an auditor feels a chill and doesn't know why."
+              },
+              {
+                "addItem": "edge_key"
+              },
+              {
+                "setFlag": "lockbox_opened"
+              },
+              {
+                "score": {
+                  "id": "bl_lockbox_key",
+                  "points": 3
+                }
+              }
+            ]
+          },
+          {
+            "if": { "flag": "knows_lockbox_rule" },
+            "text": "You know Dale's rule — the combination is the last four digits of the NOC hotline. What you don't have is the hotline. Corporate printed it on every glossy thing they ever sent this town, and the town, bless it, never throws anything glossy away. Somewhere on a board or in a box back in town, that number is still legible."
+          },
+          {
+            "if": { "flag": "read_noc_flyer" },
+            "text": "Four digits. You know plenty of four-digit numbers — including, hm, the tail of that hotline off the flyer — but guessing at a dial is how amateurs spend an evening. Dale followed a system, because installers always follow a system. His paperwork would name it. Men in hurries leave paperwork where they leave everything else."
+          },
+          {
+            "text": "The dial spins freely and means nothing yet. Four digits out of ten thousand. You're a professional: professionals don't guess, they find the documentation. Dale documented. Somewhere, Dale documented."
+          }
+        ],
+        "use": [
+          {
+            "if": { "flag": "lockbox_opened" },
+            "text": "Already open, already empty. The box has given everything it had. Let it rest."
+          },
+          {
+            "if": {
+              "all": [
+                { "flag": "knows_lockbox_rule" },
+                { "flag": "read_noc_flyer" }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "Dale's rule, from Dale's paperwork: the combination is the last four of the Community NOC hotline. The flyer unrolls in your memory, glossy and cancelled: 1-800-286-8561. Eight. Five. Six. One. The dial fights you for exactly zero seconds, the shackle drops, and there it is — brass, unremarkable, patient: the janitor's key to the county's entire internet."
+              },
+              {
+                "narrate": "Nine years, one spare, secured by a phone number printed on every piece of paper the company ever mailed this town. You pocket the key with the reverence it has, at last, earned. Somewhere, an auditor feels a chill and doesn't know why."
+              },
+              {
+                "addItem": "edge_key"
+              },
+              {
+                "setFlag": "lockbox_opened"
+              },
+              {
+                "score": {
+                  "id": "bl_lockbox_key",
+                  "points": 3
+                }
+              }
+            ]
+          },
+          {
+            "if": { "flag": "knows_lockbox_rule" },
+            "text": "You know Dale's rule — the combination is the last four digits of the NOC hotline. What you don't have is the hotline. Corporate printed it on every glossy thing they ever sent this town, and the town, bless it, never throws anything glossy away. Somewhere on a board or in a box back in town, that number is still legible."
+          },
+          {
+            "if": { "flag": "read_noc_flyer" },
+            "text": "Four digits. You know plenty of four-digit numbers — including, hm, the tail of that hotline off the flyer — but guessing at a dial is how amateurs spend an evening. Dale followed a system, because installers always follow a system. His paperwork would name it. Men in hurries leave paperwork where they leave everything else."
+          },
+          {
+            "text": "The dial spins freely and means nothing yet. Four digits out of ten thousand. You're a professional: professionals don't guess, they find the documentation. Dale documented. Somewhere, Dale documented."
+          }
+        ],
+        "take": [
+          {
+            "text": "The box is clipped, chained, and philosophically committed to the pipe. Take the contents, not the container. That's dumpster law and key-box law alike."
+          }
+        ]
+      }
+    },
+    {
+      "id": "corridor_door_bl",
+      "name": "delivery door",
+      "synonyms": [
+        "service door",
+        "corridor door",
+        "metal door",
+        "deliveries"
+      ],
+      "polygon": [[136, 36], [174, 36], [174, 104], [136, 104]],
+      "responses": {
+        "look": [
+          {
+            "text": "The plaza's delivery door: dented steel, DELIVERIES stenciled by someone fighting the stencil, propped reachable by a brick that has held this job for decades. It opens on the shared service corridor — the hallway all six units pretend they don't have."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              {
+                "narrate": "The brick nods you through."
+              },
+              {
+                "goto": "act2_corridor",
+                "arrive": { "x": 212, "y": 132, "facing": "down" }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "The brick nods you through."
+              },
+              {
+                "goto": "act2_corridor",
+                "arrive": { "x": 212, "y": 132, "facing": "down" }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "salon_backdoor",
+      "name": "salon back door",
+      "synonyms": [
+        "kims door",
+        "kim's door",
+        "back door"
+      ],
+      "polygon": [[32, 38], [66, 38], [66, 102], [32, 102]],
+      "responses": {
+        "look": [
+          {
+            "text": "Kim's back door: deadbolted, weather-stripped, generator cable passing beneath it through a drilled and gasketed hole. Drilled and GASKETED. Somewhere in the world, datacenter blanking panels sit uninstalled by the thousand, and Kim gasketed a cable pass-through for a nail salon. The competence differential back here could power the town."
+          }
+        ],
+        "open": [
+          {
+            "text": "Deadbolted, twice. Kim's continuity plan includes locks that lock. Her front door works and you know where it is — walk around like a person."
+          }
+        ]
+      }
+    },
+    {
+      "id": "staging_backdoor",
+      "name": "painted door",
+      "synonyms": [
+        "painted-shut door",
+        "old door",
+        "stuck door"
+      ],
+      "polygon": [[236, 38], [268, 38], [268, 100], [236, 100]],
+      "responses": {
+        "look": [
+          {
+            "text": "A back door painted shut so many tenants ago that the paint has geological layers — teal, then salmon, then landlord-white. The hinges are furred solid. Doors back here retire in place; nobody ever tells them, and nobody has the heart."
+          }
+        ],
+        "open": [
+          {
+            "text": "The paint has legal tenure at this point. There are other ways into everything — the corridor exists precisely so doors like this can rest."
+          }
+        ]
+      }
+    },
+    {
+      "id": "conduit",
+      "name": "conduit",
+      "synonyms": [
+        "riser",
+        "fiber",
+        "pipe",
+        "cable riser"
+      ],
+      "polygon": [[274, 8], [296, 8], [296, 100], [274, 100]],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "A gray conduit riser climbing the wall and diving into the block: the county's internet, arriving in a pipe. All of it — the dashboards, the fridges, the sermons, the invoices — funneled through two inches of schedule-40 PVC behind a nail salon. You put your ear near it. Nothing. Glass doesn't hum. Glass just carries the world, silently, or today: doesn't."
+              },
+              {
+                "score": {
+                  "id": "bl_conduit_respect",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "text": "You do not open the county's WAN with your hands in a parking lot. There are stories about people who did. They're told at conferences, slowly, as warnings."
+          }
+        ]
+      }
+    },
+    {
+      "id": "junction_box",
+      "name": "junction box",
+      "synonyms": [
+        "demarc",
+        "utility box",
+        "gray box"
+      ],
+      "polygon": [[268, 56], [302, 56], [302, 94], [268, 94]],
+      "responses": {
+        "look": [
+          {
+            "text": "The demarcation box — the exact bolted rectangle where the telephone company's problem historically became somebody else's. Every network has a spot like this. Most marriages do too. The seal is intact, which back here counts as a miracle of restraint."
+          }
+        ],
+        "open": [
+          {
+            "text": "The seal says PROPERTY OF THE PHONE COMPANY in the tone of a company that has outlived every company that ever laughed at it. You leave the seal be."
+          }
+        ]
+      }
+    },
+    {
+      "id": "pallets",
+      "name": "pallets",
+      "synonyms": [
+        "pallet",
+        "skids",
+        "wood"
+      ],
+      "polygon": [[296, 70], [319, 70], [319, 106], [296, 106]],
+      "responses": {
+        "look": [
+          {
+            "text": "A stack of shipping pallets aging into architecture. Every strip mall accretes these, like rings in a tree. The bottom one took delivery of something heavy once — the slats still remember. Possibly a rack. Possibly THE rack."
+          }
+        ],
+        "take": [
+          {
+            "text": "Free pallets: the founding lie of every small-town project. You have a closet to open, not a deck to regret."
+          }
+        ]
+      }
+    },
+    {
+      "id": "floodlight",
+      "name": "floodlight",
+      "synonyms": [
+        "light",
+        "lamp",
+        "security light"
+      ],
+      "polygon": [[142, 2], [170, 2], [170, 26], [142, 26]],
+      "responses": {
+        "look": [
+          {
+            "text": "One sodium floodlight over the delivery door, buzzing its single amber note into the dusk. It runs off the plaza's line power, which still works, because the grid is run by utilities, and utilities never got disrupted — just insulted. It will outlive the cloud, the plaza, and possibly the concept of evening."
+          }
+        ]
+      }
+    },
+    {
+      "id": "hum_wall",
+      "name": "wall",
+      "synonyms": [
+        "cinderblock",
+        "hum",
+        "block wall"
+      ],
+      "polygon": [[8, 24], [30, 24], [30, 100], [8, 100]],
+      "responses": {
+        "look": [
+          {
+            "text": "Cinderblock, painted the color of deferred maintenance. Press a palm to it anywhere along this stretch and you can feel the closet's hum arriving through eight inches of block — the internet's heartbeat, taken from the back, like a veterinarian. Steady. Feverish. Waiting for you to come around front."
+          }
+        ]
+      }
+    },
+    {
+      "id": "weeds_bl",
+      "name": "weeds",
+      "synonyms": [
+        "grass",
+        "growth",
+        "cracks"
+      ],
+      "polygon": [[240, 96], [264, 96], [264, 116], [240, 116]],
+      "responses": {
+        "look": [
+          {
+            "text": "The weeds made it back here too. Of course they did. The weeds are the only organization in this story with true global reach and no dependencies. When this is all over, somebody should acquire them."
+          }
+        ]
+      }
+    }
+  ]
+}

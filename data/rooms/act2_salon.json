@@ -1,0 +1,1089 @@
+{
+  "id": "act2_salon",
+  "name": "Kim's Nails",
+  "background": "assets/backgrounds/act2_salon.png",
+  "walkable": [
+    [
+      84,
+      112
+    ],
+    [
+      206,
+      112
+    ],
+    [
+      206,
+      122
+    ],
+    [
+      252,
+      122
+    ],
+    [
+      252,
+      112
+    ],
+    [
+      318,
+      112
+    ],
+    [
+      312,
+      178
+    ],
+    [
+      8,
+      178
+    ],
+    [
+      8,
+      142
+    ],
+    [
+      84,
+      142
+    ]
+  ],
+  "playerStart": {
+    "x": 296,
+    "y": 150,
+    "facing": "left"
+  },
+  "exits": [
+    {
+      "to": "act1_edge_of_town",
+      "polygon": [
+        [
+          306,
+          112
+        ],
+        [
+          319,
+          112
+        ],
+        [
+          319,
+          178
+        ],
+        [
+          306,
+          178
+        ]
+      ],
+      "arrive": {
+        "x": 100,
+        "y": 134,
+        "facing": "down"
+      }
+    },
+    {
+      "to": "act2_corridor",
+      "polygon": [
+        [
+          0,
+          142
+        ],
+        [
+          10,
+          142
+        ],
+        [
+          10,
+          178
+        ],
+        [
+          0,
+          178
+        ]
+      ],
+      "arrive": {
+        "x": 24,
+        "y": 150,
+        "facing": "right"
+      }
+    }
+  ],
+  "onEnter": [
+    {
+      "if": {
+        "flagNot": "sl_seen"
+      },
+      "do": [
+        {
+          "narrate": "Kim's Nails: eight hundred square feet of warmth, acetone, and unbroken service. The lights are on. The fans are drying. A rotary phone sits by the register with a dial tone it never lost. Somewhere below the lease line, a generator holds all of it up — one woman's continuity plan, outperforming a trillion-dollar cloud."
+        },
+        {
+          "setFlag": "sl_seen"
+        }
+      ]
+    },
+    {
+      "text": "The salon, warm and operational. The outage stops at Kim's threshold and waits outside like everyone else."
+    }
+  ],
+  "onScoreComplete": [
+    {
+      "do": [
+        {
+          "narrate": "The salon has given you everything it holds: coffee, testimony, a phone number's worth of hold music, and a new wrong name. Kim catches your eye and tips her head toward the lot — go on, Malcolm. The closet won't open itself. Actually, nothing here opens itself. That's the whole problem with the world you administrate."
+        }
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "kim",
+      "name": "Kim",
+      "synonyms": [
+        "manicurist",
+        "owner",
+        "proprietor",
+        "kim nguyen"
+      ],
+      "polygon": [
+        [
+          138,
+          34
+        ],
+        [
+          188,
+          34
+        ],
+        [
+          188,
+          80
+        ],
+        [
+          138,
+          80
+        ]
+      ],
+      "sprite": {
+        "use": "kim",
+        "at": [
+          163,
+          74
+        ]
+      },
+      "responses": {
+        "look": [
+          {
+            "text": "Kim Nguyen, mid-manicure, running the only functioning business in the county without looking up. The mirror behind her covers the door, the window, the lot, and you — she watched you cross the parking lot in it, graded your posture, and returned to the cuticle at hand. Everything in this room is under warranty because Kim is the warranty."
+          }
+        ],
+        "talk": [
+          {
+            "if": {
+              "flagNot": "met_kim"
+            },
+            "do": [
+              {
+                "narrate": "'You're the one from the closet company,' Kim says to the nail she's filing. Not a question. 'Mel,' you offer. 'Malcolm,' she confirms, the way a form confirms. 'There's tea if you're staying, Malcolm.' Another entry for the tally, this one with a full formal name you have never once possessed. The tally has stopped being surprised."
+              },
+              {
+                "setFlag": "met_kim"
+              },
+              {
+                "score": {
+                  "id": "sl_met_kim",
+                  "points": 2
+                }
+              }
+            ]
+          },
+          {
+            "text": "'Still here, Malcolm.' Kim keeps filing. She has topics the way the closet has heat — ambiently, and in quantity. Ask her about one."
+          }
+        ],
+        "take": [
+          {
+            "text": "Kim is the load-bearing member of this plaza. The plaza knows it. The generator knows it. You now know it."
+          }
+        ]
+      },
+      "topics": [
+        {
+          "match": [
+            "door",
+            "gray door",
+            "closet",
+            "edge node",
+            "hum",
+            "internet"
+          ],
+          "responses": [
+            {
+              "text": "'That door?' File, file. 'Dale's door. Company put their cloud in my wall and never came back. It hums in B-flat. My clients nap to it.' She holds the nail to the light. 'Nine years, Malcolm, you're the first one they sent. I'd say take your time, but you look like a man who wouldn't know how.'"
+            }
+          ]
+        },
+        {
+          "match": [
+            "dale",
+            "install",
+            "key",
+            "lockbox",
+            "key box",
+            "spare"
+          ],
+          "responses": [
+            {
+              "if": {
+                "flagNot": "kim_told_lockbox"
+              },
+              "do": [
+                {
+                  "narrate": "'Dale. Skinny kid, energy drinks, dropped things.' Kim files on. 'Kept his spare key in a little combination box, clipped to my gas meter out back like I wouldn't notice.' A pause, one eyebrow. 'I notice. Forty times a day he checked that box, like it was going to hatch.' She blows dust off the nail. 'It's still there, Malcolm. Boxes don't leave. People leave.'"
+                },
+                {
+                  "setFlag": "kim_told_lockbox"
+                }
+              ]
+            },
+            {
+              "text": "'Meter. Out back. Little box.' Kim's answers do not degrade on retransmission."
+            }
+          ]
+        },
+        {
+          "match": [
+            "coffee",
+            "machine",
+            "pod machine",
+            "pods"
+          ],
+          "responses": [
+            {
+              "if": {
+                "flagNot": "kim_coffee_ok"
+              },
+              "do": [
+                {
+                  "narrate": "'Machine's for clients.' Kim looks up for the first time — a full second of appraisal, the kind that reads blood pressure. 'You look like a man whose blood is trying to leave.' She reaches back without looking and flips the little switch on the machine's flank. 'Guest mode, Malcolm. One cup. Bring your own vessel; I'm a business, not a charity for mug owners.'"
+                },
+                {
+                  "setFlag": "kim_coffee_ok"
+                }
+              ]
+            },
+            {
+              "text": "'Guest mode's on. It stays on until you disappoint me.' The machine hums, briefly, as if it heard."
+            }
+          ]
+        },
+        {
+          "match": [
+            "generator",
+            "power",
+            "continuity"
+          ],
+          "responses": [
+            {
+              "text": "'Bought it after the '09 ice storm. Everyone laughed. Tuesday morning it started on the first pull.' Kim does not smile so much as adjust her settings. 'The cloud people sell continuity as a service, Malcolm. I bought mine as a machine. Machines stay bought.'"
+            }
+          ]
+        },
+        {
+          "match": [
+            "outage",
+            "cloud",
+            "nimbus",
+            "cumulonimbus"
+          ],
+          "responses": [
+            {
+              "text": "'My card reader died Tuesday, six forty-seven in the morning.' File. 'Cash box didn't.' File. 'The Nimbus rep who sold me the reader said it would future-proof my business.' Kim holds up the finished nail — flawless, ancient technique, zero dependencies. 'This is the future. I proofed it myself.'"
+            }
+          ]
+        },
+        {
+          "match": [
+            "name",
+            "mel",
+            "malcolm"
+          ],
+          "responses": [
+            {
+              "text": "'It's Mel. Just Mel.' Kim nods the way you'd acknowledge a software update you have no intention of installing. 'Malcolm suits you better. You carry it like a man with a middle initial.' The appointment book, you notice, has already ruled on this."
+            }
+          ]
+        },
+        {
+          "match": [
+            "dot"
+          ],
+          "responses": [
+            {
+              "text": "'Dot's under the dryer every Tuesday, outage or no outage.' Kim lowers her voice to salon-confidential. 'She knows everything that has happened in this county since Eisenhower. Ask her anything. Budget an afternoon.'"
+            }
+          ]
+        }
+      ],
+      "topicDefault": [
+        {
+          "text": "Kim files precisely three strokes' worth of silence, which is her way of marking a question as out of scope. Wontfix, with warmth."
+        }
+      ]
+    },
+    {
+      "id": "dot",
+      "name": "Dot",
+      "synonyms": [
+        "customer",
+        "client",
+        "lady",
+        "woman"
+      ],
+      "polygon": [
+        [
+          206,
+          38
+        ],
+        [
+          252,
+          38
+        ],
+        [
+          252,
+          116
+        ],
+        [
+          206,
+          116
+        ]
+      ],
+      "sprite": {
+        "use": "dot",
+        "at": [
+          228,
+          112
+        ]
+      },
+      "responses": {
+        "look": [
+          {
+            "text": "Dot: Beautification Committee chair, membership one, under the bonnet dryer with her nails mid-cure and her opinions fully cured. She gestures with her elbows to protect the polish, which gives every pronouncement the air of a small flightless bird taking off. She has been watching you since before you knew you were here."
+          }
+        ],
+        "talk": [
+          {
+            "if": {
+              "flagNot": "met_dot"
+            },
+            "do": [
+              {
+                "narrate": "'You're the computer fellow!' Dot announces over the dryer, delighted, elbows lifting. 'Mel,' you say. 'Mel Function.' She beams. 'Mel FUNKHOUSER! Any relation to the Funkhousers off Route 9?' You open your mouth. You close it. The tally, which thought it had seen everything, gets a new column: correct first name, fabricated lineage."
+              },
+              {
+                "setFlag": "met_dot"
+              },
+              {
+                "score": {
+                  "id": "sl_met_dot",
+                  "points": 1
+                }
+              }
+            ]
+          },
+          {
+            "text": "'Sit, Funkhouser, you're making the room nervous.' Dot pats the adjacent chair with an elbow. She has topics like the county has back roads."
+          }
+        ],
+        "take": [
+          {
+            "text": "Dot leaves when the timer dings and not one minute before. The timer knows better than to rush her, and it's a timer."
+          }
+        ]
+      },
+      "topics": [
+        {
+          "match": [
+            "town",
+            "county",
+            "main street"
+          ],
+          "responses": [
+            {
+              "text": "'This town had four thousand souls and a Woolworth's,' Dot says, elbows rising for emphasis. 'Then it had a bypass. Then it had a website.' She lets the dryer hum fill the silence where the Woolworth's used to be. 'Now the website's down and we still have the bypass. Nobody ever gives you your Woolworth's back, Funkhouser.'"
+            }
+          ]
+        },
+        {
+          "match": [
+            "plaza",
+            "parkview",
+            "woolworths",
+            "woolworth's"
+          ],
+          "responses": [
+            {
+              "text": "'This plaza was going to save the east end. I was at the ribbon.' Elbow flourish. 'Then the tanning place gave the whole council a glow you couldn't trust, the video store lost to the mail, and the mail lost to the air.' She nods toward the wall, toward the hum behind it. 'Now the east end holds the county's internet in a broom closet. I put THAT in the newsletter, nobody read it. It was a very good newsletter.'"
+            }
+          ]
+        },
+        {
+          "match": [
+            "petunias",
+            "planter",
+            "flowers",
+            "committee"
+          ],
+          "responses": [
+            {
+              "text": "'The memorial petunias are MUNICIPAL infrastructure,' Dot says, sitting up so fast the bonnet wobbles. 'Watered Tuesdays and Fridays, rain excepted, by me, since 1994. Four mayors. Zero outages.' She settles back with the satisfaction of a system that has never once required a status page."
+            }
+          ]
+        },
+        {
+          "match": [
+            "dale",
+            "closet",
+            "internet",
+            "outage"
+          ],
+          "responses": [
+            {
+              "text": "'Merle's nephew put the internet in Kim's wall the summer the pool closed.' Dot's voice drops to committee-executive-session level. 'Nice boy. Terrible diet. He told the Gazette where he kept the KEY, can you imagine — I clipped it for the scrapbook. Page forty. Between the sinkhole and the pie ribbon.'"
+            }
+          ]
+        },
+        {
+          "match": [
+            "name",
+            "mel",
+            "funkhouser"
+          ],
+          "responses": [
+            {
+              "text": "'Function. Mel FUNCTION.' Dot considers this at length. 'That's a strange name, dear. The Funkhousers are lovely people. You'd remember if you were one.' The matter closes with the soft authority of a minutes entry. You are Funkhouser now, seconded and carried."
+            }
+          ]
+        },
+        {
+          "match": [
+            "kim"
+          ],
+          "responses": [
+            {
+              "text": "'Kim,' says Dot, with the reverence she otherwise reserves for the petunias, 'is the only person in this county who was READY.' The elbows rise to full wingspan. 'The church has candles because of her. The Hendersons' insulin is in her mini-fridge. If Kim ran for mayor I would knock every door in the county, and I have. Twice.'"
+            }
+          ]
+        }
+      ],
+      "topicDefault": [
+        {
+          "text": "Dot inhales with the full authority of the Beautification Committee, then rules the topic 'more of a spring matter' and tables it. The dryer hums an adjournment."
+        }
+      ]
+    },
+    {
+      "id": "pod_machine",
+      "name": "pod machine",
+      "synonyms": [
+        "coffee machine",
+        "machine",
+        "coffee maker",
+        "pods",
+        "coffee"
+      ],
+      "polygon": [
+        [
+          74,
+          36
+        ],
+        [
+          102,
+          36
+        ],
+        [
+          102,
+          64
+        ],
+        [
+          74,
+          64
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "A pod coffee machine, backlit and smug — the only functioning smart appliance in the county, because it drinks from Kim's generator. Its screen offers a firmware update it will never receive. The pods are DRM'd to the brand, the brand is owned by a conglomerate, the conglomerate runs on Nimbus, and yet here it stands: alive on borrowed spite."
+          }
+        ],
+        "use": [
+          {
+            "if": {
+              "all": [
+                {
+                  "instrument": "mug"
+                },
+                {
+                  "flag": "mug_full"
+                }
+              ]
+            },
+            "text": "The mug is already full. Even this machine, which upsells by design, recognizes a completed transaction."
+          },
+          {
+            "if": {
+              "all": [
+                {
+                  "instrument": "mug"
+                },
+                {
+                  "flag": "kim_coffee_ok"
+                }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "You seat the mug under the spout. The machine punctures a pod with corporate ceremony, the generator out back accepts the surge, and eleven seconds of pressurized theater later you hold something legally describable as coffee. Kim nods once at the mug — bring-your-own-vessel discipline, acknowledged. It's no diner brew. It is, however, HOT, and today that makes it infrastructure."
+              },
+              {
+                "setFlag": "mug_full"
+              },
+              {
+                "setFlag": "coffee_act2"
+              },
+              {
+                "score": {
+                  "id": "sl_kim_coffee",
+                  "points": 2
+                }
+              }
+            ]
+          },
+          {
+            "if": {
+              "instrument": "mug"
+            },
+            "text": "The machine's screen requests a linked account, a loyalty tier, and Kim's blessing, in reverse order of importance. The first two are down. The third is filing a nail eight feet away. Ask her about coffee."
+          },
+          {
+            "if": {
+              "anyInstrument": true
+            },
+            "text": "The machine accepts vessels and pods. That is neither. Kim's mirror has already logged the attempt."
+          },
+          {
+            "if": {
+              "flag": "kim_coffee_ok"
+            },
+            "text": "Guest mode is lit and waiting. All you're missing is a vessel — and you, a man of thirty mugs, are carrying exactly one. Use it."
+          },
+          {
+            "text": "You hover a hand over the machine. Its screen brightens hopefully. Somewhere behind you, an emery board pauses mid-stroke. This is Kim's machine, in Kim's salon, on Kim's generator. There is an order to things."
+          }
+        ],
+        "take": [
+          {
+            "text": "Unplugging it from the county's last working outlet would be the second-largest infrastructure failure of the week. Ambitious, but no."
+          }
+        ]
+      }
+    },
+    {
+      "id": "rotary_phone",
+      "name": "rotary phone",
+      "synonyms": [
+        "phone",
+        "telephone",
+        "landline",
+        "rotary"
+      ],
+      "polygon": [
+        [
+          102,
+          44
+        ],
+        [
+          122,
+          44
+        ],
+        [
+          122,
+          66
+        ],
+        [
+          102,
+          66
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "A rotary telephone in salon red, connected to actual copper that runs to an actual exchange staffed by actual dial tone. The cloud fell out of the sky and this thing didn't even flinch — the phone company solved distributed systems in 1955 and never bragged. Kim keeps it for the same reason she keeps the generator: because it works."
+          }
+        ],
+        "use": [
+          {
+            "if": {
+              "all": [
+                {
+                  "flag": "read_noc_flyer"
+                },
+                {
+                  "flagNot": "sl_called_noc"
+                }
+              ]
+            },
+            "do": [
+              {
+                "narrate": "You dial the Community NOC hotline off the flyer — seven digits of finger-cranked commitment, each number a small workout. It connects. It actually connects. 'Your call is important,' says a voice made of beige, and then: hold music. Pan-flute. Licensed. Looping. You stand in a nail salon listening to the cloud's official apology instrument while the cloud itself lies dead behind the wall six feet away."
+              },
+              {
+                "narrate": "You hold for one full minute on principle, then return the handset to its cradle with the gentleness of a man closing a casket. The ticket, as ever, is yours."
+              },
+              {
+                "setFlag": "sl_called_noc"
+              },
+              {
+                "score": {
+                  "id": "sl_hold_music",
+                  "points": 1
+                }
+              }
+            ]
+          },
+          {
+            "if": {
+              "flag": "read_noc_flyer"
+            },
+            "text": "You consider calling the hotline again. The pan-flute is still there. It will always be there. It is the most highly-available component in the entire Cumulonimbus stack."
+          },
+          {
+            "text": "A working phone and nobody to call — every number you know is a contact card in a cloud that isn't answering. If you had a number written down somewhere physical, on paper, like a barbarian, you could actually dial it."
+          }
+        ],
+        "take": [
+          {
+            "text": "The handset is attached to the base, the base to the wall, the wall to Kim. The chain of custody is unbroken and unbreakable."
+          }
+        ]
+      }
+    },
+    {
+      "id": "polish_wall",
+      "name": "polish wall",
+      "synonyms": [
+        "polish",
+        "nail polish",
+        "bottles",
+        "shelves",
+        "colors"
+      ],
+      "polygon": [
+        [
+          22,
+          22
+        ],
+        [
+          70,
+          22
+        ],
+        [
+          70,
+          84
+        ],
+        [
+          22,
+          84
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "do": [
+              {
+                "narrate": "A wall of nail polish, hundreds of bottles, organized by a scheme you slowly recognize: not alphabetical, not spectral — by popularity, hot path first, like a well-tuned cache. Top shelf at hand height: 'Ballet Slipper' and 'Big Apple Red,' the workhorses. Bottom corner, dusty: 'Cyber Lime,' which the county tried once, in 1999, collectively, and never again."
+              },
+              {
+                "score": {
+                  "id": "sl_polish_wall",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "Kim's inventory system is Kim. The shrinkage rate is zero and staying there."
+          }
+        ]
+      }
+    },
+    {
+      "id": "mirror",
+      "name": "mirror",
+      "synonyms": [
+        "big mirror",
+        "reflection"
+      ],
+      "polygon": [
+        [
+          136,
+          18
+        ],
+        [
+          196,
+          18
+        ],
+        [
+          196,
+          62
+        ],
+        [
+          136,
+          62
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "The salon mirror, angled to hold the door, the window, the lot, and the register in one pane — Kim's observability stack, mounted with two screws, monitoring everything, alerting never. In the corner of it you catch a man in Real Pants who looks like he's on day two of a very long incident. You decline to acknowledge him."
+          }
+        ]
+      }
+    },
+    {
+      "id": "gel_lamp",
+      "name": "gel lamp",
+      "synonyms": [
+        "lamp",
+        "uv lamp",
+        "curing lamp",
+        "dryer lamp"
+      ],
+      "polygon": [
+        [
+          132,
+          62
+        ],
+        [
+          156,
+          62
+        ],
+        [
+          156,
+          78
+        ],
+        [
+          132,
+          78
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "A UV curing lamp, glowing patiently on the manicure table — a tanning bed for fingertips, one hand at a time. Sixty seconds under the purple and the polish is committed, immutable, production. Kim runs more successful deployments before lunch than your last three employers combined."
+          }
+        ],
+        "use": [
+          {
+            "text": "You are not putting your hand in Kim's lamp uninvited. It's not the UV you fear. It's the mirror."
+          }
+        ]
+      }
+    },
+    {
+      "id": "appointment_book",
+      "name": "appointment book",
+      "synonyms": [
+        "book",
+        "ledger",
+        "appointments",
+        "schedule"
+      ],
+      "polygon": [
+        [
+          104,
+          66
+        ],
+        [
+          122,
+          78
+        ],
+        [
+          122,
+          92
+        ],
+        [
+          104,
+          84
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "if": {
+              "flag": "met_kim"
+            },
+            "do": [
+              {
+                "narrate": "Kim's appointment book, open to today: every slot full, every appointment KEPT, on the one day the rest of civilization declared force majeure. And there, in the 3:30 margin, in Kim's decisive hand: 'MALCOLM (computers) — no appt.' You have been entered into the ledger of record. The name is wrong. The record is permanent. This is also how the cloud's billing system works."
+              },
+              {
+                "score": {
+                  "id": "sl_book_malcolm",
+                  "points": 1
+                }
+              }
+            ]
+          },
+          {
+            "text": "Kim's appointment book, open on the counter: a grid of names in confident ink, every slot full, no-shows crossed out with a single stroke like failed health checks. Paper-based scheduling, five nines. You'd need to introduce yourself before it would have anything to say about you."
+          }
+        ],
+        "take": [
+          {
+            "text": "Stealing the town's last functioning database. Bold. Career-ending, but bold."
+          }
+        ]
+      }
+    },
+    {
+      "id": "dryer",
+      "name": "bonnet dryer",
+      "synonyms": [
+        "hood",
+        "bonnet",
+        "hair dryer",
+        "chair dryer"
+      ],
+      "polygon": [
+        [
+          208,
+          36
+        ],
+        [
+          250,
+          36
+        ],
+        [
+          250,
+          78
+        ],
+        [
+          208,
+          78
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "A bonnet dryer of the grand old school, humming its single note over Dot like a personal weather system. No app, no firmware, one dial: OFF to VERY. It has outlived every startup that ever pitched 'haircare, but connected.' Dot, beneath it, is both user and uptime monitor."
+          }
+        ],
+        "use": [
+          {
+            "text": "The dryer is occupied by the Beautification Committee, quorum present. Out of order — parliamentary, not mechanical."
+          }
+        ]
+      }
+    },
+    {
+      "id": "thrones",
+      "name": "pedicure thrones",
+      "synonyms": [
+        "throne",
+        "pedicure chairs",
+        "chairs",
+        "massage chairs"
+      ],
+      "polygon": [
+        [
+          22,
+          96
+        ],
+        [
+          82,
+          96
+        ],
+        [
+          82,
+          138
+        ],
+        [
+          22,
+          138
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "Two pedicure thrones with built-in massage, foot baths dry and expectant. The chairs have a 'connect to app' sticker that Kim has covered with a smaller, firmer sticker: 'ASK.' The thrones work. Everything in here works. You keep having to sit with that."
+          }
+        ],
+        "use": [
+          {
+            "text": "You could ascend the throne, surrender your feet, and let the rollers own your spine for eleven minutes. The incident channel in your head files an objection. The incident channel wins. It always wins. Someday you'll unionize against it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "window_sl",
+      "name": "window",
+      "synonyms": [
+        "front window",
+        "glass",
+        "lot"
+      ],
+      "polygon": [
+        [
+          254,
+          22
+        ],
+        [
+          288,
+          22
+        ],
+        [
+          288,
+          68
+        ],
+        [
+          254,
+          68
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "Through the front window: the lot, the dusk, the pylon sign with its one blank panel, and — at this angle, just barely — the edge of the gray door. From inside the warmth, with a dial tone at your elbow and a generator underfoot, the internet's sick little room looks even smaller. Kim positioned every chair to face away from it. On purpose, you'd bet."
+          }
+        ]
+      }
+    },
+    {
+      "id": "curtain",
+      "name": "curtain",
+      "synonyms": [
+        "staff door",
+        "back door",
+        "doorway",
+        "beads",
+        "employees"
+      ],
+      "polygon": [
+        [
+          0,
+          26
+        ],
+        [
+          18,
+          26
+        ],
+        [
+          18,
+          112
+        ],
+        [
+          0,
+          112
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "A curtained doorway at the back of the salon, EMPLOYEES ONLY in two languages, leading into the strip mall's shared service corridor — the backend of the plaza, where the breaker panels and mop sinks live. Kim's curtain is nicer than the corridor deserves. Most frontends are."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              {
+                "narrate": "You slip through the curtain. Kim doesn't stop you, which in Kim is a security clearance."
+              },
+              {
+                "goto": "act2_corridor"
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "You slip through the curtain. Kim doesn't stop you, which in Kim is a security clearance."
+              },
+              {
+                "goto": "act2_corridor"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "salon_door",
+      "name": "front door",
+      "synonyms": [
+        "door",
+        "entrance",
+        "exit",
+        "outside"
+      ],
+      "polygon": [
+        [
+          292,
+          20
+        ],
+        [
+          318,
+          20
+        ],
+        [
+          318,
+          108
+        ],
+        [
+          292,
+          108
+        ]
+      ],
+      "responses": {
+        "look": [
+          {
+            "text": "The salon's front door, glass and gold-lettered, hours painted by hand and honored by habit. Taped to it, facing out: 'YES WE'RE OPEN. NO WE DON'T KNOW WHEN IT'S COMING BACK. NAILS THOUGH.' The best status page in the county, and the only accurate one."
+          }
+        ],
+        "open": [
+          {
+            "do": [
+              {
+                "narrate": "Back out into the dusk and the hum."
+              },
+              {
+                "goto": "act1_edge_of_town",
+                "arrive": {
+                  "x": 100,
+                  "y": 134,
+                  "facing": "down"
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "Back out into the dusk and the hum."
+              },
+              {
+                "goto": "act1_edge_of_town",
+                "arrive": {
+                  "x": 100,
+                  "y": 134,
+                  "facing": "down"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

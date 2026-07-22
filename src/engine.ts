@@ -453,7 +453,7 @@ export class Engine {
         this.refreshInventory();
       },
       die: (id, text, title) => this.die(id, text, title),
-      gotoRoom: (id) => this.changeRoom(id),
+      gotoRoom: (id, arrive) => this.changeRoom(id, arrive),
       showDocument: (spec) => {
         let imageUrl: string | undefined;
         if (spec.image) {

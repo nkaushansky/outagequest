@@ -17,6 +17,62 @@
         "y": 140,
         "facing": "left"
       }
+    },
+    {
+      "to": "act2_salon",
+      "polygon": [[86, 118], [118, 118], [118, 136], [86, 136]],
+      "arrive": {
+        "x": 296,
+        "y": 150,
+        "facing": "left"
+      }
+    },
+    {
+      "to": "act2_closet",
+      "polygon": [[246, 116], [274, 116], [274, 138], [246, 138]],
+      "arrive": {
+        "x": 294,
+        "y": 148,
+        "facing": "left"
+      },
+      "if": { "flag": "edge_door_open" },
+      "blocked": [
+        {
+          "if": { "hasItem": "edge_key" },
+          "text": "The door is still locked and the key is still in your pocket. These two facts have an obvious meeting scheduled. Use the key on the door."
+        },
+        {
+          "text": "Locked — a real lock, a metal one, the janitor's-key kind. The hum on the other side does not pause to acknowledge you. Somewhere in this parking lot, Dale left a way in; installers always do."
+        }
+      ]
+    },
+    {
+      "to": "act2_backlot",
+      "polygon": [[304, 126], [319, 126], [319, 164], [304, 164]],
+      "arrive": {
+        "x": 296,
+        "y": 150,
+        "facing": "left"
+      }
+    },
+    {
+      "to": "act2_roadside",
+      "polygon": [[236, 172], [319, 172], [319, 180], [236, 180]],
+      "arrive": {
+        "x": 30,
+        "y": 162,
+        "facing": "right"
+      },
+      "if": { "flag": "act2_trail_found" },
+      "blocked": [
+        {
+          "if": { "flag": "edge_door_open" },
+          "text": "The county road runs east into the dark, and someday soon it will want you. Not yet. The closet is open and it hasn't finished telling you things."
+        },
+        {
+          "text": "East is just county road and the smell of soybeans. Everything that matters right now is inside this parking lot, behind gray steel, humming."
+        }
+      ]
     }
   ],
   "onEnter": [
@@ -32,7 +88,7 @@
           "narrate": "You stand there in your Real Pants, ankle-deep in the first day of the rest of the outage. Every dashboard on Earth is red, and the only trail on Earth runs through that door. Mel Function — whatever this town thinks your name is — the descent starts here."
         },
         {
-          "narrate": "END OF ACT ONE. (Act Two: 'Regional Infrastructure' — under construction. The hum will wait. It's good at waiting.)"
+          "narrate": "END OF ACT ONE. (The hum will wait. It's good at waiting.)"
         },
         {
           "setFlag": "eot_arrived"
@@ -46,7 +102,15 @@
       ]
     },
     {
-      "text": "The plaza, the salon, the hum. Act Two is behind that door, and it isn't finished being built. The door, notably, doesn't care."
+      "if": { "flag": "act2_trail_found" },
+      "text": "The plaza, the hum, and — from the road east — an idle you recognize. Big, patient, carbureted. Half the diner's parking lot sounds like that. Somebody is waiting where the asphalt leaves town."
+    },
+    {
+      "if": { "flag": "edge_door_open" },
+      "text": "The plaza. The gray door stands open, exhaling warm air and institutional hum. The closet is receiving visitors."
+    },
+    {
+      "text": "The plaza, the salon, the hum. The way through that gray door is hidden somewhere in this parking lot, because a man in a hurry always leaves a spare."
     }
   ],
   "hotspots": [
@@ -62,7 +126,22 @@
       "responses": {
         "look": [
           {
-            "text": "The plaza's pylon sign: PARKVIEW PLAZA in letters missing enough plastic to read PARKV EW P AZA. Below, tenant panels — the nail salon's is lit. One panel is blank white and always has been. That one, you now know, is the internet's."
+            "do": [
+              {
+                "narrate": "The plaza's pylon sign: PARKVIEW PLAZA in letters missing enough plastic to read PARKV EW P AZA. Below, tenant panels — the nail salon's is lit, off Kim's own generator, which makes it the only illuminated advertisement in the hemisphere. One panel is blank white and always has been. That one is the internet's. It never needed your attention before, and now it has all of it."
+              },
+              {
+                "score": {
+                  "id": "eot_pylon_prophecy",
+                  "points": 1
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "The blank panel would look striking over your desk, and the ladder to it would look striking under a chalk outline. Pass."
           }
         ]
       }
@@ -94,23 +173,43 @@
         "salon",
         "kims",
         "kim",
+        "storefront",
         "generator"
       ],
       "polygon": [[76, 72], [128, 72], [128, 120], [76, 120]],
       "responses": {
         "look": [
           {
-            "text": "Kim's Nails, open and busy — a generator drones out back, because Kim, alone among the businesses of this county, had a continuity plan. Through the window, a manicure proceeds in defiance of the apocalypse. The internet's last neighbor is thriving."
+            "text": "Kim's Nails, open and busy — a generator drones out back, because Kim, alone among the businesses of this county, had a continuity plan. Through the window, a manicure proceeds in defiance of the apocalypse. The internet's last neighbor is thriving, and her door works like a door."
           }
         ],
         "open": [
           {
-            "text": "Not yet. Kim keeps information the way the diner keeps pie: dispensed on her schedule, to the deserving. Act Two problem."
+            "do": [
+              {
+                "narrate": "The salon door opens onto warmth, acetone, and competence."
+              },
+              {
+                "goto": "act2_salon"
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "do": [
+              {
+                "narrate": "The salon door opens onto warmth, acetone, and competence."
+              },
+              {
+                "goto": "act2_salon"
+              }
+            ]
           }
         ],
         "talk": [
           {
-            "text": "Through the glass, Kim points you — without looking up from a cuticle — around the side, toward the hum. Everyone who comes here in a hurry wants the gray door. Kim has seen your kind before."
+            "text": "You address the storefront. Through the glass, without looking up from a cuticle, Kim points at the door with an emery board. It's a door. It opens. She has faith you'll work it out."
           }
         ]
       }
@@ -128,7 +227,17 @@
       "responses": {
         "look": [
           {
-            "text": "Above the gray door, where a transom window should be: a consumer box fan, wedged and duct-taped, exhausting warm air at a steady clip. Somewhere a datacenter engineer has a nightmare that looks exactly like this. This is the cooling architecture. This is 'regional.'"
+            "do": [
+              {
+                "narrate": "Above the gray door, where a transom window should be: a consumer box fan, wedged and duct-taped, exhausting warm air at a steady clip. Somewhere a datacenter engineer has a nightmare that looks exactly like this. This is the cooling architecture. This is 'regional.' You make a note to meet its other side."
+              },
+              {
+                "score": {
+                  "id": "eot_fan_architecture",
+                  "points": 1
+                }
+              }
+            ]
           }
         ]
       }
@@ -140,29 +249,137 @@
         "door",
         "steel door",
         "hum",
-        "closet",
         "edge node",
         "sticker",
-        "graffiti"
+        "graffiti",
+        "lock"
       ],
       "polygon": [[249, 82], [270, 82], [270, 120], [249, 120]],
       "responses": {
         "look": [
           {
-            "text": "A gray steel door, sun-faded, unlabeled except for a sticker the size of a playing card: a stylized cloud and the words 'CUMULONIMBUS EDGE — AUTHORIZED PERSONNEL.' Someone has ballpointed 'nimbus' onto it; corporate stickered over the graffiti; the graffiti returned. Behind the door, the hum holds a perfect, patient note. The whole county's internet lives in there, and it is not feeling well."
+            "if": { "flag": "edge_door_open" },
+            "text": "The gray door stands open on the county's entire internet: one rack, one hum, zero staff. The sticker — 'CUMULONIMBUS EDGE — AUTHORIZED PERSONNEL' — now describes you, if you squint at the word 'authorized' and don't stop squinting."
+          },
+          {
+            "text": "A gray steel door, sun-faded, unlabeled except for a sticker the size of a playing card: a stylized cloud and the words 'CUMULONIMBUS EDGE — AUTHORIZED PERSONNEL.' Someone has ballpointed 'nimbus' onto it; corporate stickered over the graffiti; the graffiti returned. Behind the door, the hum holds a perfect, patient note. The lock is a real lock, a metal one, the janitor's-key kind — and somewhere, an installer's spare is waiting to be found."
           }
         ],
         "open": [
           {
-            "text": "Locked — a real lock, a metal one, the janitor's-key kind. Getting through this door is the entire shape of Act Two, and Act Two is still being wired. The hum approves of your ambition and declines your entry."
+            "if": { "flag": "edge_door_open" },
+            "do": [
+              {
+                "narrate": "You step into the hum."
+              },
+              {
+                "goto": "act2_closet"
+              }
+            ]
+          },
+          {
+            "if": { "hasItem": "edge_key" },
+            "do": [
+              {
+                "narrate": "The janitor's key slides in like it was cut yesterday, because hardware doesn't rot, it waits. One turn. The deadbolt retracts with a clack you feel in your teeth, the door swings, and the hum rolls out over you — warm, dusty, alive. Nine years this door has been closed. The internet's most neglected room would like to see you now."
+              },
+              {
+                "narrate": "You leave the key in the lock, the way Dale would have. You're a professional, not a souvenir collector."
+              },
+              {
+                "setFlag": "edge_door_open"
+              },
+              {
+                "removeItem": "edge_key"
+              },
+              {
+                "score": {
+                  "id": "eot_door_unlocked",
+                  "points": 4
+                }
+              },
+              {
+                "goto": "act2_closet"
+              }
+            ]
+          },
+          {
+            "text": "Locked. A real lock, a metal one, the janitor's-key kind. You could stand here rattling it, or you could think like an installer: young, in a hurry, years ago, required by policy to leave a spare. The trail is somewhere in this lot — and in this town."
           }
         ],
         "use": [
+          {
+            "if": { "flag": "edge_door_open" },
+            "do": [
+              {
+                "narrate": "You step into the hum."
+              },
+              {
+                "goto": "act2_closet"
+              }
+            ]
+          },
+          {
+            "if": { "instrument": "edge_key" },
+            "do": [
+              {
+                "narrate": "The janitor's key slides in like it was cut yesterday, because hardware doesn't rot, it waits. One turn. The deadbolt retracts with a clack you feel in your teeth, the door swings, and the hum rolls out over you — warm, dusty, alive. Nine years this door has been closed. The internet's most neglected room would like to see you now."
+              },
+              {
+                "narrate": "You leave the key in the lock, the way Dale would have. You're a professional, not a souvenir collector."
+              },
+              {
+                "setFlag": "edge_door_open"
+              },
+              {
+                "removeItem": "edge_key"
+              },
+              {
+                "score": {
+                  "id": "eot_door_unlocked",
+                  "points": 4
+                }
+              },
+              {
+                "goto": "act2_closet"
+              }
+            ]
+          },
+          {
+            "if": { "hasItem": "edge_key" },
+            "do": [
+              {
+                "narrate": "The janitor's key slides in like it was cut yesterday, because hardware doesn't rot, it waits. One turn. The deadbolt retracts with a clack you feel in your teeth, the door swings, and the hum rolls out over you — warm, dusty, alive. Nine years this door has been closed. The internet's most neglected room would like to see you now."
+              },
+              {
+                "narrate": "You leave the key in the lock, the way Dale would have. You're a professional, not a souvenir collector."
+              },
+              {
+                "setFlag": "edge_door_open"
+              },
+              {
+                "removeItem": "edge_key"
+              },
+              {
+                "score": {
+                  "id": "eot_door_unlocked",
+                  "points": 4
+                }
+              },
+              {
+                "goto": "act2_closet"
+              }
+            ]
+          },
           {
             "text": "You rest a palm on the steel. Warm. Vibrating. Alive, in the way that sick things are still alive. 'Soon,' you tell it, and mean it professionally."
           }
         ],
         "talk": [
+          {
+            "if": { "flag": "edge_door_open" },
+            "text": "You and the open doorway hum at each other. The relationship has entered a new phase."
+          },
           {
             "text": "You and the door listen to each other hum. It's the most productive status meeting you've attended all year."
           }
@@ -175,18 +392,74 @@
       "synonyms": [
         "trash",
         "garbage",
-        "bin"
+        "bin",
+        "debris",
+        "work order"
       ],
       "polygon": [[272, 90], [319, 90], [319, 126], [272, 126]],
       "responses": {
         "look": [
           {
-            "text": "The plaza dumpster. Poking from the top: a shipping box for a 48-port switch, a coil of cable offcuts, and an empty energy-drink flat. Archaeology confirms the closet has been maintained exactly once, by a young man, in a hurry, some years ago."
+            "if": { "flag": "eot_dumpster_dived" },
+            "text": "The plaza dumpster, already surrendered its paperwork. The switch box, the cable offcuts, the energy-drink flat — Dale's whole apprenticeship in sediment. Archaeology complete."
+          },
+          {
+            "text": "The plaza dumpster. Poking from the top: a shipping box for a 48-port switch, a coil of cable offcuts, and an empty energy-drink flat. Archaeology says the closet has been maintained exactly once, by a young man, in a hurry, some years ago. Young men in hurries leave paperwork."
           }
         ],
         "open": [
           {
-            "text": "You are not yet at the dumpster-diving stage of this incident. That's Act Two, possibly Act Three. Pace the descent."
+            "do": [
+              {
+                "narrate": "You lift the lid and go in with both sleeves — a dignity write-off you accept as operational cost. Under the switch box: a carbon-copy work order, grease-spotted, signature line signed 'D' with a lightning bolt. You read it right there, by dusk light, like scripture."
+              },
+              {
+                "document": {
+                  "style": "flyer",
+                  "title": "CUMULONIMBUS FIELD SERVICE — WORK ORDER #CN-0447",
+                  "body": "SITE: Parkview Plaza Unit 6 ('Regional Edge') — install, rack, terminate, energize.\nCHECKLIST: ☑ Rack set ☑ Uplink terminated ☑ Switch energized ☑ Cooling per site conditions (see note) ☑ Site secured per SOP-7\nNOTE (handwritten): 'cooling' is a box fan. Not filing a variance. Nobody reads these.\nSOP-7 REMINDER (printed): Affix contractor lockbox to nearest immovable gas fitting. Set combination to the final four digits of the Community NOC hotline (printed on all community-facing collateral — field techs always have collateral).\nHANDWRITTEN, CIRCLED TWICE: combo = hotline. DO NOT write it on the box again. — D⚡"
+                }
+              },
+              {
+                "setFlag": "knows_lockbox_rule"
+              },
+              {
+                "setFlag": "eot_dumpster_dived"
+              },
+              {
+                "score": {
+                  "id": "eot_dumpster_dive",
+                  "points": 2
+                }
+              }
+            ]
+          }
+        ],
+        "use": [
+          {
+            "if": { "flagNot": "eot_dumpster_warned" },
+            "do": [
+              {
+                "narrate": "You get one knee up on the lip, ready to go in like a raccoon with a mortgage. The lid — nine hundred pounds of county-spec steel — shifts an inch and rings like a church bell. You step back down. There is diving into a dumpster, and there is being filed in one."
+              },
+              {
+                "setFlag": "eot_dumpster_warned"
+              }
+            ]
+          },
+          {
+            "do": [
+              {
+                "death": {
+                  "id": "garbage_collected"
+                }
+              }
+            ]
+          }
+        ],
+        "take": [
+          {
+            "text": "The dumpster belongs to the plaza, the debris belongs to history, and the smell belongs to everyone now."
           }
         ]
       }
@@ -198,13 +471,14 @@
         "plaza",
         "mall",
         "storefronts",
-        "shopping center"
+        "shopping center",
+        "vacancies"
       ],
       "polygon": [[74, 52], [302, 52], [302, 124], [74, 124]],
       "responses": {
         "look": [
           {
-            "text": "The Parkview Plaza, which views a parking lot. Tanning, tax prep, vacancy, nails, vacancy, and one unmarked unit. Regional infrastructure chose this place for the same reason everyone else here did: the rent."
+            "text": "The Parkview Plaza, which views a parking lot. Tanning, tax prep, vacancy, nails, vacancy, and one unmarked unit. Regional infrastructure chose this place for the same reason everyone else here did: the rent. Somewhere behind these storefronts runs a service corridor, because strip malls, like networks, are mostly backend."
           }
         ]
       }

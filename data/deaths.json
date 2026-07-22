@@ -15,6 +15,21 @@
       "id": "packet_loss",
       "title": "100% Packet Loss",
       "text": "You step into Main Street without looking. Statistically, this road carries one vehicle per hour. You have just met the hour. The town's entire traffic, delivered in a single packet, and you were standing on the route. In your own postmortem, you will be listed as the single point of failure."
+    },
+    {
+      "id": "garbage_collected",
+      "title": "Garbage Collected",
+      "text": "You go in after the paperwork headfirst. The lid — nine hundred pounds of county-spec steel, hinged by gravity, reviewed by no one — detects an unreferenced object inside its heap and closes. The county's waste-management cycle runs Thursdays. You have been scheduled. Memory safety was never optional, and you, of all people, knew that."
+    },
+    {
+      "id": "load_shedding",
+      "title": "Load Shedding",
+      "text": "You flip the scorched breaker, on the theory that the worst has already happened to it. The worst, it turns out, had merely been saving. The arc takes the panel, the panel takes the corridor, and for one incandescent instant you are the best-grounded component in the building. Kim's generator doesn't so much as hiccup. Kim will find you with the mop, and the mop, at last, will have a purpose."
+    },
+    {
+      "id": "cooling_architecture",
+      "title": "Cooling Architecture",
+      "text": "You reach into the transom to adjust the county's entire thermal design mid-spin. The box fan — nineteen dollars, nine years of continuous duty, zero grille — declines the change request at eleven hundred RPM. The blades win the argument, the airflow wins your hat, and the coroner's report introduces the phrase 'cooling architecture' to county paperwork forever. The rack hums on, unmourned and unmoved. Uptime was maintained. Just not yours."
     }
   ]
 }
