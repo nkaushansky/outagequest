@@ -105,14 +105,14 @@
       "polygon": [
         [
           0,
-          160
+          116
         ],
         [
-          14,
-          160
+          16,
+          116
         ],
         [
-          14,
+          16,
           180
         ],
         [
@@ -1215,6 +1215,17 @@
           }
         ]
       }
+    }
+  ],
+  "lookAround": [
+    {
+      "if": {
+        "flag": "met_dot"
+      },
+      "text": "Kim's Nails, surveyed: KIM works her station center-room, file in hand, mirror watching everything on her behalf. DOT cures under the bonnet dryer, elbows at the ready. Polish wall left over the counter — pod machine, red rotary phone, the appointment book of record — pedicure thrones and the supply trolley holding the left flank, window and front door on the right with the waiting bench beside. The staff curtain at the back-left corner slips past the trolley into the service corridor."
+    },
+    {
+      "text": "Kim's Nails, surveyed: the woman running the room from her nail station — file in hand, mirror doing her watching — is KIM, of the sign. Under the bonnet dryer, a customer cures her nails with visible opinions. Polish wall left over the counter — pod machine, red rotary phone, appointment book — thrones and the supply trolley on the left flank, window, front door, and waiting bench right. The staff curtain in the back-left corner slips past the trolley into the plaza's service corridor."
     }
   ]
 }

@@ -332,7 +332,7 @@
               },
               {
                 "document": {
-                  "style": "flyer",
+                  "style": "binder",
                   "title": "EDGE DEPLOYMENT RUNBOOK v3 — §7: SITE SECURITY",
                   "body": "7.1 The Edge is everywhere. Security must therefore be somewhere.\n7.2 Each Type C site receives one (1) door and one (1) key, janitor pattern. Keys are the perimeter.\n7.3 Key custody: affix contractor lockbox to nearest immovable gas fitting. Gas fittings are audited by a second utility, providing free physical oversight (see Appendix: 'Other People's Rigor').\n7.4 Combination: the final four digits of the Community NOC hotline. Rationale: field technicians always carry collateral; collateral always carries the hotline; therefore the technician always carries the combination. This is called Defense in Depth.\n7.5 Do NOT write the combination on the lockbox (Incident CN-88).\n7.6 Do NOT write it on the door (Incident CN-91).\n7.7 The hotline is printed on all community-facing collateral. Distribute collateral generously. The combination must never be widely known."
                 }
@@ -546,6 +546,11 @@
           }
         ]
       }
+    }
+  ],
+  "lookAround": [
+    {
+      "text": "The old PagePro, surveyed: the corridor door behind you, a wall of bolted demo phones under the ghost sign, and the dusty glass counter where Dale set up camp — his blue RUNBOOK still holds the throne. Rightward, his leavings: the cable spool, the flattened rack boxes, the energy-drink pyramid keeping vigil in the corner, all lit amber through the papered front window. Retail died here; documentation survived."
     }
   ]
 }

@@ -2,7 +2,40 @@
   "id": "act1_living_room",
   "name": "The Rest of the House",
   "background": "assets/backgrounds/act1_living_room.png",
-  "walkable": [[22, 116], [33, 116], [33, 138], [156, 138], [156, 116], [298, 116], [258, 178], [8, 178]],
+  "walkable": [
+    [
+      22,
+      116
+    ],
+    [
+      33,
+      116
+    ],
+    [
+      33,
+      138
+    ],
+    [
+      156,
+      138
+    ],
+    [
+      156,
+      116
+    ],
+    [
+      298,
+      116
+    ],
+    [
+      258,
+      178
+    ],
+    [
+      8,
+      178
+    ]
+  ],
   "playerStart": {
     "x": 34,
     "y": 150,
@@ -11,7 +44,24 @@
   "exits": [
     {
       "to": "act1_home_office",
-      "polygon": [[0, 116], [22, 116], [22, 178], [0, 178]],
+      "polygon": [
+        [
+          0,
+          116
+        ],
+        [
+          22,
+          116
+        ],
+        [
+          22,
+          178
+        ],
+        [
+          0,
+          178
+        ]
+      ],
       "arrive": {
         "x": 284,
         "y": 164,
@@ -20,7 +70,24 @@
     },
     {
       "to": "act1_bedroom",
-      "polygon": [[24, 116], [44, 116], [44, 142], [24, 142]],
+      "polygon": [
+        [
+          24,
+          116
+        ],
+        [
+          44,
+          116
+        ],
+        [
+          44,
+          142
+        ],
+        [
+          24,
+          142
+        ]
+      ],
       "arrive": {
         "x": 34,
         "y": 158,
@@ -29,7 +96,24 @@
     },
     {
       "to": "act1_main_street",
-      "polygon": [[282, 116], [300, 116], [300, 142], [282, 142]],
+      "polygon": [
+        [
+          282,
+          116
+        ],
+        [
+          300,
+          116
+        ],
+        [
+          300,
+          142
+        ],
+        [
+          282,
+          142
+        ]
+      ],
       "arrive": {
         "x": 16,
         "y": 140,
@@ -95,7 +179,24 @@
         "monstera",
         "timer"
       ],
-      "polygon": [[0, 75], [20, 75], [20, 150], [0, 150]],
+      "polygon": [
+        [
+          0,
+          75
+        ],
+        [
+          20,
+          75
+        ],
+        [
+          20,
+          150
+        ],
+        [
+          0,
+          150
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -122,7 +223,24 @@
         "door to office",
         "nerve center"
       ],
-      "polygon": [[7, 17], [41, 17], [41, 110], [7, 110]],
+      "polygon": [
+        [
+          7,
+          17
+        ],
+        [
+          41,
+          17
+        ],
+        [
+          41,
+          110
+        ],
+        [
+          7,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -163,7 +281,24 @@
         "hallway",
         "hall"
       ],
-      "polygon": [[66, 22], [97, 22], [97, 110], [66, 110]],
+      "polygon": [
+        [
+          66,
+          22
+        ],
+        [
+          97,
+          22
+        ],
+        [
+          97,
+          110
+        ],
+        [
+          66,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -217,7 +352,24 @@
         "frames",
         "family"
       ],
-      "polygon": [[100, 26], [150, 26], [150, 64], [100, 64]],
+      "polygon": [
+        [
+          100,
+          26
+        ],
+        [
+          150,
+          26
+        ],
+        [
+          150,
+          64
+        ],
+        [
+          100,
+          64
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -240,7 +392,24 @@
         "climate",
         "furnace"
       ],
-      "polygon": [[51, 45], [61, 45], [61, 57], [51, 57]],
+      "polygon": [
+        [
+          51,
+          45
+        ],
+        [
+          61,
+          45
+        ],
+        [
+          61,
+          57
+        ],
+        [
+          51,
+          57
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -273,7 +442,24 @@
         "screen",
         "soundbar"
       ],
-      "polygon": [[152, 32], [207, 32], [207, 67], [152, 67]],
+      "polygon": [
+        [
+          152,
+          32
+        ],
+        [
+          207,
+          32
+        ],
+        [
+          207,
+          67
+        ],
+        [
+          152,
+          67
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -282,7 +468,9 @@
         ],
         "use": [
           {
-            "if": { "instrument": "couch" },
+            "if": {
+              "instrument": "couch"
+            },
             "text": "You aim the excavated remote at the smart TV and click. The remote does its entire job — infrared fires, physics complies, the click lands. The TV, which answers only to an app, which answers only to the cloud, does not acknowledge the transmission. Somewhere in that pulsing logo, a perfectly good signal dies in a queue."
           },
           {
@@ -311,7 +499,24 @@
         "node",
         "access point"
       ],
-      "polygon": [[176, 70], [198, 70], [198, 84], [176, 84]],
+      "polygon": [
+        [
+          176,
+          70
+        ],
+        [
+          198,
+          70
+        ],
+        [
+          198,
+          84
+        ],
+        [
+          176,
+          84
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -340,7 +545,24 @@
         "voice assistant",
         "cylinder"
       ],
-      "polygon": [[207, 46], [225, 46], [225, 64], [207, 64]],
+      "polygon": [
+        [
+          207,
+          46
+        ],
+        [
+          225,
+          46
+        ],
+        [
+          225,
+          64
+        ],
+        [
+          207,
+          64
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -385,7 +607,24 @@
         "view",
         "outside"
       ],
-      "polygon": [[221, 20], [251, 20], [251, 81], [221, 81]],
+      "polygon": [
+        [
+          221,
+          20
+        ],
+        [
+          251,
+          20
+        ],
+        [
+          251,
+          81
+        ],
+        [
+          221,
+          81
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -408,7 +647,24 @@
         "panel",
         "video doorbell"
       ],
-      "polygon": [[276, 88], [290, 88], [290, 104], [276, 104]],
+      "polygon": [
+        [
+          276,
+          88
+        ],
+        [
+          290,
+          88
+        ],
+        [
+          290,
+          104
+        ],
+        [
+          276,
+          104
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -452,7 +708,24 @@
         "discs",
         "media"
       ],
-      "polygon": [[253, 30], [280, 30], [280, 102], [253, 102]],
+      "polygon": [
+        [
+          253,
+          30
+        ],
+        [
+          280,
+          30
+        ],
+        [
+          280,
+          102
+        ],
+        [
+          253,
+          102
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -480,7 +753,24 @@
         "outside door",
         "exit"
       ],
-      "polygon": [[285, 20], [318, 20], [318, 108], [285, 108]],
+      "polygon": [
+        [
+          285,
+          20
+        ],
+        [
+          318,
+          20
+        ],
+        [
+          318,
+          108
+        ],
+        [
+          285,
+          108
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -547,7 +837,24 @@
         "exercise",
         "tablet"
       ],
-      "polygon": [[262, 72], [319, 72], [319, 168], [262, 168]],
+      "polygon": [
+        [
+          262,
+          72
+        ],
+        [
+          319,
+          72
+        ],
+        [
+          319,
+          168
+        ],
+        [
+          262,
+          168
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -596,11 +903,38 @@
         "remote",
         "clicker"
       ],
-      "polygon": [[33, 63], [64, 63], [64, 80], [152, 80], [152, 136], [33, 136]],
+      "polygon": [
+        [
+          33,
+          63
+        ],
+        [
+          64,
+          63
+        ],
+        [
+          64,
+          80
+        ],
+        [
+          152,
+          80
+        ],
+        [
+          152,
+          136
+        ],
+        [
+          33,
+          136
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "lr_couch_dug" },
+            "if": {
+              "flag": "lr_couch_dug"
+            },
             "text": "The couch, post-excavation: cushions resettled, coins reinterred, and the resurrected TV remote lying in state on the middle seat. A device with buttons that do what the buttons say. You keep it where you can see it, the way some people keep candles."
           },
           {
@@ -652,7 +986,9 @@
             ]
           },
           {
-            "if": { "flag": "lr_couch_dug" },
+            "if": {
+              "flag": "lr_couch_dug"
+            },
             "text": "You could sit. No — sitting is how the last four years happened. Instead you pick up the resurrected remote and click it at the room, once, like a sommelier ringing a glass. Nothing obeys. Everything, you feel, is notified."
           },
           {
@@ -665,6 +1001,11 @@
           }
         ]
       }
+    }
+  ],
+  "lookAround": [
+    {
+      "text": "The rest of the house, surveyed: a smart TV with nothing to say, a smart speaker with nobody to hear, a thermostat holding the temperature hostage, and an exercise bike wearing its tablet like a headstone. The couch keeps its fossil record center-left. Interior doors cluster left — the office's warm glow, the bedroom's dark doorway — and the front door waits on the right wall, deadbolt and all, between you and a concept called outside."
     }
   ]
 }

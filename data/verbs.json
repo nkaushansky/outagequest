@@ -1,6 +1,6 @@
 {
   "verbs": {
-    "look":  { "synonyms": ["look", "look at", "examine", "inspect", "read", "l", "x"], "needsObject": false,
+    "look":  { "synonyms": ["look", "look at", "look around", "look here", "survey", "examine", "inspect", "read", "l", "x"], "needsObject": false,
                "default": "You look. It looks back. Neither of you learns anything." },
     "take":  { "synonyms": ["take", "get", "grab", "pick up", "steal"], "needsObject": true,
                "default": "It declines to be taken. Respect that." },
@@ -11,6 +11,7 @@
     "open":  { "synonyms": ["open", "unlock"], "needsObject": true,
                "default": "It stays closed with the quiet confidence of enterprise hardware." }
   },
+  "lookAroundWords": ["around", "room", "area", "place", "here", "surroundings", "everything"],
   "unknownVerb": "The parser stares at '{input}' and quietly increments an error counter somewhere.",
   "didYouMean": "Did you mean '{suggestion}'? Of course you did. Running that instead.",
   "needsObjectPrompt": "You want to {verb}... what, exactly? The parser needs a direct object. Today of all days.",

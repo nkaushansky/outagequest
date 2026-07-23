@@ -2,7 +2,32 @@
   "id": "act1_diner",
   "name": "The Bottomless Cup",
   "background": "assets/backgrounds/act1_diner.png",
-  "walkable": [[104, 136], [298, 136], [306, 178], [38, 178], [70, 160], [104, 142]],
+  "walkable": [
+    [
+      104,
+      136
+    ],
+    [
+      298,
+      136
+    ],
+    [
+      306,
+      178
+    ],
+    [
+      38,
+      178
+    ],
+    [
+      70,
+      160
+    ],
+    [
+      104,
+      142
+    ]
+  ],
   "playerStart": {
     "x": 114,
     "y": 148,
@@ -11,7 +36,24 @@
   "exits": [
     {
       "to": "act1_main_street",
-      "polygon": [[88, 138], [108, 138], [108, 158], [88, 158]],
+      "polygon": [
+        [
+          88,
+          138
+        ],
+        [
+          108,
+          138
+        ],
+        [
+          108,
+          158
+        ],
+        [
+          88,
+          158
+        ]
+      ],
       "arrive": {
         "x": 278,
         "y": 142,
@@ -55,11 +97,30 @@
         "outside",
         "street"
       ],
-      "polygon": [[2, 10], [27, 10], [27, 110], [2, 110]],
+      "polygon": [
+        [
+          2,
+          10
+        ],
+        [
+          27,
+          10
+        ],
+        [
+          27,
+          110
+        ],
+        [
+          2,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "edge_node_located" },
+            "if": {
+              "flag": "edge_node_located"
+            },
             "do": [
               {
                 "narrate": "The diner door, bell and all. On the other side: east, the plaza, the hum. Merle gave you the address; the door is just holding it open. The 'YES' sign faces out like it knew you'd need one more."
@@ -110,11 +171,30 @@
         "gazette",
         "photo"
       ],
-      "polygon": [[33, 16], [58, 16], [58, 64], [33, 64]],
+      "polygon": [
+        [
+          33,
+          16
+        ],
+        [
+          58,
+          16
+        ],
+        [
+          58,
+          64
+        ],
+        [
+          33,
+          64
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "eot_arrived" },
+            "if": {
+              "flag": "eot_arrived"
+            },
             "do": [
               {
                 "narrate": "The corkboard, and on it the yellowed Gazette clipping — which has, since you stood in front of that gray door, stopped being nostalgia and started being documentation. You read it like a runbook this time."
@@ -175,7 +255,24 @@
         "gingham",
         "valance"
       ],
-      "polygon": [[58, 8], [98, 8], [98, 68], [58, 68]],
+      "polygon": [
+        [
+          58,
+          8
+        ],
+        [
+          98,
+          8
+        ],
+        [
+          98,
+          68
+        ],
+        [
+          58,
+          68
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -197,7 +294,24 @@
         "napkin",
         "dispenser"
       ],
-      "polygon": [[2, 112], [16, 112], [16, 130], [2, 130]],
+      "polygon": [
+        [
+          2,
+          112
+        ],
+        [
+          16,
+          112
+        ],
+        [
+          16,
+          130
+        ],
+        [
+          2,
+          130
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -225,7 +339,24 @@
         "case",
         "dessert"
       ],
-      "polygon": [[112, 46], [146, 46], [146, 76], [112, 76]],
+      "polygon": [
+        [
+          112,
+          46
+        ],
+        [
+          146,
+          46
+        ],
+        [
+          146,
+          76
+        ],
+        [
+          112,
+          76
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -255,7 +386,24 @@
         "lever",
         "spigot"
       ],
-      "polygon": [[147, 52], [167, 52], [167, 78], [147, 78]],
+      "polygon": [
+        [
+          147,
+          52
+        ],
+        [
+          167,
+          52
+        ],
+        [
+          167,
+          78
+        ],
+        [
+          147,
+          78
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -325,12 +473,36 @@
       "id": "darlene",
       "name": "Darlene",
       "synonyms": [
-        "waitress",
+        "lady",
         "server",
+        "waitress",
         "woman"
       ],
-      "polygon": [[168, 42], [196, 42], [196, 92], [168, 92]],
-      "sprite": { "use": "darlene", "at": [182, 77] },
+      "polygon": [
+        [
+          168,
+          42
+        ],
+        [
+          196,
+          42
+        ],
+        [
+          196,
+          92
+        ],
+        [
+          168,
+          92
+        ]
+      ],
+      "sprite": {
+        "use": "darlene",
+        "at": [
+          182,
+          77
+        ]
+      },
       "responses": {
         "look": [
           {
@@ -465,7 +637,24 @@
         "menu",
         "prices"
       ],
-      "polygon": [[148, 10], [233, 10], [233, 40], [148, 40]],
+      "polygon": [
+        [
+          148,
+          10
+        ],
+        [
+          233,
+          10
+        ],
+        [
+          233,
+          40
+        ],
+        [
+          148,
+          40
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -490,7 +679,24 @@
         "cash only",
         "sign"
       ],
-      "polygon": [[210, 55], [244, 55], [244, 78], [210, 78]],
+      "polygon": [
+        [
+          210,
+          55
+        ],
+        [
+          244,
+          55
+        ],
+        [
+          244,
+          78
+        ],
+        [
+          210,
+          78
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -513,12 +719,38 @@
       "id": "merle",
       "name": "Merle",
       "synonyms": [
+        "guy",
+        "man",
+        "old guy",
         "old man",
-        "regular",
-        "old timer"
+        "old timer",
+        "regular"
       ],
-      "polygon": [[236, 58], [262, 58], [262, 130], [236, 130]],
-      "sprite": { "use": "merle", "at": [239, 108] },
+      "polygon": [
+        [
+          236,
+          58
+        ],
+        [
+          262,
+          58
+        ],
+        [
+          262,
+          130
+        ],
+        [
+          236,
+          130
+        ]
+      ],
+      "sprite": {
+        "use": "merle",
+        "at": [
+          239,
+          108
+        ]
+      },
       "responses": {
         "look": [
           {
@@ -710,7 +942,24 @@
         "stool",
         "formica"
       ],
-      "polygon": [[136, 74], [274, 74], [274, 136], [136, 136]],
+      "polygon": [
+        [
+          136,
+          74
+        ],
+        [
+          274,
+          74
+        ],
+        [
+          274,
+          136
+        ],
+        [
+          136,
+          136
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -737,7 +986,24 @@
         "set",
         "screen"
       ],
-      "polygon": [[252, 14], [281, 14], [281, 40], [252, 40]],
+      "polygon": [
+        [
+          252,
+          14
+        ],
+        [
+          281,
+          14
+        ],
+        [
+          281,
+          40
+        ],
+        [
+          252,
+          40
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -759,7 +1025,24 @@
         "music",
         "records"
       ],
-      "polygon": [[283, 54], [319, 54], [319, 136], [283, 136]],
+      "polygon": [
+        [
+          283,
+          54
+        ],
+        [
+          319,
+          54
+        ],
+        [
+          319,
+          136
+        ],
+        [
+          283,
+          136
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -802,11 +1085,30 @@
         "pass",
         "hash browns"
       ],
-      "polygon": [[100, 26], [146, 26], [146, 48], [100, 48]],
+      "polygon": [
+        [
+          100,
+          26
+        ],
+        [
+          146,
+          26
+        ],
+        [
+          146,
+          48
+        ],
+        [
+          100,
+          48
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "eot_arrived" },
+            "if": {
+              "flag": "eot_arrived"
+            },
             "do": [
               {
                 "narrate": "Through the kitchen pass: the griddle, gas-fired, forty years seasoned to a black-mirror finish, running four orders of hash browns in perfect parallel. Zero downtime since 1961, except the Great Regrease of '89 — which was scheduled maintenance, announced by flyer. Now that you've met the county's 'regional infrastructure,' you can say with authority: this griddle outclasses it."
@@ -846,7 +1148,32 @@
         "farmers",
         "farmer"
       ],
-      "polygon": [[0, 70], [104, 70], [104, 120], [70, 160], [36, 178], [0, 178]],
+      "polygon": [
+        [
+          0,
+          70
+        ],
+        [
+          104,
+          70
+        ],
+        [
+          104,
+          120
+        ],
+        [
+          70,
+          160
+        ],
+        [
+          36,
+          178
+        ],
+        [
+          0,
+          178
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -864,6 +1191,11 @@
           }
         ]
       }
+    }
+  ],
+  "lookAround": [
+    {
+      "text": "The Bottomless Cup, surveyed: DARLENE runs the counter — apron, pencil, pot in orbit — and the old-timer parked at the counter's end is MERLE, seed cap and saucer, who knows where everything in this county is buried. Corkboard by the door, urn steaming behind the counter, pie case standing sentinel, farmers holding the window booth, jukebox glowing on the right. The door with the bell is your way back to the street. Everyone here will feed you, help you, and get your name wrong."
     }
   ]
 }

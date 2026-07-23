@@ -288,6 +288,25 @@ export class Engine {
       exec: (input) => this.exec(input, true),
       exportSave: () => this.exportSave(),
       importSave: (raw) => this.importSave(raw),
+      hint: () => {
+        for (const h of this.content.hints.hints ?? []) {
+          if (!h.if || evalCondition(h.if, this.state)) return h.text;
+        }
+        return null;
+      },
+      scoreboard: () => {
+        const rows: { name: string; closed: number; open: number }[] = [];
+        let unopened = 0;
+        for (const room of this.content.rooms.values()) {
+          const ids = this.roomScoreIds.get(room.id);
+          if (!ids || ids.size === 0) continue;
+          let closed = 0;
+          for (const id of ids) if (this.state.awarded.has(id)) closed++;
+          if (closed > 0) rows.push({ name: room.name, closed, open: ids.size - closed });
+          else unopened += ids.size;
+        }
+        return { rows, unopened };
+      },
     });
     if (!handled) this.dispatch(trimmed);
     this.checkScoreComplete();
@@ -362,6 +381,11 @@ export class Engine {
 
     const target = cmd.object2 ?? cmd.object;
     if (!target) {
+      // Bare LOOK (or "look around"): the room's authored survey.
+      if (cmd.verb === "look") {
+        const room = this.currentRoom();
+        if (runEntries(room?.lookAround, this.ctx())) return;
+      }
       fallback();
       return;
     }

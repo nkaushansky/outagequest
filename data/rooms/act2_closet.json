@@ -608,7 +608,7 @@
               },
               {
                 "document": {
-                  "style": "flyer",
+                  "style": "slip",
                   "title": "CUMULONIMBUS LOGISTICS — PACKING SLIP",
                   "body": "SHIP TO: Regional Edge Site 0447, Parkview Plaza, Unit 6 (rear).\nORIGIN / RMA RETURNS: CUMULONIMBUS US-CENTRAL-1 FLAGSHIP CAMPUS, 1 Cumulonimbus Way, Bunker Flats. 'If you can see the building, you are already on campus.'\nCONTENTS: Edge kit, Type C. 1x router, 1x switch, 1x UPS, 1x signage (sticker).\nNOTE: Site uplink homes to US-CENTRAL-1 via buried county fiber, westbound. In case of uplink failure, do not troubleshoot locally. Do not escalate locally. Do not think locally. The Cloud will contact you."
                 }
@@ -637,7 +637,7 @@
               },
               {
                 "document": {
-                  "style": "flyer",
+                  "style": "slip",
                   "title": "CUMULONIMBUS LOGISTICS — PACKING SLIP",
                   "body": "SHIP TO: Regional Edge Site 0447, Parkview Plaza, Unit 6 (rear).\nORIGIN / RMA RETURNS: CUMULONIMBUS US-CENTRAL-1 FLAGSHIP CAMPUS, 1 Cumulonimbus Way, Bunker Flats. 'If you can see the building, you are already on campus.'\nCONTENTS: Edge kit, Type C. 1x router, 1x switch, 1x UPS, 1x signage (sticker).\nNOTE: Site uplink homes to US-CENTRAL-1 via buried county fiber, westbound. In case of uplink failure, do not troubleshoot locally. Do not escalate locally. Do not think locally. The Cloud will contact you."
                 }
@@ -651,7 +651,7 @@
               },
               {
                 "document": {
-                  "style": "flyer",
+                  "style": "slip",
                   "title": "CUMULONIMBUS LOGISTICS — PACKING SLIP",
                   "body": "SHIP TO: Regional Edge Site 0447, Parkview Plaza, Unit 6 (rear).\nORIGIN / RMA RETURNS: CUMULONIMBUS US-CENTRAL-1 FLAGSHIP CAMPUS, 1 Cumulonimbus Way, Bunker Flats. 'If you can see the building, you are already on campus.'\nCONTENTS: Edge kit, Type C. 1x router, 1x switch, 1x UPS, 1x signage (sticker).\nNOTE: Site uplink homes to US-CENTRAL-1 via buried county fiber, westbound. In case of uplink failure, do not troubleshoot locally. Do not escalate locally. Do not think locally. The Cloud will contact you."
                 }
@@ -864,6 +864,11 @@
           }
         ]
       }
+    }
+  ],
+  "lookAround": [
+    {
+      "text": "The Edge Node, surveyed: one rack, center stage — router on top, the 48-port switch under it, patch spaghetti, UPS growling at the bottom. The uplink conduit dives in through the west wall trailing its yellow fiber; an open shipping box slumps on the floor with its slip still taped in; Dale's shelf of leavings hangs upper-left, his sign-off clipboard by the door, and the nineteen-dollar box fan holds the transom above it, cooling the county. The gray door, right, is the way back to the dusk."
     }
   ]
 }

@@ -220,6 +220,17 @@ export function parse(
     return { ok: true, cmd: { verb: vm.verb } };
   }
 
+  // "look around" / "look room": survey words collapse to a bare LOOK,
+  // which the engine answers with the room's lookAround entries.
+  if (
+    vm.verb === "look" &&
+    (verbs.lookAroundWords ?? []).some(
+      (w) => normalize(w).join(" ") === rest.join(" "),
+    )
+  ) {
+    return { ok: true, cmd: { verb: "look" } };
+  }
+
   let prepIdx = -1;
   for (let i = 1; i <= rest.length - 2; i++) {
     if (PREPS.has(rest[i]!)) {

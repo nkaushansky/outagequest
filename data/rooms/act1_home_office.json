@@ -2,7 +2,60 @@
   "id": "act1_home_office",
   "name": "Mel's Home Office",
   "background": "assets/backgrounds/act1_home_office.png",
-  "walkable": [[26, 140], [74, 130], [98, 114], [132, 114], [136, 126], [180, 126], [184, 114], [194, 114], [212, 106], [262, 112], [280, 124], [296, 178], [10, 178]],
+  "walkable": [
+    [
+      26,
+      140
+    ],
+    [
+      74,
+      130
+    ],
+    [
+      98,
+      114
+    ],
+    [
+      132,
+      114
+    ],
+    [
+      136,
+      126
+    ],
+    [
+      180,
+      126
+    ],
+    [
+      184,
+      114
+    ],
+    [
+      194,
+      114
+    ],
+    [
+      212,
+      106
+    ],
+    [
+      262,
+      112
+    ],
+    [
+      280,
+      124
+    ],
+    [
+      296,
+      178
+    ],
+    [
+      10,
+      178
+    ]
+  ],
   "playerStart": {
     "x": 160,
     "y": 150,
@@ -11,9 +64,32 @@
   "exits": [
     {
       "to": "act1_living_room",
-      "polygon": [[286, 124], [319, 124], [319, 178], [286, 178]],
-      "arrive": { "x": 34, "y": 158, "facing": "right" },
-      "if": { "flag": "confirmed_global" },
+      "polygon": [
+        [
+          286,
+          124
+        ],
+        [
+          319,
+          124
+        ],
+        [
+          319,
+          178
+        ],
+        [
+          286,
+          178
+        ]
+      ],
+      "arrive": {
+        "x": 34,
+        "y": 158,
+        "facing": "right"
+      },
+      "if": {
+        "flag": "confirmed_global"
+      },
       "blocked": [
         {
           "text": "You drift toward the door and catch yourself. Not yet. There are remote options left, and you intend to exhaust every one of them from this chair, as is tradition."
@@ -65,7 +141,24 @@
         "sticky notes",
         "todo"
       ],
-      "polygon": [[0, 14], [14, 14], [14, 72], [0, 72]],
+      "polygon": [
+        [
+          0,
+          14
+        ],
+        [
+          14,
+          14
+        ],
+        [
+          14,
+          72
+        ],
+        [
+          0,
+          72
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -100,7 +193,24 @@
         "view",
         "blinds"
       ],
-      "polygon": [[16, 8], [94, 8], [94, 62], [16, 62]],
+      "polygon": [
+        [
+          16,
+          8
+        ],
+        [
+          94,
+          8
+        ],
+        [
+          94,
+          62
+        ],
+        [
+          16,
+          62
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -129,7 +239,24 @@
         "sailboat",
         "boat"
       ],
-      "polygon": [[98, 18], [118, 18], [118, 40], [98, 40]],
+      "polygon": [
+        [
+          98,
+          18
+        ],
+        [
+          118,
+          18
+        ],
+        [
+          118,
+          40
+        ],
+        [
+          98,
+          40
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -152,7 +279,24 @@
         "boom arm",
         "podcast mic"
       ],
-      "polygon": [[94, 40], [108, 40], [108, 64], [94, 64]],
+      "polygon": [
+        [
+          94,
+          40
+        ],
+        [
+          108,
+          40
+        ],
+        [
+          108,
+          64
+        ],
+        [
+          94,
+          64
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -179,7 +323,24 @@
         "sweater",
         "clothes"
       ],
-      "polygon": [[156, 50], [192, 50], [192, 110], [156, 110]],
+      "polygon": [
+        [
+          156,
+          50
+        ],
+        [
+          192,
+          50
+        ],
+        [
+          192,
+          110
+        ],
+        [
+          156,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -233,7 +394,24 @@
         "dashboard",
         "dashboards"
       ],
-      "polygon": [[104, 38], [192, 38], [192, 64], [104, 64]],
+      "polygon": [
+        [
+          104,
+          38
+        ],
+        [
+          192,
+          38
+        ],
+        [
+          192,
+          64
+        ],
+        [
+          104,
+          64
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -286,7 +464,24 @@
         "isp box",
         "internet"
       ],
-      "polygon": [[114, 10], [172, 10], [172, 32], [114, 32]],
+      "polygon": [
+        [
+          114,
+          10
+        ],
+        [
+          172,
+          10
+        ],
+        [
+          172,
+          32
+        ],
+        [
+          114,
+          32
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -437,7 +632,24 @@
         "landscape",
         "frame"
       ],
-      "polygon": [[182, 16], [206, 16], [206, 40], [182, 40]],
+      "polygon": [
+        [
+          182,
+          16
+        ],
+        [
+          206,
+          16
+        ],
+        [
+          206,
+          40
+        ],
+        [
+          182,
+          40
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -461,7 +673,24 @@
         "cups",
         "cup"
       ],
-      "polygon": [[16, 60], [120, 60], [120, 78], [16, 78]],
+      "polygon": [
+        [
+          16,
+          60
+        ],
+        [
+          120,
+          60
+        ],
+        [
+          120,
+          78
+        ],
+        [
+          16,
+          78
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -504,7 +733,24 @@
         "photo",
         "photograph"
       ],
-      "polygon": [[0, 70], [20, 70], [20, 86], [0, 86]],
+      "polygon": [
+        [
+          0,
+          70
+        ],
+        [
+          20,
+          70
+        ],
+        [
+          20,
+          86
+        ],
+        [
+          0,
+          86
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -530,7 +776,24 @@
         "paper",
         "papers"
       ],
-      "polygon": [[0, 100], [22, 100], [22, 144], [0, 144]],
+      "polygon": [
+        [
+          0,
+          100
+        ],
+        [
+          22,
+          100
+        ],
+        [
+          22,
+          144
+        ],
+        [
+          0,
+          144
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -554,7 +817,24 @@
         "manuals",
         "bookcase"
       ],
-      "polygon": [[0, 76], [72, 76], [72, 128], [0, 128]],
+      "polygon": [
+        [
+          0,
+          76
+        ],
+        [
+          72,
+          76
+        ],
+        [
+          72,
+          128
+        ],
+        [
+          0,
+          128
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -578,11 +858,30 @@
         "filing cabinet",
         "files"
       ],
-      "polygon": [[82, 78], [114, 78], [114, 110], [82, 110]],
+      "polygon": [
+        [
+          82,
+          78
+        ],
+        [
+          114,
+          78
+        ],
+        [
+          114,
+          110
+        ],
+        [
+          82,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "cable_found" },
+            "if": {
+              "flag": "cable_found"
+            },
             "text": "The file cabinet, bottom drawer now ajar and lighter by one cable. The tax returns watched you take it. They'll keep your secret; append-only storage always does."
           },
           {
@@ -662,7 +961,24 @@
         "power supply",
         "beeping"
       ],
-      "polygon": [[112, 80], [138, 80], [138, 114], [112, 114]],
+      "polygon": [
+        [
+          112,
+          80
+        ],
+        [
+          138,
+          80
+        ],
+        [
+          138,
+          114
+        ],
+        [
+          112,
+          114
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -717,7 +1033,24 @@
         "chair",
         "seat"
       ],
-      "polygon": [[136, 58], [178, 58], [178, 126], [136, 126]],
+      "polygon": [
+        [
+          136,
+          58
+        ],
+        [
+          178,
+          58
+        ],
+        [
+          178,
+          126
+        ],
+        [
+          136,
+          126
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -741,7 +1074,24 @@
         "plugs",
         "socket"
       ],
-      "polygon": [[194, 94], [218, 94], [218, 106], [194, 106]],
+      "polygon": [
+        [
+          194,
+          94
+        ],
+        [
+          218,
+          94
+        ],
+        [
+          218,
+          106
+        ],
+        [
+          194,
+          106
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -770,7 +1120,24 @@
         "homelab",
         "lab"
       ],
-      "polygon": [[216, 12], [262, 12], [262, 110], [216, 110]],
+      "polygon": [
+        [
+          216,
+          12
+        ],
+        [
+          262,
+          12
+        ],
+        [
+          262,
+          110
+        ],
+        [
+          216,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -803,7 +1170,24 @@
         "winter coat",
         "hook"
       ],
-      "polygon": [[266, 20], [292, 20], [292, 86], [266, 86]],
+      "polygon": [
+        [
+          266,
+          20
+        ],
+        [
+          292,
+          20
+        ],
+        [
+          292,
+          86
+        ],
+        [
+          266,
+          86
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -869,7 +1253,24 @@
         "hallway",
         "house"
       ],
-      "polygon": [[292, 6], [319, 6], [319, 112], [292, 112]],
+      "polygon": [
+        [
+          292,
+          6
+        ],
+        [
+          319,
+          6
+        ],
+        [
+          319,
+          112
+        ],
+        [
+          292,
+          112
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -929,7 +1330,24 @@
         "magazines",
         "end table"
       ],
-      "polygon": [[284, 98], [319, 98], [319, 168], [284, 168]],
+      "polygon": [
+        [
+          284,
+          98
+        ],
+        [
+          319,
+          98
+        ],
+        [
+          319,
+          168
+        ],
+        [
+          284,
+          168
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -953,7 +1371,24 @@
         "keyboard",
         "mouse"
       ],
-      "polygon": [[100, 60], [204, 60], [204, 94], [100, 94]],
+      "polygon": [
+        [
+          100,
+          60
+        ],
+        [
+          204,
+          60
+        ],
+        [
+          204,
+          94
+        ],
+        [
+          100,
+          94
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -976,6 +1411,11 @@
           }
         ]
       }
+    }
+  ],
+  "lookAround": [
+    {
+      "text": "The nerve center, surveyed: dead monitors over the desk, the modem blinking its one red eye, the closet rack humming to itself. Coffee mugs colonize every flat surface, the file cabinet guards the paperwork era, and the corkboard guards the TODO era. Window on the world to the left; door to the rest of the house on the right. Everything you own is in ARM'S reach, which was the whole idea, and possibly the whole problem."
     }
   ]
 }

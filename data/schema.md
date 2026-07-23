@@ -12,6 +12,10 @@ resolution space: 320 wide, 180 tall, origin top-left.
 - `data/items.json` — inventory items
 - `data/deaths.json` — death registry: the single source of death copy
   (screen text + gallery title). Room JSON triggers deaths by id.
+- `data/hints.json` — the narrator's triage queue (shell `hint`): ordered
+  `{ if?, text }` entries, earliest gate first, each conditioned on that
+  step being incomplete; first match is the current hint. Nudge at the
+  room or the noun — never hand over the click.
 - `data/sprites.json` — sprite sheet registry (see Sprites)
 - `data/rooms/<room_id>.json` — one file per room
 
@@ -33,6 +37,12 @@ resolution space: 320 wide, 180 tall, origin top-left.
       "if": { "flag": "confirmed_global" },
       "blocked": [ { "text": "Not yet. The chair isn't done with you." } ] }
   ],
+  // Optional. Bare LOOK (or "look around"/"look room" — the survey words
+  // live in verbs.json `lookAroundWords`): the narrator's orienting read
+  // of the room. First-match like every list. Writing rule: name who and
+  // what is HERE — NPCs by name, doors by where they go — so a lost
+  // player can always re-orient without a walkthrough.
+  "lookAround": [ { "text": "The nerve center, surveyed: ..." } ],
   "onEnter": [
     // First-match, exactly like a verb response list: the first entry whose
     // `if` passes runs, the rest are skipped. Author the one-time intro
@@ -146,8 +156,9 @@ exits, topics), `instrument` is never satisfied and `anyInstrument` equals
   close-up: the death-screen pattern generalized into a focus-trapped,
   dismissible DOM overlay (button, Escape, or backdrop tap). CSS renders
   the paper; the text stays real DOM text, never canvas. Styles:
-  `newsprint`, `clipping`, `postit`, `flyer`. `title`, `image`, `caption`
-  are optional; `body` is either a string (paragraphs split on `\n`) or an
+  `newsprint`, `clipping`, `postit`, `flyer`, `binder` (three-ring
+  corporate documentation), `slip` (green-bar tractor-feed, dot-matrix).
+  `title`, `image`, `caption` are optional; `body` is either a string (paragraphs split on `\n`) or an
   array mixing plain paragraphs with annotated lines:
   `{ "text": "NIMBUS DAY!!", "style": "marker" }`. Line styles render the
   mark AS a mark — `marker` (big scrawl), `hand` (pen note), `stamp`
@@ -247,7 +258,9 @@ entry, as the pants and coat do.
    (inventory), `sudo <cmd>` (re-runs cmd with a power-trip narration),
    `ping <object>`, `man <verb>`, `whoami`, `pwd`, `rm` (denied), `help`/`?`,
    `clear` (wipes the log), `reboot`/`restart`/`shutdown` (bare only —
-   with an object they fall through to the parser as `use` synonyms), plus
+   with an object they fall through to the parser as `use` synonyms),
+   `hint`/`hints` (data/hints.json triage), `tickets`/`queue` (per-room
+   ledger; rooms the player hasn't scored in stay nameless), plus
    `save`/`export` (print save string) and `load <string>`/`import <string>`.
    Keep this list in sync with `src/shell.ts`.
 3. Grammar: `VERB [OBJECT] [PREP OBJECT2]` — e.g. `use keycard on door`.
@@ -261,7 +274,9 @@ entry, as the pants and coat do.
    `unknownVerb` ({input}), `needsObjectPrompt` ({verb}), `unknownObject`
    ({object}), `didYouMean` ({suggestion} — the correction auto-runs),
    `unknownTopic` ({name}, {topic})
-6. A bare object with no verb implies `look` (exact matches only)
+6. A bare object with no verb implies `look` (exact matches only). A bare
+   `look` — or `look` + a `lookAroundWords` word ("around", "room") —
+   runs the room's `lookAround` survey
 7. With `VERB OBJECT PREP OBJECT2`, responses resolve on OBJECT2 (the
    target); OBJECT is the instrument, gated with `instrument` /
    `anyInstrument` conditions (plus `hasItem` where mere possession

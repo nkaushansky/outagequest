@@ -130,7 +130,7 @@
       "to": "act2_backlot",
       "polygon": [
         [
-          304,
+          306,
           126
         ],
         [
@@ -139,11 +139,11 @@
         ],
         [
           319,
-          164
+          158
         ],
         [
-          304,
-          164
+          306,
+          158
         ]
       ],
       "arrive": {
@@ -156,19 +156,19 @@
       "to": "act2_roadside",
       "polygon": [
         [
-          236,
-          172
+          250,
+          174
         ],
         [
           319,
-          172
+          174
         ],
         [
           319,
           180
         ],
         [
-          236,
+          250,
           180
         ]
       ],
@@ -753,6 +753,17 @@
           }
         ]
       }
+    }
+  ],
+  "lookAround": [
+    {
+      "if": {
+        "flag": "edge_door_open"
+      },
+      "text": "The plaza, surveyed: Kim's Nails glowing mid-manicure, the pylon sign missing its plastic, the dumpster keeping Dale's secrets — and the gray door standing OPEN on the county's hum. The service drive wraps the right end of the building to the back lot; the county road runs off the bottom-right, east, where engines idle. The lot has told you everything. Almost everything."
+    },
+    {
+      "text": "The plaza, surveyed: Kim's Nails glowing warm and OPEN — her door works like a door — with the pylon sign looming left and the dumpster hunkered right. Around the side, the gray steel door hums behind its sticker, lock and all. The service drive wraps the RIGHT end of the building toward the back lot, where a building keeps its meters; the county road runs off the bottom-right corner, east. Somewhere in this geography, an installer left a spare."
     }
   ]
 }

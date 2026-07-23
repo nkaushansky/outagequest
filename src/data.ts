@@ -6,6 +6,7 @@ import type {
   DeathsFile,
   Facing,
   GameConfig,
+  HintsFile,
   Hotspot,
   ItemsFile,
   Pt,
@@ -22,6 +23,7 @@ import verbsJson from "../data/verbs.json";
 import itemsJson from "../data/items.json";
 import deathsJson from "../data/deaths.json";
 import spritesJson from "../data/sprites.json";
+import hintsJson from "../data/hints.json";
 
 const roomModules = import.meta.glob("../data/rooms/*.json", {
   eager: true,
@@ -92,6 +94,9 @@ function normalizeRoom(raw: unknown): Room {
       return exit;
     }),
     onEnter: (Array.isArray(r.onEnter) ? r.onEnter : []) as ResponseEntry[],
+    ...(Array.isArray(r.lookAround)
+      ? { lookAround: r.lookAround as ResponseEntry[] }
+      : {}),
     hotspots: hotspots.map((h): Hotspot => {
       const s = h as Record<string, unknown>;
       const hotspot: Hotspot = {
@@ -127,6 +132,7 @@ export interface Content {
   verbs: VerbsFile;
   items: ItemsFile;
   deaths: DeathsFile;
+  hints: HintsFile;
   rooms: Map<string, Room>;
   /** sprite id (data/sprites.json) -> sheet definition */
   sprites: Map<string, SpriteDef>;
@@ -173,6 +179,7 @@ export function loadContent(): Content {
     verbs: verbsJson as unknown as VerbsFile,
     items: itemsJson as unknown as ItemsFile,
     deaths: deathsJson as unknown as DeathsFile,
+    hints: hintsJson as unknown as HintsFile,
     rooms,
     sprites,
     backgroundUrl: (path) => bgByPath.get(path.replace(/^\.?\//, "")),

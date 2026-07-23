@@ -1,0 +1,32 @@
+{
+  "note": "The narrator's triage queue (shell command `hint`). First entry whose `if` passes is the current hint — ordered earliest gate to latest, each conditioned on that step being incomplete. Nudge, don't solve: point at the room or the noun, let the player earn the click.",
+  "hints": [
+    { "if": { "flagNot": "confirmed_global" },
+      "text": "Rule one of any incident: confirm it's not just you. Your equipment is right there, and you own a cable you trust more than most people." },
+    { "if": { "flagNot": "cable_found" },
+      "text": "A professional travels with kit. Yours is filed wherever you file things you'd want in a fire — which, knowing you, is a drawer." },
+    { "if": { "flagNot": "wearing_pants" },
+      "text": "The world outside has a dress code, technically. Somewhere in this house is a pair of Real Pants with your name on them. The bedroom knows more than it's saying." },
+    { "if": { "flagNot": "edge_node_located" },
+      "text": "Somebody in this town knows where the internet physically lives. In a town this size, information eats at one counter. Ask the man who predates the infrastructure — ask him about the internet." },
+    { "if": { "flagNot": "eot_arrived" },
+      "text": "The trail points east, past the dead traffic light. Walk it. The hum will do the rest." },
+    { "if": { "flagNot": "knows_lockbox_rule" },
+      "text": "The gray door wants a key, and installers always leave a spare — with paperwork to match. Young men in hurries leave their paperwork in the nearest large green container." },
+    { "if": { "flagNot": "read_noc_flyer" },
+      "text": "You know the rule: the combo is the last four of the NOC hotline. Corporate printed that number on every glossy thing they ever sent this town — and this town never throws away anything glossy. Check the notice board back on Main Street." },
+    { "if": { "flagNot": "lockbox_opened" },
+      "text": "Rule plus number equals key. The box is where Kim said and where the clipping showed: on the gas meter, behind the plaza. The service drive wraps the right end of the building." },
+    { "if": { "flagNot": "edge_door_open" },
+      "text": "You are holding the janitor's key to the county's entire internet. The gray door has been waiting nine years. Introduce them." },
+    { "if": { "flagNot": "cl_patched" },
+      "text": "Dark uplink, unknown cause — from the outside you can't tell a corpse from a mourner. Prove the local side first: your cable, the switch, any honest port." },
+    { "if": { "flagNot": "cl_diagnosed" },
+      "text": "The LAN answered. Now read the router's lights like a jury foreman and deliver the verdict." },
+    { "if": { "flagNot": "act2_trail_found" },
+      "text": "The fault is upstream, and upstream has a street address. Something in this closet shipped here once — and paperwork never forgets where it came from." },
+    { "if": { "flagNot": "rd_arrived" },
+      "text": "Listen: under the hum, an engine, idling east of the plaza where the asphalt leaves town. Somebody in this county still drives out." },
+    { "text": "The act is done; the truck is aimed west. Anything left in the queue is curiosity — try `tickets` for the ledger, and LOOK at whatever you haven't. The narrator saves his best material for the thorough." }
+  ]
+}

@@ -128,6 +128,12 @@ await run("ping rack");
 ok((await lastLines()).includes("1 received"), "ping known object", await lastLines());
 await run("restart");
 ok((await lastLines()).includes("only service still running"), "bare restart intercepted", await lastLines());
+await run("look");
+ok((await lastLines(6)).includes("surveyed"), "bare LOOK surveys the room", await lastLines(6));
+await run("look around");
+ok((await lastLines(6)).includes("nerve center"), "'look around' runs the survey", await lastLines(6));
+await run("hint");
+ok((await lastLines(4)).includes("not just you"), "hint triages the first gate", await lastLines(4));
 
 // new-hotspot writing density
 await run("look ups");
@@ -456,6 +462,9 @@ ok(dinerNpcs.includes("darlene") && dinerNpcs.includes("merle"),
   "Darlene + Merle sprites present in the diner", JSON.stringify(dinerNpcs));
 ok(await canvasHas("apron_l", [168, 50, 197, 89]), "Darlene drawn behind the counter");
 ok(await canvasHas("flannel_m", [225, 54, 254, 109]), "Merle drawn on his stool");
+await run("look around");
+ok((await lastLines(8)).includes("MERLE") && (await lastLines(8)).includes("DARLENE"),
+  "diner survey names the regulars", await lastLines(8));
 
 await run("talk to darlene");
 ok((await lastLines()).includes("two names today"), "wrong-name tally at Darlene", await lastLines());
@@ -698,6 +707,13 @@ await page.keyboard.up("ArrowLeft");
 await page.waitForTimeout(150);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_salon",
   "movement just inside the door stays in the salon");
+await page.evaluate(() => { window.spof.state.player.x = 60; window.spof.state.player.y = 170; });
+await clickScene(8, 170);
+await page.waitForTimeout(1600);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_corridor",
+  "left edge by the curtain walks out to the corridor");
+await run("open salon curtain");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_salon", "curtain returns to the salon");
 const salonNpcs = await npcIds();
 ok(salonNpcs.includes("kim") && salonNpcs.includes("dot"), "Kim + Dot sprites present", JSON.stringify(salonNpcs));
 ok(await canvasHas("rose_m", [114, 52, 154, 110]), "Kim drawn standing at her station");
@@ -746,6 +762,8 @@ await run("open unit door");
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act2_staging", "into the old PagePro");
 await run("look runbook");
 ok(await page.evaluate(() => !document.querySelector(".docview").hidden), "runbook close-up opens");
+ok(await page.evaluate(() => document.querySelector(".doc-paper").className.includes("doc-binder")),
+  "runbook renders on binder stock");
 await dismissDoc();
 await run("look demo phones");
 await run("look cable spool");
@@ -791,6 +809,8 @@ ok((await score()) === "81", "unlock + first entry scored (74+4+3)", await score
 // the closet: slip filed, cable proves the LAN, verdict points upstream
 await run("look packing slip");
 ok(await page.evaluate(() => !document.querySelector(".docview").hidden), "packing-slip close-up opens");
+ok(await page.evaluate(() => document.querySelector(".doc-paper").className.includes("doc-slip")),
+  "packing slip renders on green-bar stock");
 await dismissDoc();
 ok(await page.evaluate(() => !window.spof.state.flags.has("act2_trail_found")), "the address means nothing before the diagnosis");
 await run("use cable on switch");
@@ -829,6 +849,11 @@ await run("look fiber markers");
 await run("look mile marker");
 ok((await score()) === "100", "Acts 1+2 full clear at exactly 100", await score());
 ok((await status()) === "TICKETS OPEN 150/250", "the queue reads 150 open", await status());
+await run("hint");
+ok((await lastLines(4)).includes("tickets"), "post-act hint points at the ledger", await lastLines(4));
+await run("tickets");
+ok((await lastLines(20)).includes("Ticket queue, by site"), "tickets lists the queue by site", await lastLines(20));
+ok((await lastLines(20)).includes("clear. Ledger closed."), "cleared rooms read as closed ledgers", await lastLines(20));
 
 // world stays open at act end; kit crossed, consumables spent
 await page.evaluate(() => { window.spof.state.player.x = 30; window.spof.state.player.y = 165; });
@@ -838,6 +863,16 @@ ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_edge_of_town"
 const m4inv = await page.evaluate(() => [...window.spof.state.inventory]);
 ok(m4inv.includes("cable") && m4inv.includes("mug") && !m4inv.includes("edge_key"),
   "kit crosses acts; the key stayed in the lock", JSON.stringify(m4inv));
+
+// the diner's walk-in zone now sits under the painted door, not the window
+await page.evaluate(() => { window.spof.state.player.x = 30; window.spof.state.player.y = 162; });
+await clickScene(12, 162);
+await page.waitForTimeout(1200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_main_street", "west back to Main Street");
+await page.evaluate(() => { window.spof.state.player.x = 252, window.spof.state.player.y = 146; });
+await clickScene(252, 130);
+await page.waitForTimeout(1400);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_diner", "diner door zone admits under the painted door");
 
 // ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
 const lookGaps = await page.evaluate(() => {

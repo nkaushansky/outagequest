@@ -2,7 +2,48 @@
   "id": "act1_bedroom",
   "name": "Mel's Bedroom",
   "background": "assets/backgrounds/act1_bedroom.png",
-  "walkable": [[8, 112], [164, 112], [166, 140], [254, 140], [256, 112], [278, 112], [278, 150], [306, 150], [302, 178], [10, 178]],
+  "walkable": [
+    [
+      8,
+      112
+    ],
+    [
+      164,
+      112
+    ],
+    [
+      166,
+      140
+    ],
+    [
+      254,
+      140
+    ],
+    [
+      256,
+      112
+    ],
+    [
+      278,
+      112
+    ],
+    [
+      278,
+      150
+    ],
+    [
+      306,
+      150
+    ],
+    [
+      302,
+      178
+    ],
+    [
+      10,
+      178
+    ]
+  ],
   "playerStart": {
     "x": 34,
     "y": 158,
@@ -11,7 +52,24 @@
   "exits": [
     {
       "to": "act1_living_room",
-      "polygon": [[0, 116], [24, 116], [24, 178], [0, 178]],
+      "polygon": [
+        [
+          0,
+          116
+        ],
+        [
+          24,
+          116
+        ],
+        [
+          24,
+          178
+        ],
+        [
+          0,
+          178
+        ]
+      ],
       "arrive": {
         "x": 34,
         "y": 152,
@@ -56,11 +114,30 @@
         "hall",
         "hallway"
       ],
-      "polygon": [[6, 14], [32, 14], [32, 110], [6, 110]],
+      "polygon": [
+        [
+          6,
+          14
+        ],
+        [
+          32,
+          14
+        ],
+        [
+          32,
+          110
+        ],
+        [
+          6,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
-            "if": { "flag": "br_pants_found" },
+            "if": {
+              "flag": "br_pants_found"
+            },
             "do": [
               {
                 "narrate": "The way back through the living room — and past it, the front door you are now equipped to open. The bedroom has done its part. History will note the pants came willingly."
@@ -109,7 +186,24 @@
         "monitors",
         "top shelf"
       ],
-      "polygon": [[50, 22], [115, 22], [115, 51], [50, 51]],
+      "polygon": [
+        [
+          50,
+          22
+        ],
+        [
+          115,
+          22
+        ],
+        [
+          115,
+          51
+        ],
+        [
+          50,
+          51
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -199,7 +293,24 @@
         "clothes",
         "hangers"
       ],
-      "polygon": [[44, 15], [122, 15], [122, 110], [44, 110]],
+      "polygon": [
+        [
+          44,
+          15
+        ],
+        [
+          122,
+          15
+        ],
+        [
+          122,
+          110
+        ],
+        [
+          44,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -231,7 +342,24 @@
         "blackout curtains",
         "blinds"
       ],
-      "polygon": [[134, 12], [197, 12], [197, 80], [134, 80]],
+      "polygon": [
+        [
+          134,
+          12
+        ],
+        [
+          197,
+          12
+        ],
+        [
+          197,
+          80
+        ],
+        [
+          134,
+          80
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -271,7 +399,24 @@
         "certificate",
         "frame"
       ],
-      "polygon": [[201, 31], [224, 31], [224, 50], [201, 50]],
+      "polygon": [
+        [
+          201,
+          31
+        ],
+        [
+          224,
+          31
+        ],
+        [
+          224,
+          50
+        ],
+        [
+          201,
+          50
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -294,7 +439,24 @@
         "chargers",
         "charger"
       ],
-      "polygon": [[124, 82], [158, 82], [158, 114], [124, 114]],
+      "polygon": [
+        [
+          124,
+          82
+        ],
+        [
+          158,
+          82
+        ],
+        [
+          158,
+          114
+        ],
+        [
+          124,
+          114
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -320,7 +482,24 @@
         "clock",
         "alarm"
       ],
-      "polygon": [[253, 45], [278, 45], [278, 58], [253, 58]],
+      "polygon": [
+        [
+          253,
+          45
+        ],
+        [
+          278,
+          45
+        ],
+        [
+          278,
+          58
+        ],
+        [
+          253,
+          58
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -350,7 +529,24 @@
         "vacuum bag",
         "cold storage"
       ],
-      "polygon": [[184, 118], [252, 118], [252, 142], [184, 142]],
+      "polygon": [
+        [
+          184,
+          118
+        ],
+        [
+          252,
+          118
+        ],
+        [
+          252,
+          142
+        ],
+        [
+          184,
+          142
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -531,7 +727,24 @@
         "duvet",
         "pillows"
       ],
-      "polygon": [[164, 56], [256, 56], [256, 138], [164, 138]],
+      "polygon": [
+        [
+          164,
+          56
+        ],
+        [
+          256,
+          56
+        ],
+        [
+          256,
+          138
+        ],
+        [
+          164,
+          138
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -565,7 +778,24 @@
         "joggers",
         "sweatpants"
       ],
-      "polygon": [[246, 58], [290, 58], [290, 110], [246, 110]],
+      "polygon": [
+        [
+          246,
+          58
+        ],
+        [
+          290,
+          58
+        ],
+        [
+          290,
+          110
+        ],
+        [
+          246,
+          110
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -574,7 +804,9 @@
         ],
         "open": [
           {
-            "if": { "flagNot": "br_bag_found" },
+            "if": {
+              "flagNot": "br_bag_found"
+            },
             "text": "You pull the bottom drawer: joggers, sweatpants, and one pair of 'dress joggers,' a garment whose name should have been a warning. Soft pants, every one. Soft pants cannot make this journey. The Real Pants aren't in the rotation at all — they were decommissioned years ago, and this house archives decommissioned hardware somewhere darker than a drawer. Lower, too."
           },
           {
@@ -602,7 +834,24 @@
         "pile",
         "laundry"
       ],
-      "polygon": [[282, 68], [319, 68], [319, 152], [282, 152]],
+      "polygon": [
+        [
+          282,
+          68
+        ],
+        [
+          319,
+          68
+        ],
+        [
+          319,
+          152
+        ],
+        [
+          282,
+          152
+        ]
+      ],
       "responses": {
         "look": [
           {
@@ -620,6 +869,11 @@
           }
         ]
       }
+    }
+  ],
+  "lookAround": [
+    {
+      "text": "The bedroom, surveyed: a closet of identical hoodies with a shelf of legacy hardware brooding above it, blackout curtains embargoing one slit of daylight, a bed made with suspicious competence, a nightstand tangled in charging cables, and a dresser under an alarm clock that gave up during a previous administration. The chair in the corner holds the clothes that never made it home. Somewhere in this room, allegedly, are Real Pants."
     }
   ]
 }

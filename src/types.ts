@@ -61,6 +61,8 @@ export interface VerbsFile {
   unknownObject: string;
   /** "{name} has no opinions on {topic}" — talk-about miss fallback. */
   unknownTopic?: string;
+  /** Object words that turn LOOK into a room survey ("around", "room"). */
+  lookAroundWords?: string[];
 }
 
 export interface ItemDef {
@@ -87,6 +89,14 @@ export interface DeathDef {
 export interface DeathsFile {
   note?: string;
   deaths: DeathDef[];
+}
+
+/** data/hints.json: the narrator's triage queue. First entry whose `if`
+ *  passes is the current hint — author from the earliest gate to the
+ *  latest, each conditioned on that step being incomplete. */
+export interface HintsFile {
+  note?: string;
+  hints: Array<{ if?: Condition; text: string }>;
 }
 
 export type Condition =
@@ -171,6 +181,9 @@ export interface Room {
   playerStart: { x: number; y: number; facing: Facing };
   exits: RoomExit[];
   onEnter: ResponseEntry[];
+  /** Bare LOOK / "look around": the narrator's room survey — a broad,
+   *  orienting read that names who and what is here. First-match. */
+  lookAround?: ResponseEntry[];
   hotspots: Hotspot[];
   /** Fires once, when every score id authored in this room's JSON has been
    *  awarded (ids inside this list itself are excluded — completion bonuses

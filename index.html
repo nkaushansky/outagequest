@@ -264,6 +264,45 @@
       repeating-linear-gradient(0deg, rgba(32, 38, 54, 0.025) 0 1px, rgba(0,0,0,0) 1px 4px);
   }
 
+  /* Binder page: three-ring corporate documentation, punched and ruled. */
+  .doc-binder {
+    background-color: #F6F5F0; color: #23282F;
+    font-family: "Trebuchet MS", Verdana, "DejaVu Sans", sans-serif;
+    padding-left: 42px;
+    background-image:
+      radial-gradient(circle 6px at 16px 18%, #4A4A56 0 6px, rgba(0,0,0,0) 7px),
+      radial-gradient(circle 6px at 16px 50%, #4A4A56 0 6px, rgba(0,0,0,0) 7px),
+      radial-gradient(circle 6px at 16px 82%, #4A4A56 0 6px, rgba(0,0,0,0) 7px),
+      linear-gradient(90deg, rgba(0,0,0,0) 30px, rgba(180, 60, 50, 0.3) 30px 31px, rgba(0,0,0,0) 31px),
+      repeating-linear-gradient(0deg, rgba(35, 40, 47, 0.03) 0 1px, rgba(0,0,0,0) 1px 4px);
+  }
+  .doc-binder .doc-title {
+    font-size: 17px; text-transform: uppercase; letter-spacing: 0.03em;
+    border-bottom: 2px solid #23282F; padding-bottom: 6px; margin-bottom: 12px;
+  }
+  .doc-binder .doc-para { font-size: 14px; line-height: 1.5; }
+
+  /* Slip: green-bar tractor-feed stock, straight off the dot-matrix. */
+  .doc-slip {
+    background-color: #F4F6EE; color: #24302A;
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    padding-left: 38px; padding-right: 38px;
+    background-image:
+      radial-gradient(circle 4px at 13px 13px, #4A4A56 0 4px, rgba(0,0,0,0) 5px),
+      radial-gradient(circle 4px at 13px 13px, #4A4A56 0 4px, rgba(0,0,0,0) 5px),
+      linear-gradient(90deg, rgba(74, 74, 86, 0.14) 26px, rgba(0,0,0,0) 26px),
+      linear-gradient(270deg, rgba(74, 74, 86, 0.14) 26px, rgba(0,0,0,0) 26px),
+      repeating-linear-gradient(0deg, rgba(96, 150, 118, 0.15) 0 24px, rgba(0,0,0,0) 24px 48px);
+    background-size: 26px 26px, 26px 26px, 100% 100%, 100% 100%, 100% 100%;
+    background-repeat: repeat-y, repeat-y, no-repeat, no-repeat, repeat;
+    background-position: left top, right top, left top, right top, left top;
+  }
+  .doc-slip .doc-title {
+    font-size: 15px; letter-spacing: 0.04em;
+    border-bottom: 2px dashed #24302A; padding-bottom: 6px; margin-bottom: 12px;
+  }
+  .doc-slip .doc-para { font-size: 13px; line-height: 1.55; }
+
   /* Annotation lines: marks ON the paper, rendered as marks. */
   .doc-para.doc-line-marker {
     font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
