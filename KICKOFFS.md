@@ -209,3 +209,194 @@ document close-ups live incl. the Act 1 retrofits; all new NPCs visible
 and talking on a phone in both orientations; the wrong-name tally
 grows; content still pure JSON; zero console errors; REVIEW.md log row
 appended.
+
+---
+
+## M4 — Formal review (optional; Nate's call per the M3.5 waiver precedent)
+
+M4 formal review — Acts 1+2 complete. Repo: nkaushansky/outagequest,
+branch `claude/act2-edge-node-kickoff-adsok1` (all M4 work lives there,
+unmerged; main still ends at the M3.5 merge). You are the reviewer, not
+the builder: verify independently, trust nothing the build thread logged
+until you've reproduced it.
+
+Read first: REVIEW.md — the every-review checks, the M3–M7 per-act
+checklist, and the M4 log rows (decisions ratified, content+engine, art,
+device feedback r1 + r2). Then CLAUDE.md, GDD.md, data/schema.md,
+CHARACTERS.md.
+
+REVIEW PASSES:
+1. Build from source; `npm run preview` + `npm run smoke` — 266 checks,
+   green, zero console errors. The suite is the builder's evidence; your
+   job is what it can't see.
+2. Independent playthrough, no walkthrough. Fresh-clear invariant first:
+   a clean Act 1 run must still read exactly 45 closed ("TICKETS OPEN
+   205/250") before first reaching the Edge of Town — the two retrofit
+   tickets living in Act 1 rooms (diner clipping, griddle) are gated on
+   eot_arrived and must not leak. Then Act 2 to the full 100 ("TICKETS
+   OPEN 150/250") and the END OF ACT TWO stinger. Verify the door hunt
+   honestly needs three hooks — a rule source (dumpster work order /
+   corridor laminate / staging runbook, each sufficient alone), the
+   NUMBER only from the Main Street flyer (the mandatory back-into-town
+   leg), location color from Kim or the diner clipping. All six deaths
+   (three per act) warn-first, registered, one-step-back. Saves
+   round-trip mid-Act-2. `hint` nudges at every stage without ever
+   solving; `tickets` names only rooms with a closed ticket.
+3. Soul checks: 10 random Act 2 LOOKs against the office calibration;
+   lookAround surveys read as the narrator, not a map key; Kim's
+   "Malcolm" + Dot's "Funkhouser" grow the tally; document annotations
+   sit ON the paper (marks, never stage directions); all six paper
+   stocks reachable (newsprint, clipping, postit, flyer, binder, slip).
+4. Canon-vs-implementation audit: the four ratified M4 decisions (room
+   map, pod-machine coffee_act2, coded lockbox → janitor's key, 55
+   budget with eot_arrived gating + the accepted diner-aside timing
+   shift) must match what the game does and what GDD.md / schema.md /
+   CLAUDE.md claim.
+5. Purity + platform: content still pure JSON — read the full src diff
+   since main (expected engine additions ONLY: document overlay, goto
+   arrive, arrival exit-suppression, lookAround, hint/tickets shell);
+   colors explicit; emulated mobile both orientations; fold in Nate's
+   real-phone findings (desktop already approved — phone is the open
+   DoD gate).
+
+VERDICT: append a formal review row to REVIEW.md (must-fixes fixed on
+the branch and re-verified before pass). On pass: merge to main, deploy
+via the dreamhost-upload flow (slug `outagequest`), and confirm the next
+step is the M5 kickoff below. WAIVER PATH (the M3.5 precedent): Nate may
+let the 266-check suite plus his device passes stand as the review —
+then log an "M4 (review disposition)" decision row, merge, deploy, and
+go straight to M5.
+
+---
+
+## M5 — Act 3 (paste after the M4 review disposition settles)
+
+M5 kickoff — Act 3: The Cloud, Physically. Repo: nkaushansky/outagequest,
+start from main (M4 Act 2 merged; read REVIEW.md rows "M4 (decisions
+ratified)", "M4 (content+engine)", "M4 (art)", both device-feedback
+rows, and the M4 review/disposition row).
+
+Read before writing anything: CLAUDE.md, GDD.md (story spine — Act 3 is
+the flagship datacenter, "a cathedral in the middle of nowhere": scale,
+absurdity, security theater; the fault isn't here either), data/
+schema.md, CHARACTERS.md, PROMPTS.md, REVIEW.md. Canon already shipped
+points here: the closet packing slip names US-CENTRAL-1 FLAGSHIP CAMPUS,
+1 Cumulonimbus Way, Bunker Flats ("If you can see the building, you are
+already on campus"), reached via the westbound county fiber; Act 2 ended
+mid-ride in Merle's truck ("Get in, IT.").
+
+SCOPE:
+
+1. **Opening beat: arrival + getting inside.** Act 3 opens at the
+   perimeter of a building that is deliberately a giant beige nothing.
+   The entry puzzle is social/procedural — security theater, not
+   another key hunt: visitor badging at Bev's desk. Proposed dual path:
+   the paperwork route (Mel's own ticket number IS the credential — the
+   queue finally works FOR him) and/or the pie route (Darlene's pie as
+   goodwill contraband, seeded before leaving town). The badge prints
+   MALFUNCTON, MEL — the wrong-name gag goes institutional: it's on his
+   chest for the rest of the act and NPCs read it aloud.
+
+2. **The floor (~6 dense rooms, map decided at thread start).**
+   Candidate set from the pitch: perimeter/gatehouse, lobby + security
+   desk (Bev), badging/compliance corridor, the COLD AISLE, the hot
+   aisle / raised-floor plenum, loading dock with the inventory robot.
+   THE HOODIE PAYOFF lands here (canon since "M3 (items canon)"): the
+   backup hoodie carried since Act 1 is finally worn in the cold aisle —
+   outfit map gains the variant (pure data; engine still knows no flag
+   names), the cold gate checks wearing, not carrying, and it must read
+   on screen. THE ROBOT: an autonomous inventory scanner that cannot
+   perceive Mel because he isn't in the asset database — proposed
+   puzzle: get scanned INTO inventory (become an asset) to reach where
+   only assets go.
+
+3. **The discovery.** The flagship is FINE — racks green, generators
+   humming, dashboards immaculate. The outage isn't here; it's
+   administrative, upstream. Act 3 ends knowing WHERE (HQ), never WHY —
+   the $12/Chadwick Cirrus root-cause trail must not surface yet.
+   Act-out: proposed Mel-drives inversion — Merle lends the truck and
+   Mel drives HIMSELF toward HQ ("nobody drives out anymore" completes
+   its arc).
+
+4. **Deaths (collectible, warn-first, registered, one-step-back).**
+   Pitched menu, pick ~3 at thread start: Clean Agent discharge (fire
+   suppression in a sealed aisle), Compliance Hold (a door that legally
+   cannot open), the plenum fall (raised floor), robot right-of-way
+   (the forklift never had a chance to be wrong).
+
+5. **NPCs per the bible.** Bev (security; the badge is her wrong-name
+   contribution) + whoever the floor demands, minted with CHARACTERS.md
+   and the master palette. Coffee: proposed coffee_act3 = Bev's
+   personal Mr. Coffee behind the desk (the only unmetered appliance in
+   the building). The cable finds its Act 3 device; consumables spend
+   in-act.
+
+6. **Act 1+2 debt sweep (small).** Whatever the M4 review / phone pass
+   carried forward, closed while rooms are open.
+
+DECIDE AT THREAD START (joint decisions, not builder discretion; see
+REVIEW.md "M3.5 (decisions ratified)" for the process):
+- Room map: which ~6 rooms, and which is the act's coffee source
+  (proposal: Bev's Mr. Coffee).
+- Entry-puzzle shape: paperwork path, pie path, or true dual path (both
+  work, different flavor/score).
+- The robot: patrolling (would be the game's FIRST MOVING NPC — a
+  data-driven path walker becomes M5's opening engine item) vs.
+  stationary scanner (no engine work); plus the become-inventory
+  puzzle's exact shape.
+- Death menu: pick from the four pitched.
+- Budget: 50 tickets (the arithmetic default — 150 remain across Acts
+  3–5; confirm the even split).
+- Act-out: confirm the Mel-drives inversion and Merle's presence.
+
+CONSTRAINTS: content pure JSON (a patrol walker, if chosen, is the only
+engine item and must be data-driven — no room logic in src/); all text
+DOM, never canvas; one-generator backgrounds via the PROMPTS.md prefix +
+treat_bg.py at true 320x180; sprites per CHARACTERS.md + master palette;
+acts stay speedrunnable; no prior-act inventory required (kit excepted;
+the hoodie's gate is authored as wearing, not carrying).
+
+TEST LOOP: npm run build + preview + `npm run smoke` (266 green at M4
+close — keep green; extend with Act 3 completability, hoodie variant
+renders in the cold aisle, robot behavior if moving, coffee_act3, new
+deaths, and the fresh-clear invariants for Acts 1 AND 2). Deploy via the
+dreamhost-upload flow, slug `outagequest`; real-phone pass before done.
+
+DEFINITION OF DONE: Acts 1–3 completable start to finish (fresh clears
+still read Act 1 = 45, Act 2 = 55); the hoodie payoff lands on screen;
+the act ends pointing at HQ; all new NPCs visible and talking on a
+phone in both orientations; the wrong-name tally grows (the badge
+counts); content still pure JSON; zero console errors; REVIEW.md log
+row appended.
+
+---
+
+## Parked (cross-milestone; logged 2026-07-24, pull forward when ready)
+
+Two items from Nate's M4 close-out notes. Neither blocks M5; both must
+survive between threads, so they live here (and as a line in CLAUDE.md's
+M8 milestone).
+
+**Opening / title sequence.** First load currently drops the player
+straight into Mel's office with no ceremony. Wanted: a title beat before
+control — title card, opening scene, credits gag, anything (even
+something silly: a boot sequence, a POST screen, the terminal
+"connecting…" before the office fades in). CLAUDE.md M8 already owns the
+title screen ("Single Point of Failure: An Outage Quest, Part I" — long
+title there and only there); this extends that item with an intro so the
+game STARTS rather than merely appears. Sierra precedent: every SQ opens
+with a pan/credits before handing over the joystick. Candidate timing:
+M8 proper, or a small standalone pass after any milestone if the bare
+office start stings in playtests. Keep it data-driven where possible
+(a title "room" with onEnter sequencing beats engine-coded cinematics);
+extend the schema minimally if needed.
+
+**outagequest.com build-out.** The game currently deploys as bare static
+files. Open design questions, deliberately unanswered until picked up:
+is the game a frame inside a page or the whole page? where do SITE-level
+easter eggs live (a fake Cumulonimbus status page? a 404 in-voice?
+robots.txt jokes)? Minimum viable ship: a "coming soon" page for the
+domain — cheap, could land any time, worth doing before anyone shares
+the URL. Full site: M8-adjacent launch packaging. Either way the
+dreamhost-upload flow is the deploy path, and dark-mode/color rules
+apply to the page shell exactly as they do in-game.

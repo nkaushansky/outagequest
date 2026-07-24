@@ -50,8 +50,11 @@ from it) and `data/schema.md` (the content format — the engine's contract).
   (asset already in `assets/backgrounds/`). Add one puzzle, one death, saves
   (localStorage autosave on room change + export/import string).
 - **M3 — Act 1 complete.** M4–M7 — Acts 2–5. M8 — polish: deaths gallery,
-  postmortem ending, sound, title screen ("Single Point of Failure: An
-  Outage Quest, Part I" — the long title appears there and only there).
+  postmortem ending, sound, title screen + opening title sequence (first
+  load lands on a title beat, not bare gameplay; "Single Point of
+  Failure: An Outage Quest, Part I" — the long title appears there and
+  only there), and the outagequest.com site shell (a "coming soon" page
+  may ship earlier; details in KICKOFFS.md → Parked).
 - Definition of done per milestone: playable in browser, mobile-checked,
   no console errors, content still pure JSON.
 - Regression harness: `tools/smoke/` (build + preview, then `npm run
