@@ -13,6 +13,23 @@ export interface UICallbacks {
   onSteer(key: string, down: boolean): void;
 }
 
+/** One suggestion chip: `label` is what the chip shows, `value` is what
+ *  tapping it feeds the parser. They differ only in the conversation
+ *  row, where chips carry bare topics under a shared stem. */
+export interface SuggestionChip {
+  label: string;
+  value: string;
+}
+
+/** A row of suggestions, shell-completion style: an optional stem
+ *  ("ask Dot about") rendered once as a non-interactive label, then the
+ *  candidate chips — the fix for landscape phones, where six copies of
+ *  the same stem stacked a row each and buried the log. */
+export interface SuggestionSet {
+  stem?: string;
+  chips: SuggestionChip[];
+}
+
 export class UI {
   private log: HTMLDivElement;
   private suggest: HTMLDivElement;
@@ -296,13 +313,20 @@ export class UI {
     }
   }
 
-  setSuggestions(items: string[]): void {
-    this.suggestions = items;
+  setSuggestions(set: SuggestionSet): void {
+    this.suggestions = set.chips.map((c) => c.value);
     this.suggest.replaceChildren();
-    for (const s of items) {
+    if (set.chips.length === 0) return;
+    if (set.stem) {
+      const stem = el("span", "suggest-stem");
+      stem.textContent = set.stem;
+      this.suggest.appendChild(stem);
+    }
+    for (const c of set.chips) {
       const chip = el("button", "suggest-chip");
-      chip.textContent = s;
-      chip.addEventListener("click", () => this.cb.onSuggestion(s, true));
+      chip.textContent = c.label;
+      if (c.value !== c.label) chip.title = c.value; // full command for AT/hover
+      chip.addEventListener("click", () => this.cb.onSuggestion(c.value, true));
       this.suggest.appendChild(chip);
     }
   }

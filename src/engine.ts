@@ -7,7 +7,7 @@ import { GameState, type Snapshot } from "./state";
 import { runEntries, type EngineContext } from "./resolver";
 import { tryShell } from "./shell";
 import { Scene, type SceneNpc, type SpriteSheet } from "./scene";
-import { UI } from "./ui";
+import { UI, type SuggestionSet } from "./ui";
 import { decodeSave, encodeSave, readLocal, writeLocal, type SaveData } from "./save";
 import {
   buildCandidates,
@@ -621,22 +621,39 @@ export class Engine {
     this.ui.setSuggestions(this.suggest(this.ui.getInput()));
   }
 
-  private suggest(raw: string): string[] {
-    const verbs = Object.keys(this.content.verbs.verbs);
+  /** Chips for the current input. The empty-line conversation row is
+   *  shell-completion shaped: the shared stem ("ask Dot about") renders
+   *  once, chips carry bare topics, and each tap still runs the whole
+   *  command — six full-command chips stacked a row apiece on landscape
+   *  phones and buried the log. */
+  private suggest(raw: string): SuggestionSet {
     // Empty input suggests nothing — the verb strip already offers the
     // verbs — unless a conversation is live, in which case the line
-    // offers the whole ask ("ask Merle about internet"), tap-to-run.
+    // offers every ask, tap-to-run. No MAX cap here: this row IS the
+    // tap path's topic list (Kim's seventh topic was being sliced off),
+    // and the row scrolls past two rows.
     if (raw.trim() === "") {
-      if (!this.topicContext) return [];
+      if (!this.topicContext) return { chips: [] };
       const npc = this.currentRoom()?.hotspots.find(
         (h) => h.id === this.topicContext,
       );
-      return (npc?.topics ?? [])
-        .map((t) => (t.match[0] ? `ask ${npc!.name} about ${t.match[0]}` : ""))
-        .filter(Boolean)
-        .slice(0, MAX_SUGGESTIONS);
+      const topics = (npc?.topics ?? [])
+        .map((t) => t.match[0] ?? "")
+        .filter(Boolean);
+      if (topics.length === 0) return { chips: [] };
+      const stem = `ask ${npc!.name} about`;
+      return {
+        stem,
+        chips: topics.map((m) => ({ label: m, value: `${stem} ${m}` })),
+      };
     }
+    return {
+      chips: this.completions(raw).map((s) => ({ label: s, value: s })),
+    };
+  }
 
+  private completions(raw: string): string[] {
+    const verbs = Object.keys(this.content.verbs.verbs);
     const tokens = normalize(raw);
     const vm = matchVerb(tokens, this.content.verbs);
     const trailingSpace = /\s$/.test(raw);

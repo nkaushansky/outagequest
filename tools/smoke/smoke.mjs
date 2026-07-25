@@ -470,11 +470,13 @@ await run("talk to darlene");
 ok((await lastLines()).includes("two names today"), "wrong-name tally at Darlene", await lastLines());
 ok((await npcTalking()) === "darlene", "talking runs Darlene's talk cycle", String(await npcTalking()));
 const topicChips = await page.locator(".suggest-chip").allInnerTexts();
-ok(topicChips.includes("ask Darlene about nimbus"), "talk arms tappable topic chips", JSON.stringify(topicChips));
-await page.locator(".suggest-chip", { hasText: "about nimbus" }).click();
+ok(topicChips.includes("nimbus"), "talk arms tappable topic chips (bare topics)", JSON.stringify(topicChips));
+ok((await page.locator(".suggest-stem").textContent()) === "ask Darlene about",
+  "conversation row renders the stem once", String(await page.locator(".suggest-stem").textContent()));
+await page.locator(".suggest-chip", { hasText: "nimbus" }).click();
 await page.waitForTimeout(80);
-ok((await lastLines()).includes("For weather"), "topic chip runs the ask", await lastLines());
-ok((await page.locator(".suggest-chip").allInnerTexts()).includes("ask Darlene about pie"), "chips persist through the conversation");
+ok((await lastLines()).includes("For weather"), "bare topic chip runs the whole ask", await lastLines());
+ok((await page.locator(".suggest-chip").allInnerTexts()).includes("pie"), "chips persist through the conversation");
 await run("talk to merle");
 ok((await lastLines()).includes("three names today"), "wrong-name tally at Merle", await lastLines());
 ok((await npcTalking()) === "merle", "talking runs Merle's talk cycle", String(await npcTalking()));
@@ -885,6 +887,44 @@ const lookGaps = await page.evaluate(() => {
   return gaps;
 });
 ok(lookGaps.length === 0, "every hotspot has a bespoke LOOK", JSON.stringify(lookGaps));
+
+// ---- M4 r3: landscape conversation row must not bury the log ---------------
+// Device finding: six full "ask Dot about ..." chips wrapped one per row
+// in the narrow landscape panel and squeezed the log to a sliver. Now the
+// row is shell-completion shaped (stem once + bare topics) and height-
+// capped with internal scroll, like the inventory tray.
+await page.setViewportSize({ width: 844, height: 390 });
+await page.waitForTimeout(300);
+const r3base = await page.evaluate(() => {
+  const s = window.spof.state;
+  return { v: 1, snap: { roomId: s.roomId, flags: [...s.flags], inventory: [...s.inventory],
+    score: s.score, awarded: [...s.awarded], player: { ...s.player } }, deathsFound: [...s.deathsFound] };
+});
+await page.evaluate((base) => {
+  const save = { ...base, snap: { ...base.snap, roomId: "act2_salon",
+    player: { x: 230, y: 150, facing: "left" } } };
+  window.spof.exec("load SPOF1." + btoa(JSON.stringify(save)));
+}, r3base);
+await page.waitForTimeout(200);
+await run("talk to dot");
+const dotChips = await page.locator(".suggest-chip").allInnerTexts();
+ok(dotChips.includes("petunias") && !dotChips.some((t) => t.startsWith("ask ")),
+  "landscape conversation chips are bare topics", JSON.stringify(dotChips));
+ok((await page.locator(".suggest-stem").textContent()) === "ask Dot about",
+  "Dot's row stems once", String(await page.locator(".suggest-stem").textContent()));
+const r3box = await page.evaluate(() => ({
+  h: document.querySelector(".suggest").clientHeight,
+  scroll: document.querySelector(".suggest").scrollHeight,
+  logH: document.querySelector(".log").clientHeight,
+}));
+ok(r3box.h <= 64, "landscape conversation row is height-capped", JSON.stringify(r3box));
+ok(r3box.logH >= 90, "log keeps reading space beside a chatty NPC", JSON.stringify(r3box));
+await page.locator(".suggest-chip", { hasText: "petunias" }).click();
+await page.waitForTimeout(120);
+ok((await lastLines(8)).includes("MUNICIPAL infrastructure"),
+  "bare chip runs the full ask in landscape", await lastLines(8));
+await page.setViewportSize({ width: 1280, height: 800 });
+await page.waitForTimeout(300);
 
 // ---- console + screenshots -------------------------------------------------
 ok(consoleErrors.length === 0, "zero console errors", JSON.stringify(consoleErrors));
