@@ -1,5 +1,101 @@
 {
-  "hoodie": { "name": "hoodie", "synonyms": ["sweatshirt"], "look": "Field uniform of the remote professional. Battle-tested against thermostat disputes." },
+  "hoodie": { "name": "hoodie", "synonyms": ["sweatshirt", "backup hoodie", "hood", "second hoodie"],
+    "look": "Field uniform of the remote professional. Battle-tested against thermostat disputes.",
+    "presentIf": { "flag": "wearing_hoodie" },
+    "responses": {
+      "look": [
+        { "if": { "flag": "wearing_hoodie" },
+          "text": "The backup hoodie, on you, hood up, drawcords cinched, in fifty-five-degree air moving at volume. Two hoodies deep, which is one more hoodie than you have ever needed and exactly the right number today. It has been in your bag since the morning you left the house, waiting for the one room on Earth that would need it." },
+        { "if": { "flag": "a3_in_cold" },
+          "text": "The backup hoodie, in your hands, in a fifty-five-degree aisle. You have carried this thing three hundred and eleven miles, through a diner, a nail salon, a dumpster, a utility closet and a truck, for no articulable reason. The reason is this room. PUT IT ON." },
+        { "text": "Field uniform of the remote professional. Battle-tested against thermostat disputes. You packed a second one on the way out the door, the way you'd pack a spare fuse — not because you had a plan, but because a professional travels with a spare." }
+      ],
+      "use": [
+        { "if": { "flag": "wearing_hoodie" },
+          "text": "The hood is up and the cords are cinched. There is no further hoodie to be applied. You have reached hoodie." },
+        { "if": { "flagNot": "a3_in_cold" },
+          "text": "You could put it on. You'd be a warm man in a warm room, which is a waste of a spare. A hoodie held in reserve is a hoodie with a future; somewhere out there is a room cold enough to make this a moment. (You will know it. Your forearms will tell you.)" },
+        { "do": [
+            { "narrate": "You pull the backup hoodie out of the bag, in the middle of Cold Aisle 4, at fifty-five degrees, in a river of moving air, with ten thousand fans agreeing about something at the top of their lungs." },
+            { "narrate": "It goes on over the first one. You put the hood UP — the actual hood, up, on your actual head, in a datacenter — and pull the drawcords, and the cold stops being an argument and becomes weather. Your forearms withdraw their complaint. Your hands come back online. The roar drops half an octave through fleece." },
+            { "narrate": "Two days ago this hoodie was a thing you grabbed on the way out of a house you hadn't left in years, because a professional travels with a spare. It has ridden through a diner, a dead phone store, a dumpster, a utility closet behind a nail salon, and three hundred and eleven miles of soybeans, unused, unexplained, taking up space in a bag. Every single act you have been in, this hoodie was in it too, doing nothing." },
+            { "narrate": "It was for this. One room, in one building, in the middle of nowhere, at fifty-five degrees. The most over-prepared object in your inventory has just become the correct tool, and nobody saw it, and that is the most accurate description of your career that has ever been available." },
+            { "setFlag": "wearing_hoodie" },
+            { "removeItem": "hoodie" },
+            { "score": { "id": "a3_hoodie_worn", "points": 3 } }
+          ] }
+      ],
+      "take": [
+        { "if": { "flag": "wearing_hoodie" },
+          "text": "You're in it. Both of them. Further acquisition would be a layering incident." }
+      ]
+    } },
+  "fleece": { "name": "fleece", "synonyms": ["cumulonimbus fleece", "lost and found fleece", "nimbus day fleece", "jumper", "sweatshirt", "hood"],
+    "look": "Heather gray, three X L, a Cumulonimbus logo peeling at the shoulder, and NIMBUS DAY '14 screen-printed underneath in letters visible from the gatehouse — a garment that violates its own employer's brand standards in the largest available font. It has a hood. It smells of a plastic tub.",
+    "presentIf": { "flag": "wearing_hoodie" },
+    "responses": {
+      "look": [
+        { "if": { "flag": "wearing_hoodie" },
+          "text": "You are wearing a three-X-L Cumulonimbus fleece with the hood up, in Cold Aisle 4, inside the company that made it, with NIMBUS DAY '14 across your chest in defiance of Brand Standards §4.1. You look like a duvet with a grievance. You are warm. Only one of those facts has any operational relevance." },
+        { "text": "Heather gray, three X L, peeling logo, NIMBUS DAY '14 in enormous letters, and a hood. Nine years in a lost-and-found tub. Somebody abandoned this on purpose and you should probably respect their decision less than you currently do." }
+      ],
+      "use": [
+        { "if": { "flag": "wearing_hoodie" },
+          "text": "The hood is up. The fleece has already given you everything it has, which is warmth and a brand-standards violation." },
+        { "if": { "flagNot": "a3_in_cold" },
+          "text": "You could put on a three-X-L fleece right now, in a room that is a perfectly civil temperature, and look like a man who has given up. Save it. Somewhere in this building there is air with an opinion." },
+        { "do": [
+            { "narrate": "You put on the lost-and-found fleece in the middle of Cold Aisle 4. It goes on like a tent going up. Three X L, hood up, drawcords absent because somebody removed them years ago for reasons you will never learn, NIMBUS DAY '14 across your chest inside the building that printed it." },
+            { "narrate": "The cold stops arguing immediately. Your forearms withdraw their complaint. You are warm, you are ridiculous, and you are standing in the physical body of the internet wearing a garment that misspells its own employer according to its own employer." },
+            { "narrate": "You did bring a hoodie of your own, once, in a bag, on a day when leaving the house was the hard part. You did not bring it THIS time. Somewhere out there is a version of this afternoon where the spare you packed for no reason turned out to be exactly the tool, and you got to feel the shape of that. This is the other version. It is warm, too." },
+            { "setFlag": "wearing_hoodie" },
+            { "removeItem": "fleece" },
+            { "score": { "id": "a3_hoodie_worn", "points": 3 } }
+          ] }
+      ]
+    } },
+  "pie": { "name": "pie", "synonyms": ["paper bag", "bag", "darlenes pie", "darlene's pie", "sour cherry", "dessert"],
+    "look": "One paper sack, translucent at the corner, warm at the bottom. Inside: a sour cherry pie in a tin with masking tape across it, baked by a woman who has fed this county through two outages and a flood and who understands, better than the entire access-management industry, exactly what a closed door costs.",
+    "responses": {
+      "use": [
+        { "text": "You are not eating Darlene's pie. Darlene's pie is not food; Darlene's pie is a KEY, and you have spent two days learning to recognize one." }
+      ],
+      "open": [
+        { "text": "'She said don't open it in the truck,' Merle said, three hundred miles ago, and the instruction has acquired the force of scripture through sheer repetition inside your own head. It stays shut until it's in front of somebody with a door." }
+      ]
+    } },
+  "badge": { "name": "visitor badge", "synonyms": ["badge", "visitor pass", "pass", "id", "malfuncton", "my badge", "name tag"],
+    "look": "A stick-on visitor badge, dot-matrix, warm off the printer: MALFUNCTON, MEL. Column four's upper pin died in the spring, so every F it prints comes out an L. Your surname means WORKS AS INTENDED. It is now, laminated and adhesive and at conversational eye level, a diagnosis.",
+    "presentIf": { "flag": "a3_badged" },
+    "responses": {
+      "look": [
+        { "if": { "flag": "a3_asset" },
+          "text": "Two identities on one chest: VISITOR — MALFUNCTON, MEL, issued by a woman with a pen and worth nothing past the vestibule; and ASSET 8814402, peeled off a dead tray, which this entire building will follow anywhere. Nobody here knows your name. One of them knows your asset number, and that one opens doors." },
+        { "text": "MALFUNCTON, MEL. Dot-matrix, adhesive, chest height, unavoidable. Bev pressed it flat with two fingers like a nurse fixing a dressing. Everyone you meet for the rest of the day will read it before they look at your face, and two of them will read it out loud, and one of those two will pronounce the comma." }
+      ],
+      "use": [
+        { "text": "You press the badge down flatter, which is the only thing a visitor badge has ever done for anybody. It authorizes you to stand in a lobby and to be escorted, and there is nobody in twenty-two acres available to escort you." }
+      ],
+      "take": [
+        { "text": "It's on your chest. It's been on your chest since the printer chattered. It will be on your chest in every conversation you have today." }
+      ]
+    } },
+  "asset_tag": { "name": "asset tag", "synonyms": ["tag", "sticker", "barcode", "8814402", "asset", "label", "asset sticker"],
+    "look": "A peeled asset tag, nine-year-old adhesive still absolutely committed: barcode, seven digits, company typeface. 8814402 · 2U CHASSIS · IN SERVICE · COLD AISLE 4. It belongs to a machine that has been dead in a cage since 2019 and is, according to the only working database on this campus, hard at work. Nobody closed the ticket. Nobody ever closes the ticket.",
+    "responses": {
+      "look": [
+        { "if": { "flag": "a3_tag_live" },
+          "text": "8814402, received eleven minutes ago at a dock terminal, move ticket auto-issued per AC-09, destination Cold Aisle 4. A sticker with a valid credential and a legitimate onward journey. It is, at this moment, more thoroughly authorized than you have ever been by any employer, including the one that pays you." },
+        { "text": "8814402 · 2U CHASSIS · IN SERVICE · COLD AISLE 4. Dead since 2019, employed since 2019, both true, both in the record. The tag reads STALE at a gantry because it was never RECEIVED at this site — a sticker is a claim, and a claim has to be entered by something." }
+      ],
+      "use": [
+        { "if": { "flag": "a3_asset" },
+          "text": "It's on your chest and it's in the database and a robot has stopped for it. The sticker's work is done; you're the asset now." },
+        { "if": { "flag": "a3_tag_live" },
+          "text": "You peel the backing and press 8814402 onto your chest beside the visitor badge — one identity issued by a person, one salvaged off a corpse, and it is the corpse's that this building respects. Now go and be READ. Something has to scan you, and there is exactly one thing on this floor that scans." },
+        { "text": "You could stick it on right now, and you would be a man with a sticker. The building does not care about stickers; the building cares about ROWS. Nothing has entered 8814402 as received at this site, so nothing will read it. Receiving happens at a terminal." }
+      ]
+    } },
   "mug":    { "name": "coffee mug", "synonyms": ["mug", "cup"], "look": "Your emotional-support mug. Currently empty, like the status dashboard's promises.",
     "responses": {
       "look": [
@@ -36,15 +132,19 @@
       ]
     } },
   "pants":  { "name": "real pants", "synonyms": ["pants", "trousers", "slacks", "hard pants", "the pants"], "look": "Real Pants: rigid, buttoned, unforgiving. Last worn at a funeral for a startup. They still hold the crease. Some things stay load-bearing.",
-    "presentIf": { "flag": "wearing_pants" },
+    "presentIf": { "any": [{ "flag": "wearing_pants" }, { "flagNot": "br_pants_found" }] },
     "responses": {
       "look": [
         { "if": { "flag": "wearing_pants" },
-          "text": "You are in the Real Pants right now. The crease precedes you into rooms by a full second. Witnesses adjust their posture." }
+          "text": "You are in the Real Pants right now. The crease precedes you into rooms by a full second. Witnesses adjust their posture." },
+        { "if": { "flagNot": "br_pants_found" },
+          "text": "The Real Pants are not on your person, and it would be generous to call them nearby. They are vacuum-sealed in a space bag in cold storage — which in this house means the dark under the bed, where you filed them five years ago in your own handwriting under the heading DO NOT NEED. They are the only garment you own that would survive a service call." }
       ],
       "use": [
         { "if": { "flag": "wearing_pants" },
           "text": "You are already wearing the Real Pants. Their authority cannot be stacked." },
+        { "if": { "flagNot": "br_pants_found" },
+          "text": "You cannot put on trousers you have not yet retrieved from cold storage. Restore from backup first; the archive is under the bed." },
         { "do": [
             { "narrate": "You put on the Real Pants. The crease engages. Your posture files a change request and approves it unilaterally. Somewhere, a conference room feels a disturbance. You are dressed for a service call. The pants leave your inventory and enter your identity." },
             { "setFlag": "wearing_pants" },
@@ -53,7 +153,9 @@
       ],
       "take": [
         { "if": { "flag": "wearing_pants" },
-          "text": "You're wearing them. Further acquisition would be a laundry incident." }
+          "text": "You're wearing them. Further acquisition would be a laundry incident." },
+        { "if": { "flagNot": "br_pants_found" },
+          "text": "You reach for pants that are three rooms away and five years deep in a vacuum bag. Grand gestures require inventory. The bag is under the bed, where past you filed it with a label and a strong opinion." }
       ]
     } }
 }

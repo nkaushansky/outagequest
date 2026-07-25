@@ -1,0 +1,1310 @@
+{
+ "id": "act3_lobby",
+ "name": "The Visitor Lobby",
+ "background": "assets/backgrounds/act3_lobby.png",
+ "walkable": [
+  [
+   22,
+   128
+  ],
+  [
+   300,
+   128
+  ],
+  [
+   310,
+   178
+  ],
+  [
+   12,
+   178
+  ]
+ ],
+ "playerStart": {
+  "x": 40,
+  "y": 152,
+  "facing": "right"
+ },
+ "exits": [
+  {
+   "to": "act3_perimeter",
+   "polygon": [
+    [
+     4,
+     138
+    ],
+    [
+     26,
+     138
+    ],
+    [
+     26,
+     176
+    ],
+    [
+     4,
+     176
+    ]
+   ],
+   "arrive": {
+    "x": 204,
+    "y": 150,
+    "facing": "down"
+   }
+  },
+  {
+   "to": "act3_compliance",
+   "polygon": [
+    [
+     284,
+     128
+    ],
+    [
+     300,
+     128
+    ],
+    [
+     300,
+     148
+    ],
+    [
+     284,
+     148
+    ]
+   ],
+   "arrive": {
+    "x": 40,
+    "y": 152,
+    "facing": "right"
+   },
+   "if": {
+    "flag": "a3_badged"
+   },
+   "blocked": [
+    {
+     "if": {
+      "flagNot": "a3_knows_reference"
+     },
+     "text": "'Sir.' Bev says it without raising her voice, because thirty-one years have taught her exactly how much voice a lobby needs. 'You can't go past me without a badge. I know it's a bad day. It's a bad day WITH a badge.' She taps the logbook twice with the pen. The pen is the whole security architecture now, and it's holding."
+    },
+    {
+     "text": "'Badge,' Bev says, not unkindly, and the pen taps the logbook. The process is paper today and the paper still wins."
+    }
+   ]
+  }
+ ],
+ "onEnter": [
+  {
+   "if": {
+    "flagNot": "a3_lobby_seen"
+   },
+   "do": [
+    {
+     "narrate": "The lobby is the size of a small church and about as busy. Terrazzo floor polished to a shine that has never been scuffed by a crowd, a ceiling three storeys up doing nothing at all, and a video wall the size of a garage door showing \u2014 in white text on institutional blue, at a font size intended for four hundred people \u2014 a single line: UNABLE TO REACH IDENTITY SERVICE. RETRY?"
+    },
+    {
+     "narrate": "In front of it: three steel badge pedestals with sheets of printer paper taped over their readers. On the paper, in marker, the same three words on each: OUT. USE DESK."
+    },
+    {
+     "narrate": "And at the desk, under the only warm light in the room, a woman in a mustard cardigan is running the entire physical security of a twenty-two-acre flagship campus with a ballpoint pen and a bound paper logbook. She has been expecting somebody all morning. She was not expecting you specifically, because nobody ever is."
+    },
+    {
+     "setFlag": "a3_lobby_seen"
+    },
+    {
+     "score": {
+      "id": "lb_arrived",
+      "points": 1
+     }
+    }
+   ]
+  },
+  {
+   "if": {
+    "flag": "a3_badged"
+   },
+   "text": "The lobby, and the badge on your chest with a stranger's name on it. Bev looks up, checks the badge to remember who you are, and finds out."
+  },
+  {
+   "text": "The lobby: church-sized, empty, immaculate. The video wall is still asking whether you'd like to retry. Bev is still holding the line with a pen."
+  }
+ ],
+ "lookAround": [
+  {
+   "if": {
+    "flag": "a3_badged"
+   },
+   "text": "The lobby, surveyed: BEV at the visitor desk with her LOGBOOK and her badge PRINTER, her MR. COFFEE steaming on the credenza, the dead VIDEO WALL, the taped-over BADGE PEDESTALS, the LOST-AND-FOUND bin by her knee, the front DOORS behind you to the lot, and the INNER DOOR right \u2014 which your badge now opens, or at least which Bev now permits."
+  },
+  {
+   "text": "The lobby, surveyed: a dead VIDEO WALL asking to retry, three BADGE PEDESTALS with paper taped over the readers, and BEV at the visitor DESK \u2014 the logbook, the badge PRINTER, a LOST-AND-FOUND bin, and a MR. COFFEE keeping actual coffee actually hot. The INNER DOOR is right, past her, and she is the door. Front DOORS behind you to the lot."
+  }
+ ],
+ "hotspots": [
+  {
+   "id": "visitor_log",
+   "name": "logbook",
+   "synonyms": [
+    "log",
+    "paper log",
+    "visitor log",
+    "book",
+    "ledger",
+    "sign in",
+    "sign-in sheet",
+    "sheet"
+   ],
+   "polygon": [
+    [
+     190,
+     90
+    ],
+    [
+     226,
+     114
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "lb_read_log"
+      },
+      "do": [
+       {
+        "narrate": "You lean over \u2014 Bev turns the book toward you an inch, which is permission \u2014 and read the last surviving access-control system on the campus."
+       },
+       {
+        "document": {
+         "style": "binder",
+         "title": "SITE VISITOR LOG \u2014 US-CENTRAL-1",
+         "body": [
+          "CONTINGENCY PROCEDURE SP-11 (MANUAL): In the event the visitor management system is unavailable, Site Security shall record all visitors by hand.",
+          "TIME IN \u00b7 NAME \u00b7 COMPANY \u00b7 ESCORT \u00b7 SPONSORING REFERENCE NO. \u00b7 TIME OUT",
+          "06:12 \u00b7 B. TOLLIVER \u00b7 SELF \u00b7 \u2014 \u00b7 N/A \u00b7 \u2014",
+          "07:48 \u00b7 C. MABRY \u00b7 CONT. COMPLIANCE T2 \u00b7 SELF \u00b7 AUDIT-CCT2-1140 \u00b7 \u2014",
+          "09:05 \u00b7 (REFUSED \u2014 NO REFERENCE NO.) \u00b7 REG. FIRE MARSHAL \u00b7 \u2014 \u00b7 \u2014 \u00b7 09:06",
+          {
+           "text": "no ref no, no entry. i don't make the rules, i just outlive them  \u2014 B.T.",
+           "style": "hand"
+          },
+          {
+           "text": "Form SP-11 rev. 9. Retain seven years. Digitize when system returns.",
+           "style": "fine"
+          }
+         ]
+        }
+       },
+       {
+        "narrate": "SPONSORING REFERENCE NO. A column. A required column, which turned a fire marshal around at nine oh five this morning. You look at that column for a while. You have been carrying a reference number since 6:11 a.m. yesterday. You have quoted it to a chatbot, an IVR, a status page, and a wall."
+       },
+       {
+        "setFlag": "lb_read_log"
+       },
+       {
+        "setFlag": "a3_knows_reference"
+       },
+       {
+        "score": {
+         "id": "lb_log",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "text": "The logbook: six columns, four entries, one refusal, and a note to herself in the margin about outliving rules. SPONSORING REFERENCE NO. is the column with teeth."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "text": "Your line is in there now, in Bev's small upright hand, with a name in it that is nearly yours. The book does not care. The book has never cared. That's its whole appeal."
+     },
+     {
+      "text": "You reach for the pen. Bev's hand does not move, and neither does the pen. 'I write it,' she says. 'That's the control.' She is, technically and completely, correct."
+     }
+    ],
+    "take": [
+     {
+      "text": "The logbook stays with the desk, and the desk stays with Bev, and Bev stays. That's the retention schedule."
+     }
+    ]
+   }
+  },
+  {
+   "id": "badge_printer",
+   "name": "badge printer",
+   "synonyms": [
+    "printer",
+    "label printer",
+    "label maker",
+    "badge machine"
+   ],
+   "polygon": [
+    [
+     156,
+     90
+    ],
+    [
+     190,
+     118
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "text": "A beige box the age of your career, extruding adhesive visitor badges one at a time onto a little steel lip. It has no network port, no account, no subscription and no opinions, and it is therefore the only identity provider on this campus that came to work today. One of its dot-matrix pins is dead \u2014 column four, upper half. You know which one, now. Permanently."
+     },
+     {
+      "text": "A squat beige label printer bolted to the desk, dot-matrix, ribbon-fed, older than the building it stands in. It prints visitor badges from whatever Bev types. There is no cloud in it anywhere. Twenty-two acres of software-defined everything, and the ID card comes out of a machine that thinks it's 1994 and is right to."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "text": "It has already done the worst thing it will ever do to you, and it did it accidentally, with a dead pin, in under two seconds."
+     },
+     {
+      "text": "You do not touch the printer. Between you and Bev there is a clear and unspoken agreement about whose printer this is, and it is not a negotiation you would win or want to."
+     }
+    ]
+   }
+  },
+  {
+   "id": "lost_found",
+   "name": "lost-and-found",
+   "synonyms": [
+    "bin",
+    "lost and found",
+    "box",
+    "jackets",
+    "fleece",
+    "tub",
+    "crate"
+   ],
+   "polygon": [
+    [
+     144,
+     104
+    ],
+    [
+     178,
+     130
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "do": [
+       {
+        "narrate": "A gray plastic tub by Bev's knee, holding the sediment of nine years of visiting contractors: three hard hats, a phone charger for a phone that no longer exists, one enormous fleece, a paperback with the cover torn off, and \u2014 at the bottom, unmistakable \u2014 somebody's reading glasses, which is a small tragedy, because whoever lost them could not read the lost-and-found sign."
+       },
+       {
+        "narrate": "You count it up: nine years of visiting contractors, and the entire sediment of their passage through the most important building in the state is one tub. Twenty-two acres, four hundred designed visitors a day, and the archaeological record fits under a desk."
+       },
+       {
+        "setFlag": "lb_read_bin"
+       },
+       {
+        "score": {
+         "id": "lb_lostfound",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "flag": "lb_read_bin"
+      },
+      "text": "A gray plastic tub by Bev's knee, holding the sediment of nine years of visiting contractors: three hard hats, a phone charger for a phone that no longer exists, one enormous fleece, a paperback with the cover torn off, and \u2014 at the bottom, unmistakable \u2014 somebody's reading glasses, which is a small tragedy, because whoever lost them could not read the lost-and-found sign."
+     },
+     {
+      "text": "The tub: hard hats, a dead charger, one enormous fleece, a coverless paperback, and a pair of glasses whose owner could not read the sign about them."
+     }
+    ],
+    "open": [
+     {
+      "if": {
+       "any": [
+        {
+         "hasItem": "hoodie"
+        },
+        {
+         "flag": "wearing_hoodie"
+        }
+       ]
+      },
+      "text": "You lift the fleece out and hold it up: heather gray, three X L, a Cumulonimbus logo peeling at the shoulder, and NIMBUS DAY '14 screen-printed underneath by somebody who evidently did not read Brand Standards \u00a74.1. You already travel with a hoodie. You put the fleece back with real respect. It has clearly been through something."
+     },
+     {
+      "if": {
+       "flag": "lb_took_fleece"
+      },
+      "text": "The tub, minus one fleece. The hard hats have closed ranks over the gap."
+     },
+     {
+      "do": [
+       {
+        "narrate": "You lift out the fleece: heather gray, three X L, a Cumulonimbus logo peeling at the shoulder, and beneath it, screen-printed in enormous letters, NIMBUS DAY '14 \u2014 a garment that violates its own employer's brand standards in the largest available font. It has a hood. It is the size of a duvet."
+       },
+       {
+        "narrate": "You left your backup hoodie at home, which yesterday was a reasonable thing to have done. You take the fleece. Bev watches you do it and says nothing, which is a form of blessing."
+       },
+       {
+        "addItem": "fleece"
+       },
+       {
+        "setFlag": "lb_took_fleece"
+       }
+      ]
+     }
+    ],
+    "take": [
+     {
+      "if": {
+       "any": [
+        {
+         "hasItem": "hoodie"
+        },
+        {
+         "flag": "wearing_hoodie"
+        }
+       ]
+      },
+      "text": "You have a hoodie. Taking a second one would be hoarding, and this tub has enough sadness in it already."
+     },
+     {
+      "if": {
+       "flag": "lb_took_fleece"
+      },
+      "text": "You've had your fleece out of that tub. The hard hats keep the rest."
+     },
+     {
+      "do": [
+       {
+        "narrate": "You lift out the fleece: heather gray, three X L, peeling Cumulonimbus logo, and NIMBUS DAY '14 in letters you could read from the gatehouse. It has a hood. It is enormous. You left yours at home, and somewhere ahead of you there is going to be a cold room."
+       },
+       {
+        "addItem": "fleece"
+       },
+       {
+        "setFlag": "lb_took_fleece"
+       }
+      ]
+     }
+    ],
+    "use": [
+     {
+      "text": "Sorting a nine-year lost-and-found is not today's outage. Today's outage is the whole internet, and it is somehow less complicated than this tub."
+     }
+    ]
+   }
+  },
+  {
+   "id": "bev",
+   "name": "Bev",
+   "synonyms": [
+    "security",
+    "guard",
+    "woman",
+    "lady",
+    "tolliver",
+    "bev tolliver",
+    "receptionist",
+    "officer"
+   ],
+   "polygon": [
+    [
+     178,
+     58
+    ],
+    [
+     220,
+     128
+    ]
+   ],
+   "sprite": {
+    "use": "bev",
+    "at": [
+     196,
+     90
+    ]
+   },
+   "responses": {
+    "look": [
+     {
+      "text": "Bev Tolliver, Site Security, thirty-one years in this lobby and eleven of them spent losing an argument with Facilities about the thermostat \u2014 hence the mustard cardigan, hand-knit, worn over the uniform shirt in open defiance of a dress code that was written by somebody who has never been to Bunker Flats. Silver waves. Reading glasses on a beaded chain. A ballpoint pen held the way a bailiff holds a gavel."
+     },
+     {
+      "text": "Behind her: a bound paper logbook, a beige badge printer, a lost-and-found tub, and a Mr. Coffee she brought from home. In front of her: twenty-two acres of the most automated real estate on Earth, currently being defended by a woman with a pen. She is the only working access control system on this campus and she knows it, and she is being extremely gracious about it."
+     }
+    ],
+    "talk": [
+     {
+      "if": {
+       "flagNot": "met_bev"
+      },
+      "do": [
+       {
+        "narrate": "'Morning,' Bev says. 'You'll be here about the outage.' It is not a question; it is the only reason anyone would drive to Bunker Flats. 'Everybody's here about the outage. Nobody's here WITH a badge.' She taps the logbook. 'System's down, so we're on SP-11. That means I write you in by hand, and by hand means I need what the form needs.'"
+       },
+       {
+        "narrate": "She turns the book an inch toward you. 'Name, company, escort, and a sponsoring reference number. It's the last one that gets people.' She says it kindly. She has turned away a fire marshal today and she did not enjoy it."
+       },
+       {
+        "setFlag": "met_bev"
+       },
+       {
+        "setFlag": "a3_knows_reference"
+       }
+      ]
+     },
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "text": "'Mr. Malfuncton,' Bev says, reading your chest, because your chest is now where your name lives. 'Anything else?' You have decided not to correct her. She printed it in good faith off a machine with a dead pin, and honestly, at this point in your career, MALFUNCTON is the most accurate credential you have ever been issued."
+     },
+     {
+      "text": "'Still need a reference number,' Bev says, with the patience of erosion. 'Or something better than a reference number, but there isn't anything better than a reference number.' She is wrong about that, and there is pie in a truck outside."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "all": [
+        {
+         "instrument": "pie"
+        },
+        {
+         "flagNot": "a3_badged"
+        }
+       ]
+      },
+      "do": [
+       {
+        "narrate": "You put Darlene's bag on the desk and open it, and the lobby \u2014 three storeys of climate-controlled institutional air \u2014 fills instantly with the smell of a pie that rode three hundred miles on a transmission hump."
+       },
+       {
+        "narrate": "Bev goes very still. 'What is that.' 'Sour cherry,' you say, reading the tape on the tin. 'A woman named Darlene sent it. She runs a diner in a town you've never heard of. She said it was for whoever had a door I needed.'"
+       },
+       {
+        "narrate": "There is a silence in which thirty-one years of institutional process quietly loses a fight it did not expect to be in. 'That's a courtesy,' Bev says, unsteadily. 'A courtesy isn't a control.' 'No,' you agree. She looks at the logbook. She looks at the pie. She writes something in the SPONSORING REFERENCE NO. column that you will later learn reads SEE B.T. \u2014 DISCRETION, which is the first thing anyone has improvised on this campus since the ribbon-cutting."
+       },
+       {
+        "narrate": "The beige printer chatters. She peels the badge, presses it flat to your chest with two fingers, and the wrong-name gag stops being a gag and becomes ADHESIVE:"
+       },
+       {
+        "document": {
+         "style": "postit",
+         "title": "VISITOR",
+         "body": [
+          {
+           "text": "MALFUNCTON, MEL",
+           "style": "marker"
+          },
+          "SPONSOR: SEE B.T. \u2014 DISCRETION",
+          "ESCORT REQUIRED IN ALL RESTRICTED AREAS",
+          {
+           "text": "RETURN TO SITE SECURITY UPON DEPARTURE",
+           "style": "stamp"
+          },
+          {
+           "text": "Badge remains property of Cumulonimbus, Inc. Not valid as identification.",
+           "style": "fine"
+          }
+         ]
+        }
+       },
+       {
+        "narrate": "MALFUNCTON. The F printed as an L \u2014 column four's upper pin died in the spring \u2014 and your surname, which means WORKS AS INTENDED, is now a diagnosis stuck to your sternum at conversational eye level. It will stay there all day. People will read it out loud. The tally has stopped counting and started an archive."
+       },
+       {
+        "removeItem": "pie"
+       },
+       {
+        "setFlag": "a3_badged"
+       },
+       {
+        "setFlag": "a3_pie_given"
+       },
+       {
+        "setFlag": "name_bev"
+       },
+       {
+        "addItem": "badge"
+       },
+       {
+        "score": {
+         "id": "lb_badge_pie",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "all": [
+        {
+         "instrument": "pie"
+        },
+        {
+         "flagNot": "a3_pie_given"
+        }
+       ]
+      },
+      "do": [
+       {
+        "narrate": "You put the bag on the desk anyway and open it. Sour cherry, three hundred miles, still faintly warm at the bottom. Bev looks at it for a long moment and then, with enormous care, moves the logbook aside to make room \u2014 displacing, for the first time today, the process."
+       },
+       {
+        "narrate": "'A woman sent this,' she says. 'For a stranger's door.' 'Her name's Darlene.' Bev writes DARLENE in the margin of the log, under nothing, in no column, for no reason the retention schedule will ever understand. Then she puts the pie in the desk drawer and closes it like a vault. 'That's the drawer,' she says. 'That drawer has a lock.'"
+       },
+       {
+        "removeItem": "pie"
+       },
+       {
+        "setFlag": "a3_pie_given"
+       },
+       {
+        "score": {
+         "id": "lb_badge_pie",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "instrument": "pie"
+      },
+      "text": "The pie is already in the drawer, and the drawer, as established, has a lock."
+     },
+     {
+      "if": {
+       "anyInstrument": true
+      },
+      "text": "Bev looks at the thing in your hand, then at you, with the exact expression of a woman who has been offered a great many objects across this desk and accepted almost none of them. 'That's not a reference number,' she says."
+     },
+     {
+      "text": "You do not use Bev. Bev is the load-bearing member of this entire lobby and she is being extremely good about it."
+     }
+    ]
+   },
+   "topics": [
+    {
+     "match": [
+      "ticket",
+      "case number",
+      "reference number",
+      "my ticket",
+      "incident",
+      "number"
+     ],
+     "responses": [
+      {
+       "if": {
+        "flagNot": "a3_badged"
+       },
+       "do": [
+        {
+         "narrate": "You give her your reference number. Not a ticket you were assigned \u2014 the ticket YOU opened, at 6:11 yesterday morning, into Cumulonimbus Enterprise Support, from a home office in a town three hundred miles east, before anyone anywhere knew the sky had come down. You have quoted it to a chatbot that apologized, an IVR that hung up, and a status page that was lying. Case CUM-4471109-88."
+        },
+        {
+         "narrate": "Bev writes it in the SPONSORING REFERENCE NO. column. Then she stops. 'This is YOUR ticket,' she says. 'You're the customer.' 'I'm the customer,' you agree. She looks at the column, then at you, and something happens behind the reading glasses that you would describe, if pressed, as professional joy. 'Form doesn't say the reference has to be from INSIDE the company,' she says. 'Thirty-one years, nobody's ever brought their own.'"
+        },
+        {
+         "narrate": "The queue. The infinite, indifferent, escalation-proof queue that has ignored you for two days and your entire career. It just opened a door. Not metaphorically \u2014 Bev is typing, and the beige printer is chattering, and somewhere in the process a system designed to keep people out has been satisfied by the single most ignored object in the company's possession: a customer's own case number."
+        },
+        {
+         "narrate": "The printer stops. She peels the badge, presses it flat onto your chest with two fingers like a nurse fixing a dressing, and there it is, in dot-matrix, with column four's upper pin dead:"
+        },
+        {
+         "document": {
+          "style": "postit",
+          "title": "VISITOR",
+          "body": [
+           {
+            "text": "MALFUNCTON, MEL",
+            "style": "marker"
+           },
+           "SELF-SPONSORED \u00b7 CASE CUM-4471109-88",
+           "ESCORT REQUIRED IN ALL RESTRICTED AREAS",
+           {
+            "text": "RETURN TO SITE SECURITY UPON DEPARTURE",
+            "style": "stamp"
+           },
+           {
+            "text": "Badge remains property of Cumulonimbus, Inc. Not valid as identification.",
+            "style": "fine"
+           }
+          ]
+         }
+        },
+        {
+         "narrate": "MALFUNCTON. The F came out as an L, the T lost its crossbar to the dead pin, and your surname \u2014 Function, as in works-as-intended \u2014 has been rendered by a 1994 label printer as a diagnosis. It is on your chest. It will be on your chest for the rest of the day, at eye level, for everyone you meet. The tally does not merely note this. The tally has it framed."
+        },
+        {
+         "setFlag": "a3_badged"
+        },
+        {
+         "setFlag": "a3_paperwork"
+        },
+        {
+         "setFlag": "name_bev"
+        },
+        {
+         "addItem": "badge"
+        },
+        {
+         "score": {
+          "id": "lb_badge_paperwork",
+          "points": 4
+         }
+        }
+       ]
+      },
+      {
+       "if": {
+        "flagNot": "a3_paperwork"
+       },
+       "do": [
+        {
+         "narrate": "You give her your reference number anyway \u2014 CUM-4471109-88, opened at 6:11 yesterday, by you, from your own house, against the company whose lobby you are standing in. Bev takes the pie-shaped entry she already made and adds the number beside it in the proper column."
+        },
+        {
+         "narrate": "'That's better,' she says, with visible relief. 'Pie's a courtesy. A number's a control.' She underlines it once. 'Thirty-one years, nobody's ever brought their own.' The queue has finally done something for you, three hundred miles from where you filed it, in a column on a form."
+        },
+        {
+         "setFlag": "a3_paperwork"
+        },
+        {
+         "score": {
+          "id": "lb_badge_paperwork",
+          "points": 4
+         }
+        }
+       ]
+      },
+      {
+       "text": "'It's in the column,' Bev says. 'It'll be in the column for seven years.' Somewhere in a retention schedule, your worst morning is now permanent."
+      }
+     ]
+    },
+    {
+     "match": [
+      "badge",
+      "visitor badge",
+      "sp-11",
+      "process",
+      "procedure"
+     ],
+     "responses": [
+      {
+       "do": [
+        {
+         "narrate": "'Normally it's the kiosk,' Bev says, nodding at the pedestals with their paper hats. 'You scan your invite, it prints your badge, opens the turnstile, texts your escort. Beautiful.' A pause with a whole career in it. 'All four of those things are one system, and the system's in the cloud, and the cloud is what you drove here about.'"
+        },
+        {
+         "narrate": "'So: SP-11. Manual. Which is fine \u2014 I wrote half of SP-11.' She squares the logbook. 'It wants a name, a company, an escort, and a sponsoring reference number. I can be flexible about three of those.'"
+        },
+        {
+         "setFlag": "a3_knows_reference"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "match": [
+      "escort",
+      "escorts",
+      "restricted",
+      "data hall",
+      "floor"
+     ],
+     "responses": [
+      {
+       "text": "'Visitor badge is escort-only past the vestibule,' Bev says. 'That's not me being difficult, that's the badge.' She shrugs at the enormity of it. 'Trouble is, escorts are staff, and staff at this site is: me, and Corinne when she's flown in, and eleven people in a control room in another state who cannot currently authenticate to anything.' She lets that sit. 'The building runs itself. That's the point of it. Nobody thought about who'd walk you around.'"
+      }
+     ]
+    },
+    {
+     "match": [
+      "coffee",
+      "mr coffee",
+      "pot"
+     ],
+     "responses": [
+      {
+       "text": "'Help yourself,' Bev says, before you've finished asking. 'It's mine, it's from home, and it's the only appliance in this building that isn't on a subscription.' She says the word 'subscription' the way other people say 'raccoons.' 'Break room's got four machines. Every one of 'em wants to talk to a server in Virginia before it'll talk to a bean.'"
+      }
+     ]
+    },
+    {
+     "match": [
+      "nimbus",
+      "cumulonimbus",
+      "the company"
+     ],
+     "responses": [
+      {
+       "text": "'Nimbus,' Bev says, and immediately puts a hand up. 'Cumulonimbus. Thirty-one years and I still catch myself.' She nods at a laminated card taped inside the desk well, visible only to her, which reads NEVER \"NIMBUS\" \u2014 BRAND STANDARDS \u00a74.1 in twenty-point type. 'Corporate sent that in '09. Sent it to every site. In a truck.' She looks at the card with something almost tender. 'Cost more to ship those cards than my chair.'"
+      }
+     ]
+    },
+    {
+     "match": [
+      "outage",
+      "internet",
+      "down",
+      "cloud"
+     ],
+     "responses": [
+      {
+       "text": "'From in here?' Bev says. 'You wouldn't know.' She gestures at nothing \u2014 at the immaculate lobby, the humming wall, the fine building. 'Everything's green. Fans are fans. Generators tested Tuesday. Nothing in this building has had a bad day.' She taps the pen once. 'Only thing broke is the paperwork, and the paperwork isn't kept here.' It will take you the entire rest of the afternoon to understand that she has just handed you the answer, in one sentence, for free, in the lobby, at 11 a.m."
+      }
+     ]
+    },
+    {
+     "match": [
+      "pie",
+      "darlene"
+     ],
+     "responses": [
+      {
+       "if": {
+        "flag": "a3_pie_given"
+       },
+       "text": "'It's in the drawer,' Bev says, of the pie, in the tone of a woman guarding a vault. 'It's got its own drawer now.'"
+      },
+      {
+       "text": "Bev's expression does something complicated and human. 'You have PIE?' A beat. 'That's not a control, you understand. That's a courtesy.' Then, with great dignity: 'I'm a person who accepts courtesies.'"
+      }
+     ]
+    },
+    {
+     "match": [
+      "name",
+      "my name",
+      "malfuncton",
+      "mel"
+     ],
+     "responses": [
+      {
+       "if": {
+        "flag": "a3_badged"
+       },
+       "text": "'It's what came off the printer,' Bev says, examining your chest with professional detachment. 'Column four's pin went in the spring. Everything with an F in it comes out with an L.' She considers the badge. 'Had a MALCOLM last month who came out MALCOLM, though. So it's picking favorites.' Nobody at Cumulonimbus knows your name. Now it's LAMINATED."
+      },
+      {
+       "text": "'You'll be a name once you're a badge,' Bev says. 'That's just how the lobby works.' She has no idea how prophetic she is being, and she never will."
+      }
+     ]
+    },
+    {
+     "match": [
+      "job",
+      "31 years",
+      "thirty-one years",
+      "you",
+      "yourself",
+      "site"
+     ],
+     "responses": [
+      {
+       "text": "'Opened this desk in ninety-four, when it was a grain co-op's back office and the wall out there was a field,' Bev says. 'They built the building around me. Literally \u2014 I worked through it. Hard hat at this desk for fourteen months.' She looks around the church-sized lobby. 'Design's for four hundred visitors a day. Best day we ever had was nine.' She is not bitter about this. She has simply been keeping accurate count for thirty-one years, which is more than the monitoring can say."
+      }
+     ]
+    }
+   ],
+   "topicDefault": [
+    {
+     "text": "Bev takes the question, files it, and hands you back exactly as much as the form requires. 'Couldn't say,' she says. 'I do the door.'"
+    }
+   ]
+  },
+  {
+   "id": "desk",
+   "name": "desk",
+   "synonyms": [
+    "counter",
+    "reception",
+    "security desk",
+    "visitor desk",
+    "drawer"
+   ],
+   "polygon": [
+    [
+     152,
+     84
+    ],
+    [
+     240,
+     130
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A long wooden reception desk built in a decade that believed in wood, worn pale at exactly two spots: where a logbook sits and where a forearm rests. Under the lip, invisible from the lobby side, a laminated card taped where only Bev can see it: NEVER \"NIMBUS\" \u2014 BRAND STANDARDS \u00a74.1. Beside that, a photo of a dog, and beside the dog, an unopened company-issue stress ball still in its wrapper from an all-hands in 2014."
+     },
+     {
+      "text": "The desk: two worn spots, one dog, one laminated brand standard, and one stress ball that has never been needed because Bev has never once been stressed by anything smaller than a building."
+     }
+    ],
+    "open": [
+     {
+      "text": "'That's my drawer,' Bev says, without looking up. You have never withdrawn a hand faster, and you once worked in a datacenter with an unlabeled breaker panel."
+     }
+    ],
+    "use": [
+     {
+      "text": "You lean on the desk. It doesn't move. Thirty-one years of leaning have taught this desk to be leaned on, and it has become extremely good at it \u2014 which puts it two steps ahead of most of the infrastructure you have met today."
+     }
+    ]
+   }
+  },
+  {
+   "id": "coffee_maker",
+   "name": "Mr. Coffee",
+   "synonyms": [
+    "coffee",
+    "coffee maker",
+    "coffeemaker",
+    "drip",
+    "carafe",
+    "pot",
+    "coffee pot",
+    "credenza"
+   ],
+   "polygon": [
+    [
+     236,
+     82
+    ],
+    [
+     272,
+     126
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flag": "coffee_act3"
+      },
+      "text": "The Mr. Coffee, warmer glowing, carafe down two inches on your account. Thirty years old. No account. No firmware. No terms of service. It heats water and it pours it over grounds and it has never once asked anyone to accept an update, and today, in a twenty-two-acre monument to managed services, it is the only appliance in the building that did its job."
+     },
+     {
+      "text": "A household drip coffee maker on the credenza behind the desk: cracked beige plastic, a scorched glass carafe two-thirds full, and an orange warmer light that has been on since 6:12 this morning. Bev brought it from home in 1997 after the break room's third machine went 'smart.' It is plugged directly into a wall outlet, drawing power from a grid that has never heard of the cloud, and it is producing hot coffee at industrial scale for a workforce of one. It is, in every meaningful sense, the most reliable service on the campus."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "all": [
+        {
+         "flagNot": "coffee_act3"
+        },
+        {
+         "any": [
+          {
+           "hasItem": "mug"
+          },
+          {
+           "instrument": "mug"
+          }
+         ]
+        }
+       ]
+      },
+      "do": [
+       {
+        "narrate": "'Help yourself,' Bev says, already reaching for the carafe, because she has been waiting thirty-one years for somebody to accept a cup and today is going remarkably well for her in that one specific respect."
+       },
+       {
+        "narrate": "She fills the emotional-support mug to a level that would violate a transport regulation. It is genuinely, dangerously hot. It tastes like it was made at 6:12 a.m. and has been thinking about it ever since \u2014 which it was, and it has."
+       },
+       {
+        "narrate": "You drink datacenter coffee inside the physical cloud, produced by a thirty-year-old appliance with no account, standing next to the woman who is currently the entire identity layer of the western hemisphere. The Coffee Log records the third act. Somewhere, a subscription weeps."
+       },
+       {
+        "setFlag": "mug_full"
+       },
+       {
+        "setFlag": "coffee_act3"
+       },
+       {
+        "score": {
+         "id": "lb_coffee",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "flagNot": "coffee_act3"
+      },
+      "text": "Bev tips the carafe an inquiring inch. You have nothing to put it in \u2014 the emotional-support mug is not on your person, which on today of all days is an operational failure. She sets the carafe back on the warmer with great tact."
+     },
+     {
+      "if": {
+       "flag": "mug_full"
+      },
+      "text": "The mug is already full of Bev's coffee and Bev's coffee does not need topping up; it needs respecting."
+     },
+     {
+      "do": [
+       {
+        "narrate": "Bev fills you up again without being asked. 'Long day for you,' she says. It is 11 a.m."
+       },
+       {
+        "setFlag": "mug_full"
+       }
+      ]
+     }
+    ],
+    "take": [
+     {
+      "text": "You are not taking Bev's Mr. Coffee. Removing it would constitute the single most damaging outage this site has ever sustained, and unlike the current one, the blame would be assignable."
+     }
+    ]
+   }
+  },
+  {
+   "id": "video_wall",
+   "name": "video wall",
+   "synonyms": [
+    "screen",
+    "display",
+    "wall screen",
+    "monitor",
+    "signage",
+    "error"
+   ],
+   "polygon": [
+    [
+     20,
+     24
+    ],
+    [
+     96,
+     90
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "lb_read_wall"
+      },
+      "do": [
+       {
+        "narrate": "Eleven feet of diagonal display, mounted at the cost of a house, in a lobby that has hosted nine visitors on its best day. It was built to show the campus dashboard: capacity, uptime, a slowly rotating render of the building looking better than the building looks."
+       },
+       {
+        "narrate": "Today it shows one line of white text on institutional blue, at a font size intended to be read from the far end of a room this size: UNABLE TO REACH IDENTITY SERVICE. RETRY? Underneath, in a smaller font, a hint intended for a technician who was never going to be standing here: CHECK NETWORK CONNECTION."
+       },
+       {
+        "narrate": "The network connection is fine. The network connection is a hundred-gigabit ring with four diverse paths and a service level agreement that reads like scripture. The screen doesn't know how to say 'the company that authenticates me has an accounting problem,' so it says CHECK NETWORK CONNECTION, and it will keep saying it, in letters a foot tall, in an empty church, until somebody three hundred miles away signs something."
+       },
+       {
+        "setFlag": "lb_read_wall"
+       },
+       {
+        "score": {
+         "id": "lb_videowall",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "text": "UNABLE TO REACH IDENTITY SERVICE. RETRY? \u00b7 CHECK NETWORK CONNECTION. The network connection is immaculate. The screen has no vocabulary for what's actually wrong, so it blames the cable, forever, in letters a foot tall."
+     }
+    ],
+    "use": [
+     {
+      "text": "There is no RETRY to press \u2014 the prompt is a picture of a button on a screen with no touch layer, drawn by software that assumed a mouse. You stand in front of an eleven-foot invitation you physically cannot accept. This is the most honest user interface in the building."
+     }
+    ]
+   }
+  },
+  {
+   "id": "pedestals",
+   "name": "badge pedestals",
+   "synonyms": [
+    "pedestal",
+    "kiosk",
+    "readers",
+    "reader",
+    "turnstile",
+    "turnstiles",
+    "scanner",
+    "paper"
+   ],
+   "polygon": [
+    [
+     94,
+     86
+    ],
+    [
+     154,
+     128
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Three steel pedestals in a row, each with a glass reader panel, each panel wearing a sheet of printer paper taped down at four corners. Marker, in a firm hand: OUT. USE DESK. The tape is the good tape \u2014 the tape you use when you expect to need it for a while."
+     },
+     {
+      "text": "Under the paper, the readers' status lights are dark. These are the fast path: scan, print, walk through, escort auto-notified, eleven seconds door to desk. They are the reason the lobby has no other way in, and the reason a fire marshal went home at 9:06 this morning."
+     }
+    ],
+    "use": [
+     {
+      "text": "You lift a corner of the paper and wave a hand at the glass, out of professional curiosity and nothing better to do. Nothing. Not a beep, not a red light \u2014 the reader isn't refusing you, it's ABSENT. Refusal takes a working system. This is just glass."
+     }
+    ],
+    "take": [
+     {
+      "text": "The paper stays. That paper is doing more security work today than the eight thousand dollars of pedestal underneath it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "inner_door",
+   "name": "inner door",
+   "synonyms": [
+    "door",
+    "interior door",
+    "badging",
+    "corridor",
+    "past bev",
+    "way in"
+   ],
+   "polygon": [
+    [
+     268,
+     54
+    ],
+    [
+     318,
+     130
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "text": "The inner door, open to you now, with its own taped-over reader beside it as a reminder of how this was supposed to go. Past it: the badging corridor, and whatever a company means when it says 'continuous compliance' out loud."
+     },
+     {
+      "text": "A heavy interior door, closed, with a card reader beside it wearing the same sheet of paper as the pedestals. There is no handle-side keypad, no intercom, no override. The building's entire access model assumed a working cloud, and in its absence there is exactly one authorization mechanism left standing in the lobby, and she is wearing a mustard cardigan."
+     }
+    ],
+    "open": [
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "do": [
+       {
+        "narrate": "You push through into the badging corridor, badge first, as instructed, by a woman with a pen."
+       },
+       {
+        "goto": "act3_compliance",
+        "arrive": {
+         "x": 40,
+         "y": 152,
+         "facing": "right"
+        }
+       }
+      ]
+     },
+     {
+      "text": "The door does not open, and the reader does not care, and behind you a pen taps a logbook twice. Whatever gets you through this door is going to be paperwork, and \u2014 this is the part that should be interesting to you specifically \u2014 you are a man who has been holding a case number since yesterday morning."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "do": [
+       {
+        "narrate": "Through the inner door."
+       },
+       {
+        "goto": "act3_compliance",
+        "arrive": {
+         "x": 40,
+         "y": 152,
+         "facing": "right"
+        }
+       }
+      ]
+     },
+     {
+      "text": "Pushing harder does not authenticate you. It never has. You have written that sentence in four separate runbooks."
+     }
+    ]
+   }
+  },
+  {
+   "id": "front_doors",
+   "name": "front doors",
+   "synonyms": [
+    "glass doors",
+    "entrance",
+    "out",
+    "outside",
+    "lot"
+   ],
+   "polygon": [
+    [
+     0,
+     54
+    ],
+    [
+     22,
+     144
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "The glass doors back out to the lot, propped a half inch by a fire extinguisher lying on its side \u2014 Bev's work, at 6:40 this morning, followed immediately by a memo to Facilities disclosing that she had done it. Through the glass: six hundred empty parking spaces and one farm truck with a man in it."
+     },
+     {
+      "text": "The doors out. Beyond them, asphalt, sky, and a farmer who does not go in buildings like this."
+     }
+    ],
+    "use": [
+     {
+      "do": [
+       {
+        "narrate": "You step back out into the noon."
+       },
+       {
+        "goto": "act3_perimeter",
+        "arrive": {
+         "x": 204,
+         "y": 150,
+         "facing": "down"
+        }
+       }
+      ]
+     }
+    ],
+    "open": [
+     {
+      "text": "Already propped. The extinguisher is doing two jobs and being appreciated for neither."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ceiling",
+   "name": "ceiling",
+   "synonyms": [
+    "atrium",
+    "up",
+    "roof",
+    "lights",
+    "height"
+   ],
+   "polygon": [
+    [
+     0,
+     0
+    ],
+    [
+     320,
+     0
+    ],
+    [
+     320,
+     26
+    ],
+    [
+     0,
+     26
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Three storeys of nothing, lit evenly and expensively, with acoustic baffles hung at a height chosen by an architect to manage the noise of a crowd. There has never been a crowd. The baffles have spent nine years managing the sound of one pen."
+     },
+     {
+      "text": "Height, light, and baffles, all of it purchased to solve a problem that never arrived."
+     }
+    ]
+   }
+  },
+  {
+   "id": "terrazzo",
+   "name": "floor",
+   "synonyms": [
+    "terrazzo",
+    "polished floor",
+    "tiles",
+    "shine"
+   ],
+   "polygon": [
+    [
+     0,
+     120
+    ],
+    [
+     320,
+     120
+    ],
+    [
+     320,
+     130
+    ],
+    [
+     0,
+     130
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Poured terrazzo, ground and polished, with brass divider strips laid in a grid \u2014 the floor of a bank, or a state capitol, or a building that expects to be photographed. It is unscuffed. Not clean: UNSCUFFED. Nine years of foot traffic has failed to leave a single mark, because nine years of foot traffic here amounts to Bev walking from the door to the desk, and Bev walks the same line every time."
+     },
+     {
+      "text": "Polished terrazzo with brass strips, and one faint path worn into the shine between the front doors and the desk \u2014 the only trail on the entire campus made by a human being."
+     }
+    ],
+    "use": [
+     {
+      "text": "You scuff a heel experimentally. The terrazzo declines to be scuffed. Somewhere in a facilities budget, this was the right call."
+     }
+    ]
+   }
+  }
+ ],
+ "onScoreComplete": [
+  {
+   "text": "You have now examined a security desk more thoroughly than the company's own auditors, drunk its coffee, read its logbook, and been issued an identity that is not yours by a printer with a dead pin. The lobby has nothing left to teach you. The lobby, in fairness, taught you everything: Bev said 'the only thing broke is the paperwork, and the paperwork isn't kept here' at 11 a.m., for free."
+  }
+ ]
+}

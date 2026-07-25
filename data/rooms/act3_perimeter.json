@@ -1,0 +1,819 @@
+{
+ "id": "act3_perimeter",
+ "name": "The Campus Perimeter",
+ "background": "assets/backgrounds/act3_perimeter.png",
+ "walkable": [
+  [
+   16,
+   124
+  ],
+  [
+   304,
+   124
+  ],
+  [
+   312,
+   178
+  ],
+  [
+   8,
+   178
+  ]
+ ],
+ "playerStart": {
+  "x": 96,
+  "y": 150,
+  "facing": "right"
+ },
+ "exits": [
+  {
+   "to": "act3_lobby",
+   "polygon": [
+    [
+     188,
+     118
+    ],
+    [
+     220,
+     118
+    ],
+    [
+     220,
+     132
+    ],
+    [
+     188,
+     132
+    ]
+   ],
+   "arrive": {
+    "x": 40,
+    "y": 152,
+    "facing": "right"
+   }
+  }
+ ],
+ "onEnter": [
+  {
+   "if": {
+    "flagNot": "a3_arrived"
+   },
+   "do": [
+    {
+     "narrate": "Three hundred miles in a truck with no radio worth the name, one thermos of Darlene's coffee rationed like plasma, and a driver who volunteered exactly four sentences, two of which were about a substation. Somewhere around mile two hundred the soybeans became corn, and around mile two eighty the corn gave up entirely and left the land to gravel and sky."
+    },
+    {
+     "narrate": "Then the horizon grew a rectangle. It took eleven minutes to reach the rectangle, which is when you understood that the rectangle was not near the horizon. The rectangle WAS the horizon. Merle slowed, read the one sign at the one turnoff, and said the fifth sentence: 'Well.'"
+    },
+    {
+     "narrate": "US-CENTRAL-1 FLAGSHIP CAMPUS. A cathedral to the cloud, built in the shape of a warehouse that is ashamed of itself. No windows. No name on it anywhere. Twenty-two acres of beige concrete, one immense unbroken wall, and \u2014 dead center, at human height, apologetic \u2014 a single glass door. The packing slip said IF YOU CAN SEE THE BUILDING, YOU ARE ALREADY ON CAMPUS. You had assumed that was branding. It was a survey note."
+    },
+    {
+     "narrate": "Inside that wall lives the physical body of everything. Every photo, every payroll run, every doorbell, every insulin pump's cheerful little app. Forty percent of the world's compute, humming behind eight inches of tilt-up panel, and the only thing marking the spot where humanity keeps its memory is a slab of polished granite and four security cameras pointed at a door."
+    },
+    {
+     "setFlag": "a3_arrived"
+    },
+    {
+     "score": {
+      "id": "pm_arrived",
+      "points": 2
+     }
+    }
+   ]
+  },
+  {
+   "if": {
+    "flag": "a3_keys"
+   },
+   "text": "The visitor lot, and the truck sitting in it with its keys in your pocket. The wall goes on being beige. It will do that whether or not you are here, which is the most honest thing on this campus."
+  },
+  {
+   "if": {
+    "flag": "a3_hq_named"
+   },
+   "text": "The lot again \u2014 and the truck, and Merle in it, and the specific weight of knowing exactly where the problem ISN'T. Somebody needs to hear the word 'administrative' out loud. He's right there."
+  },
+  {
+   "text": "The visitor lot. Beige wall, small door, four cameras, one truck with a farmer in it. The scale still isn't landing; your eyes keep trying to make the wall into a horizon and failing."
+  }
+ ],
+ "lookAround": [
+  {
+   "if": {
+    "flag": "a3_hq_named"
+   },
+   "text": "The perimeter, surveyed on the way out: the beige wall (fine), the small glass door (fine), the cameras (fine, all four of them, fine), the monument slab, the empty gatehouse \u2014 and MERLE'S TRUCK in the first visitor space, engine off, farmer inside, watching you come back across the asphalt with news. Everything here works. That's the finding."
+  },
+  {
+   "text": "The perimeter, surveyed: one immense beige BUILDING filling the whole back of the world, with a single small GLASS DOOR in it (that's the way in), a polished MONUMENT slab, a pole of four CAMERAS all aimed at the door, and an empty GATEHOUSE with its boom raised at the right. MERLE'S TRUCK is parked left in the visitor row \u2014 Merle's staying in it, and there's a paper bag on the seat that smells like pie. The lot is asphalt to the fence line."
+  }
+ ],
+ "hotspots": [
+  {
+   "id": "pie_bag",
+   "name": "paper bag",
+   "synonyms": [
+    "bag",
+    "pie",
+    "the pie",
+    "darlenes pie",
+    "darlene's pie",
+    "dessert",
+    "grease bag"
+   ],
+   "polygon": [
+    [
+     18,
+     96
+    ],
+    [
+     54,
+     116
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flag": "a3_pie_given"
+      },
+      "text": "The bag's gone from the seat and into a security desk drawer, where it is currently the single most valuable object on this campus by any honest accounting. Nine hundred million dollars of cooling infrastructure in there, and the only thing anybody wanted was pie."
+     },
+     {
+      "if": {
+       "hasItem": "pie"
+      },
+      "text": "In your hands: one paper bag, translucent at the corner, warm at the bottom in a way that suggests the pie has been sitting on the transmission hump for three hundred miles and has enjoyed it. Darlene sent this. Darlene has never been to a datacenter and never will be, and she still packed the only universally accepted currency on Earth."
+     },
+     {
+      "text": "A paper sack on the bench seat, gone see-through in one corner the way a grease shadow does when it's winning. Darlene put it there before you left town, without explanation, because Darlene has fed this county through two outages and a flood and knows precisely what a closed door costs."
+     }
+    ],
+    "take": [
+     {
+      "if": {
+       "flag": "a3_pie_given"
+      },
+      "text": "Given away, eaten, and by now probably logged. Some assets depreciate beautifully."
+     },
+     {
+      "if": {
+       "hasItem": "pie"
+      },
+      "text": "You have the pie. Carrying it twice would be greed, and you have not earned greed today."
+     },
+     {
+      "do": [
+       {
+        "narrate": "You take the bag off the seat. It's heavier than a pie should be \u2014 Darlene's crust is structural \u2014 and warm through the paper. 'She said don't open it in the truck,' Merle notes, in the tone of a man who has been not-opening it for three hundred miles."
+       },
+       {
+        "addItem": "pie"
+       }
+      ]
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "hasItem": "pie"
+      },
+      "text": "You are not eating Darlene's pie in a parking lot. That pie has a destiny, and the destiny works a desk."
+     },
+     {
+      "text": "Take it first. Pie logistics have an order of operations."
+     }
+    ],
+    "open": [
+     {
+      "text": "Merle glances over without moving his head, an economy of motion perfected over sixty years. 'She said don't open it in the truck.' The bag stays shut. Some instructions carry the weight of law."
+     }
+    ]
+   }
+  },
+  {
+   "id": "truck",
+   "name": "truck",
+   "synonyms": [
+    "merle",
+    "merles truck",
+    "merle's truck",
+    "pickup",
+    "cab",
+    "keys",
+    "thermos",
+    "man"
+   ],
+   "polygon": [
+    [
+     8,
+     90
+    ],
+    [
+     94,
+     138
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flag": "a3_keys"
+      },
+      "text": "The truck, and the keys to the truck, and the astonishing fact that both of those things are now yours. Merle's moved to the passenger side without being asked, boots on the rail, cap down. Forty years of farm reports in the paint. Three hundred more miles in the tank. It smells like coffee and warm vinyl and the inside of a decision."
+     },
+     {
+      "text": "Merle's pickup, parked nose-out in visitor space one because Merle has never once parked nose-in anywhere. Engine off. Windows down. Farmer inside, cap tipped, watching a beige wall with the settled patience of a man who has watched weather do less. On the seat: Darlene's thermos and a paper bag with a grease shadow shaped like providence."
+     }
+    ],
+    "talk": [
+     {
+      "if": {
+       "flag": "a3_keys"
+      },
+      "text": "'Drive,' Merle says, and closes his eyes. The conversation is complete. It was always going to be one word."
+     },
+     {
+      "if": {
+       "all": [
+        {
+         "flag": "a3_hq_named"
+        },
+        {
+         "flagNot": "a3_keys"
+        }
+       ]
+      },
+      "do": [
+       {
+        "narrate": "You tell him. Everything green. Generators fine, glass fine, racks fine, the whole cathedral humming like it was designed to and \u2014 this is the part that takes two tries to say out loud \u2014 the outage is a PAPERWORK problem, somewhere upstream, at corporate."
+       },
+       {
+        "narrate": "Merle listens the whole way through without interrupting, which is not a thing men do. Then: 'So the barn's fine.' A pause. 'It's the county office.' You have never heard the situation described better, and you have read the incident channel."
+       },
+       {
+        "narrate": "He digs in his coat and holds out the keys. You put your hand out for them on reflex and then stop, because he isn't letting go yet. 'Sixty-five, the ice storm,' he says. 'Eighty-eight, the substation. Both times somebody drove out.' He drops the keys in your palm. 'This time somebody drives ON.' He walks around to the passenger side, gets in, and puts his boots on the rail."
+       },
+       {
+        "narrate": "Nobody drives out anymore. You are about to drive out anymore. Somewhere three hundred miles east there is a campus with kombucha on tap and nobody who knows how anything works, and it has your incident number filed under a name that isn't yours."
+       },
+       {
+        "narrate": "You peel the visitor badge off your chest \u2014 RETURN TO SITE SECURITY UPON DEPARTURE, it says, and Bev's logbook has a TIME OUT column that is going to stay empty for seven years \u2014 and you clip MALFUNCTON, MEL to the truck's sun visor, where it will fade in the windshield light for the rest of this game. The only identity the company ever issued you, and it was a typo, and you are keeping it."
+       },
+       {
+        "narrate": "END OF ACT THREE."
+       },
+       {
+        "removeItem": "badge"
+       },
+       {
+        "setFlag": "a3_keys"
+       },
+       {
+        "score": {
+         "id": "pm_act_out",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "flagNot": "a3_met_merle_here"
+      },
+      "do": [
+       {
+        "narrate": "'I'll be here,' Merle says, to the windshield. 'I don't go in buildings like that.' You ask whether he means secure buildings or big ones. 'Yep.' He tips the cap an eighth of an inch, which in Merle is a benediction. 'Go on, IT.' The tally notes that Merle remains magnificently consistent."
+       },
+       {
+        "setFlag": "a3_met_merle_here"
+       }
+      ]
+     },
+     {
+      "text": "'Still here,' Merle reports, from inside the truck he has not left. 'Wall's still there too.' He is keeping an eye on the wall. Somebody should."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flag": "a3_keys"
+      },
+      "text": "You have the keys and a direction. Whatever happens next happens in the next act, and it happens with you behind the wheel \u2014 a sentence that would have been unimaginable at breakfast."
+     },
+     {
+      "text": "You try the door handle on general principle. Merle doesn't lock it; nobody within eighty miles has ever locked anything. But the truck isn't the answer yet \u2014 the answer is behind a beige wall with one door in it."
+     }
+    ],
+    "open": [
+     {
+      "text": "The passenger door opens with a groan like a barn settling. Nothing in the cab has changed: thermos, bag, forty years of dust arranged by vibration into something almost geological. You close it again. Later."
+     }
+    ]
+   },
+   "topics": [
+    {
+     "match": [
+      "building",
+      "campus",
+      "wall",
+      "the building"
+     ],
+     "responses": [
+      {
+       "text": "'Grain elevator in Hodges is bigger,' Merle says, and he is lying, and he knows you know, and the lie is a kindness \u2014 a way of putting the thing back down to a size a person can stand next to. 'Elevator's got a name on it, though.'"
+      }
+     ]
+    },
+    {
+     "match": [
+      "drive",
+      "the drive",
+      "road",
+      "miles"
+     ],
+     "responses": [
+      {
+       "text": "'Three hundred and eleven,' Merle says. 'Two hundred of 'em you were asleep with your mouth open.' He lets that sit exactly long enough. 'Wire people'd have done it in nothing flat, they say. Didn't, though.'"
+      }
+     ]
+    },
+    {
+     "match": [
+      "pie",
+      "darlene",
+      "thermos"
+     ],
+     "responses": [
+      {
+       "text": "'She packed that for whoever's got a door you need,' Merle says. 'Told me not to touch it.' He looks briefly, genuinely aggrieved. 'Three hundred miles, that pie sat there. Three hundred.' A man's character is measured in miles beside a pie."
+      }
+     ]
+    },
+    {
+     "match": [
+      "outage",
+      "internet",
+      "cloud"
+     ],
+     "responses": [
+      {
+       "text": "'Whole thing's in there, they tell me,' Merle says, jerking his chin at twenty-two acres of concrete. 'Everybody's pictures. Everybody's money.' He considers this. 'Awful lot of eggs in a shed with no windows.' He is describing the industry's core architectural principle, and he is describing it correctly."
+      }
+     ]
+    },
+    {
+     "match": [
+      "name",
+      "my name",
+      "mel"
+     ],
+     "responses": [
+      {
+       "text": "'Merle,' he says, helpfully, pointing at himself. Then at you: 'IT.' He is not being unkind. In his taxonomy you are a function of the county, like the grader or the co-op, and functions do not require first names. Somehow this is the closest anyone has come all day."
+      }
+     ]
+    }
+   ],
+   "topicDefault": [
+    {
+     "text": "Merle takes the subject in, turns it over once, and returns it unmarked. 'Could be,' he says. The windshield agrees with him."
+    }
+   ]
+  },
+  {
+   "id": "lobby_door",
+   "name": "glass door",
+   "synonyms": [
+    "door",
+    "entrance",
+    "front door",
+    "lobby",
+    "way in",
+    "doors"
+   ],
+   "polygon": [
+    [
+     182,
+     74
+    ],
+    [
+     228,
+     122
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flag": "a3_hq_named"
+      },
+      "text": "The little glass door, from the outside, on the way out. Everything past it is fine. That's what you came three hundred miles to find out, and finding it out cost you a badge with a stranger's name on it and two entirely new ways to die."
+     },
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "text": "The door you've now been through, still absurd: one person's worth of opening in twenty-two acres of wall. A trillion-dollar company's entire human interface, sized for a mudroom."
+     },
+     {
+      "text": "A single glass door with a narrow metal awning, set into the concrete like an afterthought that arrived late and apologized. No signage. No handle-cam. No keypad you can see. Beside it, at waist height, a card reader with its light off \u2014 the first dark light you've seen on this campus, and the only one that matters to you personally. Everything the cloud authenticates is a brick today. Doors are a thing the cloud authenticates."
+     },
+     {
+      "text": "The door."
+     }
+    ],
+    "open": [
+     {
+      "if": {
+       "flag": "a3_badged"
+      },
+      "text": "It's propped. Bev propped it herself with a fire extinguisher at 6:40 this morning, then wrote a memo to Facilities explaining that she had propped it, then filed the memo. The building will never know."
+     },
+     {
+      "text": "You pull. It gives \u2014 unlatched, propped a half inch by a fire extinguisher laid on its side, the most elegant piece of engineering on the entire campus. Somebody inside decided at some point this morning that a door that cannot open is worse than a door that cannot close."
+     }
+    ],
+    "use": [
+     {
+      "do": [
+       {
+        "narrate": "You go in. Twenty-two acres of building, one door's worth at a time."
+       },
+       {
+        "goto": "act3_lobby",
+        "arrive": {
+         "x": 40,
+         "y": 152,
+         "facing": "right"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "plaque",
+   "name": "monument",
+   "synonyms": [
+    "slab",
+    "stone",
+    "granite",
+    "plaque",
+    "dedication",
+    "sign",
+    "monument sign"
+   ],
+   "polygon": [
+    [
+     92,
+     76
+    ],
+    [
+     150,
+     122
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "pm_read_plaque"
+      },
+      "do": [
+       {
+        "narrate": "A slab of polished granite on a concrete plinth, the kind of stone a company buys when it wants a feeling to be permanent. You crouch to read the bronze."
+       },
+       {
+        "document": {
+         "style": "flyer",
+         "title": "CUMULONIMBUS",
+         "body": [
+          "US-CENTRAL-1 \u00b7 FLAGSHIP CAMPUS",
+          "1 CUMULONIMBUS WAY \u00b7 BUNKER FLATS",
+          "Dedicated to the proposition that infrastructure is a promise, and that a promise, properly engineered, need never be thought about again.",
+          {
+           "text": "\"WE KEEP WHAT MATTERS.\"",
+           "style": "marker"
+          },
+          {
+           "text": "Cumulonimbus, Inc. \u2014 never \"Nimbus.\" See Brand Standards \u00a74.1.",
+           "style": "fine"
+          },
+          {
+           "text": "Groundbreaking attended by 400 employees, 0 of whom are currently assigned to this site.",
+           "style": "fine"
+          }
+         ]
+        }
+       },
+       {
+        "narrate": "Somebody has scratched four letters into the granite below the bronze, patiently, with a key, over what must have been several visits: N I M B. They ran out of visits. Twenty-two acres of concrete and the only vandalism on the property is an unfinished institutional wound."
+       },
+       {
+        "setFlag": "pm_read_plaque"
+       },
+       {
+        "score": {
+         "id": "pm_plaque",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "text": "The slab, the bronze, the promise, and NIMB scratched underneath by a person who came back more than once and still didn't finish. You feel enormous affection for that person."
+     }
+    ],
+    "use": [
+     {
+      "text": "You lay a hand flat on the granite. Sun-warm, and under the warmth a faint continuous tremble \u2014 twenty-two acres of fans, arriving in your palm through a monument. The building is alive and it is fine. That will turn out to be the whole problem."
+     }
+    ],
+    "take": [
+     {
+      "text": "Four hundred pounds of dedicated granite. Even the Real Pants have limits."
+     }
+    ]
+   }
+  },
+  {
+   "id": "cameras",
+   "name": "cameras",
+   "synonyms": [
+    "camera",
+    "pole",
+    "cctv",
+    "security cameras",
+    "surveillance"
+   ],
+   "polygon": [
+    [
+     218,
+     28
+    ],
+    [
+     248,
+     100
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "do": [
+       {
+        "narrate": "Four cameras on one pole. You follow their aim, expecting a spread \u2014 the lot, the fence, the approach, the wall. All four are pointed at the door. The same door. From four angles that differ by perhaps eleven degrees in total."
+       },
+       {
+        "narrate": "It is a perfect artifact of the discipline: nobody could agree on which camera should cover the door, so all of them do, and nothing covers anything else. Twenty-two acres of unwatched concrete, and one doorway recorded in quadruplicate, most likely to a storage bucket in a cloud that is currently down."
+       },
+       {
+        "setFlag": "pm_read_cameras"
+       },
+       {
+        "score": {
+         "id": "pm_cameras",
+         "points": 1
+        }
+       }
+      ],
+      "if": {
+       "flagNot": "pm_read_cameras"
+      }
+     },
+     {
+      "text": "Four cameras. One door. Eleven degrees of institutional disagreement, immortalized in steel."
+     }
+    ],
+    "use": [
+     {
+      "text": "You wave at the nearest camera. The camera, whose footage goes to an object store that has been returning 503s since dawn, does not record you waving. You are, at this moment, one of the least documented objects on the property. Remember that feeling; it becomes load-bearing later."
+     }
+    ]
+   }
+  },
+  {
+   "id": "gatehouse",
+   "name": "gatehouse",
+   "synonyms": [
+    "guard booth",
+    "booth",
+    "guardhouse",
+    "gate",
+    "boom",
+    "arm",
+    "barrier"
+   ],
+   "polygon": [
+    [
+     244,
+     64
+    ],
+    [
+     312,
+     122
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A guard booth the size of a phone box, with a striped boom gate standing permanently at attention beside it. Inside: a swivel chair at rest, a space heater, a coffee ring on the counter, and a laminated sheet of vehicle procedures gone amber in the sun. The booth has been unstaffed since the campus was commissioned \u2014 the boom is on a badge reader, and the badge reader is on the cloud, and this morning the whole arrangement simply gave up and raised the arm."
+     },
+     {
+      "text": "The booth: chair, heater, coffee ring, laminate, nobody. The boom stands up out of the way, having decided that failing open was the least trouble available."
+     }
+    ],
+    "open": [
+     {
+      "text": "The booth door is unlocked and the booth is empty and there is nothing in it for you. You close it gently, the way you'd close a door in someone's house."
+     }
+    ],
+    "use": [
+     {
+      "text": "You push down on the boom gate, just to see. It rises straight back up, driven by a spring that will outlive every service in the catalog. Twenty-two acres of security engineering, defeated by a nine-dollar spring being extremely good at its job."
+     }
+    ]
+   }
+  },
+  {
+   "id": "lot",
+   "name": "lot",
+   "synonyms": [
+    "parking lot",
+    "asphalt",
+    "parking",
+    "spaces",
+    "stripes",
+    "fence"
+   ],
+   "polygon": [
+    [
+     0,
+     112
+    ],
+    [
+     320,
+     112
+    ],
+    [
+     320,
+     126
+    ],
+    [
+     0,
+     126
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Parking for six hundred. Occupied: one. The stripes are faded to suggestions and the asphalt has that particular unweathered emptiness of a surface built for a workforce that arrived, discovered the site was fully automated, and was reassigned to a campus with better food. Weeds work the seams at the far end, patiently, on a longer schedule than the company's."
+     },
+     {
+      "text": "Six hundred spaces, one farm truck. The lot is a monument to an assumption."
+     }
+    ],
+    "use": [
+     {
+      "text": "You walk a little way out into it, just to feel the distance between the door and the fence. It takes longer than you expect. Everything here does."
+     }
+    ]
+   }
+  },
+  {
+   "id": "sky",
+   "name": "sky",
+   "synonyms": [
+    "sun",
+    "clouds",
+    "cloud",
+    "weather",
+    "horizon",
+    "heat"
+   ],
+   "polygon": [
+    [
+     0,
+     0
+    ],
+    [
+     320,
+     0
+    ],
+    [
+     320,
+     26
+    ],
+    [
+     0,
+     26
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "High flat prairie sky, bleached out at noon, and \u2014 because the universe has a sense of structure \u2014 not one cumulonimbus in it. A few wisps at altitude, thin and unserious, the kind you'd name a company after if you had never once been rained on. The actual weather today is happening entirely indoors, in a change-management system, three hundred miles east."
+     },
+     {
+      "text": "Sky. Wispy, high, indifferent, and pointedly not the cloud on the letterhead."
+     }
+    ],
+    "take": [
+     {
+      "text": "One trillion-dollar company already tried to. You've spent two days walking through the results."
+     }
+    ]
+   }
+  },
+  {
+   "id": "building",
+   "name": "building",
+   "synonyms": [
+    "wall",
+    "concrete",
+    "beige wall",
+    "datacenter",
+    "data center",
+    "the cloud",
+    "cathedral",
+    "panels",
+    "nothing"
+   ],
+   "polygon": [
+    [
+     0,
+     20
+    ],
+    [
+     320,
+     20
+    ],
+    [
+     320,
+     118
+    ],
+    [
+     0,
+     118
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "pm_read_wall"
+      },
+      "do": [
+       {
+        "narrate": "You look at the building the way you'd look at a mountain: in pieces, because it does not fit. Tilt-up concrete panels, eight inches thick, joined by expansion seams every thirty-four feet, painted a beige that isn't a color so much as a legal position. No windows. No logo. No address you can see from the lot. Roofline dead flat against the sky."
+       },
+       {
+        "narrate": "This is the cloud. Not a metaphor for it \u2014 the object. Every diagram you have ever drawn with a fluffy shape in the corner was pointing here, at a shed the size of a small airport that has been very carefully designed to look like absolutely nothing, because looking like nothing is cheaper and because nobody was ever supposed to come."
+       },
+       {
+        "narrate": "Somewhere behind that wall, a photograph of somebody's grandmother is being kept safe by four hundred million dollars of redundant everything. Somewhere behind that wall is the reason your entire profession exists. And from out here, in the flat noon light, it is a big beige rectangle in a field, and you cannot tell whether it is running or not."
+       },
+       {
+        "narrate": "It is running. That, it turns out, is what you drove three hundred miles to be disappointed by."
+       },
+       {
+        "setFlag": "pm_read_wall"
+       },
+       {
+        "score": {
+         "id": "pm_wall",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "text": "Twenty-two acres of beige legal position with one door in it. The seams every thirty-four feet are the only rhythm the wall permits itself."
+     }
+    ],
+    "use": [
+     {
+      "text": "You put a palm on the wall. Warm on the surface, and beneath the warmth a deep even hum you can feel in the bones of your hand \u2014 thousands of fans, hundreds of pumps, two generators idling on standby, all of it working perfectly. Twenty-two acres of nothing wrong. You take your hand back. It's the healthiest thing you've touched all day, and it's the last place on earth you wanted to find health."
+     }
+    ],
+    "take": [
+     {
+      "text": "The building weighs an estimated ninety thousand tons and is legally a fixture. Also, the pockets in the Real Pants are more of a gesture."
+     }
+    ],
+    "open": [
+     {
+      "text": "The wall has exactly one opening in twenty-two acres, and it's the little glass door. That is not an oversight. That is the design brief, framed and hung in somebody's office."
+     }
+    ]
+   }
+  }
+ ],
+ "onScoreComplete": [
+  {
+   "text": "The narrator wishes to note, for the record, that you examined a beige wall thoroughly enough to close every ticket the beige wall had. There is something wrong with you, and it is the same thing that is going to fix the internet."
+  }
+ ]
+}

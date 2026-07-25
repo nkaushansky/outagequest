@@ -59,6 +59,10 @@ const RAMP = {
   flannel_m: [146, 62, 42],   // Merle
   rose_m: [188, 108, 122],    // Kim's tunic (M4)
   lavender_m: [156, 136, 176], // Dot's cardigan (M4)
+  mustard_m: [194, 148, 56],  // Bev's hand-knit cardigan (M5)
+  hiviz_m: [186, 208, 66],    // Corinne's vest, worn indoors (M5)
+  scan_cyan: [118, 214, 232], // the inventory robot's reading band (M5)
+  hair_brown_m: [78, 53, 36], // Mel's hair — absent once the hood goes up
 };
 const playerSprite = () => page.evaluate(() => window.spof.sprites.player());
 const npcIds = () => page.evaluate(() => window.spof.sprites.npcs());
@@ -852,7 +856,9 @@ await run("look mile marker");
 ok((await score()) === "100", "Acts 1+2 full clear at exactly 100", await score());
 ok((await status()) === "TICKETS OPEN 150/250", "the queue reads 150 open", await status());
 await run("hint");
-ok((await lastLines(4)).includes("tickets"), "post-act hint points at the ledger", await lastLines(4));
+// M5: Act 2's clear is no longer the end of the chain — the truck is now
+// boardable, so the hint hands the player straight into Act 3.
+ok((await lastLines(4)).includes("GET IN"), "post-act-2 hint points at the truck", await lastLines(4));
 await run("tickets");
 ok((await lastLines(20)).includes("Ticket queue, by site"), "tickets lists the queue by site", await lastLines(20));
 ok((await lastLines(20)).includes("clear. Ledger closed."), "cleared rooms read as closed ledgers", await lastLines(20));
@@ -875,6 +881,336 @@ await page.evaluate(() => { window.spof.state.player.x = 252, window.spof.state.
 await clickScene(252, 130);
 await page.waitForTimeout(1400);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act1_diner", "diner door zone admits under the painted door");
+
+// ============================================================================
+// M5 — ACT 3: THE CLOUD, PHYSICALLY
+// Entry puzzle (dual path), the patrol walker, become-an-asset, the hoodie
+// payoff, the HQ pointer, three new deaths, coffee_act3.
+// ============================================================================
+
+/** Jump to a room carrying the current flags/score (the r3 load trick). */
+const jumpTo = async (roomId, player) => {
+  const base = await page.evaluate(() => {
+    const s = window.spof.state;
+    return { v: 1, snap: { roomId: s.roomId, flags: [...s.flags], inventory: [...s.inventory],
+      score: s.score, awarded: [...s.awarded], player: { ...s.player } },
+      deathsFound: [...s.deathsFound] };
+  });
+  await page.evaluate(([b, rid, pl]) => {
+    const save = { ...b, snap: { ...b.snap, roomId: rid, player: pl } };
+    window.spof.exec("load SPOF1." + btoa(JSON.stringify(save)));
+  }, [base, roomId, player]);
+  await page.waitForTimeout(200);
+};
+/** The head band of Mel's frame — where a hood replaces hair. The 64-tall
+ *  frame anchors at y=61 and the head grid occupies frame rows 14..27, so
+ *  in world space that is playerY-47 .. playerY-34. */
+const headBox = async () => {
+  const p = await page.evaluate(() => ({ ...window.spof.state.player }));
+  return [Math.round(p.x) - 10, Math.round(p.y) - 48, Math.round(p.x) + 10, Math.round(p.y) - 32];
+};
+
+await jumpTo("act2_roadside", { x: 180, y: 150, facing: "right" });
+
+// ---- the act boundary: Act 2's cliffhanger now boards ----------------------
+await run("get in truck");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_perimeter",
+  "boarding the truck starts Act 3", await page.evaluate(() => window.spof.state.roomId));
+ok((await logText()).includes("US-CENTRAL-1 FLAGSHIP CAMPUS"),
+  "Act 3 opens on the cathedral", await lastLines(6));
+ok((await logText()).includes("ALREADY ON CAMPUS"), "the packing slip's line pays off");
+
+// ---- the perimeter: Merle waits in the truck, the pie is aboard ------------
+// Merle stays in the cab, carried in prose — a seated sprite can only draw
+// OVER a painted cab, so he reads as sitting on the hood. Act 2's roadside
+// established the precedent; the perimeter follows it.
+ok(!(await npcIds()).includes("truck"),
+  "Merle rides in prose, not on the hood", JSON.stringify(await npcIds()));
+await run("look around");
+ok((await lastLines(6)).includes("MERLE'S TRUCK"), "perimeter survey names the truck", await lastLines(6));
+await run("take pie");
+ok((await page.evaluate(() => [...window.spof.state.inventory])).includes("pie"),
+  "Darlene's pie comes out of the truck");
+await run("look building");
+ok((await lastLines(6)).includes("beige"), "the beige nothing has a bespoke look", await lastLines(6));
+await run("look monument");
+await dismissDoc();
+await run("look cameras");
+await run("talk to merle");
+ok((await lastLines(4)).includes("IT"), "Merle is consistently wrong about your name", await lastLines(4));
+
+// ---- the lobby: Bev, and a door that wants paperwork -----------------------
+await run("use door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_lobby", "into the lobby");
+ok((await npcIds()).includes("bev"), "Bev's sprite is at the desk", JSON.stringify(await npcIds()));
+ok(await canvasHas("mustard_m", [180, 62, 213, 94]), "Bev drawn behind the visitor desk");
+await run("look around");
+ok((await lastLines(6)).includes("BEV"), "lobby survey names Bev", await lastLines(6));
+await run("talk to bev");
+ok((await npcTalking()) === "bev", "talking runs Bev's talk cycle", String(await npcTalking()));
+ok((await lastLines(6)).includes("SP-11"), "Bev explains the manual process", await lastLines(6));
+
+// the inner door refuses a man with no badge
+await page.evaluate(() => { window.spof.state.player.x = 260; window.spof.state.player.y = 140; });
+await clickScene(296, 138);
+await page.waitForTimeout(1200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_lobby",
+  "no badge, no corridor");
+ok((await logText()).includes("pen taps the logbook"), "Bev holds the line with a pen");
+
+// PATH 1 — the paperwork route: Mel's own ticket number IS the credential
+await run("look video wall");
+await run("look lost-and-found");
+await run("look pedestals");
+await run("look logbook");
+await dismissDoc();
+ok((await logText()).includes("SPONSORING REFERENCE NO"), "the log's column with teeth");
+await run("ask bev about my ticket");
+const badgePaper = await page.locator(".docview").innerText();
+await dismissDoc();
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_badged"))),
+  "the queue finally works FOR him: badged on his own case number");
+ok(badgePaper.includes("MALFUNCTON, MEL"),
+  "the badge misprints his name institutionally", badgePaper.slice(0, 90));
+ok((await logText()).includes("MALFUNCTON"), "and the log carries the joke too");
+ok((await page.evaluate(() => [...window.spof.state.inventory])).includes("badge"),
+  "the badge is on his chest for the act");
+ok((await page.evaluate(() => window.spof.state.flags.has("name_bev"))),
+  "the wrong-name tally grows at Bev");
+
+// PATH 2 — the pie route still pays, separately (true dual path)
+const beforePie = Number(await score());
+await run("give pie to bev");
+await dismissDoc();
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_pie_given"))),
+  "the pie route resolves too");
+ok(Number(await score()) === beforePie + 2, "both entry paths award, separately",
+  `${beforePie} -> ${await score()}`);
+ok(!(await page.evaluate(() => [...window.spof.state.inventory])).includes("pie"),
+  "the pie is spent in-act");
+
+// coffee_act3 = Bev's Mr. Coffee, the only unmetered appliance in the building
+await run("use coffee maker");
+ok((await page.evaluate(() => window.spof.state.flags.has("coffee_act3"))),
+  "coffee_act3 stamped at Bev's Mr. Coffee");
+// the lost-and-found backstop declines a man who already packed a hoodie
+await run("open lost-and-found");
+ok((await lastLines()).includes("been through something"),
+  "the fleece backstop stands down for a man with a hoodie", await lastLines());
+
+// ---- the badging corridor: Corinne, and the rule that matters -------------
+await run("open inner door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_compliance", "badge opens the corridor");
+ok((await npcIds()).includes("corinne"), "Corinne's sprite is in the corridor", JSON.stringify(await npcIds()));
+ok(await canvasHas("hiviz_m", [180, 84, 210, 130]), "Corinne drawn in hi-viz, indoors");
+await run("talk to corinne");
+ok((await lastLines(6)).includes("MALFUNCTON comma MEL"),
+  "Corinne reads the badge in field order, comma included", await lastLines(6));
+ok((await page.evaluate(() => window.spof.state.flags.has("name_corinne"))),
+  "the tally grows again at Corinne");
+
+// the vestibule wants an escort and there is nobody in 22 acres to be one
+await page.evaluate(() => { window.spof.state.player.x = 136; window.spof.state.player.y = 150; });
+await clickScene(136, 132);
+await page.waitForTimeout(1200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_compliance", "the mantrap holds");
+ok((await logText()).includes("Escort required"), "escort-only, forever");
+
+await run("look vestibule");
+await run("ask corinne about escort");
+await run("look policy wall");
+await dismissDoc();
+ok((await logText()).includes("AC-09"), "the freight rule is posted at reading height");
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_knows_asset_rule"))),
+  "AC-04 vs AC-09: assets move unescorted");
+
+// DEATH 1 — Compliance Hold, warn-first, one step back
+await run("look sealed door");
+await dismissDoc();
+await run("open sealed door");
+ok((await logText()).includes("I wouldn't"), "the compliance-hold death warns first", await lastLines(4));
+ok(await page.locator(".death").isHidden(), "the warning is not the death");
+await run("open sealed door");
+await page.waitForTimeout(200);
+ok(await page.locator(".death").isVisible(), "forcing the sealed door kills");
+ok((await page.locator(".death-title").innerText()).includes("Compliance Hold"),
+  "death screen titled from the registry", await page.locator(".death-title").innerText());
+await page.locator(".death-retry").click();
+await page.waitForTimeout(200);
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_compliance",
+  "one step back, same corridor");
+
+// ---- the dock: the game's first MOVING NPC --------------------------------
+await run("open dock door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_dock", "freight door opens for anybody");
+ok((await npcIds()).includes("robot"), "the scanner is on the floor", JSON.stringify(await npcIds()));
+ok(await canvasHas("scan_cyan", [86, 100, 262, 148]), "the sensor band renders");
+const pose1 = await page.evaluate(() => window.spof.sprites.pose("robot"));
+await page.waitForTimeout(900);
+const pose2 = await page.evaluate(() => window.spof.sprites.pose("robot"));
+ok(pose1 && pose2 && pose1.x !== pose2.x,
+  "the patrol walker actually moves", JSON.stringify([pose1, pose2]));
+ok(["left", "right"].includes(pose2.facing),
+  "facing is derived from the direction of travel", JSON.stringify(pose2));
+await run("talk to robot");
+ok((await lastLines()).includes("no name at all"),
+  "the robot cannot perceive him at all", await lastLines());
+
+// DEATH 2 — Right of Way, warn-first (the lane before the paperwork)
+await run("stand in scan lane");
+ok(!(await page.locator(".death").isVisible()), "the lane warns first");
+await run("stand in scan lane");
+await page.waitForTimeout(200);
+ok(await page.locator(".death").isVisible(), "the lane kills the un-listed");
+ok((await page.locator(".death-title").innerText()).includes("Right of Way"),
+  "right-of-way death registered", await page.locator(".death-title").innerText());
+await page.locator(".death-retry").click();
+await page.waitForTimeout(200);
+
+// become inventory: tag -> cable -> receive -> scan
+await run("look pallet");
+await run("look spares cage");
+await run("peel tag");
+ok((await page.evaluate(() => [...window.spof.state.inventory])).includes("asset_tag"),
+  "a dead tray's live asset tag comes off the shelf");
+await run("use tag on terminal");
+ok((await lastLines(4)).includes("NO LINK"),
+  "an unreachable database cannot receive anything", await lastLines(4));
+await run("use cable on terminal");
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_terminal_wired"))),
+  "the kit cable finds its Act 3 device");
+await run("use tag on terminal");
+await dismissDoc();
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_tag_live"))),
+  "8814402 received; move ticket auto-issued per AC-09");
+await run("stand in scan lane");
+const scanSlip = await page.locator(".docview").innerText();
+await dismissDoc();
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_asset"))),
+  "scanned INTO inventory: Mel is an asset");
+ok(scanSlip.includes("RIGHT OF WAY GRANTED"), "the robot yields to freight",
+  scanSlip.slice(0, 120));
+ok(scanSlip.includes("MALFUNCTON, MEL"),
+  "the machine OCRs the badge into an asset description field");
+ok((await page.evaluate(() => window.spof.state.flags.has("name_robot"))),
+  "the tally's third Act 3 variant: a machine wrote it");
+ok(!(await page.evaluate(() => [...window.spof.state.inventory])).includes("asset_tag"),
+  "the tag spends in-act");
+await run("use robot");
+ok((await lastLines()).includes("brakes"), "the robot now stops for him", await lastLines());
+
+// ---- Cold Aisle 4: the hoodie payoff and the discovery --------------------
+await run("open corridor door");
+await run("open vestibule");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_cold_aisle",
+  "the mantrap opens for eight hundred pounds of rack");
+ok((await logText()).includes("Not one amber"), "the flagship is fine, which is the problem");
+
+// the plenum is the cold gate, and it checks WEARING, not carrying
+await run("use lifted tile");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_cold_aisle", "the plenum warns first");
+ok((await logText()).includes("stop reporting accurately"), "55 degrees, at volume");
+await run("use lifted tile");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_cold_aisle",
+  "carrying a hoodie is not wearing a hoodie");
+ok((await lastLines()).includes("WEAR it"), "the gate says so out loud", await lastLines());
+
+// THE HOODIE PAYOFF — canon since M3 (items canon), landing on screen
+const outfitBefore = await playerSprite();
+ok(await canvasHas("hair_brown_m", await headBox()),
+  "bare-headed Mel before the payoff", outfitBefore);
+await run("wear hoodie");
+ok((await logText()).includes("It was for this"), "the payoff aria fires in the cold aisle");
+const outfitAfter = await playerSprite();
+ok(outfitAfter.startsWith("mel_hood"), "the outfit map selects a hood sheet", outfitAfter);
+ok(!(await canvasHas("hair_brown_m", await headBox())),
+  "the hood covers the hair — it READS on screen");
+ok(await canvasHas("slate_m", await headBox()), "slate hood drawn where the head was");
+ok(!(await page.evaluate(() => [...window.spof.state.inventory])).includes("hoodie"),
+  "the hoodie spends into a worn flag");
+
+// DEATH 3 — Clean Agent, warn-first
+await run("use pull station");
+ok(!(await page.locator(".death").isVisible()), "the clean agent warns first");
+ok((await logText()).includes("PE-02"), "the warning cites the laminate");
+await run("use pull station");
+await page.waitForTimeout(200);
+ok(await page.locator(".death").isVisible(), "discharge in a sealed aisle kills");
+ok((await page.locator(".death-title").innerText()).includes("As Designed"),
+  "clean-agent death registered", await page.locator(".death-title").innerText());
+await page.locator(".death-retry").click();
+await page.waitForTimeout(200);
+
+// THE DISCOVERY: fine here, administrative upstream, and upstream has an address
+await run("look racks");
+await run("use crash cart");
+await dismissDoc();
+ok((await logText()).includes("SERVING NOTHING"),
+  "all physical systems nominal; the site serves nothing");
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_diagnosed"))),
+  "the verdict: administrative hold, upstream");
+ok(!(await logText()).toLowerCase().includes("credit card"),
+  "the root-cause trail does NOT surface in Act 3");
+await run("look runbook");
+await dismissDoc();
+ok((await logText()).includes("CORPORATE"), "Tab 7 names the one room that can lift the hold");
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_hq_named"))),
+  "Act 3 ends knowing WHERE (HQ), never WHY");
+
+// ---- the plenum: the hoodie gate opens, and Act 2's fiber lands here ------
+await run("use lifted tile");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_plenum",
+  "hood up, the plenum admits him");
+await run("look fiber");
+ok((await logText()).includes("REGIONAL EDGE 0447"),
+  "the county's own fiber, three hundred miles on, lit and blameless");
+await run("look coffee cup");
+await dismissDoc();
+ok((await logText()).includes("done properly"), "the plenum's nine-year-old note");
+await run("look around");
+ok((await lastLines(4)).includes("PEDESTALS"), "plenum survey reads as the narrator");
+
+// ---- the act-out: Mel drives ---------------------------------------------
+await run("use hatch");
+await run("open containment door");
+await run("open dock door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_dock", "the floor stays open");
+await run("open door");
+await run("open lobby door");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_lobby", "back past Bev");
+await run("use front doors");
+ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_perimeter", "back out to the lot");
+await run("talk to merle");
+ok((await logText()).includes("somebody drives ON"),
+  "the Mel-drives inversion completes 'nobody drives out anymore'");
+ok((await logText()).includes("END OF ACT THREE"), "act-out stinger narrates");
+ok((await page.evaluate(() => window.spof.state.flags.has("a3_keys"))), "Merle lends the truck");
+ok(!(await page.evaluate(() => [...window.spof.state.inventory])).includes("badge"),
+  "the badge spends at the act-out");
+
+// ---- the M5 ledger -------------------------------------------------------
+await run("look gatehouse");
+await run("look lot");
+ok((await score()) === "150", "Acts 1-3 full clear at exactly 150", await score());
+ok((await status()) === "TICKETS OPEN 100/250", "the queue reads 100 open", await status());
+const m5deaths = await page.evaluate(() => [...window.spof.state.deathsFound]);
+ok(["compliance_hold", "right_of_way", "clean_agent"].every((d) => m5deaths.includes(d)),
+  "all three Act 3 deaths collected + registered", JSON.stringify(m5deaths));
+const m5inv = await page.evaluate(() => [...window.spof.state.inventory]);
+ok(m5inv.includes("cable") && m5inv.includes("mug"),
+  "kit crossed a third act; every Act 3 consumable spent", JSON.stringify(m5inv));
+await run("hint");
+ok((await lastLines(4)).includes("road is yours"), "post-Act-3 hint retires cleanly", await lastLines(4));
+
+// no act may REQUIRE a prior act's item: the hoodie gate is optional, and
+// Bev's tub is the backstop for a player who never took one.
+const hoodieOptional = await page.evaluate(() => {
+  const room = window.spof.content.rooms.get("act3_cold_aisle");
+  const gate = room.exits.find((e) => e.to === "act3_plenum");
+  return { gate: JSON.stringify(gate.if), plenumScored: 3 };
+});
+ok(hoodieOptional.gate.includes("wearing_hoodie"),
+  "the cold gate checks WEARING, not carrying", hoodieOptional.gate);
 
 // ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
 const lookGaps = await page.evaluate(() => {

@@ -12,6 +12,12 @@ export interface EngineContext {
    *  ("use mug on modem" resolves on modem with instrumentId "mug").
    *  Undefined for one-object commands, onEnter, exits, etc. */
   instrumentId?: string;
+  /** The same-noun alternate for the instrument, when a room hotspot and a
+   *  carried item share the noun ("use tag on terminal" where the shelf the
+   *  tag came off of also answers to "tag"). An `instrument` condition
+   *  matches either id — the instrument half of the hotspot-shadowing rule
+   *  the target half already has. */
+  instrumentAltId?: string;
   narrate(text: string, cls?: string): void;
   award(id: string, points: number): void;
   addItem(id: string): void;
@@ -25,17 +31,21 @@ export function evalCondition(
   cond: Condition,
   state: GameState,
   instrumentId?: string,
+  instrumentAltId?: string,
 ): boolean {
   if ("flag" in cond) return state.flags.has(cond.flag);
   if ("flagNot" in cond) return !state.flags.has(cond.flagNot);
   if ("hasItem" in cond) return state.hasItem(cond.hasItem);
-  if ("instrument" in cond) return instrumentId === cond.instrument;
+  if ("instrument" in cond)
+    return instrumentId === cond.instrument || instrumentAltId === cond.instrument;
   if ("anyInstrument" in cond)
     return (instrumentId !== undefined) === cond.anyInstrument;
   if ("all" in cond)
-    return cond.all.every((c) => evalCondition(c, state, instrumentId));
+    return cond.all.every((c) =>
+      evalCondition(c, state, instrumentId, instrumentAltId));
   if ("any" in cond)
-    return cond.any.some((c) => evalCondition(c, state, instrumentId));
+    return cond.any.some((c) =>
+      evalCondition(c, state, instrumentId, instrumentAltId));
   return false;
 }
 
@@ -73,7 +83,10 @@ export function runEntries(
 ): boolean {
   if (!entries) return false;
   for (const entry of entries) {
-    if (entry.if && !evalCondition(entry.if, ctx.state, ctx.instrumentId)) continue;
+    if (
+      entry.if &&
+      !evalCondition(entry.if, ctx.state, ctx.instrumentId, ctx.instrumentAltId)
+    ) continue;
     if (entry.text !== undefined) ctx.narrate(entry.text);
     if (entry.do) runActions(entry.do, ctx);
     return true;

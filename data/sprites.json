@@ -5,10 +5,17 @@
     "mel_pants":      { "sheet": "assets/sprites/mel_pants.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
     "mel_coat":       { "sheet": "assets/sprites/mel_coat.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
     "mel_coat_pants": { "sheet": "assets/sprites/mel_coat_pants.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "mel_hood":            { "sheet": "assets/sprites/mel_hood.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "mel_hood_pants":      { "sheet": "assets/sprites/mel_hood_pants.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "mel_hood_coat":       { "sheet": "assets/sprites/mel_hood_coat.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
+    "mel_hood_coat_pants": { "sheet": "assets/sprites/mel_hood_coat_pants.png", "frameW": 32, "frameH": 64, "anchor": [15, 61], "walkFps": 9 },
     "gary":    { "sheet": "assets/sprites/gary.png", "frameW": 40, "frameH": 52, "anchor": [19, 51], "talkFps": 6 },
     "darlene": { "sheet": "assets/sprites/darlene.png", "frameW": 30, "frameH": 38, "anchor": [14, 37], "talkFps": 6 },
     "merle":   { "sheet": "assets/sprites/merle.png", "frameW": 30, "frameH": 54, "anchor": [14, 53], "talkFps": 5 },
     "kim":     { "sheet": "assets/sprites/kim.png", "frameW": 30, "frameH": 50, "anchor": [14, 47], "talkFps": 6 },
-    "dot":     { "sheet": "assets/sprites/dot.png", "frameW": 34, "frameH": 48, "anchor": [16, 47], "talkFps": 5 }
+    "dot":     { "sheet": "assets/sprites/dot.png", "frameW": 34, "frameH": 48, "anchor": [16, 47], "talkFps": 5 },
+    "bev":     { "sheet": "assets/sprites/bev.png", "frameW": 32, "frameH": 32, "anchor": [15, 29], "talkFps": 5 },
+    "corinne": { "sheet": "assets/sprites/corinne.png", "frameW": 30, "frameH": 50, "anchor": [14, 45], "talkFps": 5 },
+    "scanner": { "sheet": "assets/sprites/scanner.png", "frameW": 28, "frameH": 32, "anchor": [14, 30], "walkFps": 8 }
   }
 }

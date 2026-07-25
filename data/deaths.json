@@ -30,6 +30,21 @@
       "id": "cooling_architecture",
       "title": "Cooling Architecture",
       "text": "You reach into the transom to adjust the county's entire thermal design mid-spin. The box fan — nineteen dollars, nine years of continuous duty, zero grille — declines the change request at eleven hundred RPM. The blades win the argument, the airflow wins your hat, and the coroner's report introduces the phrase 'cooling architecture' to county paperwork forever. The rack hums on, unmourned and unmoved. Uptime was maintained. Just not yours."
+    },
+    {
+      "id": "compliance_hold",
+      "title": "Compliance Hold",
+      "text": "You push the crash bar. Somewhere a contact closes, a panel logs an unapproved egress, and the vestibule around you seals — both doors, simultaneously, which the sign promised could never happen and which the sign was describing as a feature. A recorded woman explains that you are being held pending review. Review is a person at corporate. Corporate cannot authenticate today, and the hold duration is documented as INDEFINITE, and indefinite is a duration. Finding F-2019-114 remains open. The door was never non-compliant for one second of your entire visit."
+    },
+    {
+      "id": "clean_agent",
+      "title": "Fire Suppression, As Designed",
+      "text": "The glass breaks, the handle pulls, and a sealed containment aisle does in ten seconds precisely what four hundred thousand dollars of engineering promised it would: it removes the oxygen. It cannot tell your oxygen from a fire's oxygen; nobody ever claimed it could, and PE-02 said so in laminate at reading height. Six hundred green lights stay green. Every replica stays current. The system performs flawlessly, is certified flawless, and passes its next quarterly review — which will note, accurately, that manual discharge functioned as designed."
+    },
+    {
+      "id": "right_of_way",
+      "title": "Right of Way",
+      "text": "The inventory scanner proceeds along its route at 1.4 metres per second, and its world model — which is the asset database, and which is complete, and which is correct — contains no object at your coordinates, because you were never received at this site. It is not a collision. A collision requires two objects. The incident report will be filed by the robot, automatically, against the FLOOR, for an unexpected obstruction of undeclared mass, and it will be closed the same afternoon as no fault found. It was, in fairness, the only party present who did anything wrong."
     }
   ]
 }

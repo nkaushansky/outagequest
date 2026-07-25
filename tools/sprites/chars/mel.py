@@ -129,6 +129,78 @@ HEAD_BACK = """
 """
 
 # --------------------------------------------------------------------------
+# HOODS (13w x 14h) — the backup hoodie, finally worn (Act 3, the cold
+# aisle). These REPLACE the head grid rather than layering over it: fabric
+# eats the hairline and the jaw, which is both what a cinched hood does and
+# the reason the silhouette reads at 1x on a phone. The face opening keeps
+# the glasses exactly where the bare heads put them, so it's still Mel.
+# --------------------------------------------------------------------------
+
+HOOD_KEY = {
+    "o": "outline",
+    "u": "slate_m", "U": "slate_d", "v": "slate_l",
+    "S": "skin_pale_m", "s": "skin_pale_d", "T": "skin_pale_l",
+    "G": "outline",           # glasses
+    "h": "hair_brown_d",      # the one surviving bit of fringe
+    "W": "white",             # drawcords, cinched
+}
+
+HOOD_SIDE = """
+...oooooo....
+..oUvvvvvo...
+.oUuvvvvvuo..
+oUuuvvvvvuuoo
+oUuuuuuuhTSTo
+oUuuuuhGGGGGo
+oUuuuuusSSSTo
+oUuuuuusSSTSo
+.oUuuuuosSSso
+.oUUuuuuosSso
+..oUUuuuuooso
+...oUWuuuuoo.
+....oUWuuuo..
+.....oWuuo...
+......oWo....
+.......W.....
+"""
+
+HOOD_FRONT = """
+...ooooooo...
+..ovvvvvvvo..
+.ouvvvvvvvuo.
+.ouooooooouo.
+ouuhTSSSThuuo
+ouuGGGSGGGuuo
+ouusSSSSSsuuo
+ouusSSTSSsuuo
+oUuosSSSsouUo
+.oUuosSSsouUo
+.oUuuoosoouuo
+..oUuuuuuuuUo
+..oUWuuuuuWUo
+...oUUuuuUUo.
+....oWo.oWo..
+.....W...W...
+"""
+
+HOOD_BACK = """
+...ooooooo...
+..ovvvvvvvo..
+.ouvvvvvvvuo.
+ouuvvvvvvvuuo
+ouuuuuuuuuuuo
+ouuuuuuuuuuuo
+ouuuuuuuuuuuo
+oUuuuuuuuuuUo
+.oUuuuuuuuUo.
+.oUUuuuuuUUo.
+..oUUuuuUUo..
+..oUUUuUUUo..
+...oUUUUUo...
+....ooooo....
+"""
+
+# --------------------------------------------------------------------------
 # Hoodie torsos. Side 14w x 16h (hood bunch at the back), front/back 15w.
 # Top row is the neck; hem overlaps the hips by 2 px.
 # --------------------------------------------------------------------------
@@ -611,6 +683,8 @@ TORSO_H = 16
 
 _heads = {k: parse_grid(g, HEAD_KEY) for k, g in
           {"side": HEAD_SIDE, "front": HEAD_FRONT, "back": HEAD_BACK}.items()}
+_hoods = {k: parse_grid(g, HOOD_KEY) for k, g in
+          {"side": HOOD_SIDE, "front": HOOD_FRONT, "back": HOOD_BACK}.items()}
 _hoodie = {"side": parse_grid(TORSO_HOODIE_SIDE, HOODIE_KEY),
            "front": parse_grid(TORSO_HOODIE_FRONT, HOODIE_KEY),
            "back": parse_grid(TORSO_HOODIE_BACK, HOODIE_KEY)}
@@ -655,24 +729,32 @@ LEG_X, LEG_Y = 7, GROUND - LEG_H + 1     # 41
 TORSO_Y = LEG_Y - TORSO_H + 2            # hem overlaps hips: 27
 HEAD_Y = TORSO_Y - 12                    # chin tucks into the collar
 SHADOW_POS = (8, GROUND - 2)
+# Hoods are 1 px taller and 2 px wider than the bare heads: same chin row,
+# fabric spilling up and back. Side x lands the face where the head's was.
+HOOD_DY = -1
+HOOD_X_SIDE = 8
+HOOD_X_FLAT = 9
 
 
-def _side_frame(outfit, legstyle, leg, bob, near, far):
-    upper = []
-    if outfit == "hoodie":
-        upper = [
-            (_arm[("hoodie", far)], 10, TORSO_Y + bob + 1, ARM_FAR_HOODIE),
-            (_hoodie["side"], 9, TORSO_Y + bob),
-            (_heads["side"], 11, HEAD_Y + bob),
-            (_arm[("hoodie", near)], 13, TORSO_Y + bob + 1),
-        ]
-    else:
-        upper = [
-            (_arm[("coat", far)], 10, TORSO_Y + bob + 1, ARM_FAR_COAT),
-            (_coat["side"], 9, TORSO_Y + bob),
-            (_heads["side"], 11, HEAD_Y + bob),
-            (_arm[("coat", near)], 13, TORSO_Y + bob + 1),
-        ]
+def _head_part(facing, hood):
+    """The head slot: bare head, or the backup hoodie's hood pulled up."""
+    if hood:
+        x = HOOD_X_SIDE if facing == "side" else HOOD_X_FLAT
+        return _hoods[facing], x, HOOD_DY
+    return _heads[facing], (11 if facing == "side" else 10), 0
+
+
+def _side_frame(outfit, legstyle, leg, bob, near, far, hood=False):
+    head, hx, hdy = _head_part("side", hood)
+    sleeve = "hoodie" if outfit == "hoodie" else "coat"
+    torso = _hoodie["side"] if outfit == "hoodie" else _coat["side"]
+    far_recolor = ARM_FAR_HOODIE if outfit == "hoodie" else ARM_FAR_COAT
+    upper = [
+        (_arm[(sleeve, far)], 10, TORSO_Y + bob + 1, far_recolor),
+        (torso, 9, TORSO_Y + bob),
+        (head, hx, HEAD_Y + bob + hdy),
+        (_arm[(sleeve, near)], 13, TORSO_Y + bob + 1),
+    ]
     return compose(FRAME_W, FRAME_H, [
         (_shadow, *SHADOW_POS),
         (_legs[(legstyle, leg)], LEG_X, LEG_Y),
@@ -680,41 +762,42 @@ def _side_frame(outfit, legstyle, leg, bob, near, far):
     ])
 
 
-def _flat_frame(outfit, legstyle, leg, bob, facing, flip):
+def _flat_frame(outfit, legstyle, leg, bob, facing, flip, hood=False):
     torso = _hoodie[facing] if outfit == "hoodie" else _coat[facing]
     tx = 9  # 13-wide torsos center on the head/anchor column (x=15)
     legs = _legs[(legstyle, leg)]
+    head, hx, hdy = _head_part(facing, hood)
     frame = compose(FRAME_W, FRAME_H, [
         (_shadow, *SHADOW_POS),
         (legs, 8, LEG_Y),
         (torso, tx, TORSO_Y + bob),
-        (_heads[facing], 10, HEAD_Y + bob),
+        (head, hx, HEAD_Y + bob + hdy),
     ])
     return mirror(frame) if flip else frame
 
 
-def _row_side(outfit, legstyle):
-    row = [_side_frame(outfit, legstyle, "side_idle", 0, "down", "down")]
+def _row_side(outfit, legstyle, hood=False):
+    row = [_side_frame(outfit, legstyle, "side_idle", 0, "down", "down", hood)]
     for leg, bob, near, far in SIDE_PHASES:
-        row.append(_side_frame(outfit, legstyle, leg, bob, near, far))
+        row.append(_side_frame(outfit, legstyle, leg, bob, near, far, hood))
     return row
 
 
-def _row_flat(outfit, legstyle, facing):
-    row = [_flat_frame(outfit, legstyle, "front_idle", 0, facing, False)]
+def _row_flat(outfit, legstyle, facing, hood=False):
+    row = [_flat_frame(outfit, legstyle, "front_idle", 0, facing, False, hood)]
     for leg, bob, flip in FRONT_PHASES:
-        row.append(_flat_frame(outfit, legstyle, leg, bob, facing, flip))
+        row.append(_flat_frame(outfit, legstyle, leg, bob, facing, flip, hood))
     return row
 
 
-def _sheet_rows(outfit, legstyle):
-    right = _row_side(outfit, legstyle)
+def _sheet_rows(outfit, legstyle, hood=False):
+    right = _row_side(outfit, legstyle, hood)
     left = [mirror(f) for f in right]
     return [
-        _row_flat(outfit, legstyle, "front"),   # down
-        left,                                   # left
-        right,                                  # right
-        _row_flat(outfit, legstyle, "back"),    # up
+        _row_flat(outfit, legstyle, "front", hood),   # down
+        left,                                         # left
+        right,                                        # right
+        _row_flat(outfit, legstyle, "back", hood),    # up
     ]
 
 
@@ -724,4 +807,10 @@ def build():
         "mel_pants": _sheet_rows("hoodie", "khaki"),
         "mel_coat": _sheet_rows("coat", "jogger"),
         "mel_coat_pants": _sheet_rows("coat", "khaki"),
+        # The backup hoodie, hood up — the Act 3 cold-aisle payoff. Same
+        # part set, one new head slot; the outfit map does the rest.
+        "mel_hood": _sheet_rows("hoodie", "jogger", hood=True),
+        "mel_hood_pants": _sheet_rows("hoodie", "khaki", hood=True),
+        "mel_hood_coat": _sheet_rows("coat", "jogger", hood=True),
+        "mel_hood_coat_pants": _sheet_rows("coat", "khaki", hood=True),
     }

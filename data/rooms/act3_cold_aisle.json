@@ -1,0 +1,277 @@
+{
+  "id": "act3_cold_aisle",
+  "name": "Cold Aisle 4",
+  "background": "assets/backgrounds/act3_cold_aisle.png",
+  "walkable": [[74,130],[244,130],[248,178],[74,178]],
+  "playerStart": { "x": 150, "y": 156, "facing": "down" },
+  "exits": [
+    { "to": "act3_compliance", "polygon": [[136,128],[184,128],[184,142],[136,142]],
+      "arrive": { "x": 136, "y": 152, "facing": "down" } },
+    { "to": "act3_plenum", "polygon": [[236,148],[250,148],[250,176],[236,176]],
+      "arrive": { "x": 56, "y": 150, "facing": "right" },
+      "if": { "flag": "wearing_hoodie" },
+      "blocked": [
+        { "if": { "flagNot": "a3_warn_plenum" },
+          "do": [
+            { "narrate": "You crouch at the lifted tile and put a hand down into the opening, and the plenum takes it — a solid moving river of fifty-five-degree air at volume, the whole building's cooling budget running under the floor like weather with a work order. Four seconds in, your fingers stop reporting accurately." },
+            { "narrate": "You take the hand back. Down there is where every cable in the building actually lives, and you are dressed for a lobby. You have been carrying a second hoodie since you left your house, on a day when leaving your house was the hard part. It is in your bag. It has been in your bag the whole time." },
+            { "setFlag": "a3_warn_plenum" }
+          ] },
+        { "if": { "any": [{ "hasItem": "hoodie" }, { "hasItem": "fleece" }] },
+          "text": "The plenum breathes fifty-five degrees up at you at volume. You have a hoodie. It is in your bag, doing nothing, four feet from a hole in the floor that would very much reward it. Put it ON." },
+        { "text": "You get one arm into the opening and the cold takes it in under five seconds. Not dangerous — just absolutely and non-negotiably not happening in shirtsleeves. Somewhere in this building there is something warm, and Bev has a whole tub of the things." } ]
+    }
+  ],
+  "onEnter": [
+    { "if": { "flagNot": "a3_cold_seen" },
+      "do": [
+        { "narrate": "The inner door releases and the cold hits you like an opinion. Fifty-five degrees, moving, dry as a courtroom, coming up out of the perforated floor tiles in a solid sheet — and the NOISE, which isn't a hum at all from in here but a flat white roar you can feel in your sinuses, ten thousand fans agreeing about something at once." },
+        { "narrate": "Cold Aisle 4. Two rows of black racks running away from you down both sides, seven feet tall, close enough that you could touch both at once if your arms were slightly better arms. And every single rack face, top to bottom, both sides, all the way down: green. Green, green, green, green. Hundreds of steady green indicator lights, in ranks, going away into the perspective." },
+        { "narrate": "Not one amber. Not one red. Not one dark. You stand in the physical body of the cloud on the second day of the largest outage in the history of computing and you cannot find a single component that is having a bad time." },
+        { "narrate": "You have been a systems person for nineteen years. You know exactly what an all-green board means when the service is down, and you have never once wanted it to mean anything else this badly." },
+        { "setFlag": "a3_cold_seen" },
+        { "setFlag": "a3_in_cold" },
+        { "score": { "id": "ca_arrived", "points": 1 } }
+      ] },
+    { "if": { "flag": "a3_hq_named" },
+      "do": [
+        { "narrate": "The aisle again: cold, loud, and immaculately, insultingly fine. Every light still green. The fault was never in this room. It was never in this building. It's a form, in a room, three hundred miles east." },
+        { "setFlag": "a3_in_cold" }
+      ] },
+    { "do": [
+        { "narrate": "Cold Aisle 4: fifty-five degrees, ten thousand fans, and several hundred green lights refusing to help you." },
+        { "setFlag": "a3_in_cold" }
+      ] }
+  ],
+  "lookAround": [
+    { "if": { "flag": "a3_diagnosed" },
+      "text": "Cold Aisle 4, surveyed after the verdict: RACKS green both sides (fine, all of them, fine), the CRASH CART with the answer still on its screen, the ROW RUNBOOK hanging at the rack end, the CLEAN AGENT nozzle and its red PULL STATION overhead (leave both alone), the CONTAINMENT DOOR back to the corridor, and the LIFTED TILE at the right, breathing cold from the plenum." },
+    { "text": "Cold Aisle 4, surveyed: two rows of RACKS down both side edges, every light green; a wheeled CRASH CART left of center; a ROW RUNBOOK in a binder hung at the rack end; a white CLEAN AGENT discharge nozzle and a red PULL STATION high on the right wall; the glass CONTAINMENT DOOR back to the corridor; and at the lower right one perforated floor TILE lifted out, with the plenum breathing through the hole." }
+  ],
+  "hotspots": [
+    { "id": "crash_cart", "name": "crash cart",
+      "synonyms": ["cart", "monitor", "screen", "keyboard", "kvm", "terminal", "console", "trolley"],
+      "polygon": [[80,84],[124,132]],
+      "responses": {
+        "look": [
+          { "if": { "flag": "a3_diagnosed" },
+            "text": "The crash cart, screen still up, verdict still on it. A monitor and a keyboard on four wheels — the piece of equipment that every datacenter has and no architecture diagram has ever contained. It is how you talk to a machine when everything clever has stopped working, and it is the reason you know what you now know." },
+          { "text": "A wheeled cart with a small monitor and a rubber keyboard, cable-tied at every join, a roll of electrical tape bungeed to the handle and a permanent marker on a string. Somebody's initials are scratched into the frame. It is the least glamorous object in twenty-two acres and it is the only thing in this aisle you can have a conversation with." }
+        ],
+        "use": [
+          { "if": { "flagNot": "a3_diagnosed" },
+            "do": [
+              { "narrate": "You wheel the cart to the nearest rack end, find the console port, and go in the way you have gone in ten thousand times: locally, physically, with a keyboard, like a person." },
+              { "narrate": "It answers instantly. Of course it does. You run the checks in the order nineteen years put in your hands. Hardware: nominal. Storage: nominal, all replicas current. Network: 400 gigabit, four diverse paths, zero errors on any interface. Power: utility, with two generators tested Tuesday and passing. Cooling: within envelope, every sensor. Local services: UP. Peer nodes: UP. Every dependency inside this building: UP." },
+              { "narrate": "And then, at the bottom of the health summary, one line that is not green:" },
+              { "document": {
+                  "style": "slip",
+                  "title": "US-CENTRAL-1 · SITE HEALTH SUMMARY",
+                  "body": "COMPUTE ........................ OK  (100%)\nSTORAGE ........................ OK  (100%, 0 degraded)\nNETWORK ........................ OK  (4/4 paths, 0 err)\nPOWER .......................... OK  (utility + 2 gen, tested)\nCOOLING ........................ OK  (all zones in envelope)\nPEERS .......................... OK  (11/11 sites reachable)\n\nSERVICE ENTITLEMENT ............ HOLD\n  reason ....... ADMINISTRATIVE HOLD (UPSTREAM)\n  origin ....... NOT THIS SITE\n  action ....... NONE AVAILABLE LOCALLY\n  escalate ..... SEE ROW RUNBOOK, ESCALATION MATRIX\n\n>> ALL PHYSICAL SYSTEMS NOMINAL. SITE IS SERVING NOTHING."
+                } },
+              { "narrate": "ALL PHYSICAL SYSTEMS NOMINAL. SITE IS SERVING NOTHING. Every machine in twenty-two acres is healthy, powered, cooled, networked, replicated and idle, holding forty percent of the world's compute in perfect readiness, and refusing to serve one single byte of it — because a field somewhere says HOLD." },
+              { "narrate": "Not a failure. Not a fault. Not a fire, not a flood, not a fiber cut, not a bad deploy, not a cascading retry storm, not any of the eleven thousand things you have spent your career defending against. An ADMINISTRATIVE HOLD. Upstream. Origin: not this site." },
+              { "narrate": "You drove three hundred miles to stand inside the cloud and find out that the cloud is fine and the problem is a FORM. You put both hands on the crash cart's handle for a second. Nineteen years, and the enemy turns out to be a checkbox in a building with better coffee." },
+              { "setFlag": "a3_diagnosed" },
+              { "score": { "id": "ca_diagnosed", "points": 3 } }
+            ] },
+          { "if": { "flagNot": "a3_hq_named" },
+            "text": "You re-run it, because you are the kind of person who re-runs it. Same summary, same single non-green line, same instruction: ESCALATE — SEE ROW RUNBOOK, ESCALATION MATRIX. The runbook is a binder, and the binder is hanging six feet away at the rack end, exactly where the runbook has hung since the ribbon-cutting." },
+          { "text": "The summary hasn't changed and it won't. Everything in this building is nominal. The hold is somewhere with a mailing address." }
+        ],
+        "open": [
+          { "text": "The cart's little drawer holds four screwdrivers, a coil of cat 5 crimped by somebody with less patience than you, three zip ties, and a fun-size candy bar of an extinct brand. Datacenter archaeology. You leave the candy bar; it has clearly outlived its ability to be food and become a monument." }
+        ],
+        "take": [
+          { "text": "The crash cart belongs to the aisle, and the aisle needs it far more than you do, because the aisle has nobody else." }
+        ]
+      } },
+    { "id": "runbook", "name": "runbook",
+      "synonyms": ["binder", "row runbook", "manual", "documentation", "escalation", "matrix", "procedures"],
+      "polygon": [[196,84],[240,124]],
+      "responses": {
+        "look": [
+          { "if": { "flagNot": "a3_diagnosed" },
+            "text": "A three-ring binder in a steel sling hung on the rack-row end plate, spine out: ROW RUNBOOK · CA-4 · ROOM COPY — DO NOT REMOVE. Punched pages, plastic tab dividers, a pen on a string. Every datacenter has one and nobody has opened one since the commissioning walkthrough. You could read it now, but you don't yet know which tab you need, and the tabs are the whole point of a runbook." },
+          { "if": { "flagNot": "a3_hq_named" },
+            "do": [
+              { "narrate": "The site health summary said ESCALATE — SEE ROW RUNBOOK, ESCALATION MATRIX. You lift the binder out of its sling, and it is heavier than a binder ought to be, and the plastic tabs are numbered, and you go straight to the one you want the way you have gone to a tab a thousand times." },
+              { "document": {
+                  "style": "binder",
+                  "title": "ROW RUNBOOK · CA-4 · TAB 7: ESCALATION MATRIX",
+                  "body": [
+                    "PHYSICAL FAULT (power, cooling, fire, structural) → Site Facilities → on-call, 24/7, 15 min.",
+                    "HARDWARE FAULT (node, disk, optic, switch) → Site Ops → on-call, 24/7, 30 min.",
+                    "NETWORK FAULT (path, peering, transit) → Network Ops Center → 1-800-CUMULO-1, 24/7, 15 min.",
+                    "SERVICE ENTITLEMENT / LICENSING / ADMINISTRATIVE HOLD → not a site function. No site remedy exists. Escalate to CORPORATE: Change Advisory Board, Cumulonimbus, Inc., Corporate Campus. Business hours. In person if unresolved.",
+                    { "text": "IF THE HOLD IS ADMINISTRATIVE, NOTHING IN THIS BUILDING CAN HELP YOU.", "style": "stamp" },
+                    { "text": "no phone number for the last one. asked twice. told it's an internal matter  — B.T., commissioning walkthrough, 2016", "style": "hand" },
+                    { "text": "Room copy. Do not remove. Review annually. Last reviewed: 2016.", "style": "fine" }
+                  ]
+                } },
+              { "narrate": "Four rows. The first three have phone numbers, response times, and people who will pick up at three in the morning. Cumulonimbus has built, staffed and drilled a magnificent apparatus for every way a building can hurt itself, and it works, and that is exactly why you are standing in a room where nothing is wrong." },
+              { "narrate": "The fourth row has no phone number. It has an ADDRESS. 'Not a site function. No site remedy exists. Escalate to CORPORATE: Change Advisory Board. Business hours. In person if unresolved.' And underneath, in ballpoint, in a small upright hand you recognize because you watched it write your name wrong an hour ago: 'no phone number for the last one. asked twice. told it's an internal matter — B.T., 2016.'" },
+              { "narrate": "Bev asked. Nine years ago, at the commissioning walkthrough, a security guard read Tab 7, noticed that the only failure mode with no phone number was the only one a building can't fix, and asked twice. They told her it was an internal matter. She wrote it in the margin and went back to the lobby and kept the log by hand for nine more years." },
+              { "narrate": "So: not here. Not this building, not this row, not this aisle, not any of the twenty-two acres of immaculate green. It is a hold, it is administrative, it is upstream, and the runbook says where upstream lives. CORPORATE. Business hours. In person if unresolved." },
+              { "narrate": "It is going to be unresolved." },
+              { "setFlag": "a3_hq_named" },
+              { "score": { "id": "ca_runbook", "points": 3 } }
+            ] },
+          { "text": "Tab 7, the escalation matrix: three faults with phone numbers and one with an address. SERVICE ENTITLEMENT / ADMINISTRATIVE HOLD → CORPORATE, Change Advisory Board, business hours, in person if unresolved. Bev's ballpoint in the margin, nine years old, asking the only question that mattered." }
+        ],
+        "use": [
+          { "if": { "flag": "a3_hq_named" },
+            "text": "You put the binder back in its sling, spine out, room copy, do not remove. Somebody should review it. Somebody should have reviewed it in 2017." },
+          { "text": "You leaf through the tabs: power-on sequence, thermal excursion, optic replacement, cable dressing standards (illustrated, beautifully, by somebody who loved their job). It's a good runbook. Written by people who understood buildings. You'd hire whoever wrote Tab 3." }
+        ],
+        "take": [
+          { "text": "ROOM COPY — DO NOT REMOVE, and after nineteen years in this profession you are not the man who removes the room copy. You have met that man. You have escalated about that man." }
+        ]
+      } },
+    { "id": "racks", "name": "racks",
+      "synonyms": ["rack", "servers", "server rack", "lights", "leds", "green", "green lights", "rows", "row", "hardware"],
+      "polygon": [[0,18],[74,134]],
+      "responses": {
+        "look": [
+          { "if": { "flagNot": "ca_read_racks" },
+            "do": [
+              { "narrate": "You walk the row the way you'd walk a hospital ward at night, reading faces. Every rack unit has a status LED and every status LED is green and every green is steady — not blinking, not amber-cycling, not the sick slow pulse of a thing rebuilding. Steady. Healthy. Bored." },
+              { "narrate": "Behind these bezels: forty percent of the compute on this planet. Every family photo that was ever uploaded 'to be safe.' Every payroll run for a third of the companies you have heard of. Every doorbell, every thermostat, every insulin pump's cheerful little app, every hospital's appointment system, every school's attendance register, and a startup's entire two-year runway spent on a service that resizes images." },
+              { "narrate": "All of it, present and accounted for, on healthy hardware, in a cooled room, on tested power, replicated three ways, in a building with a nine-year record of never having a finding that wasn't paperwork. Sitting perfectly still. Serving nothing." },
+              { "narrate": "You put a hand flat on a rack door. It's cool on the front and the air coming out the back of the row is warm, which is the whole architecture in one gesture: cold in, work, warm out. Everything is exactly as designed. That is the finding, and it is the worst possible finding, and it means somebody's grandmother's photographs are being kept perfectly safe by a machine that has been forbidden to hand them over." },
+              { "setFlag": "ca_read_racks" },
+              { "score": { "id": "ca_racks", "points": 1 } }
+            ] },
+          { "text": "Ranks of steady green going away into the perspective, both sides, top to bottom. Healthy, cooled, powered, replicated, idle. The cloud, in perfect health, serving nothing." }
+        ],
+        "open": [
+          { "text": "The rack doors are locked with the little square key every rack in the world uses, which means every field engineer on Earth has one on their belt and you left yours on a hook by your front door, three hundred miles east, in a house you had not left in years. It doesn't matter. There is nothing wrong in there." }
+        ],
+        "use": [
+          { "text": "You could reseat something. You could power-cycle something. Nineteen years of instinct is standing in the doorway of your skull with a hand on the switch. Don't: nothing in this room is broken, and the fastest way to turn an administrative problem into a real one is to start touching healthy hardware because you drove a long way and want to have done something." }
+        ],
+        "take": [
+          { "text": "Each rack weighs about as much as Merle's truck and is worth rather more, and taking one would appear in the asset database, which is — you have painful reason to know — the only system on this campus that is paying attention." }
+        ]
+      } },
+    { "id": "racks_right", "name": "far racks",
+      "synonyms": ["other racks", "right row", "far row", "row 4b"],
+      "polygon": [[246,18],[320,134]],
+      "responses": {
+        "look": [
+          { "text": "The other side of the aisle: identical racks, identical ranks of identical steady green, identical health. There is a rack-unit gap two thirds of the way down where something was pulled and never replaced — one dark slot in six hundred, and it is dark because it is EMPTY, not because it is failed. Somewhere on a dock, in a mesh cage, that machine's tray is still officially in service in this exact aisle. You are wearing its identity." },
+          { "text": "Identical green, identical health, and one empty slot whose absent occupant is still logged as working in this room. Six years running." }
+        ],
+        "use": [
+          { "text": "You put a finger into the empty rack slot, into the space where 8814402 used to live, and feel warm exhaust air moving through from the hot side. Its neighbors have covered for it, quietly, without a ticket, for six years. You have known people like that." }
+        ]
+      } },
+    { "id": "clean_agent", "name": "pull station",
+      "synonyms": ["clean agent", "fire suppression", "suppression", "nozzle", "fire alarm", "alarm", "red box", "fm200", "halon", "extinguisher"],
+      "polygon": [[194,28],[240,90]],
+      "responses": {
+        "look": [
+          { "text": "High on the wall at the aisle's end: a round white discharge nozzle the size of a dinner plate, and beneath it a red manual pull station with a glass window and a small printed legend — CLEAN AGENT · MANUAL DISCHARGE · AREA MUST BE EVACUATED." },
+          { "text": "There is no water in a data hall. Water and forty percent of the world's compute do not mix, so the fire strategy is a clean agent: an inert gas, held at pressure in cylinders somewhere behind that wall, which floods the contained aisle in ten seconds and puts out a fire by displacing the oxygen it needs. It does not distinguish between the oxygen a fire needs and the oxygen you need. Nobody claimed it would. It's in the laminate: PE-02, evacuate on the first alarm, DO NOT INVESTIGATE THE ALARM." }
+        ],
+        "use": [
+          { "if": { "flagNot": "a3_warn_clean" },
+            "do": [
+              { "narrate": "You put a hand near the pull station, on the reflex of a man who has spent two days looking for one single thing in this entire industry that will respond to being physically operated." },
+              { "narrate": "Then PE-02 arrives in your head, in Corinne's flat delivery, laminated and mounted at reading height: fire suppression in contained aisles is a CLEAN AGENT system. Discharge displaces oxygen. Evacuate on the first alarm. Do not investigate the alarm." },
+              { "narrate": "This aisle is CONTAINED. That is the word on the door you came through — the glass, the seals, the brushes at the floor. It is a sealed box designed to hold cold air in, which means it is a sealed box, which means it is very good indeed at holding other things in. You put your hand back down." },
+              { "setFlag": "a3_warn_clean" }
+            ] },
+          { "do": [
+              { "narrate": "You break the glass and pull the handle, in a sealed containment aisle, having read the laminate and been told." },
+              { "death": { "id": "clean_agent" } }
+            ] }
+        ],
+        "open": [
+          { "if": { "flagNot": "a3_warn_clean" },
+            "do": [
+              { "narrate": "The little glass window over the handle is designed to be broken by anybody in an emergency, which is excellent engineering for a fire and appalling engineering for a curious man on the second day of an outage. You do not break it. PE-02 says evacuate on the first alarm and do not investigate the alarm, and PE-02 was written by somebody who had thought about this harder than you have." },
+              { "setFlag": "a3_warn_clean" }
+            ] },
+          { "do": [
+              { "narrate": "You break the glass in a sealed aisle. The handle behind it does exactly one thing, immediately, for ten seconds." },
+              { "death": { "id": "clean_agent" } }
+            ] }
+        ],
+        "take": [
+          { "text": "The pull station is bolted through the wall into the structure and connected to cylinders you cannot see, holding a gas you would rather not meet. Leave it exactly where it is; it is the one thing in this building that is genuinely dangerous and it is dangerous entirely on purpose." }
+        ]
+      } },
+    { "id": "containment_door", "name": "containment door",
+      "synonyms": ["door", "glass door", "vestibule", "back", "corridor", "out", "seal", "brushes"],
+      "polygon": [[128,44],[194,130]],
+      "responses": {
+        "look": [
+          { "text": "The containment door: a full-height glass panel with rubber seals down both jambs and a bristle brush sweeping the floor, all of it engineered to keep fifty-five-degree air on this side of it and not one degree of it in the corridor. A small placard: AISLE CONTAINMENT — KEEP CLOSED. Cooling is expensive and physics is not negotiable, so the aisle is a box." },
+          { "text": "Glass, seals, floor brush, KEEP CLOSED. The box that keeps the cold in — and, as the clean-agent laminate would like you to remember, the box that would keep other things in too." }
+        ],
+        "open": [
+          { "do": [
+              { "narrate": "You lean on the door and step back out into the corridor, and the corridor's twenty-two degrees feels, for about four seconds, tropical." },
+              { "goto": "act3_compliance", "arrive": { "x": 136, "y": 152, "facing": "down" } }
+            ] }
+        ],
+        "use": [
+          { "do": [
+              { "narrate": "Back out through the containment door, into the warm." },
+              { "goto": "act3_compliance", "arrive": { "x": 136, "y": 152, "facing": "down" } }
+            ] }
+        ]
+      } },
+    { "id": "lifted_tile", "name": "lifted tile",
+      "synonyms": ["tile", "floor tile", "hole", "opening", "plenum", "under the floor", "raised floor", "down"],
+      "polygon": [[246,132],[296,176]],
+      "responses": {
+        "look": [
+          { "if": { "flag": "wearing_hoodie" },
+            "text": "One perforated tile lifted out and propped against its neighbor, leaving a two-foot square of dark, cold, moving air. With the hood up you can look into it without your face objecting: cable trays, pedestals, and the whole under-floor weather system of a twenty-two-acre building. Everything real in a datacenter is under the floor. Everything visible is a bezel." },
+          { "text": "Somebody has lifted one perforated floor tile out with a suction puller and propped it against its neighbor — a two-foot square of dark in an immaculate grid, breathing cold up at you hard enough to move your trouser cuffs. This is where the building's actual nervous system lives. It is also fifty-five degrees down there, at volume, on purpose, forever." }
+        ],
+        "open": [
+          { "text": "It's already out. Whoever pulled it never came back for it, which in this building means it has been out since a work order in a previous fiscal year." }
+        ],
+        "use": [
+          { "if": { "flag": "wearing_hoodie" },
+            "do": [
+              { "narrate": "Hood up, sleeves down, you sit on the tile edge and drop into the plenum." },
+              { "goto": "act3_plenum", "arrive": { "x": 56, "y": 150, "facing": "right" } }
+            ] },
+          { "if": { "flagNot": "a3_warn_plenum" },
+            "do": [
+              { "narrate": "You put a hand down into the opening and the plenum takes it: a solid moving river of fifty-five-degree air, the building's entire cooling budget running under the floor like weather on a work order. Four seconds and your fingers stop reporting accurately." },
+              { "narrate": "You take the hand back. Down there is where every cable in this building actually lives — and you are dressed for a lobby. You have been carrying a second hoodie since the morning you left your house, on the day when leaving the house was the hard part. It has been in your bag ever since, unused, waiting for a reason." },
+              { "setFlag": "a3_warn_plenum" }
+            ] },
+          { "if": { "any": [{ "hasItem": "hoodie" }, { "hasItem": "fleece" }] },
+            "text": "Cold, moving, fifty-five degrees, and a hoodie in your bag four feet away from a hole that would very much reward it. WEAR it." },
+          { "text": "Not in shirtsleeves. The plenum is not dangerous and it is not negotiable; it is simply colder than your current outfit has any answer for. Bev has a tub full of answers." }
+        ],
+        "take": [
+          { "text": "A raised-floor tile weighs about forty pounds and needs a suction puller to lift, and the one that was lifted is already lifted, and you have a hole to get into rather than a tile to collect." }
+        ]
+      } },
+    { "id": "cold_air", "name": "cold",
+      "synonyms": ["air", "chill", "temperature", "roar", "noise", "fans", "sound", "cooling", "hum"],
+      "polygon": [[74,124],[248,132]],
+      "responses": {
+        "look": [
+          { "if": { "flag": "wearing_hoodie" },
+            "text": "Fifty-five degrees and moving, and with the hood up it has stopped being an argument and become weather — the kind of cold you can stand in and think in. Under the roar, if you listen properly, you can hear that the fans are not straining. Nothing in this room is working hard. Everything in this room is idling in perfect health at industrial scale, and the sound of that is the sound of a very large machine holding its breath." },
+          { "text": "The air comes up out of the perforated tiles in a sheet and goes over you and into the racks and out the hot side, and it never stops, and it is fifty-five degrees, and after four minutes of it your forearms have opinions and after ten your hands will have demands. The roar is ten thousand fans agreeing. It is the loudest quiet you have ever stood in." }
+        ],
+        "use": [
+          { "if": { "flag": "wearing_hoodie" },
+            "text": "You stand in the cold aisle with the hood up and your hands in your pockets, at the exact center of the physical internet, being perfectly comfortable. Nineteen years of remote work and the correct outfit for the job turned out to be the one you already owned." },
+          { "text": "You rub your forearms and do the thing every engineer does in a cold aisle, which is stand slightly closer to the hot side of a rack and pretend it was for a diagnostic reason." }
+        ]
+      } }
+  ],
+  "onScoreComplete": [
+    { "text": "Cold Aisle 4 has closed every ticket it had, which is the narrator's way of noting that you read every green light, ran the console, and got all the way to Tab 7 — where a security guard's nine-year-old ballpoint note was waiting for somebody who would finally need it. You are the somebody. That took two days and three hundred and eleven miles and a badge with the wrong name on it." }
+  ]
+}

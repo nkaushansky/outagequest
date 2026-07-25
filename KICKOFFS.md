@@ -371,6 +371,103 @@ row appended.
 
 ---
 
+## M6 — Act 4 (paste after the M5 review disposition settles)
+
+M6 kickoff — Act 4: The Company. Repo: nkaushansky/outagequest, start from
+main (M5 Act 3 merged; read REVIEW.md rows "M5 (decisions ratified)", "M5
+(content+engine)", "M5 (art notes)", plus whatever device-feedback rows
+M5 collected).
+
+Read before writing anything: CLAUDE.md, GDD.md (story spine — Act 4 is
+CORPORATE HQ: kombucha taps, empty desks, org-chart archaeology, nobody
+has known how anything works in years), data/schema.md, CHARACTERS.md,
+PROMPTS.md, REVIEW.md. Canon already shipped points here: Cold Aisle 4's
+row runbook, Tab 7 — the ONLY escalation row with an address instead of a
+phone number — sends SERVICE ENTITLEMENT / ADMINISTRATIVE HOLD to
+"CORPORATE: Change Advisory Board, Cumulonimbus, Inc., Corporate Campus.
+Business hours. In person if unresolved," with Bev Tolliver's nine-year-old
+ballpoint note in the margin: "no phone number for the last one. asked
+twice. told it's an internal matter." Act 3 ended with Mel DRIVING, keys in
+hand, Merle in the passenger seat, boots on the rail.
+
+SCOPE:
+
+1. **Arrival: the campus that is the opposite of the last one.** Act 3 was
+   twenty-two acres of beige with one door and one human being in it.
+   Act 4 is all lobby and no load-bearing anything: architecture that
+   photographs, amenities nobody uses, and a building full of people none
+   of whom can tell you how a single thing works. The badge gag inverts —
+   Act 3 made Mel an ASSET to get onto a floor; here his self-sponsored
+   case number and a farm truck in visitor parking are the wrong shape
+   entirely.
+
+2. **The CAB hunt (~6 dense rooms, map decided at thread start).** The act's
+   object is a room and a signature: find the Change Advisory Board, get
+   the administrative hold lifted. Nobody knows where CAB meets, who chairs
+   it, or when — it has been deferring a four-hundred-dollar door for
+   eleven quarters. ORG-CHART ARCHAEOLOGY is the mechanic: the trail runs
+   through documents (the `binder`/`flyer`/`slip` stocks are shipped),
+   reorganizations, renamed teams, and people who each own one true fact
+   and no context. Candidate rooms from the pitch: the atrium with the
+   kombucha wall, an empty open-plan floor, a wall of framed org charts,
+   somebody's abandoned office, the executive floor, a basement records
+   room. The trail must end pointing at Act 5 (the legacy core + The One
+   Guy) — and the $12/expired-card root cause STILL must not surface.
+
+3. **The Coffee Log's fourth stamp.** `coffee_act4`. Act 3's joke was that
+   the only working appliance was a 1997 Mr. Coffee with no account; the HQ
+   inversion writes itself (a $9,000 machine that needs to authenticate).
+   The cable finds its Act 4 device; consumables spend in-act.
+
+4. **Deaths (3, collectible, warn-first, registered, one-step-back).** Nine
+   after Act 3; GDD wants 12–15 total, so 3 here and 3 in Act 5 lands at
+   15. Mine them from corporate physicality, not slapstick.
+
+5. **NPCs per the bible.** The satire target is people who are individually
+   pleasant and collectively load-bearing on nothing. Every new NPC gets
+   Mel's name wrong a NEW way — and note the bar is now high: Act 3's badge
+   put MALFUNCTON, MEL on his chest, Corinne read it aloud in field order
+   with the comma pronounced, and a robot OCR'd it into a chassis's
+   description field. Chadwick Cirrus has NEVER been named in shipped
+   content — decide deliberately whether Act 4 is where that changes.
+
+6. **Act 1–3 debt sweep (small).** Whatever the M5 review / phone pass
+   carried forward, closed while rooms are open.
+
+DECIDE AT THREAD START (joint decisions, not builder discretion; see
+REVIEW.md "M3.5 (decisions ratified)" for the process):
+- Room map: which ~6 rooms, and which is the act's coffee source.
+- The CAB hunt's shape: how many hooks are mandatory, and is the answer a
+  ROOM, a PERSON, or a discovery that CAB has not actually met since 2019.
+- Whether Chadwick Cirrus appears, is merely named, or stays offstage for
+  Act 5.
+- Death menu (3), and whether any of them is the act's own inversion of the
+  Compliance Hold.
+- Budget: 50 tickets (100 remain across Acts 4–5; confirm the even split).
+- Act-out: how Mel gets pointed at the legacy core, and whether Merle
+  crosses into Act 5 or the truck's arc closes here.
+
+CONSTRAINTS: content pure JSON (the engine already has documents, patrol
+walkers, outfit maps, surveys, hints/tickets — extend the schema only if a
+room genuinely can't be expressed, and minimally); all text DOM, never
+canvas; one-generator backgrounds via the PROMPTS.md prefix + treat_bg.py
+at true 320x180; sprites per CHARACTERS.md + master palette; acts stay
+speedrunnable; no prior-act inventory required (kit excepted).
+
+TEST LOOP: npm run build + preview + `npm run smoke` (371 green at M5
+close — keep green; extend with Act 4 completability, coffee_act4, the new
+deaths, and the fresh-clear invariants for Acts 1, 2 AND 3 — 45 / 100 /
+150). Deploy via the dreamhost-upload flow, slug `outagequest`; real-phone
+pass before done.
+
+DEFINITION OF DONE: Acts 1–4 completable start to finish (fresh clears
+still read 45 / 100 / 150); the act ends pointing at the legacy core; all
+new NPCs visible and talking on a phone in both orientations; the
+wrong-name tally grows; content still pure JSON; zero console errors;
+REVIEW.md log row appended.
+
+---
+
 ## Parked (cross-milestone; logged 2026-07-24, pull forward when ready)
 
 Two items from Nate's M4 close-out notes. Neither blocks M5; both must
