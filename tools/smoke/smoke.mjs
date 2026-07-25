@@ -1212,6 +1212,25 @@ const hoodieOptional = await page.evaluate(() => {
 ok(hoodieOptional.gate.includes("wearing_hoodie"),
   "the cold gate checks WEARING, not carrying", hoodieOptional.gate);
 
+// ---- M5: Bev is now the chattiest NPC in the game (9 topics) ---------------
+// The M4 r3 safety net was built so no future chatty NPC could bury the log.
+// She is that NPC, so she gets the regression.
+await page.setViewportSize({ width: 844, height: 390 });
+await page.waitForTimeout(300);
+await jumpTo("act3_lobby", { x: 120, y: 150, facing: "right" });
+await run("talk to bev");
+const bevRow = await page.evaluate(() => ({
+  chips: document.querySelectorAll(".suggest-chip").length,
+  row: document.querySelector(".suggest").clientHeight,
+  scroll: document.querySelector(".suggest").scrollHeight,
+  log: document.querySelector(".log").clientHeight,
+}));
+ok(bevRow.chips === 9, "every one of Bev's topics is offered by tap", JSON.stringify(bevRow));
+ok(bevRow.row < bevRow.scroll, "her row is capped and scrolls, not grown", JSON.stringify(bevRow));
+ok(bevRow.log >= 90, "the log survives the chattiest NPC in the game", JSON.stringify(bevRow));
+await page.setViewportSize({ width: 1280, height: 800 });
+await page.waitForTimeout(300);
+
 // ---- M3: every hotspot in every room has a bespoke LOOK ---------------------
 const lookGaps = await page.evaluate(() => {
   const gaps = [];
