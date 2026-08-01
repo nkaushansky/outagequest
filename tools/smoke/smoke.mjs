@@ -943,7 +943,7 @@ ok((await lastLines(4)).includes("IT"), "Merle is consistently wrong about your 
 await run("use door");
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_lobby", "into the lobby");
 ok((await npcIds()).includes("bev"), "Bev's sprite is at the desk", JSON.stringify(await npcIds()));
-ok(await canvasHas("mustard_m", [180, 62, 213, 94]), "Bev drawn behind the visitor desk");
+ok(await canvasHas("mustard_m", [159, 78, 193, 110]), "Bev drawn behind the visitor desk");
 await run("look around");
 ok((await lastLines(6)).includes("BEV"), "lobby survey names Bev", await lastLines(6));
 await run("talk to bev");
@@ -1002,7 +1002,7 @@ ok((await lastLines()).includes("been through something"),
 await run("open inner door");
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_compliance", "badge opens the corridor");
 ok((await npcIds()).includes("corinne"), "Corinne's sprite is in the corridor", JSON.stringify(await npcIds()));
-ok(await canvasHas("hiviz_m", [180, 84, 210, 130]), "Corinne drawn in hi-viz, indoors");
+ok(await canvasHas("hiviz_m", [56, 74, 92, 124]), "Corinne drawn in hi-viz, indoors");
 await run("talk to corinne");
 ok((await lastLines(6)).includes("MALFUNCTON comma MEL"),
   "Corinne reads the badge in field order, comma included", await lastLines(6));
@@ -1010,8 +1010,8 @@ ok((await page.evaluate(() => window.spof.state.flags.has("name_corinne"))),
   "the tally grows again at Corinne");
 
 // the vestibule wants an escort and there is nobody in 22 acres to be one
-await page.evaluate(() => { window.spof.state.player.x = 136; window.spof.state.player.y = 150; });
-await clickScene(136, 132);
+await page.evaluate(() => { window.spof.state.player.x = 140; window.spof.state.player.y = 150; });
+await clickScene(140, 110);
 await page.waitForTimeout(1200);
 ok((await page.evaluate(() => window.spof.state.roomId)) === "act3_compliance", "the mantrap holds");
 ok((await logText()).includes("Escort required"), "escort-only, forever");

@@ -4,25 +4,25 @@
  "background": "assets/backgrounds/act3_compliance.png",
  "walkable": [
   [
-   16,
-   126
-  ],
-  [
-   306,
-   126
+   8,
+   106
   ],
   [
    312,
+   106
+  ],
+  [
+   318,
    178
   ],
   [
-   10,
+   2,
    178
   ]
  ],
  "playerStart": {
-  "x": 40,
-  "y": 152,
+  "x": 46,
+  "y": 140,
   "facing": "right"
  },
  "exits": [
@@ -31,24 +31,24 @@
    "polygon": [
     [
      2,
-     138
+     104
     ],
     [
-     24,
-     138
+     30,
+     104
     ],
     [
-     24,
-     176
+     30,
+     126
     ],
     [
      2,
-     176
+     126
     ]
    ],
    "arrive": {
-    "x": 276,
-    "y": 152,
+    "x": 268,
+    "y": 150,
     "facing": "left"
    }
   },
@@ -56,25 +56,25 @@
    "to": "act3_dock",
    "polygon": [
     [
-     290,
+     258,
+     104
+    ],
+    [
+     306,
+     104
+    ],
+    [
+     306,
      126
     ],
     [
-     312,
+     258,
      126
-    ],
-    [
-     312,
-     150
-    ],
-    [
-     290,
-     150
     ]
    ],
    "arrive": {
-    "x": 44,
-    "y": 152,
+    "x": 56,
+    "y": 140,
     "facing": "right"
    }
   },
@@ -82,25 +82,25 @@
    "to": "act3_cold_aisle",
    "polygon": [
     [
-     118,
-     126
+     112,
+     104
     ],
     [
-     154,
-     126
+     180,
+     104
     ],
     [
-     154,
-     140
+     180,
+     120
     ],
     [
-     118,
-     140
+     112,
+     120
     ]
    ],
    "arrive": {
-    "x": 150,
-    "y": 156,
+    "x": 152,
+    "y": 140,
     "facing": "down"
    },
    "if": {
@@ -177,209 +177,13 @@
    "if": {
     "flag": "a3_asset"
    },
-   "text": "The corridor, surveyed with an asset tag on your chest: the POLICY WALL, the VESTIBULE (which will now let you through to Cold Aisle 4 \u2014 you are inventory), the sealed COMPLIANCE HOLD door, the DOCK door right, the lobby back left, and CORINNE, who has been watching your paperwork improve all afternoon and has opinions."
+   "text": "The corridor, surveyed with an asset tag on your chest: the POLICY WALL, the VESTIBULE (which will now let you through to Cold Aisle 4 \u2014 you are inventory), the sealed COMPLIANCE HOLD door, the DOCK door right, the lobby back left, and CORINNE at the policy wall, who has been watching your paperwork improve all afternoon and has opinions."
   },
   {
-   "text": "The corridor, surveyed: a POLICY WALL of eight laminated controls left, a glass VESTIBULE in the middle (the way to the data hall \u2014 it wants an escort), a steel COMPLIANCE HOLD door under a paper seal, and a DOCK door at the right. CORINNE MABRY stands by the vestibule with a binder. The lobby is back through the left edge. One long SCUFF runs the whole wall at hand height."
+   "text": "The corridor, surveyed: a POLICY WALL of eight laminated controls left, a glass VESTIBULE in the middle (the way to the data hall \u2014 it wants an escort), a steel COMPLIANCE HOLD door under a paper seal, and a DOCK door at the right. CORINNE MABRY stands at the policy wall with a binder, reading her own controls. The lobby is back through the left edge. One long SCUFF runs the whole wall at hand height."
   }
  ],
  "hotspots": [
-  {
-   "id": "policy_wall",
-   "name": "policy wall",
-   "synonyms": [
-    "policy",
-    "policies",
-    "laminated sheets",
-    "sheets",
-    "laminates",
-    "controls",
-    "notices",
-    "sleeves"
-   ],
-   "polygon": [
-    [
-     24,
-     38
-    ],
-    [
-     102,
-     118
-    ]
-   ],
-   "responses": {
-    "look": [
-     {
-      "if": {
-       "flagNot": "cp_read_policy"
-      },
-      "do": [
-       {
-        "narrate": "Eight laminated sheets, mounted in a grid so precise it must have had its own work order. You read them all, because you are the kind of person who reads them all, and because two of them turn out to matter enormously."
-       },
-       {
-        "document": {
-         "style": "binder",
-         "title": "SITE CONTROLS \u2014 POSTED PER AUDIT REQUIREMENT",
-         "body": [
-          "AC-04 \u00b7 No person shall traverse a controlled boundary without an authorized escort. Escort authorization is issued by the access management system.",
-          "AC-09 \u00b7 Materiel movements do not require escort. All materiel movements require a MOVE TICKET, issued automatically upon inventory scan.",
-          "PE-02 \u00b7 Fire suppression in contained aisles is a CLEAN AGENT system. Discharge displaces oxygen. Evacuate on the first alarm. Do not investigate the alarm.",
-          "PE-06 \u00b7 Egress door EX-4 is under COMPLIANCE HOLD pending closure of finding F-2019-114. Do not open. Do not test. Do not prop.",
-          "CM-11 \u00b7 All changes require Change Advisory Board approval. CAB is convened at CORPORATE.",
-          {
-           "text": "AC-04 and AC-09 cannot both be satisfied by a human being. Filed as observation, twice.  \u2014 C.M.",
-           "style": "hand"
-          },
-          {
-           "text": "Posted copies must remain legible. Laminate replaced quarterly.",
-           "style": "fine"
-          }
-         ]
-        }
-       },
-       {
-        "narrate": "AC-04: people need an escort. AC-09: MATERIEL does not \u2014 freight just needs a move ticket, issued automatically on inventory scan. The company has written, laminated, and mounted at reading height a formal declaration that it trusts cargo more than it trusts people. Somebody named C.M. has noted the gap in pen, twice, and been ignored twice, which is what 'filed as observation' means."
-       },
-       {
-        "setFlag": "cp_read_policy"
-       },
-       {
-        "setFlag": "a3_knows_asset_rule"
-       },
-       {
-        "score": {
-         "id": "cp_policy",
-         "points": 2
-        }
-       }
-      ]
-     },
-     {
-      "text": "Eight controls in plastic. The two with teeth: AC-04 (people need escorts) and AC-09 (freight needs only a move ticket, issued on inventory scan). And PE-02, about the clean agent, which you should probably take more seriously than you are currently taking it."
-     }
-    ],
-    "take": [
-     {
-      "text": "Laminate replaced quarterly, per the laminate's own footnote. It is the only thing on this campus with a maintenance schedule that is actually being honored."
-     }
-    ],
-    "use": [
-     {
-      "text": "You straighten a sheet that was already straight. Somewhere behind you, in the professional silence, a binder opens approximately one inch."
-     }
-    ]
-   }
-  },
-  {
-   "id": "mantrap",
-   "name": "vestibule",
-   "synonyms": [
-    "mantrap",
-    "man trap",
-    "airlock",
-    "glass doors",
-    "interlock",
-    "sally port",
-    "data hall",
-    "cold aisle",
-    "placard"
-   ],
-   "polygon": [
-    [
-     100,
-     36
-    ],
-    [
-     172,
-     130
-    ]
-   ],
-   "responses": {
-    "look": [
-     {
-      "if": {
-       "flagNot": "cp_read_mantrap"
-      },
-      "do": [
-       {
-        "narrate": "A glass vestibule set into the wall: two separate doors, an interlock between them, and a floor plate that weighs you. You step in and the outer door closes with a pneumatic sigh of real quality. The inner door does not move."
-       },
-       {
-        "narrate": "The sign above it, backlit, in the company's typeface: CONTROLLED BOUNDARY \u00b7 ESCORT REQUIRED \u00b7 BOTH DOORS CANNOT BE OPEN. THIS IS A CONTROL, NOT A FAULT. Someone had that last sentence added, and you can date it precisely: it was added the week after the first person stood in here for eleven minutes waiting for a door that was working perfectly."
-       },
-       {
-        "narrate": "A ceiling speaker, in the voice of a woman recorded in a carpeted room in 2016: 'Escort required. Please wait for your escort.' You wait. Every escort on this site is either three hundred miles away, unable to authenticate, or wearing a mustard cardigan and legally unable to leave the lobby unattended."
-       },
-       {
-        "setFlag": "cp_read_mantrap"
-       },
-       {
-        "score": {
-         "id": "cp_mantrap",
-         "points": 1
-        }
-       }
-      ]
-     },
-     {
-      "if": {
-       "flag": "a3_asset"
-      },
-      "text": "The vestibule, and the small green light that came on above the inner door when a robot on the dock decided you were a two-U chassis in transit. Glass, steel, two doors, one interlock, and a security model that has been completely satisfied by a sticker. The sign still says ESCORT REQUIRED. The sign is not wrong; it is simply not consulted."
-     },
-     {
-      "text": "Two glass doors, one interlock, one floor plate, one recorded woman with all afternoon. BOTH DOORS CANNOT BE OPEN. THIS IS A CONTROL, NOT A FAULT. Beyond it: the data hall, and the cold."
-     }
-    ],
-    "open": [
-     {
-      "if": {
-       "flag": "a3_asset"
-      },
-      "do": [
-       {
-        "narrate": "The floor plate weighs you, the reader reads the tag on your chest, and something in a table two rooms away decides you are eight hundred pounds of rack in transit with a valid move ticket. The inner door opens on a wall of cold."
-       },
-       {
-        "goto": "act3_cold_aisle",
-        "arrive": {
-         "x": 150,
-         "y": 156,
-         "facing": "down"
-        }
-       }
-      ]
-     },
-     {
-      "text": "'Escort required. Please wait for your escort.' You could stand here until the sun goes down. The recording would keep you company and the door would keep its integrity, and both of those things would go in a report as successes."
-     }
-    ],
-    "use": [
-     {
-      "if": {
-       "flag": "a3_asset"
-      },
-      "do": [
-       {
-        "narrate": "You walk into the vestibule as freight, which is the only way anything has ever walked into it."
-       },
-       {
-        "goto": "act3_cold_aisle",
-        "arrive": {
-         "x": 150,
-         "y": 156,
-         "facing": "down"
-        }
-       }
-      ]
-     },
-     {
-      "text": "You press the plate, and the button, and eventually the glass. The vestibule remains a control and not a fault. Whatever gets you through here isn't force and isn't argument \u2014 it's a database row."
-     }
-    ]
-   }
-  },
   {
    "id": "corinne",
    "name": "Corinne",
@@ -396,19 +200,27 @@
    ],
    "polygon": [
     [
-     174,
-     70
+     54,
+     72
     ],
     [
-     216,
-     132
+     92,
+     72
+    ],
+    [
+     92,
+     124
+    ],
+    [
+     54,
+     124
     ]
    ],
    "sprite": {
     "use": "corinne",
     "at": [
-     194,
-     128
+     72,
+     120
     ]
    },
    "responses": {
@@ -636,6 +448,218 @@
    ]
   },
   {
+   "id": "policy_wall",
+   "name": "policy wall",
+   "synonyms": [
+    "policy",
+    "policies",
+    "laminated sheets",
+    "sheets",
+    "laminates",
+    "controls",
+    "notices",
+    "sleeves"
+   ],
+   "polygon": [
+    [
+     38,
+     40
+    ],
+    [
+     102,
+     40
+    ],
+    [
+     102,
+     84
+    ],
+    [
+     38,
+     84
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "cp_read_policy"
+      },
+      "do": [
+       {
+        "narrate": "Eight laminated sheets, mounted in a grid so precise it must have had its own work order. You read them all, because you are the kind of person who reads them all, and because two of them turn out to matter enormously."
+       },
+       {
+        "document": {
+         "style": "binder",
+         "title": "SITE CONTROLS \u2014 POSTED PER AUDIT REQUIREMENT",
+         "body": [
+          "AC-04 \u00b7 No person shall traverse a controlled boundary without an authorized escort. Escort authorization is issued by the access management system.",
+          "AC-09 \u00b7 Materiel movements do not require escort. All materiel movements require a MOVE TICKET, issued automatically upon inventory scan.",
+          "PE-02 \u00b7 Fire suppression in contained aisles is a CLEAN AGENT system. Discharge displaces oxygen. Evacuate on the first alarm. Do not investigate the alarm.",
+          "PE-06 \u00b7 Egress door EX-4 is under COMPLIANCE HOLD pending closure of finding F-2019-114. Do not open. Do not test. Do not prop.",
+          "CM-11 \u00b7 All changes require Change Advisory Board approval. CAB is convened at CORPORATE.",
+          {
+           "text": "AC-04 and AC-09 cannot both be satisfied by a human being. Filed as observation, twice.  \u2014 C.M.",
+           "style": "hand"
+          },
+          {
+           "text": "Posted copies must remain legible. Laminate replaced quarterly.",
+           "style": "fine"
+          }
+         ]
+        }
+       },
+       {
+        "narrate": "AC-04: people need an escort. AC-09: MATERIEL does not \u2014 freight just needs a move ticket, issued automatically on inventory scan. The company has written, laminated, and mounted at reading height a formal declaration that it trusts cargo more than it trusts people. Somebody named C.M. has noted the gap in pen, twice, and been ignored twice, which is what 'filed as observation' means."
+       },
+       {
+        "setFlag": "cp_read_policy"
+       },
+       {
+        "setFlag": "a3_knows_asset_rule"
+       },
+       {
+        "score": {
+         "id": "cp_policy",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "text": "Eight controls in plastic. The two with teeth: AC-04 (people need escorts) and AC-09 (freight needs only a move ticket, issued on inventory scan). And PE-02, about the clean agent, which you should probably take more seriously than you are currently taking it."
+     }
+    ],
+    "take": [
+     {
+      "text": "Laminate replaced quarterly, per the laminate's own footnote. It is the only thing on this campus with a maintenance schedule that is actually being honored."
+     }
+    ],
+    "use": [
+     {
+      "text": "You straighten a sheet that was already straight. Somewhere behind you, in the professional silence, a binder opens approximately one inch."
+     }
+    ]
+   }
+  },
+  {
+   "id": "mantrap",
+   "name": "vestibule",
+   "synonyms": [
+    "mantrap",
+    "man trap",
+    "airlock",
+    "glass doors",
+    "interlock",
+    "sally port",
+    "data hall",
+    "cold aisle",
+    "placard"
+   ],
+   "polygon": [
+    [
+     102,
+     30
+    ],
+    [
+     188,
+     30
+    ],
+    [
+     188,
+     108
+    ],
+    [
+     102,
+     108
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "cp_read_mantrap"
+      },
+      "do": [
+       {
+        "narrate": "A glass vestibule set into the wall: two separate doors, an interlock between them, and a floor plate that weighs you. You step in and the outer door closes with a pneumatic sigh of real quality. The inner door does not move."
+       },
+       {
+        "narrate": "The sign above it, backlit, in the company's typeface: CONTROLLED BOUNDARY \u00b7 ESCORT REQUIRED \u00b7 BOTH DOORS CANNOT BE OPEN. THIS IS A CONTROL, NOT A FAULT. Someone had that last sentence added, and you can date it precisely: it was added the week after the first person stood in here for eleven minutes waiting for a door that was working perfectly."
+       },
+       {
+        "narrate": "A ceiling speaker, in the voice of a woman recorded in a carpeted room in 2016: 'Escort required. Please wait for your escort.' You wait. Every escort on this site is either three hundred miles away, unable to authenticate, or wearing a mustard cardigan and legally unable to leave the lobby unattended."
+       },
+       {
+        "setFlag": "cp_read_mantrap"
+       },
+       {
+        "score": {
+         "id": "cp_mantrap",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "text": "The vestibule, and the small green light that came on above the inner door when a robot on the dock decided you were a two-U chassis in transit. Glass, steel, two doors, one interlock, and a security model that has been completely satisfied by a sticker. The sign still says ESCORT REQUIRED. The sign is not wrong; it is simply not consulted."
+     },
+     {
+      "text": "Two glass doors, one interlock, one floor plate, one recorded woman with all afternoon. BOTH DOORS CANNOT BE OPEN. THIS IS A CONTROL, NOT A FAULT. Beyond it: the data hall, and the cold."
+     }
+    ],
+    "open": [
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "do": [
+       {
+        "narrate": "The floor plate weighs you, the reader reads the tag on your chest, and something in a table two rooms away decides you are eight hundred pounds of rack in transit with a valid move ticket. The inner door opens on a wall of cold."
+       },
+       {
+        "goto": "act3_cold_aisle",
+        "arrive": {
+         "x": 150,
+         "y": 156,
+         "facing": "down"
+        }
+       }
+      ]
+     },
+     {
+      "text": "'Escort required. Please wait for your escort.' You could stand here until the sun goes down. The recording would keep you company and the door would keep its integrity, and both of those things would go in a report as successes."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "do": [
+       {
+        "narrate": "You walk into the vestibule as freight, which is the only way anything has ever walked into it."
+       },
+       {
+        "goto": "act3_cold_aisle",
+        "arrive": {
+         "x": 150,
+         "y": 156,
+         "facing": "down"
+        }
+       }
+      ]
+     },
+     {
+      "text": "You press the plate, and the button, and eventually the glass. The vestibule remains a control and not a fault. Whatever gets you through here isn't force and isn't argument \u2014 it's a database row."
+     }
+    ]
+   }
+  },
+  {
    "id": "hold_door",
    "name": "sealed door",
    "synonyms": [
@@ -650,12 +674,20 @@
    ],
    "polygon": [
     [
-     214,
-     50
+     194,
+     38
     ],
     [
-     266,
-     130
+     236,
+     38
+    ],
+    [
+     236,
+     106
+    ],
+    [
+     194,
+     106
     ]
    ],
    "responses": {
@@ -787,12 +819,20 @@
    ],
    "polygon": [
     [
-     264,
-     50
+     252,
+     30
     ],
     [
-     320,
-     130
+     310,
+     30
+    ],
+    [
+     310,
+     106
+    ],
+    [
+     252,
+     106
     ]
    ],
    "responses": {
@@ -853,11 +893,19 @@
    "polygon": [
     [
      0,
-     50
+     36
     ],
     [
-     26,
-     130
+     34,
+     36
+    ],
+    [
+     34,
+     106
+    ],
+    [
+     0,
+     106
     ]
    ],
    "responses": {
@@ -918,12 +966,20 @@
    ],
    "polygon": [
     [
-     26,
-     116
+     34,
+     84
     ],
     [
      300,
-     126
+     84
+    ],
+    [
+     300,
+     100
+    ],
+    [
+     34,
+     100
     ]
    ],
    "responses": {
@@ -963,11 +1019,11 @@
     ],
     [
      320,
-     34
+     20
     ],
     [
      0,
-     34
+     20
     ]
    ],
    "responses": {

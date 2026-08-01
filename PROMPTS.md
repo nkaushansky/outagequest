@@ -33,7 +33,14 @@ The five Act 1 prompts that produced the shipped backgrounds are preserved
 in git history (this file, before the M4 revision). Do not regenerate Act 1
 rooms casually — polygons are fit to the shipped art.
 
-## Act 3 — The Cloud, Physically (currently placeholder art)
+## Act 3 — The Cloud, Physically (real art shipped, M5 art pass)
+
+These six prompts produced the shipped backgrounds. Do not regenerate
+casually — polygons are fit to this art. The plenum prompt below is the
+SECOND one: the first put the access hatch in the FLOOR, which is wrong for
+a room you climb DOWN into, so it was rerolled with the hatch overhead and
+an explicit "no openings in the floor" clause. Lesson kept for later acts:
+name the thing you do NOT want, or the generator will re-add it.
 
 US-CENTRAL-1 FLAGSHIP CAMPUS, 1 Cumulonimbus Way, Bunker Flats. The act's
 running visual joke is SCALE against BLANKNESS: a cathedral that spent its
@@ -118,16 +125,21 @@ that is the problem. Nothing in these rooms may look broken.
 ### act3_plenum — The Raised-Floor Plenum
 
 > Scene: a tall walkable service level underneath a data-center raised
-> floor, seen along its length, lit by one clamped work light. Overhead: the
-> dark underside of floor tiles and two long steel cable trays running the
-> width of the frame. Standing across the middle distance: a forest of tall
-> slender steel floor pedestals holding the floor up like columns. Threaded horizontally through
-> the pedestals: a thick bundle of dark cables with one bright yellow fiber
-> strand and a small gray splice tray with a single green indicator light.
-> At the right, a large louvered air-handler intake grille. At the left, an
-> open square floor hatch with a short steel ladder and cold pale light
-> spilling down through it. Bare concrete slab as the open stage, dust-free
-> and cold, deep shadows lifted enough to read.
+> floor, seen along its length, lit by one yellow portable work light
+> standing on the slab. Overhead, filling the top of the frame: the dark
+> underside of the raised floor and two long steel cable trays running the
+> full width. At the upper left, an open square hatch in that ceiling — a
+> missing floor tile seen from below — with cold pale blue light spilling
+> DOWN through it onto the slab, and a fixed steel ladder descending from
+> the hatch to the floor. Standing across the middle distance: a forest of
+> tall slender steel pedestals holding the floor up like columns. Threaded
+> horizontally through the pedestals: a thick bundle of dark cables with one
+> bright yellow fiber strand and a small gray splice tray with a single
+> green indicator light. At the right, a large louvered air-handler intake
+> grille. The concrete slab is unbroken and continuous — no openings, pits,
+> hatches or trenches in the floor — and fills the lower 40% of the frame as
+> the open stage. Dust-free and cold, a warm pool of light from the work
+> lamp, deep shadows lifted enough to read.
 
 ## Act 2 — the Edge Node (currently placeholder art)
 

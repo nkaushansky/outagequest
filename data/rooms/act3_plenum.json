@@ -4,51 +4,51 @@
  "background": "assets/backgrounds/act3_plenum.png",
  "walkable": [
   [
-   30,
-   120
+   16,
+   126
   ],
   [
-   290,
-   120
+   302,
+   126
   ],
   [
-   296,
-   172
+   312,
+   178
   ],
   [
-   24,
-   172
+   8,
+   178
   ]
  ],
  "playerStart": {
-  "x": 56,
+  "x": 100,
   "y": 150,
-  "facing": "right"
+  "facing": "left"
  },
  "exits": [
   {
    "to": "act3_cold_aisle",
    "polygon": [
     [
-     24,
-     132
+     38,
+     126
     ],
     [
-     42,
-     132
+     78,
+     126
     ],
     [
-     42,
-     170
+     78,
+     150
     ],
     [
-     24,
-     170
+     38,
+     150
     ]
    ],
    "arrive": {
-    "x": 226,
-    "y": 160,
+    "x": 215,
+    "y": 152,
     "facing": "left"
    }
   }
@@ -90,265 +90,6 @@
  ],
  "hotspots": [
   {
-   "id": "fiber",
-   "name": "yellow fiber",
-   "synonyms": [
-    "fiber",
-    "fibre",
-    "yellow strand",
-    "strand",
-    "county fiber",
-    "splice",
-    "splice tray",
-    "bundle",
-    "cables",
-    "cable bundle"
-   ],
-   "polygon": [
-    [
-     100,
-     52
-    ],
-    [
-     220,
-     82
-    ]
-   ],
-   "responses": {
-    "look": [
-     {
-      "if": {
-       "flagNot": "a3_fiber_seen"
-      },
-      "do": [
-       {
-        "narrate": "The bundle runs the length of the plenum: hundreds of jacketed strands zip-tied at nine-inch intervals by somebody with a straight eye and a tidy mind, all of it going east through the wall into a conduit the diameter of a dinner plate. And in the middle of the bundle, in a small gray splice tray screwed to a pedestal, the strands come apart into individual fibers, labelled."
-       },
-       {
-        "narrate": "You find it because you have spent two days following it and because it is labelled the way infrastructure is always labelled \u2014 accurately, unglamorously, and by somebody who never expected to be read: E-RING \u00b7 SEG 47 \u00b7 REGIONAL EDGE 0447."
-       },
-       {
-        "narrate": "Edge site 0447. Parkview Plaza, Unit 6, rear. A utility closet behind a nail salon with a nineteen-dollar box fan wedged in the transom, three hundred and eleven miles east of this pedestal, where you stood yesterday with a cable in your hand."
-       },
-       {
-        "narrate": "One yellow strand. It goes out of this tray, into the bundle, through the wall, under a county road you rode in on, past a mile marker that said 47, under Merle's soybeans, and up into a rack behind Kim's Nails. Every word that town has said to the world for nine years came down this piece of glass."
-       },
-       {
-        "narrate": "The splice tray's port indicator, six inches from your face, in the cold, in the dark, under a building the size of an airport, is GREEN. Lit. Clean. Zero errors. The glass is fine. The glass was always fine. The county's entire internet is sitting right here, perfectly delivered, at line rate, waiting for permission from a form."
-       },
-       {
-        "narrate": "You sit down on the slab, in the cold, hood up, and look at a green light. Yesterday a box fan and a patch panel; today two hundred pedestals and forty percent of the world's compute; both ends fine, both ends healthy, both ends helpless. The whole descent, and the fault was never in any of the rooms."
-       },
-       {
-        "setFlag": "a3_fiber_seen"
-       },
-       {
-        "score": {
-         "id": "pl_fiber",
-         "points": 2
-        }
-       }
-      ]
-     },
-     {
-      "text": "E-RING \u00b7 SEG 47 \u00b7 REGIONAL EDGE 0447 \u2014 one yellow strand in a bundle of thousands, indicator green, zero errors, running three hundred and eleven miles east to a closet behind a nail salon. Both ends perfect. Nothing in between broken. The problem is a form."
-     }
-    ],
-    "use": [
-     {
-      "if": {
-       "instrument": "cable"
-      },
-      "text": "You hold your hand-crimped cat 5 up next to a single-mode fiber carrying a county's entire existence, for scale, and for a second the two of them are just cable \u2014 the same trade, the same crimp, the same person somewhere deciding to do it properly. Then you put yours away, because the other one is glass and it is working and you have never once been the man who tests a live production strand for fun."
-     },
-     {
-      "text": "You do not touch a lit production fiber under a live floor. There is a version of this profession where somebody does that, and every one of us has read that postmortem."
-     }
-    ],
-    "take": [
-     {
-      "text": "CALL BEFORE YOU DIG, said the orange posts along the county road, all the way west. This is the thing they meant. It stays exactly where it is."
-     }
-    ]
-   }
-  },
-  {
-   "id": "pedestals",
-   "name": "pedestals",
-   "synonyms": [
-    "pedestal",
-    "posts",
-    "legs",
-    "supports",
-    "stanchions",
-    "forest",
-    "floor supports"
-   ],
-   "polygon": [
-    [
-     46,
-     84
-    ],
-    [
-     270,
-     120
-    ]
-   ],
-   "responses": {
-    "look": [
-     {
-      "text": "Two hundred steel pedestals in a grid, each one taller than you and carrying a corner of four floor tiles, each tile carrying its share of a rack, each rack carrying its share of everything anybody ever uploaded. You look down the rows and the perspective does what perspective does in a forest: closes into dark about forty feet out, in every direction, identically."
-     },
-     {
-      "text": "Each pedestal is a threaded rod, a base plate, four anchor bolts and a head, with a small stamped load rating, and the ratings are conservative because the people who make pedestals have never once been asked to move fast and break things. The most load-bearing objects in the entire information economy cost about two hundred dollars each and have never appeared on a status page, an architecture diagram, or a slide."
-     }
-    ],
-    "use": [
-     {
-      "text": "You put a hand on a pedestal head and push, out of nothing but professional curiosity. It does not move even slightly. Above it, four tiles, a rack, a row, an aisle, a hall, a building, an industry, and a species' collective memory. Below it, four anchor bolts into slab. It is a nine-dollar part doing a job that has never once been on a status page."
-     }
-    ],
-    "take": [
-     {
-      "text": "Removing a pedestal from a live raised floor is how a room becomes an incident. You have read that postmortem too."
-     }
-    ]
-   }
-  },
-  {
-   "id": "trays",
-   "name": "cable trays",
-   "synonyms": [
-    "tray",
-    "trays",
-    "overhead",
-    "runs",
-    "wire trays",
-    "cabling",
-    "zip ties",
-    "dressing"
-   ],
-   "polygon": [
-    [
-     0,
-     10
-    ],
-    [
-     320,
-     10
-    ],
-    [
-     320,
-     36
-    ],
-    [
-     0,
-     36
-    ]
-   ],
-   "responses": {
-    "look": [
-     {
-      "text": "Two steel trays running the full length of the plenum, and the cable dressing in them is \u2014 you want to be precise about this \u2014 beautiful. Every bundle combed straight, every zip tie at the same interval, every tie's tail cut flush so nothing can snag a hand, every service loop the same generous radius. Nobody was ever going to see this. It is under a floor, in the dark, in a building with no windows, in a county with no people."
-     },
-     {
-      "text": "Somebody spent weeks down here on their knees in fifty-five-degree air making cable runs that nobody would ever look at, and made them perfect anyway, because that is what the job is when the job is done properly. You are looking at the only art in twenty-two acres, and it is in a tray, in the dark, under the floor."
-     }
-    ],
-    "use": [
-     {
-      "text": "You run a finger along a bundle and feel every tie tail cut flush, one after another, for six feet. You could not do better. You would like very much to meet whoever did this, and you never will, and their work will hold this building up for thirty years."
-     }
-    ]
-   }
-  },
-  {
-   "id": "crac",
-   "name": "air handler",
-   "synonyms": [
-    "crac",
-    "intake",
-    "grille",
-    "louvers",
-    "cooling unit",
-    "air conditioner",
-    "ac",
-    "cold air",
-    "wind"
-   ],
-   "polygon": [
-    [
-     268,
-     40
-    ],
-    [
-     320,
-     118
-    ]
-   ],
-   "responses": {
-    "look": [
-     {
-      "text": "A louvered intake the size of a doorway, pulling the plenum's air past you at a speed that has been making a low continuous note in your left ear since you came down the ladder. This is the source: the cold is manufactured behind that grille, pushed under the floor, and let up through the perforated tiles into the aisle. The whole cooling architecture of a twenty-two-acre building is a big fan, a cold coil, and the space under a floor."
-     },
-     {
-      "text": "The grille, and behind it the coils and compressors doing exactly what a nineteen-dollar box fan in a strip-mall transom was doing yesterday, at four hundred thousand times the cost and with a maintenance contract. Same physics. Same idea. Same result. One of them has a laminated control."
-     }
-    ],
-    "use": [
-     {
-      "text": "You stand in front of the intake and let the plenum's entire air budget go past you at once, hood up, hands in pockets, in the dark, under the cloud. It is the coldest and least glamorous place you have ever stood, and after two days of dashboards and hold music it is the first place all week that has been unambiguously honest with you."
-     }
-    ],
-    "take": [
-     {
-      "text": "It is a building system with a four-hundred-amp feed and its own maintenance contract, and you have a hoodie and a cable."
-     }
-    ]
-   }
-  },
-  {
-   "id": "work_light",
-   "name": "work light",
-   "synonyms": [
-    "light",
-    "lamp",
-    "clamp light",
-    "worklight",
-    "bulb"
-   ],
-   "polygon": [
-    [
-     190,
-     26
-    ],
-    [
-     236,
-     100
-    ]
-   ],
-   "responses": {
-    "look": [
-     {
-      "text": "A clamp light gripped onto a cable tray, aimed down at nothing in particular, burning away under the floor of the most automated building on the continent. There is no switch on it that anybody could reach from upstairs. Somebody clamped it here, turned it on, and left, and it has been lighting an empty plenum ever since, on the building's power, off the building's books."
-     },
-     {
-      "text": "One bulb, one clamp, one cord going away into the dark toward an outlet nobody documented. It is the only light down here and it is not on any plan. Every building has one. Every building's is beloved."
-     }
-    ],
-    "use": [
-     {
-      "text": "You swivel it to point down the fiber bundle, and the whole length of somebody's flawless cable dressing comes up out of the dark for a moment, combed and tied and beautiful. Then you put it back where it was, because whoever left it aimed it that way for a reason you will never learn."
-     }
-    ],
-    "take": [
-     {
-      "text": "You are not stealing the only light in the crypt. You have a functioning sense of what happens to people who take the only light."
-     }
-    ]
-   }
-  },
-  {
    "id": "relic",
    "name": "coffee cup",
    "synonyms": [
@@ -363,12 +104,20 @@
    ],
    "polygon": [
     [
-     62,
-     96
+     144,
+     104
     ],
     [
-     96,
-     120
+     180,
+     104
+    ],
+    [
+     180,
+     128
+    ],
+    [
+     144,
+     128
     ]
    ],
    "responses": {
@@ -448,6 +197,297 @@
    }
   },
   {
+   "id": "fiber",
+   "name": "yellow fiber",
+   "synonyms": [
+    "fiber",
+    "fibre",
+    "yellow strand",
+    "strand",
+    "county fiber",
+    "splice",
+    "splice tray",
+    "bundle",
+    "cables",
+    "cable bundle"
+   ],
+   "polygon": [
+    [
+     88,
+     54
+    ],
+    [
+     264,
+     54
+    ],
+    [
+     264,
+     82
+    ],
+    [
+     88,
+     82
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "a3_fiber_seen"
+      },
+      "do": [
+       {
+        "narrate": "The bundle runs the length of the plenum: hundreds of jacketed strands zip-tied at nine-inch intervals by somebody with a straight eye and a tidy mind, all of it going east through the wall into a conduit the diameter of a dinner plate. And in the middle of the bundle, in a small gray splice tray screwed to a pedestal, the strands come apart into individual fibers, labelled."
+       },
+       {
+        "narrate": "You find it because you have spent two days following it and because it is labelled the way infrastructure is always labelled \u2014 accurately, unglamorously, and by somebody who never expected to be read: E-RING \u00b7 SEG 47 \u00b7 REGIONAL EDGE 0447."
+       },
+       {
+        "narrate": "Edge site 0447. Parkview Plaza, Unit 6, rear. A utility closet behind a nail salon with a nineteen-dollar box fan wedged in the transom, three hundred and eleven miles east of this pedestal, where you stood yesterday with a cable in your hand."
+       },
+       {
+        "narrate": "One yellow strand. It goes out of this tray, into the bundle, through the wall, under a county road you rode in on, past a mile marker that said 47, under Merle's soybeans, and up into a rack behind Kim's Nails. Every word that town has said to the world for nine years came down this piece of glass."
+       },
+       {
+        "narrate": "The splice tray's port indicator, six inches from your face, in the cold, in the dark, under a building the size of an airport, is GREEN. Lit. Clean. Zero errors. The glass is fine. The glass was always fine. The county's entire internet is sitting right here, perfectly delivered, at line rate, waiting for permission from a form."
+       },
+       {
+        "narrate": "You sit down on the slab, in the cold, hood up, and look at a green light. Yesterday a box fan and a patch panel; today two hundred pedestals and forty percent of the world's compute; both ends fine, both ends healthy, both ends helpless. The whole descent, and the fault was never in any of the rooms."
+       },
+       {
+        "setFlag": "a3_fiber_seen"
+       },
+       {
+        "score": {
+         "id": "pl_fiber",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "text": "E-RING \u00b7 SEG 47 \u00b7 REGIONAL EDGE 0447 \u2014 one yellow strand in a bundle of thousands, indicator green, zero errors, running three hundred and eleven miles east to a closet behind a nail salon. Both ends perfect. Nothing in between broken. The problem is a form."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "instrument": "cable"
+      },
+      "text": "You hold your hand-crimped cat 5 up next to a single-mode fiber carrying a county's entire existence, for scale, and for a second the two of them are just cable \u2014 the same trade, the same crimp, the same person somewhere deciding to do it properly. Then you put yours away, because the other one is glass and it is working and you have never once been the man who tests a live production strand for fun."
+     },
+     {
+      "text": "You do not touch a lit production fiber under a live floor. There is a version of this profession where somebody does that, and every one of us has read that postmortem."
+     }
+    ],
+    "take": [
+     {
+      "text": "CALL BEFORE YOU DIG, said the orange posts along the county road, all the way west. This is the thing they meant. It stays exactly where it is."
+     }
+    ]
+   }
+  },
+  {
+   "id": "pedestals",
+   "name": "pedestals",
+   "synonyms": [
+    "pedestal",
+    "posts",
+    "legs",
+    "supports",
+    "stanchions",
+    "forest",
+    "floor supports"
+   ],
+   "polygon": [
+    [
+     88,
+     84
+    ],
+    [
+     262,
+     84
+    ],
+    [
+     262,
+     126
+    ],
+    [
+     88,
+     126
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Two hundred steel pedestals in a grid, each one taller than you and carrying a corner of four floor tiles, each tile carrying its share of a rack, each rack carrying its share of everything anybody ever uploaded. You look down the rows and the perspective does what perspective does in a forest: closes into dark about forty feet out, in every direction, identically."
+     },
+     {
+      "text": "Each pedestal is a threaded rod, a base plate, four anchor bolts and a head, with a small stamped load rating, and the ratings are conservative because the people who make pedestals have never once been asked to move fast and break things. The most load-bearing objects in the entire information economy cost about two hundred dollars each and have never appeared on a status page, an architecture diagram, or a slide."
+     }
+    ],
+    "use": [
+     {
+      "text": "You put a hand on a pedestal head and push, out of nothing but professional curiosity. It does not move even slightly. Above it, four tiles, a rack, a row, an aisle, a hall, a building, an industry, and a species' collective memory. Below it, four anchor bolts into slab. It is a nine-dollar part doing a job that has never once been on a status page."
+     }
+    ],
+    "take": [
+     {
+      "text": "Removing a pedestal from a live raised floor is how a room becomes an incident. You have read that postmortem too."
+     }
+    ]
+   }
+  },
+  {
+   "id": "trays",
+   "name": "cable trays",
+   "synonyms": [
+    "tray",
+    "trays",
+    "overhead",
+    "runs",
+    "wire trays",
+    "cabling",
+    "zip ties",
+    "dressing"
+   ],
+   "polygon": [
+    [
+     88,
+     0
+    ],
+    [
+     320,
+     0
+    ],
+    [
+     320,
+     50
+    ],
+    [
+     88,
+     50
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Two steel trays running the full length of the plenum, and the cable dressing in them is \u2014 you want to be precise about this \u2014 beautiful. Every bundle combed straight, every zip tie at the same interval, every tie's tail cut flush so nothing can snag a hand, every service loop the same generous radius. Nobody was ever going to see this. It is under a floor, in the dark, in a building with no windows, in a county with no people."
+     },
+     {
+      "text": "Somebody spent weeks down here on their knees in fifty-five-degree air making cable runs that nobody would ever look at, and made them perfect anyway, because that is what the job is when the job is done properly. You are looking at the only art in twenty-two acres, and it is in a tray, in the dark, under the floor."
+     }
+    ],
+    "use": [
+     {
+      "text": "You run a finger along a bundle and feel every tie tail cut flush, one after another, for six feet. You could not do better. You would like very much to meet whoever did this, and you never will, and their work will hold this building up for thirty years."
+     }
+    ]
+   }
+  },
+  {
+   "id": "crac",
+   "name": "air handler",
+   "synonyms": [
+    "crac",
+    "intake",
+    "grille",
+    "louvers",
+    "cooling unit",
+    "air conditioner",
+    "ac",
+    "cold air",
+    "wind"
+   ],
+   "polygon": [
+    [
+     258,
+     48
+    ],
+    [
+     320,
+     48
+    ],
+    [
+     320,
+     122
+    ],
+    [
+     258,
+     122
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A louvered intake the size of a doorway, pulling the plenum's air past you at a speed that has been making a low continuous note in your left ear since you came down the ladder. This is the source: the cold is manufactured behind that grille, pushed under the floor, and let up through the perforated tiles into the aisle. The whole cooling architecture of a twenty-two-acre building is a big fan, a cold coil, and the space under a floor."
+     },
+     {
+      "text": "The grille, and behind it the coils and compressors doing exactly what a nineteen-dollar box fan in a strip-mall transom was doing yesterday, at four hundred thousand times the cost and with a maintenance contract. Same physics. Same idea. Same result. One of them has a laminated control."
+     }
+    ],
+    "use": [
+     {
+      "text": "You stand in front of the intake and let the plenum's entire air budget go past you at once, hood up, hands in pockets, in the dark, under the cloud. It is the coldest and least glamorous place you have ever stood, and after two days of dashboards and hold music it is the first place all week that has been unambiguously honest with you."
+     }
+    ],
+    "take": [
+     {
+      "text": "It is a building system with a four-hundred-amp feed and its own maintenance contract, and you have a hoodie and a cable."
+     }
+    ]
+   }
+  },
+  {
+   "id": "work_light",
+   "name": "work light",
+   "synonyms": [
+    "light",
+    "lamp",
+    "clamp light",
+    "worklight",
+    "bulb"
+   ],
+   "polygon": [
+    [
+     202,
+     88
+    ],
+    [
+     256,
+     88
+    ],
+    [
+     256,
+     130
+    ],
+    [
+     202,
+     130
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A clamp light gripped onto a cable tray, aimed down at nothing in particular, burning away under the floor of the most automated building on the continent. There is no switch on it that anybody could reach from upstairs. Somebody clamped it here, turned it on, and left, and it has been lighting an empty plenum ever since, on the building's power, off the building's books."
+     },
+     {
+      "text": "One bulb, one clamp, one cord going away into the dark toward an outlet nobody documented. It is the only light down here and it is not on any plan. Every building has one. Every building's is beloved."
+     }
+    ],
+    "use": [
+     {
+      "text": "You swivel it to point down the fiber bundle, and the whole length of somebody's flawless cable dressing comes up out of the dark for a moment, combed and tied and beautiful. Then you put it back where it was, because whoever left it aimed it that way for a reason you will never learn."
+     }
+    ],
+    "take": [
+     {
+      "text": "You are not stealing the only light in the crypt. You have a functioning sense of what happens to people who take the only light."
+     }
+    ]
+   }
+  },
+  {
    "id": "hatch",
    "name": "hatch",
    "synonyms": [
@@ -461,12 +501,20 @@
    ],
    "polygon": [
     [
-     18,
-     110
+     4,
+     4
     ],
     [
-     54,
-     176
+     86,
+     4
+    ],
+    [
+     86,
+     130
+    ],
+    [
+     4,
+     130
     ]
    ],
    "responses": {
@@ -527,12 +575,20 @@
    ],
    "polygon": [
     [
-     30,
-     112
+     0,
+     116
     ],
     [
-     290,
-     120
+     320,
+     116
+    ],
+    [
+     320,
+     126
+    ],
+    [
+     0,
+     126
     ]
    ],
    "responses": {
