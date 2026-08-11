@@ -375,8 +375,8 @@ row appended.
 
 M6 kickoff — Act 4: The Company. Repo: nkaushansky/outagequest, start from
 main (M5 Act 3 merged; read REVIEW.md rows "M5 (decisions ratified)", "M5
-(content+engine)", "M5 (art notes)", plus whatever device-feedback rows
-M5 collected).
+(content+engine)", "M5 (art notes)", "M5 (art)", "M5 (phone check)" and
+"M5 (device pass)").
 
 Read before writing anything: CLAUDE.md, GDD.md (story spine — Act 4 is
 CORPORATE HQ: kombucha taps, empty desks, org-chart archaeology, nobody
@@ -432,7 +432,34 @@ SCOPE:
    content — decide deliberately whether Act 4 is where that changes.
 
 6. **Act 1–3 debt sweep (small).** Whatever the M5 review / phone pass
-   carried forward, closed while rooms are open.
+   carried forward, closed while rooms are open. (M5's device pass came
+   back clean, so this may genuinely be empty — check the log rather than
+   inventing work.)
+
+WHAT M5 LEFT YOU (use it, don't rebuild it):
+
+- **Patrol walkers.** A hotspot `sprite` block takes `path`/`speed`/`loop`/
+  `pauseMs` and the engine walks it, derives facing from travel, and
+  y-sorts on live position. Pure data. If Act 4 wants a moving thing — a
+  floor-scrubber, a mail cart, an executive on a lap — it costs nothing.
+- **`instrument` matches the same-noun alternate**, so "use X on Y" no
+  longer silently misses when a hotspot and a carried item share X's noun.
+- **The ART PASS has a proven order**, and it is worth following exactly:
+  generate → `treat_bg.py` → refit every polygon from GRID-RULED
+  measurements (render the treated bg at 3x with a labelled 20px grid) →
+  probe floor lines off the actual PIXELS rather than eyeballing them →
+  re-anchor every sprite against the real furniture and LOOK at it. M5's
+  two art bugs (Bev floating over the desk, the plenum hatch in the floor)
+  were both invisible to the suite and obvious in a screenshot. Budget a
+  look-at-it step; it is not optional.
+- **Name the negative in a prompt.** The first plenum came back with a
+  hatch in the floor because the prompt only said where the hatch SHOULD
+  be. The reroll said "no openings, pits, hatches or trenches in the
+  floor" and got it right. Generators re-add what you don't forbid.
+- **Author state-variant response entries AFTER the first-read entry.**
+  Three Act 3 tickets were briefly unreachable because a later-state
+  variant shadowed the entry that carried the score. The suite's
+  full-clear invariant is what caught it — keep that invariant.
 
 DECIDE AT THREAD START (joint decisions, not builder discretion; see
 REVIEW.md "M3.5 (decisions ratified)" for the process):
@@ -454,7 +481,7 @@ canvas; one-generator backgrounds via the PROMPTS.md prefix + treat_bg.py
 at true 320x180; sprites per CHARACTERS.md + master palette; acts stay
 speedrunnable; no prior-act inventory required (kit excepted).
 
-TEST LOOP: npm run build + preview + `npm run smoke` (371 green at M5
+TEST LOOP: npm run build + preview + `npm run smoke` (373 green at M5
 close — keep green; extend with Act 4 completability, coffee_act4, the new
 deaths, and the fresh-clear invariants for Acts 1, 2 AND 3 — 45 / 100 /
 150). Deploy via the dreamhost-upload flow, slug `outagequest`; real-phone
