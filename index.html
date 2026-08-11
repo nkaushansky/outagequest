@@ -121,6 +121,26 @@
   }
   .verb:active, .run:active, .clear:active, .suggest-chip:active { background-color: #24384E; }
 
+  /* Every interactive surface declares its own focus ring and tap flash.
+     UA defaults are exactly the thing the dark-mode rule forbids: the
+     platform ring is invisible on some of these backgrounds and the
+     WebKit tap highlight is an uninvited translucent blue rectangle. */
+  .verb, .run, .clear, .suggest-chip, .inv-chip, .inv-label,
+  .doc-dismiss, .death-retry, .cmd-input {
+    -webkit-tap-highlight-color: rgba(127, 211, 78, 0.18);
+  }
+  /* The scene is a walk surface, not a button: a tap flash on the art
+     would fire on every step Mel takes. */
+  #scene canvas { -webkit-tap-highlight-color: transparent; }
+  .verb:focus-visible, .run:focus-visible, .clear:focus-visible,
+  .suggest-chip:focus-visible, .inv-chip:focus-visible,
+  .inv-label:focus-visible, .doc-dismiss:focus-visible,
+  .death-retry:focus-visible {
+    outline: 2px solid #7FD34E;
+    outline-offset: 2px;
+  }
+  .cmd-input:focus-visible { outline: 2px solid #7FD34E; outline-offset: 1px; }
+
   .inv {
     display: flex; align-items: flex-start; gap: 8px;
     padding: 4px 8px 8px;

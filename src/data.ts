@@ -111,12 +111,21 @@ function normalizeRoom(raw: unknown): Room {
         hotspot.topicDefault = s.topicDefault as ResponseEntry[];
       if (s.sprite && typeof s.sprite === "object") {
         // "at" arrives as [x, y], like every other room coordinate.
-        const sp = s.sprite as { use?: unknown; at?: unknown };
+        const sp = s.sprite as Record<string, unknown>;
         const pair = Array.isArray(sp.at) ? (sp.at as number[]) : [0, 0];
-        hotspot.sprite = {
+        const sprite: Hotspot["sprite"] = {
           use: String(sp.use ?? ""),
           at: { x: Number(pair[0] ?? 0), y: Number(pair[1] ?? 0) },
         };
+        // A patrol path is authored the same way every polygon is: [x, y].
+        const path = toPts(sp.path);
+        if (path.length >= 2) {
+          sprite.path = path;
+          if (sp.speed !== undefined) sprite.speed = Number(sp.speed);
+          if (sp.loop === "cycle" || sp.loop === "pingpong") sprite.loop = sp.loop;
+          if (sp.pauseMs !== undefined) sprite.pauseMs = Number(sp.pauseMs);
+        }
+        hotspot.sprite = sprite;
       }
       return hotspot;
     }),

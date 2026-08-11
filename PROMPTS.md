@@ -33,6 +33,114 @@ The five Act 1 prompts that produced the shipped backgrounds are preserved
 in git history (this file, before the M4 revision). Do not regenerate Act 1
 rooms casually — polygons are fit to the shipped art.
 
+## Act 3 — The Cloud, Physically (real art shipped, M5 art pass)
+
+These six prompts produced the shipped backgrounds. Do not regenerate
+casually — polygons are fit to this art. The plenum prompt below is the
+SECOND one: the first put the access hatch in the FLOOR, which is wrong for
+a room you climb DOWN into, so it was rerolled with the hatch overhead and
+an explicit "no openings in the floor" clause. Lesson kept for later acts:
+name the thing you do NOT want, or the generator will re-add it.
+
+US-CENTRAL-1 FLAGSHIP CAMPUS, 1 Cumulonimbus Way, Bunker Flats. The act's
+running visual joke is SCALE against BLANKNESS: a cathedral that spent its
+whole budget on the inside and none of it on looking like anything. Every
+interior is spotless, lit, powered and working — the building is fine, and
+that is the problem. Nothing in these rooms may look broken.
+
+### act3_perimeter — The Campus Perimeter
+
+> Scene: the visitor parking lot of an enormous windowless data center on
+> flat empty farmland at midday. The back of the frame is one immense
+> featureless beige concrete wall running the full width, filling the upper
+> half, broken only by faint vertical expansion joints and a single small
+> human-sized glass entrance door with a narrow metal awning, right of
+> center. Left to right along the wall: an old faded-red farm pickup truck
+> parked nose-out in the first visitor space; a low blank polished stone
+> monument slab on a concrete base; the small glass door; a tall steel pole
+> carrying four security cameras all aimed at that door; and at the right a
+> small empty guard booth with its striped boom gate raised. Wide cracked
+> asphalt lot with faded painted parking stripes as the open stage, one
+> long shadow line at the base of the wall, pale washed sky above the
+> roofline, heat shimmer, no landscaping whatsoever.
+
+### act3_lobby — The Visitor Lobby
+
+> Scene: the interior of a vast corporate data-center lobby scaled for
+> crowds that never come, warm and immaculate. Along the back wall, left to
+> right: tall glass entrance doors at the far left edge; an enormous dark
+> switched-off video wall in a black frame; a bank of three waist-high
+> steel badge pedestals with sheets of paper taped over their readers; a
+> long wooden security reception desk with a paper logbook, a boxy beige
+> label printer, and a plastic bin of abandoned jackets tucked at its near
+> end; a low credenza holding a small household drip coffee maker with a
+> glowing orange warmer light and a half-full glass carafe; and at the
+> right a heavy interior door with another taped-over card reader beside
+> it. Polished terrazzo floor filling the lower 40% as the open stage,
+> enormous empty ceiling above, framed motivational prints too small for
+> the wall they are on.
+
+### act3_compliance — The Badging Corridor
+
+> Scene: a long clean interior corridor of institutional procedure, evenly
+> lit, sealed concrete floor. Along the back wall, left to right: a plain
+> door at the far left edge; a grid of eight laminated policy sheets
+> mounted in plastic sleeves; a glass security vestibule with two separate
+> glass doors and a small placard sign above it; then a heavy gray steel
+> door with a horizontal crash bar and a printed paper seal pasted across
+> its seam and frame; and at the far right a wide industrial door with a
+> yellow placard above it. Utilitarian grays and beiges, one long scuff
+> line along the wall at hand height, everything spotless and nothing
+> welcoming. Empty sealed concrete floor as the open stage.
+
+### act3_dock — The Loading Dock
+
+> Scene: the interior of a spotless data-center receiving dock, lit by high
+> bays. Along the back wall, left to right: a plain door at the far left
+> edge; a small computer terminal on a gray pedestal stand with a dark
+> screen; a shrink-wrapped pallet of tall new equipment in milky plastic on
+> a wooden pallet; a steel mesh spares cage holding stacked dark equipment
+> trays with small white labels; a freestanding metal scanning gantry — two
+> uprights and a crossbar carrying a pale cyan light strip — over a lane
+> painted on the floor in yellow hatching; and at the right a wide closed
+> corrugated roll-up freight door. A bold safety-yellow and black striped
+> edge stripe runs across the very front of the deck. Sealed gray concrete
+> as the open stage, industrial and orderly, nothing damaged.
+
+### act3_cold_aisle — Cold Aisle 4
+
+> Scene: the inside of a contained data-center cold aisle, cool blue-gray
+> and immaculate. Tall black four-post server racks fill the entire left
+> and right edges of the frame in receding rows, every rack face dense with
+> small steady GREEN indicator lights — nothing red, nothing dark. Across
+> the back of the aisle: a glass containment door with a small placard,
+> centered. Left of center a wheeled crash cart carrying a small monitor
+> and keyboard. Right of center, high on the wall, a round white fire
+> suppression discharge nozzle and a red pull-station box. At the lower
+> right one perforated white floor tile has been lifted out and propped,
+> leaving a dark rectangular opening. Perforated raised-floor tiles in a
+> visible grid fill the lower 40% as the open stage. Cold clean light,
+> everything working, uncanny order.
+
+### act3_plenum — The Raised-Floor Plenum
+
+> Scene: a tall walkable service level underneath a data-center raised
+> floor, seen along its length, lit by one yellow portable work light
+> standing on the slab. Overhead, filling the top of the frame: the dark
+> underside of the raised floor and two long steel cable trays running the
+> full width. At the upper left, an open square hatch in that ceiling — a
+> missing floor tile seen from below — with cold pale blue light spilling
+> DOWN through it onto the slab, and a fixed steel ladder descending from
+> the hatch to the floor. Standing across the middle distance: a forest of
+> tall slender steel pedestals holding the floor up like columns. Threaded
+> horizontally through the pedestals: a thick bundle of dark cables with one
+> bright yellow fiber strand and a small gray splice tray with a single
+> green indicator light. At the right, a large louvered air-handler intake
+> grille. The concrete slab is unbroken and continuous — no openings, pits,
+> hatches or trenches in the floor — and fills the lower 40% of the frame as
+> the open stage. Dust-free and cold, a warm pool of light from the work
+> lamp, deep shadows lifted enough to read.
+
 ## Act 2 — the Edge Node (currently placeholder art)
 
 ### act2_salon — Kim's Nails

@@ -1,0 +1,1046 @@
+{
+ "id": "act3_compliance",
+ "name": "The Badging Corridor",
+ "background": "assets/backgrounds/act3_compliance.png",
+ "walkable": [
+  [
+   8,
+   106
+  ],
+  [
+   312,
+   106
+  ],
+  [
+   318,
+   178
+  ],
+  [
+   2,
+   178
+  ]
+ ],
+ "playerStart": {
+  "x": 46,
+  "y": 140,
+  "facing": "right"
+ },
+ "exits": [
+  {
+   "to": "act3_lobby",
+   "polygon": [
+    [
+     2,
+     104
+    ],
+    [
+     30,
+     104
+    ],
+    [
+     30,
+     126
+    ],
+    [
+     2,
+     126
+    ]
+   ],
+   "arrive": {
+    "x": 268,
+    "y": 150,
+    "facing": "left"
+   }
+  },
+  {
+   "to": "act3_dock",
+   "polygon": [
+    [
+     258,
+     104
+    ],
+    [
+     306,
+     104
+    ],
+    [
+     306,
+     126
+    ],
+    [
+     258,
+     126
+    ]
+   ],
+   "arrive": {
+    "x": 56,
+    "y": 140,
+    "facing": "right"
+   }
+  },
+  {
+   "to": "act3_cold_aisle",
+   "polygon": [
+    [
+     112,
+     104
+    ],
+    [
+     180,
+     104
+    ],
+    [
+     180,
+     120
+    ],
+    [
+     112,
+     120
+    ]
+   ],
+   "arrive": {
+    "x": 152,
+    "y": 140,
+    "facing": "down"
+   },
+   "if": {
+    "flag": "a3_asset"
+   },
+   "blocked": [
+    {
+     "if": {
+      "flagNot": "a3_knows_asset_rule"
+     },
+     "text": "The inner glass door of the vestibule does not move, and a small speaker in the ceiling says, in the voice of a woman recorded in a carpeted room in 2016: 'Escort required. Please wait for your escort.' You wait. There is nobody in the building to escort you, and the recording has all afternoon."
+    },
+    {
+     "if": {
+      "flagNot": "a3_tag_live"
+     },
+     "text": "'Escort required. Please wait for your escort.' Your badge is a VISITOR badge, and visitors do not move through this building alone. Assets do. Assets have move tickets. You do not, at this moment, qualify as an asset \u2014 a sentence you have never before had cause to be disappointed by."
+    },
+    {
+     "text": "'Escort required.' The vestibule is polite and absolute. You are carrying a live asset tag and the vestibule still doesn't care, because nothing has READ it yet. Being an asset is not a claim. It's a scan."
+    }
+   ]
+  }
+ ],
+ "onEnter": [
+  {
+   "if": {
+    "flagNot": "a3_corridor_seen"
+   },
+   "do": [
+    {
+     "narrate": "The badging corridor. Twenty feet of the cleanest hallway you have ever stood in, lit to a level a dentist would find aggressive, floor sealed to a shine that has never met a wheel. It smells of nothing. Not 'clean' \u2014 NOTHING. Somebody engineered the smell out of it."
+    },
+    {
+     "narrate": "Along the left wall, eight laminated sheets in plastic sleeves, mounted at reading height in a grid so exact you can feel the template that made it. Ahead, a glass vestibule with two separate doors and a sign above it. Right of that, a steel door with a crash bar and a paper seal pasted across its seam. And beyond, another door with a yellow placard reading DOCK."
+    },
+    {
+     "narrate": "The only mark on any surface in the corridor is a single horizontal scuff running the whole length of the wall at hand height, made by nine years of somebody trailing a knuckle."
+    },
+    {
+     "setFlag": "a3_corridor_seen"
+    },
+    {
+     "clearFlag": "a3_in_cold"
+    }
+   ]
+  },
+  {
+   "if": {
+    "flag": "a3_asset"
+   },
+   "do": [
+    {
+     "narrate": "The corridor, and the vestibule at the middle of it, which has changed its mind about you \u2014 not because you argued, but because a machine scanned your chest and updated a table."
+    },
+    {
+     "clearFlag": "a3_in_cold"
+    }
+   ]
+  },
+  {
+   "do": [
+    {
+     "narrate": "The corridor. Eight laminated controls, one vestibule, one sealed door, one dock door, and a woman with a binder who is here to make sure all of that stays true."
+    },
+    {
+     "clearFlag": "a3_in_cold"
+    }
+   ]
+  }
+ ],
+ "lookAround": [
+  {
+   "if": {
+    "flag": "a3_asset"
+   },
+   "text": "The corridor, surveyed with an asset tag on your chest: the POLICY WALL, the VESTIBULE (which will now let you through to Cold Aisle 4 \u2014 you are inventory), the sealed COMPLIANCE HOLD door, the DOCK door right, the lobby back left, and CORINNE at the policy wall, who has been watching your paperwork improve all afternoon and has opinions."
+  },
+  {
+   "text": "The corridor, surveyed: a POLICY WALL of eight laminated controls left, a glass VESTIBULE in the middle (the way to the data hall \u2014 it wants an escort), a steel COMPLIANCE HOLD door under a paper seal, and a DOCK door at the right. CORINNE MABRY stands at the policy wall with a binder, reading her own controls. The lobby is back through the left edge. One long SCUFF runs the whole wall at hand height."
+  }
+ ],
+ "hotspots": [
+  {
+   "id": "corinne",
+   "name": "Corinne",
+   "synonyms": [
+    "auditor",
+    "compliance",
+    "woman",
+    "lady",
+    "mabry",
+    "corinne mabry",
+    "vest",
+    "binder",
+    "clipboard"
+   ],
+   "polygon": [
+    [
+     54,
+     72
+    ],
+    [
+     92,
+     72
+    ],
+    [
+     92,
+     124
+    ],
+    [
+     54,
+     124
+    ]
+   ],
+   "sprite": {
+    "use": "corinne",
+    "at": [
+     72,
+     120
+    ]
+   },
+   "responses": {
+    "look": [
+     {
+      "text": "Corinne Mabry, Continuous Compliance, Tier 2, flown in from somewhere with an airport. Dark ponytail pulled to structural tension, corporate black, and \u2014 on a floor cleaner than an operating theater, indoors, under fluorescent light \u2014 a hi-viz vest in a chartreuse that could be seen from orbit. The vest is a control. Controls do not get skipped for being ridiculous. You respect this more than you can currently express."
+     },
+     {
+      "text": "She holds a three-ring binder against her chest with both forearms, the way other people hold a child. It is full of tabs. Every so often she looks at something, opens the binder without looking down, and writes. She has been in this corridor since 07:48 and she has not once sat."
+     }
+    ],
+    "talk": [
+     {
+      "if": {
+       "flagNot": "met_corinne"
+      },
+      "do": [
+       {
+        "narrate": "She reads your chest before your face, which is correct procedure. 'MALFUNCTON comma MEL,' she says \u2014 the whole field, in field order, including the comma, which she pronounces. 'Self-sponsored. That's unusual.' She writes something. 'I'm Corinne. Continuous Compliance, Tier Two. I'm not here about the outage.'"
+       },
+       {
+        "narrate": "You ask what she IS here about, on today of all days. 'Finding F-2019-114,' she says. 'It's six years old. I fly out quarterly to confirm it's still open.' A pause you could hang a coat on. 'It's still open.' The tally records a new variant: not a wrong name, exactly \u2014 a CORRECTLY RENDERED WRONG NAME, read aloud, comma included, from a machine's mistake. Institutional. Airtight."
+       },
+       {
+        "setFlag": "met_corinne"
+       },
+       {
+        "setFlag": "name_corinne"
+       }
+      ]
+     },
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "text": "Corinne looks at the asset tag on your chest, then at the visitor badge beside it, then \u2014 for a long, professionally devastating moment \u2014 at the vestibule. 'You're carrying two identities,' she says, 'and the building believes the wrong one.' She opens the binder. 'I'm going to write this down and nothing is going to happen about it, and in six years I'm going to fly out here and confirm it's still open.' It is the single most honest description of the industry you have ever heard."
+     },
+     {
+      "text": "'Still open,' Corinne says, of the finding, before you've asked. Then, because she is not unkind: 'You're still a person, by the way. In the access model. That's the problem you're actually having.'"
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "anyInstrument": true
+      },
+      "text": "Corinne looks at what you are holding out, then writes something in the binder without opening it more than an inch. Whatever you were attempting, it is now documented."
+     },
+     {
+      "text": "You do not use a Tier Two compliance auditor. A Tier Two compliance auditor uses herself, quarterly, on a schedule, for six years, on a four-hundred-dollar door."
+     }
+    ]
+   },
+   "topics": [
+    {
+     "match": [
+      "escort",
+      "escorts",
+      "ac-04",
+      "boundary"
+     ],
+     "responses": [
+      {
+       "if": {
+        "flagNot": "a3_knows_asset_rule"
+       },
+       "do": [
+        {
+         "narrate": "'AC-04,' Corinne says, and taps the laminate without turning to look at it. 'No person crosses a controlled boundary without an authorized escort. Escort authorization is issued by the access management system.' She lets you get there yourself. You get there. The access management system is the thing that is down."
+        },
+        {
+         "narrate": "'Right,' she says. 'So no person crosses that boundary today. That control is one hundred percent effective. It has never been more effective than it is right now.' She writes something. Then she does something genuinely generous: she taps the laminate two rows down. 'AC-09. Materiel movements do not require escort. They require a move ticket, issued automatically upon inventory scan.'"
+        },
+        {
+         "narrate": "'Materiel,' you repeat. 'Freight,' she says. 'Assets. Anything in the asset database.' She closes the binder on one finger. 'I have filed the observation that AC-04 and AC-09 cannot both be satisfied by a human being. Twice. I would file it a third time, but I'd be quoting myself.' She looks at the vestibule, and then at you, and says absolutely nothing else, extremely loudly."
+        },
+        {
+         "setFlag": "a3_knows_asset_rule"
+        },
+        {
+         "score": {
+          "id": "cp_corinne",
+          "points": 2
+         }
+        }
+       ]
+      },
+      {
+       "do": [
+        {
+         "narrate": "'AC-04 for people, AC-09 for freight,' Corinne says. 'One of those two rules is having a good day.' She does not point at the dock. She has, however, arranged her entire posture so that not-pointing at the dock is the loudest thing in the corridor."
+        },
+        {
+         "score": {
+          "id": "cp_corinne",
+          "points": 2
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "match": [
+      "assets",
+      "asset",
+      "ac-09",
+      "move ticket",
+      "inventory",
+      "materiel"
+     ],
+     "responses": [
+      {
+       "if": {
+        "flagNot": "a3_knows_asset_rule"
+       },
+       "do": [
+        {
+         "narrate": "'AC-09,' Corinne says, with the flat pleasure of a person quoting the thing she has been trying to get someone to read for six years. 'Materiel movements do not require escort. All materiel movements require a move ticket, issued automatically upon inventory scan.'"
+        },
+        {
+         "narrate": "'So a rack can go anywhere on this floor by itself,' you say, 'and I can't.' 'A rack IS in the asset database,' she says. 'You're a visitor. Visitors are an exception process.' She opens the binder, writes nothing, and closes it again \u2014 a tell you will think about later. 'I've filed the observation twice. AC-04 and AC-09 cannot both be satisfied by a human being.' She looks past you, toward the door with the yellow DOCK placard. 'Assets are received at the dock.'"
+        },
+        {
+         "setFlag": "a3_knows_asset_rule"
+        },
+        {
+         "score": {
+          "id": "cp_corinne",
+          "points": 2
+         }
+        }
+       ]
+      },
+      {
+       "do": [
+        {
+         "narrate": "'Assets are received at the dock,' Corinne says, for the second time, at the same speed, in the same tone. Compliance does not escalate. Compliance repeats."
+        },
+        {
+         "score": {
+          "id": "cp_corinne",
+          "points": 2
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "match": [
+      "finding",
+      "f-2019-114",
+      "hold",
+      "the door",
+      "ex-4",
+      "seal"
+     ],
+     "responses": [
+      {
+       "text": "'Egress door EX-4,' Corinne says. 'In 2019 an auditor found that its alarm contact was wired to a panel that also served a non-life-safety circuit. The remediation is four hundred dollars and forty minutes.' She says the next part with the calm of a woman who has said it into a camera. 'Remediation is a change. Changes require CAB approval. CAB is at corporate. Corporate has deferred it eleven times, because a deferred finding is a known risk and a completed change is a new risk.' A beat. 'So the door is sealed. Sealed doors can't be found non-compliant. The finding protects itself now.'"
+      }
+     ]
+    },
+    {
+     "match": [
+      "outage",
+      "internet",
+      "down",
+      "cloud"
+     ],
+     "responses": [
+      {
+       "text": "'Not my scope,' Corinne says immediately, and then, because she is a professional and not a coward: 'But I'll tell you what I've observed, since you drove.' She opens the binder to a tab. 'Every physical control on this site is passing. Power, cooling, fire, structural, physical access, all green, all evidenced. In nine years this site has never had a finding that wasn't paperwork.' She closes the binder. 'Whatever's wrong with the internet today didn't happen in a building. Buildings are the easy part. We got very good at buildings.'"
+      }
+     ]
+    },
+    {
+     "match": [
+      "vest",
+      "hi-viz",
+      "hiviz",
+      "safety"
+     ],
+     "responses": [
+      {
+       "text": "'I know,' Corinne says, before you can arrange your face. 'Hi-viz. Indoors. On a floor you could perform surgery on.' She adjusts a strap with real dignity. 'The control says hi-viz in any area with materiel movement. There is materiel movement on this floor. Therefore hi-viz.' She looks at you evenly. 'The day I decide a control is silly is the day I'm not doing the job. That's how findings happen.' You have met exactly two people today who understand their own function completely, and the other one has a pen."
+      }
+     ]
+    },
+    {
+     "match": [
+      "name",
+      "my name",
+      "malfuncton",
+      "mel",
+      "badge"
+     ],
+     "responses": [
+      {
+       "text": "'MALFUNCTON comma MEL,' Corinne reads off your chest, again, in field order. 'Is that not right?' You say it's actually Function. She looks at the badge for two full seconds. 'The badge is the record,' she says, not cruelly \u2014 just accurately, in the voice of somebody whose entire profession is the difference between a thing and its record. 'I'd need a corrected badge to write down anything else.' Nobody at Cumulonimbus knows your name. Now there is a documented reason."
+      }
+     ]
+    },
+    {
+     "match": [
+      "nimbus",
+      "cumulonimbus",
+      "corporate",
+      "cab",
+      "hq",
+      "headquarters"
+     ],
+     "responses": [
+      {
+       "text": "'Corporate,' Corinne says, and something in her posture shifts a millimeter toward the human. 'Change Advisory Board convenes at corporate. Eleven deferrals on a four-hundred-dollar door.' She looks at the sealed steel. 'I've never been. Tier Twos don't go to corporate; corporate is where the deferrals come from.' A pause. 'Do not call it Nimbus in an email. That one they answer.'"
+      }
+     ]
+    }
+   ],
+   "topicDefault": [
+    {
+     "text": "Corinne considers the question against her scope, finds it outside, and puts it down carefully rather than dropping it. 'Not something I could evidence,' she says."
+    }
+   ]
+  },
+  {
+   "id": "policy_wall",
+   "name": "policy wall",
+   "synonyms": [
+    "policy",
+    "policies",
+    "laminated sheets",
+    "sheets",
+    "laminates",
+    "controls",
+    "notices",
+    "sleeves"
+   ],
+   "polygon": [
+    [
+     38,
+     40
+    ],
+    [
+     102,
+     40
+    ],
+    [
+     102,
+     84
+    ],
+    [
+     38,
+     84
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "cp_read_policy"
+      },
+      "do": [
+       {
+        "narrate": "Eight laminated sheets, mounted in a grid so precise it must have had its own work order. You read them all, because you are the kind of person who reads them all, and because two of them turn out to matter enormously."
+       },
+       {
+        "document": {
+         "style": "binder",
+         "title": "SITE CONTROLS \u2014 POSTED PER AUDIT REQUIREMENT",
+         "body": [
+          "AC-04 \u00b7 No person shall traverse a controlled boundary without an authorized escort. Escort authorization is issued by the access management system.",
+          "AC-09 \u00b7 Materiel movements do not require escort. All materiel movements require a MOVE TICKET, issued automatically upon inventory scan.",
+          "PE-02 \u00b7 Fire suppression in contained aisles is a CLEAN AGENT system. Discharge displaces oxygen. Evacuate on the first alarm. Do not investigate the alarm.",
+          "PE-06 \u00b7 Egress door EX-4 is under COMPLIANCE HOLD pending closure of finding F-2019-114. Do not open. Do not test. Do not prop.",
+          "CM-11 \u00b7 All changes require Change Advisory Board approval. CAB is convened at CORPORATE.",
+          {
+           "text": "AC-04 and AC-09 cannot both be satisfied by a human being. Filed as observation, twice.  \u2014 C.M.",
+           "style": "hand"
+          },
+          {
+           "text": "Posted copies must remain legible. Laminate replaced quarterly.",
+           "style": "fine"
+          }
+         ]
+        }
+       },
+       {
+        "narrate": "AC-04: people need an escort. AC-09: MATERIEL does not \u2014 freight just needs a move ticket, issued automatically on inventory scan. The company has written, laminated, and mounted at reading height a formal declaration that it trusts cargo more than it trusts people. Somebody named C.M. has noted the gap in pen, twice, and been ignored twice, which is what 'filed as observation' means."
+       },
+       {
+        "setFlag": "cp_read_policy"
+       },
+       {
+        "setFlag": "a3_knows_asset_rule"
+       },
+       {
+        "score": {
+         "id": "cp_policy",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "text": "Eight controls in plastic. The two with teeth: AC-04 (people need escorts) and AC-09 (freight needs only a move ticket, issued on inventory scan). And PE-02, about the clean agent, which you should probably take more seriously than you are currently taking it."
+     }
+    ],
+    "take": [
+     {
+      "text": "Laminate replaced quarterly, per the laminate's own footnote. It is the only thing on this campus with a maintenance schedule that is actually being honored."
+     }
+    ],
+    "use": [
+     {
+      "text": "You straighten a sheet that was already straight. Somewhere behind you, in the professional silence, a binder opens approximately one inch."
+     }
+    ]
+   }
+  },
+  {
+   "id": "mantrap",
+   "name": "vestibule",
+   "synonyms": [
+    "mantrap",
+    "man trap",
+    "airlock",
+    "glass doors",
+    "interlock",
+    "sally port",
+    "data hall",
+    "cold aisle",
+    "placard"
+   ],
+   "polygon": [
+    [
+     102,
+     30
+    ],
+    [
+     188,
+     30
+    ],
+    [
+     188,
+     108
+    ],
+    [
+     102,
+     108
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "cp_read_mantrap"
+      },
+      "do": [
+       {
+        "narrate": "A glass vestibule set into the wall: two separate doors, an interlock between them, and a floor plate that weighs you. You step in and the outer door closes with a pneumatic sigh of real quality. The inner door does not move."
+       },
+       {
+        "narrate": "The sign above it, backlit, in the company's typeface: CONTROLLED BOUNDARY \u00b7 ESCORT REQUIRED \u00b7 BOTH DOORS CANNOT BE OPEN. THIS IS A CONTROL, NOT A FAULT. Someone had that last sentence added, and you can date it precisely: it was added the week after the first person stood in here for eleven minutes waiting for a door that was working perfectly."
+       },
+       {
+        "narrate": "A ceiling speaker, in the voice of a woman recorded in a carpeted room in 2016: 'Escort required. Please wait for your escort.' You wait. Every escort on this site is either three hundred miles away, unable to authenticate, or wearing a mustard cardigan and legally unable to leave the lobby unattended."
+       },
+       {
+        "setFlag": "cp_read_mantrap"
+       },
+       {
+        "score": {
+         "id": "cp_mantrap",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "text": "The vestibule, and the small green light that came on above the inner door when a robot on the dock decided you were a two-U chassis in transit. Glass, steel, two doors, one interlock, and a security model that has been completely satisfied by a sticker. The sign still says ESCORT REQUIRED. The sign is not wrong; it is simply not consulted."
+     },
+     {
+      "text": "Two glass doors, one interlock, one floor plate, one recorded woman with all afternoon. BOTH DOORS CANNOT BE OPEN. THIS IS A CONTROL, NOT A FAULT. Beyond it: the data hall, and the cold."
+     }
+    ],
+    "open": [
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "do": [
+       {
+        "narrate": "The floor plate weighs you, the reader reads the tag on your chest, and something in a table two rooms away decides you are eight hundred pounds of rack in transit with a valid move ticket. The inner door opens on a wall of cold."
+       },
+       {
+        "goto": "act3_cold_aisle",
+        "arrive": {
+         "x": 150,
+         "y": 156,
+         "facing": "down"
+        }
+       }
+      ]
+     },
+     {
+      "text": "'Escort required. Please wait for your escort.' You could stand here until the sun goes down. The recording would keep you company and the door would keep its integrity, and both of those things would go in a report as successes."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "do": [
+       {
+        "narrate": "You walk into the vestibule as freight, which is the only way anything has ever walked into it."
+       },
+       {
+        "goto": "act3_cold_aisle",
+        "arrive": {
+         "x": 150,
+         "y": 156,
+         "facing": "down"
+        }
+       }
+      ]
+     },
+     {
+      "text": "You press the plate, and the button, and eventually the glass. The vestibule remains a control and not a fault. Whatever gets you through here isn't force and isn't argument \u2014 it's a database row."
+     }
+    ]
+   }
+  },
+  {
+   "id": "hold_door",
+   "name": "sealed door",
+   "synonyms": [
+    "compliance hold",
+    "hold",
+    "ex-4",
+    "egress",
+    "steel door",
+    "crash bar",
+    "emergency exit",
+    "exit"
+   ],
+   "polygon": [
+    [
+     194,
+     38
+    ],
+    [
+     236,
+     38
+    ],
+    [
+     236,
+     106
+    ],
+    [
+     194,
+     106
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "cp_read_seal"
+      },
+      "do": [
+       {
+        "narrate": "A heavy gray egress door with a horizontal crash bar \u2014 the universal shape of GET OUT THIS WAY, engineered so that a panicking crowd can operate it with a hip. Across the seam, where the door meets the frame, somebody has pasted a paper seal."
+       },
+       {
+        "document": {
+         "style": "flyer",
+         "title": "COMPLIANCE HOLD",
+         "body": [
+          "DOOR EX-4 \u00b7 EGRESS \u00b7 SOUTH",
+          "This door is subject to a compliance hold pending closure of FINDING F-2019-114 (alarm contact shares a panel with a non-life-safety circuit).",
+          "DO NOT OPEN \u00b7 DO NOT TEST \u00b7 DO NOT PROP",
+          "Anti-passback interlock ACTIVE. Opening this door without an approved change will generate a security event and seal the vestibule pending review.",
+          {
+           "text": "HOLD REVIEWED \u2014 HOLD MAINTAINED (11)",
+           "style": "stamp"
+          },
+          {
+           "text": "Remediation deferred by Change Advisory Board. Next review: quarterly. Hold duration: indefinite.",
+           "style": "fine"
+          }
+         ]
+        }
+       },
+       {
+        "narrate": "An emergency exit that legally cannot open. Eleven quarterly reviews, each one confirming that the safest available action is to keep the safety device disabled. The mag-lock, you note, has failed SECURE \u2014 not safe. Somebody chose that default in a configuration screen years ago and it was the correct choice for a fire door in exactly zero of the scenarios that a fire door exists for."
+       },
+       {
+        "setFlag": "cp_read_seal"
+       },
+       {
+        "score": {
+         "id": "cp_seal",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "text": "The sealed egress door: crash bar, paper seal, HOLD REVIEWED \u2014 HOLD MAINTAINED (11), and an anti-passback interlock that is very much awake. 'Hold duration: indefinite.' Indefinite is a duration."
+     }
+    ],
+    "open": [
+     {
+      "if": {
+       "flagNot": "a3_warn_hold"
+      },
+      "do": [
+       {
+        "narrate": "You put a hand on the crash bar, because it is a crash bar, and a crash bar is the most trustworthy object in any building."
+       },
+       {
+        "narrate": "'I wouldn't,' Corinne says, and for the first time all afternoon there is speed in her voice. 'The interlock is live. If it registers an unapproved egress it seals the vestibule and holds whoever's inside pending review, and the review is a person at corporate, and there is nobody at corporate today.' She has stopped writing. 'The hold is indefinite by design.'"
+       },
+       {
+        "narrate": "You take your hand off the bar. The seal, undisturbed, has been maintained eleven times."
+       },
+       {
+        "setFlag": "a3_warn_hold"
+       }
+      ]
+     },
+     {
+      "do": [
+       {
+        "narrate": "You push the crash bar anyway, because it is a crash bar, and because after two days of doors that will not open you would like exactly one door to behave like a door."
+       },
+       {
+        "death": {
+         "id": "compliance_hold"
+        }
+       }
+      ]
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flagNot": "a3_warn_hold"
+      },
+      "do": [
+       {
+        "narrate": "You lean into the bar experimentally. 'Don't test it,' Corinne says, sharply. 'The sign says do not test it. The interlock treats a test as an event, and an event seals the vestibule around whoever's in it, pending a review by a person at corporate.' She looks at you. 'Nobody at corporate can log in today.'"
+       },
+       {
+        "setFlag": "a3_warn_hold"
+       }
+      ]
+     },
+     {
+      "do": [
+       {
+        "narrate": "You test it. The sign said do not test it, and eleven quarterly reviews agreed with the sign, and you test it."
+       },
+       {
+        "death": {
+         "id": "compliance_hold"
+        }
+       }
+      ]
+     }
+    ],
+    "take": [
+     {
+      "text": "You could peel the seal off. It's paper and it's nine months old and it would come away in one piece. It is also the only thing in this corridor doing any actual security work, in the sense that it has successfully stopped one person: you."
+     }
+    ]
+   }
+  },
+  {
+   "id": "dock_door",
+   "name": "dock door",
+   "synonyms": [
+    "door",
+    "industrial door",
+    "dock",
+    "loading dock",
+    "placard",
+    "yellow sign",
+    "receiving"
+   ],
+   "polygon": [
+    [
+     252,
+     30
+    ],
+    [
+     310,
+     30
+    ],
+    [
+     310,
+     106
+    ],
+    [
+     252,
+     106
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A wide industrial door with a yellow placard above it: DOCK \u00b7 RECEIVING \u00b7 MATERIEL. No card reader. No interlock. No recorded woman. Freight has never needed to prove who it is, because freight is not a who, and the entire architecture of this building's security rests, load-bearing, on that distinction."
+     },
+     {
+      "text": "The dock door: wide, plain, unguarded, yellow-placarded. The only unlocked route out of this corridor, and it is unlocked because it was designed for objects."
+     }
+    ],
+    "open": [
+     {
+      "do": [
+       {
+        "narrate": "It opens. Of course it opens. It's for freight."
+       },
+       {
+        "goto": "act3_dock",
+        "arrive": {
+         "x": 44,
+         "y": 152,
+         "facing": "right"
+        }
+       }
+      ]
+     }
+    ],
+    "use": [
+     {
+      "do": [
+       {
+        "narrate": "Through to receiving, where the rules are entirely different and much more generous."
+       },
+       {
+        "goto": "act3_dock",
+        "arrive": {
+         "x": 44,
+         "y": 152,
+         "facing": "right"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "lobby_back",
+   "name": "lobby door",
+   "synonyms": [
+    "door",
+    "back",
+    "lobby",
+    "bev",
+    "reception"
+   ],
+   "polygon": [
+    [
+     0,
+     36
+    ],
+    [
+     34,
+     36
+    ],
+    [
+     34,
+     106
+    ],
+    [
+     0,
+     106
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "The door back to the lobby, and through it the faint sound of a pen tapping a logbook at intervals \u2014 the heartbeat of the last functioning access control system in the western hemisphere."
+     },
+     {
+      "text": "Back to the lobby, the terrazzo, the mustard cardigan, and the coffee."
+     }
+    ],
+    "open": [
+     {
+      "do": [
+       {
+        "narrate": "Back into the lobby."
+       },
+       {
+        "goto": "act3_lobby",
+        "arrive": {
+         "x": 276,
+         "y": 152,
+         "facing": "left"
+        }
+       }
+      ]
+     }
+    ],
+    "use": [
+     {
+      "do": [
+       {
+        "narrate": "Back toward the pen."
+       },
+       {
+        "goto": "act3_lobby",
+        "arrive": {
+         "x": 276,
+         "y": 152,
+         "facing": "left"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "scuff",
+   "name": "scuff",
+   "synonyms": [
+    "scuff line",
+    "mark",
+    "wall",
+    "walls",
+    "line",
+    "knuckle"
+   ],
+   "polygon": [
+    [
+     34,
+     84
+    ],
+    [
+     300,
+     84
+    ],
+    [
+     300,
+     100
+    ],
+    [
+     34,
+     100
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "One continuous scuff at hand height, running the entire length of the corridor, made by a knuckle trailing along paint over nine years of walks nobody logged. It's the only human mark in the room, and \u2014 given the vestibule at the middle of it and the sealed door beside that \u2014 it is almost certainly Bev's, from before they built the wall that made her a lobby."
+     },
+     {
+      "text": "A single knuckle-height line, nine years long. In a building engineered to be walked through by nothing, somebody kept walking through it and kept touching it."
+     }
+    ],
+    "use": [
+     {
+      "text": "You trail your own knuckle along the paint for a few feet, adding your afternoon to the line. It is the only change you will make to this building today, and it will outlast the finding."
+     }
+    ]
+   }
+  },
+  {
+   "id": "lights",
+   "name": "lights",
+   "synonyms": [
+    "ceiling",
+    "fluorescents",
+    "lighting",
+    "up",
+    "fixtures"
+   ],
+   "polygon": [
+    [
+     0,
+     0
+    ],
+    [
+     320,
+     0
+    ],
+    [
+     320,
+     20
+    ],
+    [
+     0,
+     20
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Continuous linear fixtures, color temperature chosen by committee, brightness chosen by a standard, arranged so that no point in the corridor has a shadow anywhere on it. It is the light of a place that expects to be photographed by an auditor and never looked at by a person. Not one of the tubes is out. In nine years, presumably, not one of them has been out for longer than a work order."
+     },
+     {
+      "text": "Shadowless institutional light, perfectly maintained, illuminating nobody."
+     }
+    ]
+   }
+  }
+ ],
+ "onScoreComplete": [
+  {
+   "text": "You have now read every control in the corridor, including the two that contradict each other and the one about the clean agent. Corinne, who has been filing that contradiction for six years, has watched a self-sponsored visitor with a misprinted name read her whole wall in one afternoon. She wrote something down. She won't say what."
+  }
+ ]
+}

@@ -1,0 +1,611 @@
+{
+ "id": "act3_plenum",
+ "name": "The Raised-Floor Plenum",
+ "background": "assets/backgrounds/act3_plenum.png",
+ "walkable": [
+  [
+   16,
+   126
+  ],
+  [
+   302,
+   126
+  ],
+  [
+   312,
+   178
+  ],
+  [
+   8,
+   178
+  ]
+ ],
+ "playerStart": {
+  "x": 100,
+  "y": 150,
+  "facing": "left"
+ },
+ "exits": [
+  {
+   "to": "act3_cold_aisle",
+   "polygon": [
+    [
+     38,
+     126
+    ],
+    [
+     78,
+     126
+    ],
+    [
+     78,
+     150
+    ],
+    [
+     38,
+     150
+    ]
+   ],
+   "arrive": {
+    "x": 215,
+    "y": 152,
+    "facing": "left"
+   }
+  }
+ ],
+ "onEnter": [
+  {
+   "if": {
+    "flagNot": "a3_plenum_seen"
+   },
+   "do": [
+    {
+     "narrate": "You drop through the tile into the crypt of the cathedral, and the cathedral turns out to be held up by two hundred steel legs, each one taller than you are."
+    },
+    {
+     "narrate": "You stand up. That is the first thing that happens, and it takes a second to understand: you STAND UP, under a raised floor, at full height, with room over your head. You have worked in eleven datacenters and you have never once been able to do more than kneel under one. The flagship's airflow design called for a plenum a person could walk in, and somebody signed it, and it is the single most humane decision anybody made on this entire campus. Above: the underside of the floor, and two long cable trays running away to the limit of the work light. Below: bare structural slab, swept, sealed, and \u2014 because every surface here is somebody's control \u2014 perfectly clean."
+    },
+    {
+     "narrate": "And threaded horizontally through the pedestal forest, in bundles thicker than your arm, EVERYTHING. Every fiber, every copper run, every power whip, every sensor lead in twenty-two acres, all of it down here in the dark under the pretty floor, exactly the way it is in every building you have ever worked in, from a strip-mall closet to a cathedral. The bezels are upstairs. The truth is under the tiles."
+    },
+    {
+     "setFlag": "a3_plenum_seen"
+    }
+   ]
+  },
+  {
+   "if": {
+    "flag": "a3_fiber_seen"
+   },
+   "text": "The plenum again: pedestals, trays, cold, and one yellow strand out of ten thousand that runs three hundred and eleven miles east to a nail salon's back wall and is, infuriatingly, absolutely fine."
+  },
+  {
+   "text": "Under the floor, standing up in it: a river of cold, a forest of steel columns, and every cable in the building."
+  }
+ ],
+ "lookAround": [
+  {
+   "text": "The plenum, surveyed: PEDESTALS holding the floor up in every direction, two overhead CABLE TRAYS running the length, a huge horizontal CABLE BUNDLE threaded through the forest with one bright yellow FIBER in it and a small SPLICE TRAY, a louvered CRAC INTAKE at the right where the cold is manufactured, one clamped WORK LIGHT, and the open HATCH with its ladder back up to Cold Aisle 4 at the left."
+  }
+ ],
+ "hotspots": [
+  {
+   "id": "relic",
+   "name": "coffee cup",
+   "synonyms": [
+    "cup",
+    "paper cup",
+    "relic",
+    "trash",
+    "litter",
+    "styrofoam",
+    "rubbish",
+    "slab"
+   ],
+   "polygon": [
+    [
+     144,
+     104
+    ],
+    [
+     180,
+     104
+    ],
+    [
+     180,
+     128
+    ],
+    [
+     144,
+     128
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "pl_found_relic"
+      },
+      "do": [
+       {
+        "narrate": "Wedged behind a pedestal base, where nine years of sweeping never quite reaches: a paper coffee cup, collapsed on one side, bone dry. There is writing on it in ballpoint, gone brown, in the tidy hand of somebody who wrote on a cup because a cup was what they had."
+       },
+       {
+        "document": {
+         "style": "postit",
+         "title": "(ballpoint, on a paper cup)",
+         "body": [
+          {
+           "text": "SEG 47 DRESSED + TIED \u2014 LOOKS RIGHT",
+           "style": "hand"
+          },
+          {
+           "text": "COLD DOWN HERE. BROUGHT A HOODIE. 2nd DAY.",
+           "style": "hand"
+          },
+          {
+           "text": "if anybody ever reads this: it was done properly",
+           "style": "hand"
+          },
+          {
+           "text": "\u2014 D.",
+           "style": "hand"
+          }
+         ]
+        }
+       },
+       {
+        "narrate": "D. Somebody with an initial, on the second day of a commissioning job, under a floor, in the cold, with a hoodie and a cup of coffee, who dressed segment 47 \u2014 YOUR segment 47, the one that carries your entire county \u2014 and then wrote on a cup that it was done properly, in case anybody ever came."
+       },
+       {
+        "narrate": "Nobody ever came. Nine years of sweeping went around the cup. Forty percent of the world's compute went over the top of it. And on the second day of the largest outage in history, a man with a misprinted badge and a hoodie he finally put on has crouched down in the same cold and read it."
+       },
+       {
+        "narrate": "You put the cup back exactly where it was, behind the pedestal, out of the broom's reach. It was done properly. Somebody read it."
+       },
+       {
+        "setFlag": "pl_found_relic"
+       },
+       {
+        "score": {
+         "id": "pl_relic",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "text": "A dry collapsed paper cup behind a pedestal base, ballpoint gone brown: SEG 47 DRESSED + TIED. COLD DOWN HERE. BROUGHT A HOODIE. 2nd DAY. \u2014 D. Nine years of brooms went around it."
+     }
+    ],
+    "take": [
+     {
+      "if": {
+       "flag": "pl_found_relic"
+      },
+      "text": "It stays. It has been here nine years, it is a nine-year-old note to a stranger, and the stranger has now read it. Taking it would end the sentence."
+     },
+     {
+      "text": "You reach behind the pedestal and find it's a paper cup, which is not what you expected under the most expensive floor in the state. Read it first."
+     }
+    ],
+    "use": [
+     {
+      "text": "The cup is not going to do anything. It already did the only thing it was ever going to do, which was wait nine years to be read by exactly one person."
+     }
+    ]
+   }
+  },
+  {
+   "id": "fiber",
+   "name": "yellow fiber",
+   "synonyms": [
+    "fiber",
+    "fibre",
+    "yellow strand",
+    "strand",
+    "county fiber",
+    "splice",
+    "splice tray",
+    "bundle",
+    "cables",
+    "cable bundle"
+   ],
+   "polygon": [
+    [
+     88,
+     54
+    ],
+    [
+     264,
+     54
+    ],
+    [
+     264,
+     82
+    ],
+    [
+     88,
+     82
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "a3_fiber_seen"
+      },
+      "do": [
+       {
+        "narrate": "The bundle runs the length of the plenum: hundreds of jacketed strands zip-tied at nine-inch intervals by somebody with a straight eye and a tidy mind, all of it going east through the wall into a conduit the diameter of a dinner plate. And in the middle of the bundle, in a small gray splice tray screwed to a pedestal, the strands come apart into individual fibers, labelled."
+       },
+       {
+        "narrate": "You find it because you have spent two days following it and because it is labelled the way infrastructure is always labelled \u2014 accurately, unglamorously, and by somebody who never expected to be read: E-RING \u00b7 SEG 47 \u00b7 REGIONAL EDGE 0447."
+       },
+       {
+        "narrate": "Edge site 0447. Parkview Plaza, Unit 6, rear. A utility closet behind a nail salon with a nineteen-dollar box fan wedged in the transom, three hundred and eleven miles east of this pedestal, where you stood yesterday with a cable in your hand."
+       },
+       {
+        "narrate": "One yellow strand. It goes out of this tray, into the bundle, through the wall, under a county road you rode in on, past a mile marker that said 47, under Merle's soybeans, and up into a rack behind Kim's Nails. Every word that town has said to the world for nine years came down this piece of glass."
+       },
+       {
+        "narrate": "The splice tray's port indicator, six inches from your face, in the cold, in the dark, under a building the size of an airport, is GREEN. Lit. Clean. Zero errors. The glass is fine. The glass was always fine. The county's entire internet is sitting right here, perfectly delivered, at line rate, waiting for permission from a form."
+       },
+       {
+        "narrate": "You sit down on the slab, in the cold, hood up, and look at a green light. Yesterday a box fan and a patch panel; today two hundred pedestals and forty percent of the world's compute; both ends fine, both ends healthy, both ends helpless. The whole descent, and the fault was never in any of the rooms."
+       },
+       {
+        "setFlag": "a3_fiber_seen"
+       },
+       {
+        "score": {
+         "id": "pl_fiber",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "text": "E-RING \u00b7 SEG 47 \u00b7 REGIONAL EDGE 0447 \u2014 one yellow strand in a bundle of thousands, indicator green, zero errors, running three hundred and eleven miles east to a closet behind a nail salon. Both ends perfect. Nothing in between broken. The problem is a form."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "instrument": "cable"
+      },
+      "text": "You hold your hand-crimped cat 5 up next to a single-mode fiber carrying a county's entire existence, for scale, and for a second the two of them are just cable \u2014 the same trade, the same crimp, the same person somewhere deciding to do it properly. Then you put yours away, because the other one is glass and it is working and you have never once been the man who tests a live production strand for fun."
+     },
+     {
+      "text": "You do not touch a lit production fiber under a live floor. There is a version of this profession where somebody does that, and every one of us has read that postmortem."
+     }
+    ],
+    "take": [
+     {
+      "text": "CALL BEFORE YOU DIG, said the orange posts along the county road, all the way west. This is the thing they meant. It stays exactly where it is."
+     }
+    ]
+   }
+  },
+  {
+   "id": "pedestals",
+   "name": "pedestals",
+   "synonyms": [
+    "pedestal",
+    "posts",
+    "legs",
+    "supports",
+    "stanchions",
+    "forest",
+    "floor supports"
+   ],
+   "polygon": [
+    [
+     88,
+     84
+    ],
+    [
+     262,
+     84
+    ],
+    [
+     262,
+     126
+    ],
+    [
+     88,
+     126
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Two hundred steel pedestals in a grid, each one taller than you and carrying a corner of four floor tiles, each tile carrying its share of a rack, each rack carrying its share of everything anybody ever uploaded. You look down the rows and the perspective does what perspective does in a forest: closes into dark about forty feet out, in every direction, identically."
+     },
+     {
+      "text": "Each pedestal is a threaded rod, a base plate, four anchor bolts and a head, with a small stamped load rating, and the ratings are conservative because the people who make pedestals have never once been asked to move fast and break things. The most load-bearing objects in the entire information economy cost about two hundred dollars each and have never appeared on a status page, an architecture diagram, or a slide."
+     }
+    ],
+    "use": [
+     {
+      "text": "You put a hand on a pedestal head and push, out of nothing but professional curiosity. It does not move even slightly. Above it, four tiles, a rack, a row, an aisle, a hall, a building, an industry, and a species' collective memory. Below it, four anchor bolts into slab. It is a nine-dollar part doing a job that has never once been on a status page."
+     }
+    ],
+    "take": [
+     {
+      "text": "Removing a pedestal from a live raised floor is how a room becomes an incident. You have read that postmortem too."
+     }
+    ]
+   }
+  },
+  {
+   "id": "trays",
+   "name": "cable trays",
+   "synonyms": [
+    "tray",
+    "trays",
+    "overhead",
+    "runs",
+    "wire trays",
+    "cabling",
+    "zip ties",
+    "dressing"
+   ],
+   "polygon": [
+    [
+     88,
+     0
+    ],
+    [
+     320,
+     0
+    ],
+    [
+     320,
+     50
+    ],
+    [
+     88,
+     50
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Two steel trays running the full length of the plenum, and the cable dressing in them is \u2014 you want to be precise about this \u2014 beautiful. Every bundle combed straight, every zip tie at the same interval, every tie's tail cut flush so nothing can snag a hand, every service loop the same generous radius. Nobody was ever going to see this. It is under a floor, in the dark, in a building with no windows, in a county with no people."
+     },
+     {
+      "text": "Somebody spent weeks down here on their knees in fifty-five-degree air making cable runs that nobody would ever look at, and made them perfect anyway, because that is what the job is when the job is done properly. You are looking at the only art in twenty-two acres, and it is in a tray, in the dark, under the floor."
+     }
+    ],
+    "use": [
+     {
+      "text": "You run a finger along a bundle and feel every tie tail cut flush, one after another, for six feet. You could not do better. You would like very much to meet whoever did this, and you never will, and their work will hold this building up for thirty years."
+     }
+    ]
+   }
+  },
+  {
+   "id": "crac",
+   "name": "air handler",
+   "synonyms": [
+    "crac",
+    "intake",
+    "grille",
+    "louvers",
+    "cooling unit",
+    "air conditioner",
+    "ac",
+    "cold air",
+    "wind"
+   ],
+   "polygon": [
+    [
+     258,
+     48
+    ],
+    [
+     320,
+     48
+    ],
+    [
+     320,
+     122
+    ],
+    [
+     258,
+     122
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A louvered intake the size of a doorway, pulling the plenum's air past you at a speed that has been making a low continuous note in your left ear since you came down the ladder. This is the source: the cold is manufactured behind that grille, pushed under the floor, and let up through the perforated tiles into the aisle. The whole cooling architecture of a twenty-two-acre building is a big fan, a cold coil, and the space under a floor."
+     },
+     {
+      "text": "The grille, and behind it the coils and compressors doing exactly what a nineteen-dollar box fan in a strip-mall transom was doing yesterday, at four hundred thousand times the cost and with a maintenance contract. Same physics. Same idea. Same result. One of them has a laminated control."
+     }
+    ],
+    "use": [
+     {
+      "text": "You stand in front of the intake and let the plenum's entire air budget go past you at once, hood up, hands in pockets, in the dark, under the cloud. It is the coldest and least glamorous place you have ever stood, and after two days of dashboards and hold music it is the first place all week that has been unambiguously honest with you."
+     }
+    ],
+    "take": [
+     {
+      "text": "It is a building system with a four-hundred-amp feed and its own maintenance contract, and you have a hoodie and a cable."
+     }
+    ]
+   }
+  },
+  {
+   "id": "work_light",
+   "name": "work light",
+   "synonyms": [
+    "light",
+    "lamp",
+    "clamp light",
+    "worklight",
+    "bulb"
+   ],
+   "polygon": [
+    [
+     202,
+     88
+    ],
+    [
+     256,
+     88
+    ],
+    [
+     256,
+     130
+    ],
+    [
+     202,
+     130
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A clamp light gripped onto a cable tray, aimed down at nothing in particular, burning away under the floor of the most automated building on the continent. There is no switch on it that anybody could reach from upstairs. Somebody clamped it here, turned it on, and left, and it has been lighting an empty plenum ever since, on the building's power, off the building's books."
+     },
+     {
+      "text": "One bulb, one clamp, one cord going away into the dark toward an outlet nobody documented. It is the only light down here and it is not on any plan. Every building has one. Every building's is beloved."
+     }
+    ],
+    "use": [
+     {
+      "text": "You swivel it to point down the fiber bundle, and the whole length of somebody's flawless cable dressing comes up out of the dark for a moment, combed and tied and beautiful. Then you put it back where it was, because whoever left it aimed it that way for a reason you will never learn."
+     }
+    ],
+    "take": [
+     {
+      "text": "You are not stealing the only light in the crypt. You have a functioning sense of what happens to people who take the only light."
+     }
+    ]
+   }
+  },
+  {
+   "id": "hatch",
+   "name": "hatch",
+   "synonyms": [
+    "ladder",
+    "opening",
+    "way up",
+    "up",
+    "tile",
+    "aisle",
+    "back"
+   ],
+   "polygon": [
+    [
+     4,
+     4
+    ],
+    [
+     86,
+     4
+    ],
+    [
+     86,
+     130
+    ],
+    [
+     4,
+     130
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "The square of cold blue light you came down through, with a short steel ladder bolted under the lip \u2014 evidence that somebody once expected people to be down here regularly, and evidence, from the ladder's total absence of wear, that they were wrong. Above it: Cold Aisle 4, fifty-five degrees, ten thousand fans, six hundred green lights, and a runbook with an address in it."
+     },
+     {
+      "text": "The hatch, the ladder, and the aisle above. Everything you came three hundred miles for has now happened; it just happened downward."
+     }
+    ],
+    "use": [
+     {
+      "do": [
+       {
+        "narrate": "You go back up the ladder into the aisle, where it is warmer by absolutely nothing and louder by a lot."
+       },
+       {
+        "goto": "act3_cold_aisle",
+        "arrive": {
+         "x": 226,
+         "y": 160,
+         "facing": "left"
+        }
+       }
+      ]
+     }
+    ],
+    "open": [
+     {
+      "do": [
+       {
+        "narrate": "Up the ladder."
+       },
+       {
+        "goto": "act3_cold_aisle",
+        "arrive": {
+         "x": 226,
+         "y": 160,
+         "facing": "left"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "slab",
+   "name": "slab",
+   "synonyms": [
+    "floor",
+    "concrete",
+    "ground",
+    "structural slab",
+    "underside",
+    "tiles above"
+   ],
+   "polygon": [
+    [
+     0,
+     116
+    ],
+    [
+     320,
+     116
+    ],
+    [
+     320,
+     126
+    ],
+    [
+     0,
+     126
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "Bare structural slab, swept, sealed, and free of dust in a way that a floor in a building this size has no business being. Above you, the underside of the raised floor: two hundred tiles' worth of galvanized steel pans, each stamped with a load rating, each one the invisible half of a surface somebody upstairs polished."
+     },
+     {
+      "text": "Slab below, tile pans a foot over your head, a whole standing room of cold between them, and every single thing that matters threaded through the middle. Every building you have ever loved has looked like this from underneath."
+     }
+    ]
+   }
+  }
+ ],
+ "onScoreComplete": [
+  {
+   "text": "The plenum is closed out, which means you went under the floor of the cloud in a hoodie and found the two things that were actually down there: your own county's fiber, lit and blameless \u2014 and a nine-year-old note on a paper cup from somebody who did the work properly and assumed nobody would ever know. Both of those are the same discovery. Neither will be in the postmortem. You'll remember them longer than the outage."
+  }
+ ]
+}

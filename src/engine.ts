@@ -162,15 +162,36 @@ export class Engine {
     this.scene.setPlayerSprite(id ? this.sheetFor(id) : null);
   }
 
-  /** NPCs standing in this room: every hotspot with a `sprite` block. */
+  /** NPCs standing in this room: every hotspot with a `sprite` block. A
+   *  `path` makes one patrol instead — the route, speed and dwell are
+   *  authored, so a moving NPC costs the engine no room knowledge. */
   private npcsFor(room: Room): SceneNpc[] {
     const npcs: SceneNpc[] = [];
     for (const h of room.hotspots) {
       if (!h.sprite) continue;
       const sheet = this.sheetFor(h.sprite.use);
-      if (sheet) {
-        npcs.push({ id: h.id, sheet, x: h.sprite.at.x, y: h.sprite.at.y });
+      if (!sheet) continue;
+      const spec = h.sprite;
+      const npc: SceneNpc = { id: h.id, sheet, x: spec.at.x, y: spec.at.y };
+      if (spec.path && spec.path.length >= 2) {
+        const start = spec.path[0]!;
+        npc.x = start.x;
+        npc.y = start.y;
+        npc.patrol = {
+          path: spec.path,
+          speed: spec.speed ?? 24,
+          loop: spec.loop ?? "pingpong",
+          pauseMs: spec.pauseMs ?? 0,
+          leg: 0,
+          t: 0,
+          dir: 1,
+          wait: 0,
+          facing: "down",
+          moving: false,
+          animTime: 0,
+        };
       }
+      npcs.push(npc);
     }
     return npcs;
   }
@@ -390,6 +411,10 @@ export class Engine {
       return;
     }
     const instrumentId = cmd.object2 ? cmd.object?.id : undefined;
+    // A hotspot and a carried item can share the instrument's noun; honor
+    // both, or "use tag on terminal" silently misses because the shelf the
+    // tag came off of also answers to "tag".
+    const instrumentAlt = cmd.object2 ? cmd.objectAlt?.id : undefined;
 
     if (target.kind === "hotspot") {
       const room = this.currentRoom();
@@ -404,14 +429,14 @@ export class Engine {
         this.scene.npcTalk(hotspot.id);
       }
       const entries = hotspot?.responses?.[cmd.verb];
-      if (runEntries(entries, this.ctx(instrumentId))) return;
+      if (runEntries(entries, this.ctx(instrumentId, instrumentAlt))) return;
       // The room named it but authored nothing for this verb; a carried
       // item sharing the noun catches the command ("wear coat" works in
       // the room the coat came from).
       const alt = cmd.object2 ? cmd.object2Alt : cmd.objectAlt;
       if (alt?.kind === "item") {
         const item = this.content.items[alt.id];
-        if (runEntries(item?.responses?.[cmd.verb], this.ctx(instrumentId))) return;
+        if (runEntries(item?.responses?.[cmd.verb], this.ctx(instrumentId, instrumentAlt))) return;
         if (cmd.verb === "look" && item?.look) {
           this.narrate(item.look);
           return;
@@ -423,7 +448,7 @@ export class Engine {
 
     // Inventory item target: authored responses first, bespoke look second.
     const item = this.content.items[target.id];
-    if (runEntries(item?.responses?.[cmd.verb], this.ctx(instrumentId))) return;
+    if (runEntries(item?.responses?.[cmd.verb], this.ctx(instrumentId, instrumentAlt))) return;
     if (cmd.verb === "look" && item?.look) {
       this.narrate(item.look);
       return;
@@ -462,10 +487,11 @@ export class Engine {
 
   // ---- engine context (side effects for the resolver) -----------------
 
-  private ctx(instrumentId?: string): EngineContext {
+  private ctx(instrumentId?: string, instrumentAltId?: string): EngineContext {
     return {
       state: this.state,
       instrumentId,
+      instrumentAltId,
       narrate: (text, cls) => this.narrate(text, cls),
       award: (id, points) => this.award(id, points),
       addItem: (id) => {
@@ -737,6 +763,7 @@ export class Engine {
         player: () => this.playerSpriteId,
         npcs: () => this.scene.npcIds(),
         talking: () => this.scene.npcTalking(),
+        pose: (id: string) => this.scene.npcPose(id),
       },
     };
   }

@@ -162,6 +162,65 @@ engine work.
   and splayed, fresh rose fingertips — the hands NEVER close. Talk: the
   elbows wing outward, nails level throughout ("a small flightless
   bird taking off"). Minted M4.
+- **Bev Tolliver** (the flagship lobby, behind the visitor desk) — 32x32
+  static, WAIST-UP (the Darlene trick; anchor at the waist-cut row, which
+  tucks behind the desk top's FAR edge). Thirty-one years of this lobby.
+  Silver waves, reading glasses on a beaded brass chain, white uniform
+  shirt, and the cast's mustard pop: the hand-knit cardigan she wears
+  over the uniform because facilities keeps the lobby at 64°F and has
+  since the building opened. The paper visitor log rides on a clipboard
+  in her hands, because every badge reader on campus is a brick today.
+  Talk: the pen taps the signature line, then the whole log comes at
+  you. Minted M5. (Second waist-up in the cast, but nothing about silver
+  waves in mustard reads as Darlene's teal-and-apron.)
+- **Corinne Mabry** (the badging corridor) — 30x50 static stander, feet
+  anchored, baked shadow. Continuous Compliance, Tier 2, flown in from
+  somewhere with an airport. Tight dark ponytail, corporate black, and
+  the cast's chartreuse pop: a hi-viz vest worn INDOORS on a floor
+  cleaner than an operating theater, because the vest is a control and
+  controls do not get skipped for being ridiculous. The three-ring
+  binder is hugged to her chest at all times — the same stock the
+  `binder` document style renders on, which is not a coincidence. Talk:
+  the binder opens on a wall of tabs, then one finger comes up to mark a
+  finding. Minted M5.
+- **The inventory scanner** (the loading dock, on patrol) — 28x32
+  **WALKER** (4 rows down/left/right/up, col 0 idle + a 4-frame roll),
+  anchor at the wheel contact patch. The game's first moving NPC and its
+  first non-Mel walker sheet. Silhouette law, read bottom to top: wheels
+  → cargo chassis with two open bays → mast → sensor head with a cyan
+  reading band → amber strobe, meaning AN ASSET IS MOVING, LEGALLY.
+  Deliberately SHORT (~30 px against the cast's 48–50) so it reads as
+  machine at a glance and never competes for a human silhouette. Its
+  cycle is a wheel-spoke shift plus the strobe alternating; it has no
+  talk frames, because walker sheets spend their columns on the gait and
+  because it has nothing to say to something that isn't an asset. It
+  cannot perceive Mel. That is the specification, not a fault. Its route
+  is room data — see schema.md → Sprites → Patrolling NPCs. Minted M5.
+
+## Non-Mel walkers (added M5)
+
+A patrolling NPC uses the same sheet contract as Mel: 4 rows in the fixed
+order down/left/right/up, col 0 idle, remaining cols the cycle, left row
+mirrored from right. Two rules the static NPCs never had to care about:
+
+- **No talk frames.** The engine reads a 4-row sheet as a walker and
+  spends its columns on the gait, so TALK on a patroller runs no cycle.
+  Give a walker something to say in its LOOK and topics, not its arms.
+- **The baked shadow travels with the frame**, which is correct for
+  wheels and wrong for feet — a walker whose shadow should stay put wants
+  it painted into the background instead.
+
+## Outfits, continued (added M5)
+
+Mel's hood-up sheets (`mel_hood*`) are the backup hoodie's Act 3 payoff
+and cost no new system: three hood grids in the head slot, four sheet
+combinations off the existing part set, four registry rows, four
+outfit-map entries. The hood REPLACES the head grid rather than layering
+over it — fabric eats the hairline and the jaw, which is what a cinched
+hood does and the reason the silhouette reads at 1x. The face opening
+keeps the glasses exactly where the bare heads put them, so it is still
+Mel; the drawcords hanging past the chin are what keep it from reading as
+a motorcycle helmet.
 
 ## Make-a-character (the repeatable process)
 

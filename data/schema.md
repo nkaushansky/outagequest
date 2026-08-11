@@ -130,7 +130,11 @@ resolve on OBJECT2 with OBJECT as the *instrument*:
 
 - `{ "instrument": "cable" }` — the command supplied exactly this item or
   hotspot id as the instrument. "use mug on modem" no longer satisfies a
-  cable gate; give wrong instruments bespoke snark where it matters.
+  cable gate; give wrong instruments bespoke snark where it matters. When a
+  room hotspot and a carried item share the instrument's noun, EITHER id
+  satisfies the condition — the instrument half of the hotspot-shadowing
+  rule (see Items). Without it, "use tag on terminal" silently misses
+  because the shelf the tag was peeled off of also answers to "tag".
 - `{ "anyInstrument": true }` — some instrument was supplied (use after the
   bespoke ones as the catch-all wrong-instrument entry); `false` matches
   one-object commands only.
@@ -216,6 +220,35 @@ never touches engine code:
 player, so keep `at` y above the walkable band for characters standing
 behind it. TALK (or ask-about) landing on a sprite-bearing hotspot runs
 its talk cycle for a beat; there is nothing to author.
+
+**Patrolling NPCs.** Add `path` and the sprite walks its route instead of
+standing. The engine interpolates the anchor between waypoints, derives
+facing from the direction of travel, and animates the walk columns while
+underway — the route itself is content:
+
+```jsonc
+{ "id": "scanner", "name": "inventory robot",
+  "polygon": [[70,96],[262,96],[262,150],[70,150]],
+  "sprite": { "use": "scanner", "at": [96, 138],
+              "path": [[96,138],[248,138],[248,124]],
+              "speed": 20, "loop": "pingpong", "pauseMs": 1400 } }
+```
+
+- `path` — two or more waypoints; the sprite starts at `path[0]` (which
+  makes `at` the standing fallback for a sheet with no path).
+- `speed` — px/sec, default 24. `loop` — `pingpong` (default, reverses at
+  each end) or `cycle` (returns to waypoint 0). `pauseMs` — dwell at every
+  waypoint, default 0.
+- The sheet should be a **walker** (4 rows) so facing reads; a 1-row sheet
+  patrols as its idle frame. Walker sheets have no talk cycle — those
+  columns are the gait.
+- Patrols ignore the walkable polygon: the author drew the route. The
+  **hotspot polygon stays where it is authored** — make it cover the whole
+  patrol lane so the noun is tappable wherever the sprite happens to be.
+- Live state resets on room entry, so a patrol is deterministic from the
+  door and a room's deaths and puzzles never depend on wall-clock timing.
+  Anything a patroller does to the player is authored like any other
+  response (there is no collision engine, and there will not be one).
 
 **The outfit map** lives in `data/game.json` under `player.sprite`: an
 ordered first-match list, exactly like response resolution. The first

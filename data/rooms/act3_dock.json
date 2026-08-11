@@ -1,0 +1,1013 @@
+{
+ "id": "act3_dock",
+ "name": "The Loading Dock",
+ "background": "assets/backgrounds/act3_dock.png",
+ "walkable": [
+  [
+   10,
+   118
+  ],
+  [
+   308,
+   118
+  ],
+  [
+   312,
+   160
+  ],
+  [
+   6,
+   160
+  ]
+ ],
+ "playerStart": {
+  "x": 56,
+  "y": 140,
+  "facing": "right"
+ },
+ "exits": [
+  {
+   "to": "act3_compliance",
+   "polygon": [
+    [
+     6,
+     118
+    ],
+    [
+     34,
+     118
+    ],
+    [
+     34,
+     142
+    ],
+    [
+     6,
+     142
+    ]
+   ],
+   "arrive": {
+    "x": 268,
+    "y": 150,
+    "facing": "left"
+   }
+  }
+ ],
+ "onEnter": [
+  {
+   "if": {
+    "flagNot": "a3_dock_seen"
+   },
+   "do": [
+    {
+     "narrate": "Receiving. High bays, sealed concrete, a safety-yellow hazard stripe across the front of the deck laid down with a precision that suggests somebody used a chalk line and cared about it. Along the back: a terminal on a stand, a pallet of new racks still in their milky shrink-wrap, a mesh cage of dead equipment trays, a freestanding scanning gantry over a lane painted on the floor in yellow hatching, and a closed roll-up freight door."
+    },
+    {
+     "narrate": "And moving, unhurried, along the apron in front of all of it: a wheeled machine about hip-high, with two open cargo bays, a short mast, a cyan sensor band where a face would be if a face had ever been considered, and an amber strobe on top turning slowly. It comes toward you. It comes THROUGH where you are standing, more or less, and you step aside, and it does not adjust, and it does not slow, and it does not acknowledge, and it goes past you and away."
+    },
+    {
+     "narrate": "You have been in this room eleven seconds and you have already been ignored by it more completely than by any human being in your entire career, which \u2014 and you want to be clear about this \u2014 is a high bar."
+    },
+    {
+     "setFlag": "a3_dock_seen"
+    }
+   ]
+  },
+  {
+   "if": {
+    "flag": "a3_asset"
+   },
+   "text": "The dock, and the machine that now stops for you. It is the single most respectful relationship you have had all day and you had to become furniture to get it."
+  },
+  {
+   "text": "Receiving. The strobe turns, the wheels roll, the sensor band sweeps, and none of it is for you."
+  }
+ ],
+ "lookAround": [
+  {
+   "if": {
+    "flag": "a3_asset"
+   },
+   "text": "The dock, surveyed as inventory: the RECEIVING TERMINAL (your cable still in its port, holding the whole thing up), the shrink-wrapped PALLET, the SPARES CAGE, the SCAN LANE under its gantry, the FREIGHT DOOR, and the ROBOT \u2014 which now brakes for you, logs you, and yields right of way, because a table says you are eight hundred pounds of rack. The corridor is back through the left."
+  },
+  {
+   "text": "The dock, surveyed: a RECEIVING TERMINAL on a stand at the left (screen dark, one network port darker), a shrink-wrapped PALLET of new racks, a mesh SPARES CAGE of dead trays with labels still on them, a SCAN LANE painted on the floor under a gantry with a cyan reading band, and a closed FREIGHT DOOR right. An inventory ROBOT patrols the apron and cannot see you. Corridor back through the left edge."
+  }
+ ],
+ "hotspots": [
+  {
+   "id": "robot",
+   "name": "robot",
+   "synonyms": [
+    "scanner",
+    "inventory robot",
+    "machine",
+    "bot",
+    "amr",
+    "cart",
+    "strobe",
+    "drone"
+   ],
+   "polygon": [
+    [
+     70,
+     116
+    ],
+    [
+     262,
+     116
+    ],
+    [
+     262,
+     138
+    ],
+    [
+     70,
+     138
+    ]
+   ],
+   "sprite": {
+    "use": "scanner",
+    "at": [
+     80,
+     130
+    ],
+    "path": [
+     [
+      80,
+      130
+     ],
+     [
+      250,
+      130
+     ]
+    ],
+    "speed": 19,
+    "loop": "pingpong",
+    "pauseMs": 1400
+   },
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "text": "The scanner, rolling its route, and when it reaches you it stops \u2014 a full, patient, courteous stop, strobe turning, cyan band level with the tag on your chest \u2014 and waits for you to move. It yields to you now. Nothing about the machine changed. A row in a table changed. You have never been treated better by anything with a logo on it."
+     },
+     {
+      "if": {
+       "flagNot": "dk_read_robot"
+      },
+      "do": [
+       {
+        "narrate": "Hip-high, four hard wheels, two open cargo bays, a stubby mast, and a cyan sensor band sweeping side to side at the exact height of a rack label. Amber strobe on top, turning: the internationally understood signal for AN ASSET IS MOVING, LEGALLY. No screen, no speaker, no buttons, no handle. It was not built to be talked to. It was built to count things."
+       },
+       {
+        "narrate": "You stand directly in its path with your arms out, at a distance of six feet, in a hi-viz-free chartreuse-free entirely-visible-to-humans way, and it comes on at exactly the same speed. Its sensor band passes across your chest \u2014 across the visitor badge, across your sternum, across your entire physical existence \u2014 and registers nothing, because there is nothing there to register."
+       },
+       {
+        "narrate": "It isn't broken. It's a LiDAR-and-barcode inventory auditor whose world model contains exactly the objects listed in the asset database. You are not in the asset database. In the only reality this machine has access to, this section of floor is empty and always has been. It will drive through where you are standing with a completely clear conscience, and if you are still there, that will be a fact about you and not about it."
+       },
+       {
+        "setFlag": "dk_read_robot"
+       },
+       {
+        "setFlag": "a3_warn_robot"
+       }
+      ]
+     },
+     {
+      "text": "Two cargo bays, a cyan band, an amber strobe, and no model of you whatsoever. It sweeps your chest and reads empty floor. Mind the lane."
+     }
+    ],
+    "talk": [
+     {
+      "text": "You say hello to the inventory robot. This is the single most reasonable thing you have done today and it is completely wasted: no microphone, no speaker, no port for a voice, nothing on the entire chassis that was ever intended to be addressed. It rolls past mid-sentence. The tally, which has spent two days recording every wrong name you have been given, quietly notes that this is the first thing all day to give you no name at all."
+     },
+     {
+      "text": "Still no microphone. Still rolling."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "text": "You step in front of the scanner. It brakes \u2014 smoothly, respectfully, with a small servo sigh \u2014 and waits, strobe turning, for eight hundred pounds of rack to finish doing whatever racks do. You could stand here all day being deferred to. It's very nearly moving."
+     },
+     {
+      "if": {
+       "flagNot": "a3_warn_robot"
+      },
+      "do": [
+       {
+        "narrate": "You step in front of it, hand up, the way you'd stop a car. It comes on. At four feet you understand, in your legs before your head, that the gesture has no receiver \u2014 that there is no part of this machine that is looking for a raised hand, because a raised hand has never once been part of a rack."
+       },
+       {
+        "narrate": "You get out of the way. It goes through the space you were in. Whatever safety envelope this thing has, it is scaled to cartons and pallets and the corner of a rack, and it is drawn around objects that are IN A LIST."
+       },
+       {
+        "setFlag": "a3_warn_robot"
+       }
+      ]
+     },
+     {
+      "do": [
+       {
+        "narrate": "You stand your ground in front of the inventory robot, which cannot perceive you, on a dock floor rated for materiel handling, having already been told."
+       },
+       {
+        "death": {
+         "id": "right_of_way"
+        }
+       }
+      ]
+     }
+    ],
+    "take": [
+     {
+      "text": "It weighs three hundred and forty pounds and it is currently the only member of staff on the floor. Also it would not notice being taken, which somehow makes it worse."
+     }
+    ],
+    "open": [
+     {
+      "text": "The two cargo bays are open already, and empty, and clean, and sized for exactly one standard tray. You look into a bay for slightly too long. A thought arrives about the possibility of getting into it, and departs when you consider the mass rating and your own."
+     }
+    ]
+   }
+  },
+  {
+   "id": "terminal",
+   "name": "receiving terminal",
+   "synonyms": [
+    "terminal",
+    "screen",
+    "computer",
+    "kiosk",
+    "receiving",
+    "port",
+    "network port",
+    "stand",
+    "console"
+   ],
+   "polygon": [
+    [
+     36,
+     72
+    ],
+    [
+     66,
+     72
+    ],
+    [
+     66,
+     116
+    ],
+    [
+     36,
+     116
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flag": "a3_tag_live"
+      },
+      "text": "The receiving terminal, awake, your hand-crimped cable running from its port down the stand and along the concrete like the one honest wire in the building. On screen: ASSET 8814402 \u00b7 STATUS: RECEIVED \u00b7 LOCATION: DOCK \u00b7 MOVE TICKET: AUTO-ISSUED. Four fields. In the only reality this campus can perceive, those four fields are more real than you are."
+     },
+     {
+      "if": {
+       "flag": "a3_terminal_wired"
+      },
+      "text": "Awake, and honest about it: RECEIVING \u00b7 SCAN OR ENTER ASSET TAG \u00b7 LINK 1000FDX. The asset database lives on this floor, on this switch, behind no cloud whatsoever, and it has been working perfectly all day because nobody ever thought inventory was worth putting somewhere clever. It wants a tag."
+     },
+     {
+      "if": {
+       "flagNot": "dk_read_terminal"
+      },
+      "do": [
+       {
+        "narrate": "A small industrial terminal on a gray pedestal stand: rubber-keyed keyboard, screen dark, a barcode wand on a coiled cord. Taped to the bezel, in Bev-adjacent handwriting: RECEIVING ONLY \u2014 DO NOT USE FOR VISITORS."
+       },
+       {
+        "narrate": "You wake it. It comes up instantly \u2014 no login, no identity service, no cloud \u2014 into a green-on-black receiving form from a decade with better priorities, and then stops on one line: NO LINK. You look at the network port under the screen. Unplugged. Not failed: UNPLUGGED. There is a patch cable coiled neatly on a hook eight inches away, and somebody has zip-tied the coil, which is how you know it has been eight inches away for years."
+       },
+       {
+        "narrate": "The asset database is not in the cloud. Of course it isn't. Inventory is boring, so inventory stayed on the floor, on a local switch, in a building with two generators \u2014 which means that of everything Cumulonimbus owns, the system that knows what is real is the only one still running."
+       },
+       {
+        "setFlag": "dk_read_terminal"
+       }
+      ]
+     },
+     {
+      "text": "Green-on-black receiving form, NO LINK, one unplugged port, and a zip-tied patch cable eight inches away that nobody has ever needed to plug in. You own a better cable than that one."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "all": [
+        {
+         "instrument": "cable"
+        },
+        {
+         "flagNot": "a3_terminal_wired"
+        }
+       ]
+      },
+      "do": [
+       {
+        "narrate": "You take fourteen feet of hand-crimped cat 5 out of your pocket \u2014 crimped by you, at your own kitchen table, in a year when you still believed you'd never need it \u2014 and you plug one end into the terminal and the other into the floor switch's nearest live port."
+       },
+       {
+        "narrate": "The screen redraws in under a second: RECEIVING \u00b7 SCAN OR ENTER ASSET TAG \u00b7 LINK 1000FDX. Somewhere on this floor, a local database that has never once been down notices a new host and gets on with its afternoon."
+       },
+       {
+        "narrate": "Two days ago this cable proved the outage wasn't your house. Yesterday it proved a closet's LAN was fine while the county's internet was dead. Today it has just connected you to the only system in a trillion-dollar company that still knows what's true. The most reliable object in the hemisphere continues its undefeated season."
+       },
+       {
+        "setFlag": "a3_terminal_wired"
+       },
+       {
+        "score": {
+         "id": "dk_terminal",
+         "points": 3
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "instrument": "cable"
+      },
+      "text": "Your cable's already in it, holding up the only truthful system on campus. Adding a second cable would be showing off."
+     },
+     {
+      "if": {
+       "all": [
+        {
+         "instrument": "asset_tag"
+        },
+        {
+         "flagNot": "a3_terminal_wired"
+        }
+       ]
+      },
+      "text": "You key the tag number in and the form eats it and returns NO LINK, which is the terminal being scrupulously honest: it cannot receive anything into a database it cannot reach. The port under the screen is still unplugged. You are a man who travels with fourteen feet of cat 5."
+     },
+     {
+      "if": {
+       "all": [
+        {
+         "instrument": "asset_tag"
+        },
+        {
+         "flagNot": "a3_tag_live"
+        }
+       ]
+      },
+      "do": [
+       {
+        "narrate": "You wand the tag. The terminal finds it instantly: ASSET 8814402 \u00b7 2U CHASSIS \u00b7 STATUS: IN SERVICE \u00b7 LOCATION: COLD AISLE 4 \u00b7 LAST INVENTORY: 2019. Six years of nobody closing a ticket, preserved perfectly, because the system that keeps inventory is the only one nobody ever modernized."
+       },
+       {
+        "narrate": "The form offers you the thing it offers all day, to anyone standing at a dock with a tag in their hand: RECEIVE THIS ASSET? You press Y."
+       },
+       {
+        "narrate": "STATUS: RECEIVED. LOCATION: DOCK. MOVE TICKET: AUTO-ISSUED PER AC-09. No approval. No escort. No identity service, no Change Advisory Board, no human being anywhere in the loop \u2014 because receiving a box is not a change, receiving a box is just Tuesday, and the company that requires eleven quarterly reviews to fix a four-hundred-dollar door will move eight hundred pounds of hardware anywhere on this floor because a wand went beep."
+       },
+       {
+        "narrate": "Asset 8814402 is now, officially, in transit. It is a sticker in your hand."
+       },
+       {
+        "setFlag": "a3_tag_live"
+       },
+       {
+        "score": {
+         "id": "dk_received",
+         "points": 2
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "instrument": "asset_tag"
+      },
+      "text": "8814402 is already received and already carrying a move ticket. Receiving it twice would be inventory fraud, and you have standards about inventory."
+     },
+     {
+      "if": {
+       "anyInstrument": true
+      },
+      "text": "The receiving form wants an asset tag or a cable, in roughly that order of desperation. It has no field for anything else."
+     },
+     {
+      "if": {
+       "flag": "a3_terminal_wired"
+      },
+      "text": "RECEIVING \u00b7 SCAN OR ENTER ASSET TAG \u00b7 LINK 1000FDX. It is ready, patient, and entirely uninterested in who you are \u2014 the most refreshing user experience of your career. It wants a tag."
+     },
+     {
+      "do": [
+       {
+        "narrate": "You wake the terminal. Green on black: RECEIVING \u00b7 SCAN OR ENTER ASSET TAG. Then, at the bottom, in the same dispassionate green: NO LINK. The port under the screen has never had anything in it."
+       },
+       {
+        "setFlag": "dk_read_terminal"
+       }
+      ]
+     }
+    ],
+    "take": [
+     {
+      "text": "Bolted to the stand, and the stand is bolted to the deck, and honestly the last thing you want to do to the only working database in the company is pick it up."
+     }
+    ]
+   }
+  },
+  {
+   "id": "pallet",
+   "name": "pallet",
+   "synonyms": [
+    "racks",
+    "new racks",
+    "shrink wrap",
+    "wrap",
+    "plastic",
+    "delivery",
+    "boxes",
+    "crate"
+   ],
+   "polygon": [
+    [
+     62,
+     50
+    ],
+    [
+     118,
+     50
+    ],
+    [
+     118,
+     116
+    ],
+    [
+     62,
+     116
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "dk_read_pallet"
+      },
+      "do": [
+       {
+        "narrate": "Three new racks on a wooden pallet, mummified in milky shrink-wrap, delivered \u2014 per the shipping label \u2014 nineteen days ago. The label's other fields are the interesting part: ORIGIN, a factory. DESTINATION, this dock. PROJECT, CAPACITY EXPANSION FY-NEXT. INSTALL WINDOW, a date four months from now."
+       },
+       {
+        "narrate": "Under the wrap, taped to the front of the top rack, an installation checklist with the first two items ticked in pen and the third \u2014 RACK AND STACK PER LAYOUT DWG \u2014 blank. Beside the blank box, in different ink, somebody has written: awaiting layout dwg (req'd via CAB). Nineteen days of eight hundred pounds of hardware standing on a dock, wrapped, waiting for a drawing to be approved by a board that meets three hundred miles away."
+       },
+       {
+        "narrate": "The racks do not mind. Racks are extremely good at waiting. It is the single most transferable skill in this industry."
+       },
+       {
+        "setFlag": "dk_read_pallet"
+       },
+       {
+        "score": {
+         "id": "dk_pallet",
+         "points": 1
+        }
+       }
+      ]
+     },
+     {
+      "text": "Three wrapped racks, nineteen days on the dock, blocked on a layout drawing pending Change Advisory Board approval at corporate. Everything on this campus that isn't moving is waiting for the same room."
+     }
+    ],
+    "open": [
+     {
+      "text": "You get a thumbnail under the shrink-wrap and then stop. Whatever else is true today, three racks that don't belong to you are not going to be improved by being unwrapped by a visitor whose badge says MALFUNCTON."
+     }
+    ],
+    "use": [
+     {
+      "text": "You push. Eight hundred pounds of future capacity declines to be pushed by hand, as does the pallet jack situation, which is: there isn't one, because the robot handles materiel and the robot cannot see people, so nobody has needed a pallet jack in this room in years."
+     }
+    ],
+    "take": [
+     {
+      "text": "Three racks. Four months from now they will be somebody's Tuesday. Today they are furniture with a work order."
+     }
+    ]
+   }
+  },
+  {
+   "id": "spares_cage",
+   "name": "spares cage",
+   "synonyms": [
+    "cage",
+    "trays",
+    "spares",
+    "dead trays",
+    "mesh",
+    "shelf",
+    "tag",
+    "asset tag",
+    "label",
+    "sticker",
+    "drive tray"
+   ],
+   "polygon": [
+    [
+     114,
+     54
+    ],
+    [
+     166,
+     54
+    ],
+    [
+     166,
+     118
+    ],
+    [
+     114,
+     118
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "if": {
+       "flagNot": "dk_read_cage"
+      },
+      "do": [
+       {
+        "narrate": "A steel mesh cage, unlocked, holding three shelves of dead equipment trays \u2014 the elephants' graveyard of any datacenter. Chassis with their guts out, drive sleds with the drives removed and destroyed elsewhere by contract, one power supply with a scorch mark shaped like a lesson."
+       },
+       {
+        "narrate": "And on the front of every single one of them, still perfectly legible, still perfectly adhered: an asset tag. Barcode, seven digits, and the company's typeface. Nobody removes asset tags from dead hardware, because removing an asset tag is a change to the asset record, and changing an asset record requires closing the ticket, and closing the ticket requires somebody to care about a tray with no drives in it."
+       },
+       {
+        "narrate": "The top tray's tag reads 8814402. You crouch and read the little printed line beneath the barcode, the way you have read a thousand labels in your career, and something in your chest does a slow professional roll: 8814402 \u00b7 2U CHASSIS \u00b7 IN SERVICE \u00b7 COLD AISLE 4."
+       },
+       {
+        "narrate": "IN SERVICE. This tray has been dead in a cage on a loading dock since 2019, and according to the only database on this campus that still works, it is in service, in Cold Aisle 4, doing its job. Nobody closed the ticket. Nobody EVER closes the ticket."
+       },
+       {
+        "setFlag": "dk_read_cage"
+       }
+      ]
+     },
+     {
+      "if": {
+       "flag": "a3_tag_found"
+      },
+      "text": "Three shelves of dead trays, each still wearing its asset tag, each still officially in service somewhere on this floor. One gap on the top shelf where 8814402's tag used to be. The tray it came off of is not going to file a complaint; the tray has been past complaining since 2019."
+     },
+     {
+      "text": "Dead trays, live tags. Every one of them still IN SERVICE according to the asset database, because removing an asset tag would require somebody to close a ticket about a tray with no drives in it."
+     }
+    ],
+    "take": [
+     {
+      "if": {
+       "flag": "a3_tag_found"
+      },
+      "text": "You have 8814402. Taking a second identity from a cage of dead hardware would be greedy, and one is plenty for what you're about to do with it."
+     },
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "text": "You already are 8814402, or 8814402 already is you; the paperwork is genuinely unclear and the paperwork is the only authority."
+     },
+     {
+      "do": [
+       {
+        "narrate": "You work a thumbnail under the corner of tag 8814402 and peel it off the dead tray in one piece \u2014 slowly, the way you peel a label you intend to reuse. The adhesive is nine years old and still absolutely committed."
+       },
+       {
+        "narrate": "In your hand: a barcode, seven digits, and a claim. 8814402 \u00b7 2U CHASSIS \u00b7 IN SERVICE \u00b7 COLD AISLE 4. A perfectly valid identity belonging to a machine that has been dead in a cage for six years, kept alive in the asset database by nothing but institutional inertia and an unclosed ticket."
+       },
+       {
+        "narrate": "You are holding the only credential on this campus that nobody has to approve."
+       },
+       {
+        "addItem": "asset_tag"
+       },
+       {
+        "setFlag": "a3_tag_found"
+       },
+       {
+        "score": {
+         "id": "dk_tag",
+         "points": 2
+        }
+       }
+      ]
+     }
+    ],
+    "open": [
+     {
+      "text": "The cage isn't locked. Nothing that would fit in this cage has been worth locking up since the drives came out of it."
+     }
+    ],
+    "use": [
+     {
+      "text": "You rattle the mesh gently. Somewhere in a table, three shelves of dead metal continue to be in service in Cold Aisle 4, humming away, doing important work, for six years running."
+     }
+    ]
+   }
+  },
+  {
+   "id": "scan_lane",
+   "name": "scan lane",
+   "synonyms": [
+    "lane",
+    "gantry",
+    "arch",
+    "scanner arch",
+    "hatching",
+    "yellow lane",
+    "reading band",
+    "portal"
+   ],
+   "polygon": [
+    [
+     172,
+     36
+    ],
+    [
+     226,
+     36
+    ],
+    [
+     226,
+     118
+    ],
+    [
+     172,
+     118
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A freestanding steel gantry over a lane painted on the deck in yellow hatching: two uprights, a crossbar, and a pale cyan reading band along the underside. Everything that enters this building rolls through here and gets counted. The hatching means DO NOT OBSTRUCT, and the robot's route runs straight down the middle of it, and the two facts are the same fact."
+     },
+     {
+      "text": "The gantry, the cyan band, and the hatched lane. Objects go through it and become known. It has no opinion about people because people were never in the requirements."
+     }
+    ],
+    "use": [
+     {
+      "if": {
+       "flag": "a3_asset"
+      },
+      "text": "You walk the lane again. The band sweeps, finds 8814402 exactly where its move ticket says it should be, and logs a location update without comment. You have become routine. It is the nicest thing that has happened to you professionally in nine years."
+     },
+     {
+      "if": {
+       "flag": "a3_tag_live"
+      },
+      "do": [
+       {
+        "narrate": "You peel the backing off tag 8814402 and press it onto your chest, next to the visitor badge, and smooth it down with your thumb. Two identities now: one issued by a woman with a pen, one salvaged off a dead tray. Only one of them is going to work."
+       },
+       {
+        "narrate": "You step into the hatching and stand under the gantry with your arms at your sides, feeling \u2014 and there is no dignified way to describe this \u2014 like freight."
+       },
+       {
+        "narrate": "The cyan band sweeps down your chest. Somewhere on the floor a local database with two generators behind it reads a barcode it has been carrying for six years, matches it against a move ticket issued eleven minutes ago, and updates a row."
+       },
+       {
+        "narrate": "The strobe on the robot's mast changes rhythm. It stops four feet away \u2014 the first time it has stopped for anything in this room \u2014 and its sensor band comes up to the height of the tag on your chest, and holds there. And then, on the gantry's little status readout, the third wrong name of the day arrives, and this one is the best of them, because a machine wrote it:"
+       },
+       {
+        "document": {
+         "style": "slip",
+         "title": "INVENTORY SCAN \u2014 DOCK GANTRY 1",
+         "body": "ASSET: 8814402\nCLASS: 2U CHASSIS\nSTATUS: IN TRANSIT (MOVE TICKET AUTO-ISSUED, AC-09)\nDEST: COLD AISLE 4\nMASS: NOT DECLARED\nDESCRIPTION FIELD (OCR, VISUAL): \"MALFUNCTON, MEL\"\nLOCATION VARIANCE: 311 MI (WITHIN TOLERANCE \u2014 SEE NOTE)\nNOTE: TOLERANCE NOT CONFIGURED.\n\n>> ASSET ACKNOWLEDGED. RIGHT OF WAY GRANTED."
+        }
+       },
+       {
+        "narrate": "The machine read your badge with its camera and put MALFUNCTON, MEL in the DESCRIPTION field of a two-U chassis. Not your name \u2014 the chassis's description. You are now, in the only database on this campus that has been correct all day, a piece of hardware described as a malfunction. It is the first time all day anything has recorded you at all."
+       },
+       {
+        "narrate": "The robot yields. Somewhere two rooms away, a glass vestibule that has told you 'escort required' for the last twenty minutes quietly decides that eight hundred pounds of rack with a move ticket does not need one."
+       },
+       {
+        "removeItem": "asset_tag"
+       },
+       {
+        "setFlag": "a3_asset"
+       },
+       {
+        "setFlag": "a3_tag_worn"
+       },
+       {
+        "setFlag": "name_robot"
+       },
+       {
+        "score": {
+         "id": "dk_scanned",
+         "points": 3
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "all": [
+        {
+         "hasItem": "asset_tag"
+        },
+        {
+         "flagNot": "a3_warn_robot"
+        }
+       ]
+      },
+      "do": [
+       {
+        "narrate": "You step into the hatching with the tag in your hand and hold it up to the band. The band sweeps. Nothing happens \u2014 no beep, no strobe, no acknowledgement. On the gantry's readout: ASSET 8814402 \u00b7 NOT RECEIVED AT THIS SITE \u00b7 NO MOVE TICKET \u00b7 IGNORED."
+       },
+       {
+        "narrate": "Then the strobe swings around the end of the lane and you get out of the hatching quickly, because the hatching means DO NOT OBSTRUCT, and because the machine coming down it does not have you in its model and never did. A tag that hasn't been RECEIVED is a sticker. The receiving happens at a terminal, and the terminal's port is unplugged."
+       },
+       {
+        "setFlag": "a3_warn_robot"
+       }
+      ]
+     },
+     {
+      "if": {
+       "hasItem": "asset_tag"
+      },
+      "do": [
+       {
+        "narrate": "You stand in the hatched lane holding an unreceived tag, having already watched the robot come down this lane once without seeing you."
+       },
+       {
+        "death": {
+         "id": "right_of_way"
+        }
+       }
+      ]
+     },
+     {
+      "if": {
+       "flagNot": "a3_warn_robot"
+      },
+      "do": [
+       {
+        "narrate": "You step into the hatching and stand under the gantry, arms out, presenting yourself for inventory. The cyan band sweeps across your chest, finds a visitor badge, a hoodie, a sternum and a heartbeat, and records none of them, because none of them are on the list."
+       },
+       {
+        "narrate": "The strobe changes angle at the end of the lane. You step out of the hatching, fast. The paint means DO NOT OBSTRUCT and it means it about objects, and the machine enforcing it has never modelled anything that could be warned."
+       },
+       {
+        "setFlag": "a3_warn_robot"
+       }
+      ]
+     },
+     {
+      "do": [
+       {
+        "narrate": "You stand in the hatched lane, unlisted, undeclared, un-received, directly in the path of three hundred and forty pounds of materiel handling. You have done this once already and been let off."
+       },
+       {
+        "death": {
+         "id": "right_of_way"
+        }
+       }
+      ]
+     }
+    ],
+    "take": [
+     {
+      "text": "The gantry is bolted to the deck at four points and the lane is paint. You could take some paint, given a chisel and a grudge."
+     }
+    ]
+   }
+  },
+  {
+   "id": "freight_door",
+   "name": "freight door",
+   "synonyms": [
+    "roll-up door",
+    "roller door",
+    "bay door",
+    "loading door",
+    "corrugated",
+    "outside"
+   ],
+   "polygon": [
+    [
+     228,
+     24
+    ],
+    [
+     306,
+     24
+    ],
+    [
+     306,
+     116
+    ],
+    [
+     228,
+     116
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A wide corrugated roll-up door, closed, its chain hoist padlocked and the padlock's shackle furred with the particular dull bloom that says nine years. Beside it, a call button labelled DELIVERIES, and above the button a small sign: NO CARRIER ACCESS WITHOUT SCHEDULED APPOINTMENT. Appointments are made in a scheduling system."
+     },
+     {
+      "text": "The freight door: closed, padlocked, chain-hoisted, appointment-only. The appointment system is in the cloud. Nineteen days ago a truck got through here; it will be a while before another one does."
+     }
+    ],
+    "open": [
+     {
+      "text": "Padlocked, and the padlock is the honest old kind that would need a key you are never going to see. Which is fine \u2014 everything you need is inside, and the one thing you came for isn't in this building at all."
+     }
+    ],
+    "use": [
+     {
+      "text": "You press DELIVERIES. Somewhere overhead, a small speaker produces a tone of great confidence, and then nothing happens, forever, because the tone was the only part of that system running locally."
+     }
+    ]
+   }
+  },
+  {
+   "id": "corridor_door",
+   "name": "corridor door",
+   "synonyms": [
+    "door",
+    "back",
+    "corridor",
+    "exit",
+    "way back",
+    "plain door"
+   ],
+   "polygon": [
+    [
+     4,
+     44
+    ],
+    [
+     44,
+     44
+    ],
+    [
+     44,
+     116
+    ],
+    [
+     4,
+     116
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "The plain door back to the badging corridor, with no reader, no interlock and no recorded woman on this side of it either \u2014 because this side is the freight side, and freight has never been asked to prove anything. Through it: laminated controls, a vestibule that wants an escort, and a woman in a hi-viz vest who has filed the same observation twice."
+     }
+    ],
+    "open": [
+     {
+      "do": [
+       {
+        "narrate": "Back into the corridor, where the rules apply to people."
+       },
+       {
+        "goto": "act3_compliance",
+        "arrive": {
+         "x": 276,
+         "y": 152,
+         "facing": "left"
+        }
+       }
+      ]
+     }
+    ],
+    "use": [
+     {
+      "do": [
+       {
+        "narrate": "Back through to the corridor."
+       },
+       {
+        "goto": "act3_compliance",
+        "arrive": {
+         "x": 276,
+         "y": 152,
+         "facing": "left"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "deck_stripe",
+   "name": "hazard stripe",
+   "synonyms": [
+    "stripe",
+    "yellow stripe",
+    "safety stripe",
+    "deck edge",
+    "hatching",
+    "chevrons",
+    "floor"
+   ],
+   "polygon": [
+    [
+     0,
+     158
+    ],
+    [
+     320,
+     158
+    ],
+    [
+     320,
+     180
+    ],
+    [
+     0,
+     180
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "A safety-yellow and black hazard stripe running the full width of the deck, chevrons laid down with a chalk line by somebody who took real care over it. It marks the edge of the materiel handling zone. It is the only marking in the building that exists to protect a human body, and it was painted, from the evidence, by hand, by one person, on a floor where the only thing that moves cannot see human bodies at all."
+     },
+     {
+      "text": "Yellow and black chevrons, hand-laid, protecting a species the robot has never heard of."
+     }
+    ],
+    "use": [
+     {
+      "text": "You stand behind the stripe, on the correct side, like a good boy at a level crossing. The robot goes past on the other side of it, obeying a boundary it does not know is there for you."
+     }
+    ]
+   }
+  },
+  {
+   "id": "high_bays",
+   "name": "high bays",
+   "synonyms": [
+    "ceiling",
+    "lights",
+    "up",
+    "roof",
+    "girders",
+    "bay lights"
+   ],
+   "polygon": [
+    [
+     0,
+     0
+    ],
+    [
+     320,
+     0
+    ],
+    [
+     320,
+     26
+    ],
+    [
+     0,
+     26
+    ]
+   ],
+   "responses": {
+    "look": [
+     {
+      "text": "High-bay fixtures on exposed steel, throwing a light with no warmth in it at all, and above them the underside of a roof that covers twenty-two acres. Every fixture works. In a room a robot works in, with no people in it, every single light works, because the lights are on the building's maintenance contract and the building's maintenance contract has never once been deferred by a Change Advisory Board."
+     },
+     {
+      "text": "Steel, high bays, cold light, all of it functioning perfectly for the benefit of a machine that navigates by LiDAR and does not need any of it."
+     }
+    ]
+   }
+  }
+ ],
+ "onScoreComplete": [
+  {
+   "text": "The dock is closed out: the pallet read, the cage read, the terminal wired with your own cable, the tag received, and you personally logged as a two-U chassis described by a camera as MALFUNCTON, MEL. In nine years of exemplary invisible work nothing in this company ever recorded you. It took becoming furniture. The narrator wants you to know he noticed, even if the asset database only noticed the sticker."
+  }
+ ]
+}

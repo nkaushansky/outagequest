@@ -62,6 +62,24 @@ PALETTE = {
     # -- Dot ---------------------------------------------------------------
     "lavender_l": (198, 180, 212), "lavender_m": (156, 136, 176), "lavender_d": (110, 92, 130),
 
+    # -- Bev (M5) ----------------------------------------------------------
+    # The hand-knit cardigan she wears over the uniform because facilities
+    # keeps the lobby at 64 degrees and has for eleven years. Mustard is
+    # the cast's only yellow garment; nothing else competes with it.
+    "mustard_l": (226, 186, 92), "mustard_m": (194, 148, 56), "mustard_d": (140, 102, 34),
+
+    # -- Corinne (M5) ------------------------------------------------------
+    # Continuous Compliance, Tier 2. Hi-viz worn INDOORS, on a spotless
+    # floor, because the vest is a control and controls do not get skipped.
+    "hiviz_l": (226, 240, 126), "hiviz_m": (186, 208, 66), "hiviz_d": (128, 148, 38),
+
+    # -- The inventory robot (M5) ------------------------------------------
+    # Corporate service plastic + the sensor band it perceives assets with
+    # (and the amber strobe that means an asset is moving, legally).
+    "bot_l": (222, 226, 232), "bot_m": (172, 180, 190), "bot_d": (112, 120, 132),
+    "scan_cyan": (118, 214, 232),
+    "beacon_lit": (250, 196, 86), "beacon_dim": (128, 96, 40),
+
     # -- footwear ----------------------------------------------------------
     "sneaker_l": (232, 228, 216), "sneaker_m": (196, 190, 176), "sneaker_d": (150, 144, 130),
     "shoe_brown_m": (92, 62, 38), "shoe_brown_d": (58, 38, 22),

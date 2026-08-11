@@ -74,8 +74,10 @@ only as the missing-sheet fallback. All characters (Mel + NPCs) are designed tog
 one dedicated pass — M3.5, after the formal M3 review, before Act 2 — so
 they share one style (the sprite equivalent of the one-generator rule).
 Worn state must show on Mel: outfit flags (wearing_pants, wearing_coat,
-the eventual hoodie beat) select sprite variants through a data-defined
-outfit map; the engine never hard-codes a flag name.
+wearing_hoodie — the hood-up cold-aisle payoff, landed in M5) select
+sprite variants through a data-defined outfit map; the engine never
+hard-codes a flag name. A patrolling NPC is also pure data: the hotspot
+`sprite` block takes an optional waypoint `path` (schema.md → Sprites).
 
 ## Asset pipeline
 

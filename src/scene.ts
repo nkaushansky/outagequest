@@ -45,12 +45,34 @@ export interface SpriteSheet {
   talkFps: number;
 }
 
-/** An NPC standing in the room (from a hotspot's `sprite` block). */
+/** Live state of a patrolling NPC. Authored fields come from the room's
+ *  `sprite` block; the rest is this room visit's walk bookkeeping, reset
+ *  on every entry so a patrol is deterministic from the door. */
+export interface NpcPatrol {
+  path: Pt[];
+  speed: number;
+  loop: "pingpong" | "cycle";
+  pauseMs: number;
+  /** Waypoint index currently being travelled FROM. */
+  leg: number;
+  /** Progress along the current leg, 0..1. */
+  t: number;
+  /** +1 forward through the path, -1 back (pingpong only). */
+  dir: 1 | -1;
+  /** Remaining dwell at the waypoint, seconds. */
+  wait: number;
+  facing: Facing;
+  moving: boolean;
+  animTime: number;
+}
+
+/** An NPC standing — or patrolling — in the room (a hotspot `sprite`). */
 export interface SceneNpc {
   id: string;
   sheet: SpriteSheet;
   x: number;
   y: number;
+  patrol?: NpcPatrol;
 }
 
 const FACING_ROW: Record<Facing, number> = { down: 0, left: 1, right: 2, up: 3 };
@@ -220,6 +242,18 @@ export class Scene {
     return this.npcs.map((n) => n.id);
   }
 
+  /** Debug/test: where an NPC is right now, and whether it's underway. */
+  npcPose(id: string): { x: number; y: number; facing: Facing; moving: boolean } | null {
+    const npc = this.npcs.find((n) => n.id === id);
+    if (!npc) return null;
+    return {
+      x: Math.round(npc.x),
+      y: Math.round(npc.y),
+      facing: npc.patrol?.facing ?? "down",
+      moving: npc.patrol?.moving ?? false,
+    };
+  }
+
   /** Map a pointer event to internal coordinates, accounting for the
    *  object-fit:contain letterbox. Returns null on the black bars. */
   private toInternal(e: PointerEvent): Pt | null {
@@ -360,8 +394,67 @@ export class Scene {
     requestAnimationFrame((t) => this.frame(t));
   }
 
+  /** Walk one patrolling NPC along its authored waypoints. The engine
+   *  interpolates and derives facing; the route, gait and dwell are data.
+   *  Patrols ignore the walkable polygon — the author drew the path, and
+   *  a robot on a floor line has its own idea of where the floor is. */
+  private stepPatrol(npc: SceneNpc, dt: number): void {
+    const p = npc.patrol;
+    if (!p) return;
+    p.moving = false;
+    if (p.wait > 0) {
+      p.wait = Math.max(0, p.wait - dt);
+      return;
+    }
+    const n = p.path.length;
+    const from = p.path[p.leg];
+    if (!from) return;
+    let nextIdx: number;
+    if (p.loop === "cycle") {
+      nextIdx = (p.leg + 1) % n;
+    } else {
+      nextIdx = p.leg + p.dir;
+      if (nextIdx < 0 || nextIdx >= n) {
+        p.dir = p.dir === 1 ? -1 : 1;
+        nextIdx = p.leg + p.dir;
+      }
+    }
+    const to = p.path[nextIdx];
+    if (!to) return;
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const len = Math.hypot(dx, dy);
+    if (len < 0.001) {
+      p.leg = nextIdx; // degenerate leg: step over it
+      p.t = 0;
+      return;
+    }
+    p.t += (p.speed * dt) / len;
+    if (p.t >= 1) {
+      npc.x = to.x;
+      npc.y = to.y;
+      p.leg = nextIdx;
+      p.t = 0;
+      p.wait = p.pauseMs / 1000;
+    } else {
+      npc.x = from.x + dx * p.t;
+      npc.y = from.y + dy * p.t;
+      p.moving = true;
+      p.animTime += dt;
+    }
+    p.facing =
+      Math.abs(dx) >= Math.abs(dy)
+        ? dx < 0
+          ? "left"
+          : "right"
+        : dy < 0
+          ? "up"
+          : "down";
+  }
+
   private update(dt: number): void {
     this.walking = false;
+    for (const npc of this.npcs) if (npc.patrol) this.stepPatrol(npc, dt);
     if (!this.room) return;
 
     // Keyboard steering runs instead of (never alongside) target walking.
@@ -558,19 +651,32 @@ export class Scene {
     const s = npc.sheet;
     if (!sheetReady(s)) return; // static scenery gap beats a broken image
     const cols = Math.max(1, Math.floor(s.img.naturalWidth / s.frameW));
+    const rows = Math.max(1, Math.floor(s.img.naturalHeight / s.frameH));
     let col = 0;
-    const talk = this.talk;
-    if (talk && talk.id === npc.id && cols > 1) {
-      const t = now - talk.start;
-      if (t < TALK_MS) {
-        col = 1 + (Math.floor((t / 1000) * s.talkFps) % (cols - 1));
-      } else {
-        this.talk = null;
+    let row = 0;
+    if (rows >= 4) {
+      // A walker sheet (the same contract Mel uses): direction rows, walk
+      // columns. No talk cycle — those columns are the gait, and a machine
+      // on a route has nothing to gesture with anyway.
+      const p = npc.patrol;
+      row = FACING_ROW[p?.facing ?? "down"];
+      if (p?.moving && cols > 1) {
+        col = 1 + (Math.floor(p.animTime * s.walkFps) % (cols - 1));
+      }
+    } else {
+      const talk = this.talk;
+      if (talk && talk.id === npc.id && cols > 1) {
+        const t = now - talk.start;
+        if (t < TALK_MS) {
+          col = 1 + (Math.floor((t / 1000) * s.talkFps) % (cols - 1));
+        } else {
+          this.talk = null;
+        }
       }
     }
     this.ctx.drawImage(
       s.img,
-      col * s.frameW, 0, s.frameW, s.frameH,
+      col * s.frameW, row * s.frameH, s.frameW, s.frameH,
       Math.round(npc.x - s.anchorX), Math.round(npc.y - s.anchorY),
       s.frameW, s.frameH,
     );

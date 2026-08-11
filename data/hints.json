@@ -27,6 +27,26 @@
       "text": "The fault is upstream, and upstream has a street address. Something in this closet shipped here once — and paperwork never forgets where it came from." },
     { "if": { "flagNot": "rd_arrived" },
       "text": "Listen: under the hum, an engine, idling east of the plaza where the asphalt leaves town. Somebody in this county still drives out." },
-    { "text": "The act is done; the truck is aimed west. Anything left in the queue is curiosity — try `tickets` for the ledger, and LOOK at whatever you haven't. The narrator saves his best material for the thorough." }
+    { "if": { "flagNot": "a3_arrived" },
+      "text": "The truck is running, aimed west, and provisioned with coffee and pie. Merle has run out of stories and the county has run out of leads. GET IN." },
+    { "if": { "flagNot": "a3_badged" },
+      "text": "Every badge reader on this campus authenticates through the thing you drove here about, so the lobby is running on paper — and paper wants a number in a column. You have been quoting a case number since 6:11 yesterday morning. Try quoting it to the woman with the logbook. (There is also a pie in that truck, and pie is not a control, but Bev is a person.)" },
+    { "if": { "flagNot": "a3_knows_asset_rule" },
+      "text": "The vestibule wants an escort and there is nobody in twenty-two acres who can be one. Read the wall of laminated controls — or ask the auditor who has filed an observation about it twice. The rule that matters is the one about FREIGHT." },
+    { "if": { "flagNot": "a3_tag_found" },
+      "text": "People need escorts; materiel needs only a move ticket, issued on inventory scan. So stop being a person: this building tracks assets, assets wear tags, and nobody has ever once removed a tag from dead hardware. The dock keeps a cage of dead trays." },
+    { "if": { "flagNot": "a3_terminal_wired" },
+      "text": "A tag nobody has RECEIVED is just a sticker. Receiving happens at the dock terminal — whose network port is unplugged, which is a problem you have now solved twice today with your own cable." },
+    { "if": { "flagNot": "a3_tag_live" },
+      "text": "You're on the asset network, and the asset network has never been down for a second because nobody thought inventory was worth putting somewhere clever. Now make the paperwork true: RECEIVE the tag at the terminal." },
+    { "if": { "flagNot": "a3_asset" },
+      "text": "Wear the tag and let the machine read you — a claim isn't a row until something scans it. Mind the painted lane while you're doing it: the robot's world model does not contain you, and it never did." },
+    { "if": { "flagNot": "a3_diagnosed" },
+      "text": "The vestibule opens for freight now, and beyond it Cold Aisle 4 is bright green in every direction. Don't trust the lights — get on a console. There is a cart in there with a monitor and a keyboard on it, which is the last honest diagnostic surface in the building." },
+    { "if": { "flagNot": "a3_hq_named" },
+      "text": "'Administrative hold, upstream' is a verdict, not an address, and the summary told you exactly where to look for one: the escalation matrix. Every rack row hangs its runbook at the end plate. Go to the tab with no phone number on it." },
+    { "if": { "flagNot": "a3_keys" },
+      "text": "You know where the fault isn't — twenty-two acres of it — and you know the one room that can lift the hold. Go and say it out loud to the man in the truck. Notice, when you get there, that he is not offering to drive." },
+    { "text": "The act is done and the road is yours to drive. Anything left in the queue is curiosity — try `tickets` for the ledger, and LOOK at whatever you haven't. The narrator saves his best material for the thorough, and there is a paper cup under a floor somewhere that is worth the trip." }
   ]
 }

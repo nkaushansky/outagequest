@@ -5,6 +5,10 @@
   "maxScore": 250,
   "player": {
     "sprite": [
+      { "if": { "all": [{ "flag": "wearing_hoodie" }, { "flag": "wearing_coat" }, { "flag": "wearing_pants" }] }, "use": "mel_hood_coat_pants" },
+      { "if": { "all": [{ "flag": "wearing_hoodie" }, { "flag": "wearing_coat" }] }, "use": "mel_hood_coat" },
+      { "if": { "all": [{ "flag": "wearing_hoodie" }, { "flag": "wearing_pants" }] }, "use": "mel_hood_pants" },
+      { "if": { "flag": "wearing_hoodie" }, "use": "mel_hood" },
       { "if": { "all": [{ "flag": "wearing_coat" }, { "flag": "wearing_pants" }] }, "use": "mel_coat_pants" },
       { "if": { "flag": "wearing_coat" }, "use": "mel_coat" },
       { "if": { "flag": "wearing_pants" }, "use": "mel_pants" },

@@ -41,10 +41,21 @@ export interface SpritesFile {
   sprites: Record<string, SpriteDef>;
 }
 
-/** A hotspot's standing sprite: which sheet, and where the anchor goes. */
+/** A hotspot's standing sprite: which sheet, and where the anchor goes.
+ *  With `path` it patrols instead of standing — the engine interpolates
+ *  the anchor along the waypoints and derives facing from the direction
+ *  of travel. Pure data: a moving NPC is authored, never coded. */
 export interface HotspotSpriteRef {
   use: string;
   at: Pt;
+  /** Patrol waypoints in world space (320x180). Two or more to move. */
+  path?: Pt[];
+  /** Travel speed in px/sec (default 24). */
+  speed?: number;
+  /** End-of-path behavior: reverse (default) or return to waypoint 0. */
+  loop?: "pingpong" | "cycle";
+  /** Dwell at each waypoint before moving on, ms (default 0). */
+  pauseMs?: number;
 }
 
 export interface VerbDef {
