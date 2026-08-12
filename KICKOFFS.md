@@ -371,7 +371,7 @@ row appended.
 
 ---
 
-## M6 — Act 4 (paste after the M5 review disposition settles)
+## M6 — Act 4 (READY TO PASTE — M5 merged to main 2026-08-01)
 
 M6 kickoff — Act 4: The Company. Repo: nkaushansky/outagequest, start from
 main (M5 Act 3 merged; read REVIEW.md rows "M5 (decisions ratified)", "M5
